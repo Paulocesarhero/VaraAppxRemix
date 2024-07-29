@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d3a3ce70-161e-4b88-9b98-4298b2ee7e92" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.eslintrc.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/AppIcon.appiconset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/AppIcon.appiconset/Icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/AppIcon.appiconset/icon_20pt.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/AppIcon.appiconset/icon_20pt@2x-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/AppIcon.appiconset/icon_20pt@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/AppIcon.appiconset/icon_20pt@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/AppIcon.appiconset/icon_29pt.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/AppIcon.appiconset/icon_29pt@2x-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/AppIcon.appiconset/icon_29pt@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/AppIcon.appiconset/icon_29pt@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/AppIcon.appiconset/icon_40pt.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/AppIcon.appiconset/icon_40pt@2x-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/AppIcon.appiconset/icon_40pt@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/AppIcon.appiconset/icon_40pt@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/AppIcon.appiconset/icon_60pt@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/AppIcon.appiconset/icon_60pt@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/AppIcon.appiconset/icon_76pt.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/AppIcon.appiconset/icon_76pt@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/AppIcon.appiconset/icon_83.5@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/add.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/add.imageset/add.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/add.imageset/add@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/add.imageset/add@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/alive.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/alive.imageset/alive.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/alive.imageset/alive@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/alive.imageset/alive@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/arrow.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/arrow.imageset/arrow.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/arrow.imageset/arrow@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/arrow.imageset/arrow@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/background.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/background.imageset/background.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/background.imageset/background@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/background.imageset/background@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/cancel.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/cancel.imageset/cancel.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/cancel.imageset/cancel@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/cancel.imageset/cancel@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/check.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/check.imageset/check.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/check.imageset/check@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/check.imageset/check@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/create.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/create.imageset/create.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/create.imageset/create@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/create.imageset/create@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/dolphin.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/dolphin.imageset/dolphin.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/dolphin.imageset/dolphin@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/dolphin.imageset/dolphin@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/email.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/email.imageset/at.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/email.imageset/at@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/email.imageset/at@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/format.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/format.imageset/format.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/format.imageset/format@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/format.imageset/format@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip1.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip1.imageset/generalTip1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip1.imageset/generalTip1@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip1.imageset/generalTip1@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip2.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip2.imageset/generalTip2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip2.imageset/generalTip2@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip2.imageset/generalTip2@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip3.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip3.imageset/generalTip3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip3.imageset/generalTip3@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip3.imageset/generalTip3@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip4.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip4.imageset/generalTip4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip4.imageset/generalTip4@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip4.imageset/generalTip4@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip5.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip5.imageset/generalTip5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip5.imageset/generalTip5@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip5.imageset/generalTip5@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip6.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip6.imageset/generalTip6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip6.imageset/generalTip6@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/generalTip6.imageset/generalTip6@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/greenDot.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/greenDot.imageset/greenDot.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/greenDot.imageset/greenDot@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/greenDot.imageset/greenDot@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/individualFormat.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/individualFormat.imageset/individualFormat.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/individualFormat.imageset/individualFormat@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/individualFormat.imageset/individualFormat@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/location.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/location.imageset/location.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/location.imageset/location@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/location.imageset/location@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/lock.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/lock.imageset/lock.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/lock.imageset/lock@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/lock.imageset/lock@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/logo.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/logo.imageset/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/logo.imageset/logo@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/logo.imageset/logo@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/logoSplash.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/logoSplash.imageset/logoSplash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/logoSplash.imageset/logoSplash@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/logoSplash.imageset/logoSplash@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mapPin.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mapPin.imageset/mapPin.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mapPin.imageset/mapPin@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mapPin.imageset/mapPin@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/morphometry.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/morphometry.imageset/morphometry.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/morphometry.imageset/morphometry@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/morphometry.imageset/morphometry@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti1.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti1.imageset/mysticeti1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti10.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti10.imageset/mysticeti10.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti11.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti11.imageset/mysticeti11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti12.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti12.imageset/mysticeti12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti13.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti13.imageset/mysticeti13.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti16.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti16.imageset/mysticeti16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti2.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti2.imageset/mysticeti2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti23.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti23.imageset/mysticeti23.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti24.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti24.imageset/mysticeti24.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti25.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti25.imageset/mysticeti25.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti26.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti26.imageset/mysticeti26.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti27.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti27.imageset/mysticeti27.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti3.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti3.imageset/mysticeti3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti30.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti30.imageset/mysticeti32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti31.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti31.imageset/mysticeti31.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti32.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti32.imageset/mysticeti30.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti33.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti33.imageset/mysticeti33.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti34.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti34.imageset/mysticeti34.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti35.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti35.imageset/mysticeti35.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti36.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti36.imageset/mysticeti36.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti37.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti37.imageset/mysticeti37.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti38.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti38.imageset/mysticeti38.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti39.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti39.imageset/mysticeti39.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti4.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti4.imageset/mysticeti4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti5.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti5.imageset/mysticeti5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti6.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti6.imageset/mysticeti6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti7.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti7.imageset/mysticeti7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti8.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti8.imageset/mysticeti8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti9.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/mysticeti9.imageset/mysticeti9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/notice.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/notice.imageset/notice.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/notice.imageset/notice@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/notice.imageset/notice@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/notification.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/notification.imageset/notification.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/notification.imageset/notification@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/notification.imageset/notification@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti1.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti1.imageset/odontoceti1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti10.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti10.imageset/odontoceti10.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti11.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti11.imageset/odontoceti11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti12.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti12.imageset/odontoceti12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti14.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti14.imageset/odontoceti14.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti2.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti2.imageset/odontoceti2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti23.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti23.imageset/odontoceti23.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti24.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti24.imageset/odontoceti24.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti25.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti25.imageset/odontoceti25.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti26.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti26.imageset/odontoceti26.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti27.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti27.imageset/odontoceti27.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti28.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti28.imageset/odontoceti28.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti29.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti29.imageset/odontoceti29.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti3.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti3.imageset/odontoceti3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti30.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti30.imageset/odontoceti30.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti31.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti31.imageset/odontoceti31.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti32.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti32.imageset/odontoceti32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti33.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti33.imageset/odontoceti33.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti34.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti34.imageset/odontoceti34.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti35.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti35.imageset/odontoceti35.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti36.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti36.imageset/odontoceti36.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti37.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti37.imageset/odontoceti37.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti38.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti38.imageset/odontoceti38.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti4.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti4.imageset/odontoceti4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti5.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti5.imageset/odontoceti5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti6.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti6.imageset/odontoceti6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti7.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti7.imageset/odontoceti7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti8.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti8.imageset/odontoceti8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti9.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/odontoceti9.imageset/odontoceti9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pause.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pause.imageset/pause.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pause.imageset/pause@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pause.imageset/pause@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/photo.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/photo.imageset/photo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/photo.imageset/photo@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/photo.imageset/photo@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped.imageset/pinniped.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped.imageset/pinniped@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped.imageset/pinniped@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped1.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped1.imageset/pinniped1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped10.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped10.imageset/pinniped10.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped11.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped11.imageset/pinniped11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped12.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped12.imageset/pinniped12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped15.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped15.imageset/pinniped15.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped16.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped16.imageset/pinniped16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped17.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped17.imageset/pinniped17.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped18.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped18.imageset/pinniped18.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped19.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped19.imageset/pinniped19.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped2.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped2.imageset/pinniped2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped20.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped20.imageset/pinniped20.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped21.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped21.imageset/pinniped21.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped3.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped3.imageset/pinniped3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped4.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped4.imageset/pinniped4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped5.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped5.imageset/pinniped5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped6.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped6.imageset/pinniped6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped7.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped7.imageset/pinniped7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped8.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped8.imageset/pinniped8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped9.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/pinniped9.imageset/pinniped9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/recommendation.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/recommendation.imageset/recommendation.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/recommendation.imageset/recommendation@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/recommendation.imageset/recommendation@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/results.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/results.imageset/results.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/results.imageset/results@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/results.imageset/results@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/route.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/route.imageset/route.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/route.imageset/route@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/route.imageset/route@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/routeBlack.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/routeBlack.imageset/routeBlack.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/routeBlack.imageset/routeBlack@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/routeBlack.imageset/routeBlack@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/save.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/save.imageset/save.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/save.imageset/save@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/save.imageset/save@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/settings.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/settings.imageset/settings.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/settings.imageset/settings@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/settings.imageset/settings@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia.imageset/sirenia.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia.imageset/sirenia@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia.imageset/sirenia@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia1.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia1.imageset/sirenia1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia10.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia10.imageset/sirenia10.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia11.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia11.imageset/sirenia11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia12.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia12.imageset/sirenia12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia13.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia13.imageset/sirenia13.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia15.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia15.imageset/sirenia15.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia16.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia16.imageset/sirenia16.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia2.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia2.imageset/sirenia2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia21.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia21.imageset/sirenia21.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia3.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia3.imageset/sirenia3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia4.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia4.imageset/sirenia4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia5.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia5.imageset/sirenia5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia6.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia6.imageset/sirenia6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia7.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia7.imageset/sirenia7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia8.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia8.imageset/sirenia8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia9.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sirenia9.imageset/sirenia9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sizeInfo.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sizeInfo.imageset/sizeInfo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sizeInfo.imageset/sizeInfo@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/sizeInfo.imageset/sizeInfo@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/syncCloud.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/syncCloud.imageset/syncCloud.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/syncCloud.imageset/syncCloud@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/syncCloud.imageset/syncCloud@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/telephone.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/telephone.imageset/telephone.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/telephone.imageset/telephone@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/telephone.imageset/telephone@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/temperature.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/temperature.imageset/temperature.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/temperature.imageset/temperature@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/temperature.imageset/temperature@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/whale.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/whale.imageset/whale.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/whale.imageset/whale@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/whale.imageset/whale@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/whaleIcon.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/whaleIcon.imageset/whaleIcon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/whaleIcon.imageset/whaleIcon@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/whaleIcon.imageset/whaleIcon@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/whaleTail.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/whaleTail.imageset/whaleTail.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/whaleTail.imageset/whaleTail@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/whaleTail.imageset/whaleTail@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/wifi.imageset/Contents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/wifi.imageset/wifi.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/wifi.imageset/wifi@2x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/img/wifi.imageset/wifi@3x.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/Authentication/screens/LoginScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2jrJ12d6T3T5jyzVtgpsEaMohdK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/pchr/WebstormProjects/VaraApp/VaraAppx/assets/img&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/pchr/WebstormProjects/VaraApp/VaraAppx/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets/img" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/features/Authentication/screens" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.web">
+    <configuration name="format" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="format" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="lint" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="lint" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="web" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="web" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.web" />
+        <item itemvalue="npm.format" />
+        <item itemvalue="npm.lint" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d3a3ce70-161e-4b88-9b98-4298b2ee7e92" name="Changes" comment="" />
+      <created>1722139043400</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1722139043400</updated>
+      <workItem from="1722139044418" duration="9665000" />
+      <workItem from="1722208700217" duration="1265000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
