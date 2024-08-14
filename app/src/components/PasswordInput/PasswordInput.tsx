@@ -1,5 +1,4 @@
 import {View, Text, Pressable, TextInput} from "react-native";
-import {LoginFormStyle} from "../LoginForm/LoginForm.style";
 import React, {useState} from "react";
 import {PasswordInputStyle} from "./PasswordInput.style";
 import {PasswordInputProps} from "./PasswordInputProps";

@@ -23,7 +23,5 @@ export const LoginFormStyle = StyleSheet.create({
     toggleButtonText: {
         color: '#1E90FF',
         fontSize: 16,
-    }
-
-
+    },
 });

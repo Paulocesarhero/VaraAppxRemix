@@ -4,11 +4,11 @@ import {RoundedButtonProps} from "./types";
 import {RoundedButtonStyle} from "./RoundedButton.style";
 
 
-const RoundedButton: React.FC<RoundedButtonProps> = ({color, text, ...rest}) => {
+const RoundedButton: React.FC<RoundedButtonProps> = ({color, text, ...restButtonProps}) => {
     return (
         <Pressable
             style={[RoundedButtonStyle.container, { backgroundColor: color }]}
-            {...rest}
+            {...restButtonProps}
         >
             <Text style={RoundedButtonStyle.text}>{text}</Text>
         </Pressable>

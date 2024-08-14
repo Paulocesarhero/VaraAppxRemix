@@ -5,11 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3a3ce70-161e-4b88-9b98-4298b2ee7e92" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/App/src/components/BottomMenu/BottomMenu.style.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App/src/components/BottomMenu/BottomMenu.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/App/src/screens/Recommendations/Recommendations.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/src/components/LoginForm/LoginForm.style.ts" beforeDir="false" afterPath="$PROJECT_DIR$/App/src/components/LoginForm/LoginForm.style.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/src/components/LoginForm/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App/src/components/LoginForm/LoginForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/src/components/LoginForm/LoginFormProps.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/App/src/components/LoginForm/LoginFormProps.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/src/components/PasswordInput/PasswordInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App/src/components/PasswordInput/PasswordInput.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/src/components/RoundedButton/RoundedButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App/src/components/RoundedButton/RoundedButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/src/screens/HomePage/HomPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App/src/screens/Login/LoginPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/src/screens/HomePage/HomePage.style.ts" beforeDir="false" afterPath="$PROJECT_DIR$/App/src/screens/Login/LoginPage.style.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +37,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -46,10 +56,13 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/pchr/WebstormProjects/VaraApp/VaraAppx/assets/VaraAppxAssets&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/Users/pchr/WebstormProjects/VaraApp/VaraAppx/node_modules/typescript/lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
@@ -61,10 +74,11 @@
       <recent name="$PROJECT_DIR$/assets/img" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app" />
-      <recent name="$PROJECT_DIR$/src/features/Authentication/screens" />
+      <recent name="$PROJECT_DIR$/App/src/assets" />
+      <recent name="$PROJECT_DIR$/App" />
+      <recent name="$PROJECT_DIR$/App/src/Localization" />
+      <recent name="$PROJECT_DIR$/App/src/components/InputText" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
   <component name="RunManager" selected="npm.web">
@@ -107,6 +121,9 @@
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="d3a3ce70-161e-4b88-9b98-4298b2ee7e92" name="Changes" comment="" />
@@ -118,6 +135,9 @@
       <workItem from="1722208700217" duration="1265000" />
       <workItem from="1722266791373" duration="21414000" />
       <workItem from="1722632650024" duration="356000" />
+      <workItem from="1723136975668" duration="38258000" />
+      <workItem from="1723575935709" duration="171000" />
+      <workItem from="1723576115761" duration="10740000" />
     </task>
     <servers />
   </component>
