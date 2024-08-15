@@ -5,32 +5,27 @@ import React from "react";
 import { BottomMenuProps } from "./BottomMenuProps";
 
 const BottomMenu: React.FC<BottomMenuProps> = ({
-  imageStyleStranding,
-  imageStyleSettings,
-  imageStyleRecommendations,
+  ViewStyleSettings,
+  ViewStyleRecommendations,
+  ViewStyleStranding,
 }) => {
   return (
     <View style={BottomMenuStyle.container}>
-      <View style={BottomMenuStyle.containerImage}>
+      <View style={[BottomMenuStyle.containerImage, ViewStyleStranding]}>
         <Image
           source={require("../../assets/format.imageset/format.png")}
           style={BottomMenuStyle.image}
         />
         <Text>Stranding</Text>
       </View>
-      <View style={BottomMenuStyle.containerImage}>
+      <View style={[BottomMenuStyle.containerImage, ViewStyleRecommendations]}>
         <Image
           source={require("../../assets/recommendation.imageset/recommendation.png")}
           style={BottomMenuStyle.image}
         />
         <Text>Recommendations</Text>
       </View>
-      <View
-        style={[
-          BottomMenuStyle.containerImage,
-          { backgroundColor: "#f0f0f0", borderRadius: 10 },
-        ]}
-      >
+      <View style={[BottomMenuStyle.containerImage, ViewStyleSettings]}>
         <Image
           source={require("../../assets/settings.imageset/settings.png")}
           style={BottomMenuStyle.image}

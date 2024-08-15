@@ -13,10 +13,12 @@ export const BottomMenuStyle = StyleSheet.create({
     contentFit: "contain",
   },
   containerImage: {
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
     alignItems: "center",
   },
   containerBottom: {
-    borderRadius: 10,
     flex: 1,
     justifyContent: "flex-end",
   },

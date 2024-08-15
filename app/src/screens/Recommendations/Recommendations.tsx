@@ -5,6 +5,7 @@ import { View } from "react-native";
 import React from "react";
 import { Carousel } from "react-native-basic-carousel";
 import CardCarousel from "../../components/CardCarousel/CardCarousel";
+import { COLORS } from "../../Constants/Colors";
 
 const Recommendations: React.FC = () => {
   const items = [
@@ -62,7 +63,11 @@ const Recommendations: React.FC = () => {
           pagination={true}
         />
       </View>
-      <BottomMenu />
+      <BottomMenu
+        ViewStyleSettings={{
+          backgroundColor: COLORS.background,
+        }}
+      />
     </SafeAreaView>
   );
 };
