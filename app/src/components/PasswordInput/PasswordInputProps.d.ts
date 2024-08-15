@@ -1,5 +1,3 @@
-import {TextInputProps} from "react-native";
+import { TextInputProps } from "react-native";
 
-export interface PasswordInputProps extends TextInputProps{
-
-}
+export interface PasswordInputProps extends TextInputProps {}

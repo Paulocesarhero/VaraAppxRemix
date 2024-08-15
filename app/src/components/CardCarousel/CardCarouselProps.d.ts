@@ -1,5 +1,5 @@
-export interface CardCarouselProps{
-    labelHeading: string;
-    labelDescription: string;
-    imagePath: string;
+export interface CardCarouselProps {
+  labelHeading: string;
+  labelDescription: string;
+  imagePath: string;
 }
