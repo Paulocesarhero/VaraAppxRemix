@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Text, Image} from 'react-native';
 import {CardCarouselProps} from "./CardCarouselProps";
-import {LoginPageStyle} from "../../screens/Login/LoginPage.style";
 import {CardCarouselStyle} from "./CardCarousel.style";
 
 
