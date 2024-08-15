@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import {PasswordInputStyle} from "./PasswordInput.style";
 import {PasswordInputProps} from "./PasswordInputProps";
 const PasswordInput: React.FC<PasswordInputProps> = ({...rest}) => {
-    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [showPassword, setShowPassword] = useState<boolean>(true);
     return (
         <View>
             <TextInput

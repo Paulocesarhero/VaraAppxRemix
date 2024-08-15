@@ -11,7 +11,7 @@ const LoginForm: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('')
     const handleLogin = () => {
-        //Aqui iria la confirmación del servidor
+        //TODO Aqui iria la confirmación del servidor
         router.navigate({pathname: 'src/screens/Recommendations/Recommendations'});
 
     }
