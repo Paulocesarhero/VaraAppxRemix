@@ -54,7 +54,7 @@ const BottomMenu: React.FC = ({
   );
 
   return (
-    <View style={BottomMenuStyle.container}>
+    <View style={[BottomMenuStyle.container, BottomMenuStyle.containerBottom]}>
       <MenuItem
         onPress={handleStrandingPress}
         style={[ViewStyleStranding, getStyle("Stranding")]}

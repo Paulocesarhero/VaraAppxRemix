@@ -19,7 +19,9 @@ export const BottomMenuStyle = StyleSheet.create({
     alignItems: "center",
   },
   containerBottom: {
-    flex: 1,
-    justifyContent: "flex-end",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 });
