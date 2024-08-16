@@ -1,13 +1,12 @@
 import BottomMenu from "../../components/BottomMenu/BottomMenu";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { RecommendationsStyle } from "./Recommendations.style";
+import { RecommendationsPageStyle } from "./RecommendationsPage.style";
 import { View } from "react-native";
 import React from "react";
 import { Carousel } from "react-native-basic-carousel";
 import CardCarousel from "../../components/CardCarousel/CardCarousel";
-import { COLORS } from "../../Constants/Colors";
 
-const Recommendations: React.FC = () => {
+const RecommendationsPage: React.FC = () => {
   const items = [
     {
       id: 1,
@@ -47,8 +46,8 @@ const Recommendations: React.FC = () => {
     },
   ];
   return (
-    <SafeAreaView style={RecommendationsStyle.container}>
-      <View style={RecommendationsStyle.containerBody}>
+    <SafeAreaView style={RecommendationsPageStyle.container}>
+      <View style={RecommendationsPageStyle.containerBody}>
         <Carousel
           data={items}
           renderItem={({ item }) => (
@@ -63,13 +62,9 @@ const Recommendations: React.FC = () => {
           pagination={true}
         />
       </View>
-      <BottomMenu
-        ViewStyleSettings={{
-          backgroundColor: COLORS.background,
-        }}
-      />
+      <BottomMenu />
     </SafeAreaView>
   );
 };
 
-export default Recommendations;
+export default RecommendationsPage;

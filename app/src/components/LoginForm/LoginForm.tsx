@@ -12,7 +12,7 @@ const LoginForm: React.FC = () => {
   const handleLogin = () => {
     //TODO Aqui iria la confirmación del servidor
     router.navigate({
-      pathname: "src/screens/Recommendations/Recommendations",
+      pathname: "src/screens/Recommendations/RecommendationsPage",
     });
   };
 
