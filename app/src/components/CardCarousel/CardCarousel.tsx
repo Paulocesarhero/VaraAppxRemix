@@ -11,7 +11,7 @@ const CardCarousel: React.FC<CardCarouselProps> = ({
   return (
     <View style={CardCarouselStyle.container}>
       <Text style={CardCarouselStyle.textHeading}>{labelHeading}</Text>
-      <Image source={imagePath} style={CardCarouselStyle.image} />
+      <Image source={imagePath} style={CardCarouselStyle.imageStyle} />
       <Text style={CardCarouselStyle.textDescription}>{labelDescription}</Text>
     </View>
   );

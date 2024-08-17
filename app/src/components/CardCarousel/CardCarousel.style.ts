@@ -30,17 +30,12 @@ export const CardCarouselStyle = StyleSheet.create({
     paddingBottom: 10,
     flexWrap: "wrap",
   },
-  ImageStyle: {
-    marginHorizontal: 10,
+  imageStyle: {
+    width: "100%",
     marginVertical: 10,
-    width: 200,
-    height: 200,
-    borderRadius: 15,
-    borderWidth: 8,
-    borderColor: "#d31414",
-    shadowColor: "#357e1c",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
+    borderRadius: 12,
+    borderWidth: 1,
+    resizeMode: "contain",
+    borderColor: "#ccc",
   },
 });

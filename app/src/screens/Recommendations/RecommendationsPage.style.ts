@@ -10,13 +10,6 @@ export const RecommendationsPageStyle = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  item: {
-    backgroundColor: "#ccc",
-    borderRadius: 8,
-    height: 150,
-    padding: 20,
-    alignItems: "center",
-  },
   text: {
     fontWeight: "bold",
   },

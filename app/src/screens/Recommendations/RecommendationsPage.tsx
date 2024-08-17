@@ -58,9 +58,9 @@ const RecommendationsPage: React.FC = () => {
               labelHeading={item.labelHeading}
             />
           )}
-          sliderWidth={400}
           itemWidth={400}
           pagination={true}
+          paginationPosition={"top"}
         />
       </View>
       <BottomMenu
