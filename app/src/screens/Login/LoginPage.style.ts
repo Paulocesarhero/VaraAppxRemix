@@ -26,10 +26,8 @@ export const LoginPageStyle = StyleSheet.create({
     contentFit: "contain",
   },
   containerForgotPassword: {
-    position: "absolute",
     alignItems: "center",
     justifyContent: "center",
-    bottom: 40,
   },
   textForgotPassword: {
     fontSize: 20,
