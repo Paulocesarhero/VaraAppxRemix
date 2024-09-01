@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "axios": "^1.7.4",
     "expo": "~51.0.22",
     "expo-image": "~1.12.13",
     "expo-linear-gradient": "~13.0.2",
@@ -22,16 +23,17 @@
     "react-native": "0.74.3",
     "react-native-basic-carousel": "^1.1.2",
     "react-native-localization": "^2.3.2",
-    "react-native-paper": "^5.12.5"
+    "react-native-paper": "^5.12.5",
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.45",
     "eslint": "^8.57.0",
+    "eslint-config-expo": "^7.0.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "prettier": "^3.3.3",
-    "eslint-config-expo": "^7.0.0",
     "typescript": "^5.3.3"
   },
   "private": true

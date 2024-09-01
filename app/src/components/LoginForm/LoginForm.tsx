@@ -1,19 +1,42 @@
-import { View, TextInput } from "react-native";
+import { Alert, TextInput, View } from "react-native";
 import React, { useState } from "react";
 import { LoginFormStyle } from "./LoginForm.style";
 import RoundedButton from "../RoundedButton/RoundedButton";
 import { COLORS } from "../../Constants/Colors";
 import PasswordInput from "../PasswordInput/PasswordInput";
+import { Login } from "../../services/AuthService";
+import { LoginViewModel } from "../../services/AuthServiceInterfaces";
 import { router } from "expo-router";
+import useAuthStore from "../../hooks/useStore";
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const handleLogin = () => {
-    //TODO Aqui iria la confirmación del servidor
-    router.navigate({
-      pathname: "src/screens/Recommendations/RecommendationsPage",
-    });
+  const { setToken } = useAuthStore();
+  const handleLogin = async () => {
+    try {
+      const loginData: LoginViewModel = {
+        CorreoElectronico: email,
+        Contraseña: password,
+      };
+      const response = await Login(loginData);
+      if (!response.error) {
+        router.navigate({
+          pathname: "src/screens/Recommendations/RecommendationsPage",
+        });
+        setToken(response.data.token);
+      } else {
+        Alert.alert(
+          "Credenciales incorrectas",
+          "Revise que esté bien su correo electrónico y contraseña",
+        );
+      }
+    } catch (error) {
+      Alert.alert(
+        "Credenciales incorrectas",
+        "Revise que esté bien su correo electrónico y contraseña",
+      );
+    }
   };
 
   return (
@@ -21,12 +44,16 @@ const LoginForm: React.FC = () => {
       <TextInput
         onChangeText={setEmail}
         style={LoginFormStyle.input}
-        placeholder={"email"}
+        placeholder={"correo electrónico"}
         autoComplete={"email"}
         value={email}
       ></TextInput>
 
-      <PasswordInput value={password} onChangeText={setPassword} />
+      <PasswordInput
+        placeholder={"Contraseña"}
+        value={password}
+        onChangeText={setPassword}
+      />
       <RoundedButton
         color={COLORS.primary}
         text={"Log in"}
