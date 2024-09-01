@@ -34,4 +34,4 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 app/src/assets
-.idea
+.idea/
