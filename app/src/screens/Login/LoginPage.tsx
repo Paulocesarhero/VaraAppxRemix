@@ -30,7 +30,7 @@ const LoginPage: React.FC = () => {
                 LoginPageStyle.textBold,
               ]}
             >
-              Forgot your password?
+              ¿Olvidaste tu contraseña?
             </Text>
           </Pressable>
           <Text
@@ -39,7 +39,7 @@ const LoginPage: React.FC = () => {
               LoginPageStyle.spaceBetweenText,
             ]}
           >
-            Don´t have a account
+            ¿No tienes una cuenta?
             <Pressable>
               <Text
                 style={[
@@ -48,7 +48,7 @@ const LoginPage: React.FC = () => {
                 ]}
               >
                 {" "}
-                Sing up
+                Crear cuenta
               </Text>
             </Pressable>
           </Text>
