@@ -11,38 +11,39 @@ const RecommendationsPage: React.FC = () => {
   const items = [
     {
       id: 1,
-      labelHeading: "Keep calm",
-      labelDescription: "Don't Caos",
+      labelHeading: "Mantén la calma",
+      labelDescription: "No te pongas nervioso",
       imagePath: require("../../assets/generalTip1.imageset/generalTip1.png"),
     },
     {
       id: 2,
-      labelHeading: "Avoid",
-      labelDescription: "Work Alone",
+      labelHeading: "Evita",
+      labelDescription: "Trabajar solo",
       imagePath: require("../../assets/generalTip2.imageset/generalTip2.png"),
     },
     {
       id: 3,
-      labelHeading: "Avoid into",
-      labelDescription: "To water with animals",
+      labelHeading: "Evita",
+      labelDescription: "Entrar al agua con animales",
       imagePath: require("../../assets/generalTip3.imageset/generalTip3.png"),
     },
     {
       id: 4,
-      labelHeading: "Its wrong",
-      labelDescription: "Pulling animal",
+      labelHeading: "Está mal",
+      labelDescription: "Arrastrar animales",
       imagePath: require("../../assets/generalTip4.imageset/generalTip4.png"),
     },
     {
       id: 5,
-      labelHeading: "Keep free",
-      labelDescription: "Obstructions animals orifice",
+      labelHeading: "Mantén libre",
+      labelDescription:
+        "Evita obstrucciones en las vías respiratorias de los animales",
       imagePath: require("../../assets/generalTip5.imageset/generalTip5.png"),
     },
     {
       id: 6,
-      labelHeading: "Forbidden",
-      labelDescription: "supply medications",
+      labelHeading: "Prohibido",
+      labelDescription: "Administrar medicamentos",
       imagePath: require("../../assets/generalTip6.imageset/generalTip6.png"),
     },
   ];

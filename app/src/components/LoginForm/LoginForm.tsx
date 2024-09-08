@@ -1,4 +1,4 @@
-import { Alert, TextInput, View } from "react-native";
+import { Alert, View } from "react-native";
 import React, { useState } from "react";
 import { LoginFormStyle } from "./LoginForm.style";
 import RoundedButton from "../RoundedButton/RoundedButton";
@@ -8,6 +8,7 @@ import { Login } from "../../services/AuthService";
 import { LoginViewModel } from "../../services/AuthServiceInterfaces";
 import { router } from "expo-router";
 import useAuthStore from "../../hooks/useStore";
+import EmailInput from "../EmailInput/EmailInput";
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -41,14 +42,7 @@ const LoginForm: React.FC = () => {
 
   return (
     <View style={LoginFormStyle.container}>
-      <TextInput
-        onChangeText={setEmail}
-        style={LoginFormStyle.input}
-        placeholder={"correo electrónico"}
-        autoComplete={"email"}
-        value={email}
-      ></TextInput>
-
+      <EmailInput onEmailTextChange={setEmail} />
       <PasswordInput
         placeholder={"Contraseña"}
         value={password}

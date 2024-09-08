@@ -25,7 +25,6 @@ export const CardCarouselStyle = StyleSheet.create({
     color: COLORS.gradientStart,
     textAlign: "center",
     letterSpacing: 1,
-    textTransform: "capitalize",
     borderBottomWidth: 2,
     paddingBottom: 10,
     flexWrap: "wrap",
