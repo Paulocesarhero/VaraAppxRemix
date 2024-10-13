@@ -6,10 +6,9 @@ export const emailInputStyle = StyleSheet.create({
     backgroundColor: COLORS.white,
     marginVertical: 15,
     borderWidth: 1,
-    width: 325,
-    height: 40,
+    height: 50,
     borderRadius: 12,
     textAlign: "center",
-    fontSize: 25,
+    fontSize: 20,
   },
 });

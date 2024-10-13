@@ -1,11 +1,11 @@
 import { StyleSheet } from "react-native";
 
-export const informacionPersonalFormStyle = StyleSheet.create({
+export const registroFormStyle = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#fff",
+    justifyContent: "flex-start",
+    backgroundColor: "#FFF",
+    height: "100%",
   },
   title: {
     marginVertical: 10,

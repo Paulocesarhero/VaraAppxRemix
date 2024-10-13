@@ -1,3 +1,5 @@
+// @ts-ignore
+
 import { StyleSheet } from "react-native";
 import { COLORS } from "../../Constants/Colors";
 
@@ -13,24 +15,20 @@ export const LoginPageStyle = StyleSheet.create({
   },
   Text: {
     alignItems: "center",
-    backgroundColor: "#fff",
-  },
-  overlay: {
-    backgroundColor: "#d71515",
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: COLORS.white,
   },
   image: {
-    width: 200,
-    height: 200,
+    width: "60%",
+    height: "30%",
     contentFit: "contain",
   },
   containerForgotPassword: {
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-end",
+    marginTop: "20%",
   },
   textForgotPassword: {
-    fontSize: 20,
+    fontSize: 12,
     color: COLORS.white,
   },
   textBold: {
@@ -39,5 +37,8 @@ export const LoginPageStyle = StyleSheet.create({
   },
   spaceBetweenText: {
     marginVertical: 20,
+  },
+  space: {
+    marginHorizontal: 5,
   },
 });

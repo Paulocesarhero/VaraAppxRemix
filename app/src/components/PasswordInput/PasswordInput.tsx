@@ -1,25 +1,32 @@
-import { View, Text, Pressable, TextInput } from "react-native";
 import React, { useState } from "react";
+import { Pressable, TextInput, View } from "react-native";
 import { PasswordInputStyle } from "./PasswordInput.style";
 import { PasswordInputProps } from "./PasswordInputProps";
-const PasswordInput: React.FC<PasswordInputProps> = ({ ...rest }) => {
-  const [showPassword, setShowPassword] = useState<boolean>(true);
+import { NoVisibleEye, VisibleEye } from "../../icons/icons"; // Importar los íconos
+
+const PasswordInput: React.FC<PasswordInputProps> = (props) => {
+  const [isPasswordVisible, setPasswordVisibility] = useState<boolean>(false);
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisibility(!isPasswordVisible);
+  };
+
+  const EyeIcon = isPasswordVisible ? NoVisibleEye : VisibleEye;
+
   return (
-    <View>
+    <View style={PasswordInputStyle.container}>
       <TextInput
-        autoComplete={"password"}
+        autoComplete="password"
         style={PasswordInputStyle.input}
-        secureTextEntry={showPassword}
+        secureTextEntry={!isPasswordVisible} // Contraseña oculta por defecto
         placeholder="Password"
-        {...rest}
+        {...props}
       />
       <Pressable
-        style={PasswordInputStyle.toggleButton}
-        onPress={() => setShowPassword(!showPassword)}
+        style={PasswordInputStyle.iconButton}
+        onPress={togglePasswordVisibility}
       >
-        <Text style={PasswordInputStyle.toggleButtonText}>
-          {showPassword ? "Mostrar" : "Ocultar"}
-        </Text>
+        <EyeIcon size={24} color="gray" />
       </Pressable>
     </View>
   );

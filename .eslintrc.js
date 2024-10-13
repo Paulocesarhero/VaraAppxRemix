@@ -1,8 +1,21 @@
-// https://docs.expo.dev/guides/using-eslint/
 module.exports = {
-  extends: ["expo", "prettier"],
-  plugins: ["prettier"],
+  parser: "@typescript-eslint/parser", // Configurar el analizador de TypeScript
+  extends: [
+    "expo",
+    "plugin:@typescript-eslint/recommended", // Extender las reglas de TypeScript
+    "prettier",
+  ],
+  plugins: ["prettier", "@typescript-eslint"], // Agregar el plugin de TypeScript
   rules: {
-    "prettier/prettier": "error",
+    // Aquí puedes agregar otras reglas específicas que desees
   },
+  // Si tienes configuraciones específicas para archivos, puedes agregarlas aquí
+  overrides: [
+    {
+      files: ["*.ts", "*.tsx"], // Solo para archivos de TypeScript
+      rules: {
+        // Aquí puedes agregar reglas específicas para TypeScript
+      },
+    },
+  ],
 };

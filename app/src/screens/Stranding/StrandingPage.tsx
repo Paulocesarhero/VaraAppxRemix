@@ -9,10 +9,7 @@ const StrandingPage: React.FC = () => {
   return (
     <SafeAreaView style={StrandingPageStyle.container}>
       <Text>Que onda desde stranding</Text>
-      <BottomMenu
-        activeMenu={"Stranding"}
-        ViewStyleStranding={{ backgroundColor: COLORS.background }}
-      />
+      <BottomMenu ViewStyleStranding={{ backgroundColor: COLORS.background }} />
     </SafeAreaView>
   );
 };

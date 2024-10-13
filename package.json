@@ -24,7 +24,9 @@
     "react-native-basic-carousel": "^1.1.2",
     "react-native-localization": "^2.3.2",
     "react-native-paper": "^5.12.5",
-    "zustand": "^4.5.5"
+    "zustand": "^4.5.5",
+    "react-native-web": "~0.19.10",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

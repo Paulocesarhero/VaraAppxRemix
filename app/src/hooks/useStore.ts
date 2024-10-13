@@ -7,7 +7,9 @@ const useAuthStore = create((set) => ({
 
   clearToken: () => set({ token: null }),
 
-  isAuthenticated: () => !!useAuthStore.getState().token,
+  isAuthenticated: () => {
+    return !!useAuthStore.getState().token;
+  },
 }));
 
 export default useAuthStore;

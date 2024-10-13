@@ -49,6 +49,7 @@ const LoginForm: React.FC = () => {
         onChangeText={setPassword}
       />
       <RoundedButton
+        style={{ marginVertical: 30 }}
         color={COLORS.primary}
         text={"Log in"}
         onPress={handleLogin}

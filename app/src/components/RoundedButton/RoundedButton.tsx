@@ -1,20 +1,23 @@
 import React from "react";
-import { Pressable, Text } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { RoundedButtonProps } from "./types";
 import { RoundedButtonStyle } from "./RoundedButton.style";
 
 const RoundedButton: React.FC<RoundedButtonProps> = ({
   color,
   text,
+  style,
   ...restButtonProps
 }) => {
   return (
-    <Pressable
-      style={[RoundedButtonStyle.container, { backgroundColor: color }]}
-      {...restButtonProps}
-    >
-      <Text style={RoundedButtonStyle.text}>{text}</Text>
-    </Pressable>
+    <View style={style}>
+      <Pressable
+        style={[RoundedButtonStyle.container, { backgroundColor: color }]}
+        {...restButtonProps}
+      >
+        <Text style={RoundedButtonStyle.text}>{text}</Text>
+      </Pressable>
+    </View>
   );
 };
 

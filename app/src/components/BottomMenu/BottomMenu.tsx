@@ -4,15 +4,9 @@ import { Image } from "expo-image";
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import { COLORS } from "../../Constants/Colors";
+import { BottomMenuProps, MenuItemProps } from "./BottomMenuProps";
 
-interface MenuItemProps {
-  onPress: () => void;
-  style: StyleProp<ViewStyle>;
-  imageSource: any;
-  label: string;
-}
-
-const BottomMenu: React.FC = ({
+const BottomMenu: React.FC<BottomMenuProps> = ({
   ViewStyleSettings,
   ViewStyleRecommendations,
   ViewStyleStranding,
