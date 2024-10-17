@@ -1,5 +1,3 @@
-// @ts-ignore
-
 import { StyleSheet } from "react-native";
 import { COLORS } from "../../Constants/Colors";
 

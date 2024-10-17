@@ -16,6 +16,7 @@ interface InputFieldProps extends TextInputProps {
   IsRequired?: boolean;
   iconName?: string; // El nombre del ícono
   iconFamily?: "Ionicons" | "Entypo"; // La familia de íconos
+  onTextChange: (text: string) => void;
 }
 
 const InputField: FC<InputFieldProps> = ({
@@ -24,6 +25,7 @@ const InputField: FC<InputFieldProps> = ({
   placeholder,
   iconName = "person",
   iconFamily = "Ionicons",
+  onTextChange,
   ...props
 }) => {
   const [text, setText] = useState<string>("");
@@ -86,7 +88,10 @@ const InputField: FC<InputFieldProps> = ({
           style={styles.input}
           placeholder={placeholder}
           value={text}
-          onChangeText={setText}
+          onChangeText={(newText) => {
+            setText(newText);
+            onTextChange(newText);
+          }}
           onFocus={() => setIsFocused(true)}
           {...props}
         />

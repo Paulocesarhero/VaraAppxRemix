@@ -2,7 +2,6 @@ import { Text, View } from "react-native";
 import CustomizableHeader from "../../components/CustomizableHeader/CustomizableHeader";
 import { RegistroCientificoStyle } from "./RegistroCientifico.style";
 import InformacionPersonalForm from "../../components/RegistroForms/InformacionPersonalForm/InformacionPersonalForm";
-import InformacionDeContactoForm from "../../components/RegistroForms/InformacionDeContactoForm/InformacionDeContactoForm";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -29,8 +28,6 @@ const RegistroCientificoPage: React.FC = () => {
         rightComponent={<View style={{ height: 24, width: 24 }}></View>}
       />
       <InformacionPersonalForm />
-
-      <InformacionDeContactoForm />
     </View>
   );
 };
