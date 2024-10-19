@@ -1,45 +1,31 @@
 import React, { FC, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TextInputProps,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Entypo, Ionicons } from "@expo/vector-icons";
-import { COLORS } from "../../Constants/Colors";
+import { MaterialInputStyle } from "./MaterialInput.style";
+import { MaterialInputProps } from "./MaterialInputProps";
 
-interface InputFieldProps extends TextInputProps {
-  label: string;
-  placeholder: string;
-  IsRequired?: boolean;
-  iconName?: string; // El nombre del ícono
-  iconFamily?: "Ionicons" | "Entypo"; // La familia de íconos
-  onTextChange: (text: string) => void;
-}
-
-const InputField: FC<InputFieldProps> = ({
+const InputField: FC<MaterialInputProps> = ({
   IsRequired = true,
   label,
   placeholder,
   iconName = "person",
   iconFamily = "Ionicons",
   onTextChange,
+  valueInput,
   ...props
 }) => {
   const [text, setText] = useState<string>("");
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
   const getBorderColor = (): string => {
-    let borderColor = "#000"; // Valor por defecto
+    let borderColor = "#000";
 
     if (!IsRequired) {
-      borderColor = "#000"; // Normal (negro)
+      borderColor = "#000";
     } else if ("" === text) {
-      borderColor = "#8B0000"; // Rojo para error
+      borderColor = "#8B0000";
     } else {
-      borderColor = "#008000"; // Verde para éxito
+      borderColor = "#008000";
     }
 
     return borderColor;
@@ -51,11 +37,11 @@ const InputField: FC<InputFieldProps> = ({
     }
     if (isFocused && text === "") {
       return "#FADBD8";
-    } // Fondo claro para error
+    }
     if (text !== "") {
       return "#D5F5E3";
-    } // Fondo claro para éxito
-    return "#FFF"; // Normal (blanco)
+    }
+    return "#FFF";
   };
 
   const renderIcon = () => {
@@ -68,15 +54,15 @@ const InputField: FC<InputFieldProps> = ({
       // @ts-expect-error
       return <Entypo name={iconName} size={24} color={getBorderColor()} />;
     }
-    return null; // Si no coincide ninguna familia
+    return null;
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+    <View style={MaterialInputStyle.container}>
+      <Text style={MaterialInputStyle.label}>{label}</Text>
       <View
         style={[
-          styles.inputContainer,
+          MaterialInputStyle.inputContainer,
           {
             borderColor: getBorderColor(),
             backgroundColor: getBackgroundColor(),
@@ -85,7 +71,7 @@ const InputField: FC<InputFieldProps> = ({
       >
         {renderIcon()}
         <TextInput
-          style={styles.input}
+          style={MaterialInputStyle.input}
           placeholder={placeholder}
           value={text}
           onChangeText={(newText) => {
@@ -96,50 +82,23 @@ const InputField: FC<InputFieldProps> = ({
           {...props}
         />
         {text !== "" && (
-          <TouchableOpacity onPress={() => setText("")}>
+          <TouchableOpacity
+            onPress={() => {
+              setText("");
+              onTextChange("");
+            }}
+          >
             <Entypo name="erase" size={24} color="black" />
           </TouchableOpacity>
         )}
       </View>
       {IsRequired && text === "" && (
-        <Text style={styles.helperText}>
+        <Text style={MaterialInputStyle.helperText}>
           Por favor ingrese {label.toLowerCase()}
         </Text>
       )}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginVertical: 10,
-    paddingHorizontal: 10,
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: COLORS.black,
-    marginBottom: 5,
-  },
-  inputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderWidth: 2,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-  },
-  input: {
-    flex: 1,
-    fontSize: 16,
-    marginLeft: 10,
-    color: "#4A0404",
-  },
-  helperText: {
-    fontSize: 14,
-    color: COLORS.black,
-    marginTop: 5,
-  },
-});
 
 export default InputField;

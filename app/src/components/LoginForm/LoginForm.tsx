@@ -1,4 +1,4 @@
-import { Alert, View } from "react-native";
+import { Alert, View, Text } from "react-native";
 import React, { useState } from "react";
 import { LoginFormStyle } from "./LoginForm.style";
 import RoundedButton from "../RoundedButton/RoundedButton";
@@ -42,7 +42,9 @@ const LoginForm: React.FC = () => {
 
   return (
     <View style={LoginFormStyle.container}>
+      <Text style={LoginFormStyle.label}>Correo electrónico</Text>
       <EmailInput onEmailTextChange={setEmail} />
+      <Text style={LoginFormStyle.label}>Contraseña</Text>
       <PasswordInput
         placeholder={"Contraseña"}
         value={password}
