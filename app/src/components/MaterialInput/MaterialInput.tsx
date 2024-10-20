@@ -11,7 +11,6 @@ const InputField: FC<MaterialInputProps> = ({
   iconName = "person",
   iconFamily = "Ionicons",
   onTextChange,
-  valueInput,
   ...props
 }) => {
   const [text, setText] = useState<string>("");

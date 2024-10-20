@@ -5,7 +5,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableWithoutFeedback,
   View,
@@ -16,8 +15,8 @@ import InputField from "../../MaterialInput/MaterialInput";
 import MaterialSelector from "../../MaterialSelector/MaterialSelector";
 import MaterialPasswordInput from "../../MaterialPassword/MaterialPassword";
 import { RegistroCientifico } from "../../../services/AuthService";
-import { COLORS } from "../../../Constants/Colors";
 import { RegistroCientificoRequest } from "../../../services/AuthServiceInterfaces";
+import { InformacionPersonalFormStyle } from "./InformacionPersonalForm.style";
 
 interface FormData {
   estado: string | null;
@@ -136,14 +135,14 @@ const InformacionPersonalForm: React.FC = () => {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={InformacionPersonalFormStyle.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0} // Ajusta este valor según sea necesario
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
           ref={scrollViewRef}
-          contentContainerStyle={styles.scrollViewContent}
+          contentContainerStyle={InformacionPersonalFormStyle.scrollViewContent}
           keyboardShouldPersistTaps="handled"
         >
           <Text style={registroFormStyle.title}>Información personal</Text>
@@ -157,7 +156,7 @@ const InformacionPersonalForm: React.FC = () => {
             iconName="mail"
             iconFamily="Ionicons"
             label="Email"
-            placeholder="fulanito@tal.com"
+            placeholder="cientifico@gmail.com"
             maxLength={50}
             autoCorrect={false}
             onTextChange={(value) => handleInputChange("correo", value)}
@@ -214,6 +213,7 @@ const InformacionPersonalForm: React.FC = () => {
             label="Teléfono móvil"
             placeholder="10 dígitos"
             keyboardType="phone-pad"
+            textContentType={"telephoneNumber"}
             maxLength={10}
             autoCorrect={false}
             onTextChange={(value) => handleInputChange("telefonoMovil", value)}
@@ -226,8 +226,10 @@ const InformacionPersonalForm: React.FC = () => {
           />
 
           <TouchableWithoutFeedback onPress={handleRegistroCientifico}>
-            <View style={styles.submitButton}>
-              <Text style={styles.submitButtonText}>Enviar</Text>
+            <View style={InformacionPersonalFormStyle.submitButton}>
+              <Text style={InformacionPersonalFormStyle.submitButtonText}>
+                Enviar
+              </Text>
               <Ionicons name="checkmark" size={24} color="black" />
             </View>
           </TouchableWithoutFeedback>
@@ -236,30 +238,5 @@ const InformacionPersonalForm: React.FC = () => {
     </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  scrollViewContent: {
-    flexGrow: 1,
-    padding: 16,
-    paddingBottom: 100, // Añade espacio extra al final del contenido
-  },
-  submitButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: COLORS.secondary,
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 20,
-  },
-  submitButtonText: {
-    marginRight: 10,
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-});
 
 export default InformacionPersonalForm;

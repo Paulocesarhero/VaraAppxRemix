@@ -7,5 +7,4 @@ export interface MaterialInputProps extends TextInputProps {
   iconName?: string;
   iconFamily?: "Ionicons" | "Entypo";
   onTextChange: (text: string) => void;
-  valueInput: string;
 }
