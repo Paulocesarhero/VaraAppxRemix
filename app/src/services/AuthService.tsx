@@ -1,14 +1,16 @@
 import api from "./Api";
 import {
-  Response,
+  ResponseApi,
   LoginViewModel,
   RegistroCientificoRequest,
 } from "./AuthServiceInterfaces";
+import { AxiosError } from "axios";
+import { FormValues } from "varaapplib/components/InformacionPersonalForm/types";
 
-export const Login = async (data: LoginViewModel): Promise<Response> => {
+export const Login = async (data: LoginViewModel): Promise<ResponseApi> => {
   try {
-    const response = await api.post<Response>(
-      "/Api/Autenticacion/IniciarSesionVaraAppx",
+    const response = await api.post<ResponseApi>(
+      "/Api/Autenticacion/IniciarSesion",
       data,
       {
         headers: {
@@ -25,10 +27,10 @@ export const Login = async (data: LoginViewModel): Promise<Response> => {
 
 export const RegistroCientifico = async (
   data: RegistroCientificoRequest,
-): Promise<Response> => {
+): Promise<ResponseApi> => {
   try {
-    const response = await api.post<Response>(
-      "/Api/Autenticacion/RegistrarUsuarioExperto",
+    const response = await api.post<ResponseApi>(
+      "/Api/Autenticacion/RegistrarUsuarioExperto2",
       data,
       {
         headers: {
@@ -36,13 +38,8 @@ export const RegistroCientifico = async (
         },
       },
     );
-
     return response.data;
   } catch (error) {
-    console.error(
-      "Error en RegistroCientifico:",
-      error.response?.data || error.message,
-    );
     throw error;
   }
 };
