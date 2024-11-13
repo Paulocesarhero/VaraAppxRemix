@@ -10,7 +10,7 @@ export const RegistroCientificoStyle = StyleSheet.create({
   },
   TextTitle: {
     fontSize: 20,
-    color: COLORS.white,
+    color: "black",
     fontWeight: "bold",
 
     alignSelf: "center",

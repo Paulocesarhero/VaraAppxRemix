@@ -1,33 +1,72 @@
-import { Text, View } from "react-native";
+import { Alert, View } from "react-native";
 import CustomizableHeader from "../../components/CustomizableHeader/CustomizableHeader";
-import { RegistroCientificoStyle } from "./RegistroCientifico.style";
-import InformacionPersonalForm from "../../components/RegistroForms/InformacionPersonalForm/InformacionPersonalForm";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import InformacionPersonalForm from "varaapplib/components/InformacionPersonalForm/InformacionPersonalForm";
+import {
+  RegistroCientificoRequest,
+  ResponseApi,
+} from "../../services/AuthServiceInterfaces";
+import { useState } from "react";
+import { RegistroCientifico } from "../../services/AuthService";
+import { AxiosError } from "axios";
+import { FormValues } from "varaapplib/components/InformacionPersonalForm/types";
 
 const RegistroCientificoPage: React.FC = () => {
   const router = useRouter();
   const handleBack = () => {
     router.back();
   };
+  const [loading, setLoading] = useState(false);
+
+  const handleOnSubmit = async (data: any) => {
+    setLoading(true);
+    try {
+      const respuesta: ResponseApi = await RegistroCientifico(data);
+      Alert.alert(
+        "Registro enviado",
+        "Deberá esperar a que el administrador acepte su cuenta",
+      );
+      router.back();
+    } catch (error: unknown) {
+      let errorMessage =
+        "Ocurrió un error inesperado. Por favor, inténtelo de nuevo más tarde.";
+
+      if (error instanceof AxiosError) {
+        errorMessage = error.response?.data?.message || errorMessage;
+        console.error("Error al registrar al científico:", errorMessage);
+        Alert.alert(
+          "Error al registrar al científico",
+          "El correo ya esta en uso",
+        );
+      } else {
+        console.error("Error inesperado:", error);
+        Alert.alert("Error en el servidor", "Contacte al soporte tecnioc");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <View style={{ flex: 1 }}>
       <CustomizableHeader
-        containerStyle={{}}
+        containerStyle={{ backgroundColor: "#fff" }}
         leftComponent={
           <Ionicons
             name="arrow-back"
             size={24}
-            color="white"
+            color="black"
             onPress={handleBack}
           />
         }
-        centerComponent={
-          <Text style={RegistroCientificoStyle.TextTitle}>Registro</Text>
-        }
         rightComponent={<View style={{ height: 24, width: 24 }}></View>}
       />
-      <InformacionPersonalForm />
+
+      <InformacionPersonalForm
+        onSubmitData={handleOnSubmit}
+        loading={loading}
+        setLoading={setLoading}
+      ></InformacionPersonalForm>
     </View>
   );
 };
