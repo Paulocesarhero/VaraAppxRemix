@@ -1,11 +1,9 @@
 import api from "./Api";
 import {
-  ResponseApi,
   LoginViewModel,
   RegistroCientificoRequest,
+  ResponseApi,
 } from "./AuthServiceInterfaces";
-import { AxiosError } from "axios";
-import { FormValues } from "varaapplib/components/InformacionPersonalForm/types";
 
 export const Login = async (data: LoginViewModel): Promise<ResponseApi> => {
   try {
@@ -16,7 +14,7 @@ export const Login = async (data: LoginViewModel): Promise<ResponseApi> => {
         headers: {
           "Content-Type": "application/json",
         },
-      },
+      }
     );
 
     return response.data;
@@ -26,7 +24,7 @@ export const Login = async (data: LoginViewModel): Promise<ResponseApi> => {
 };
 
 export const RegistroCientifico = async (
-  data: RegistroCientificoRequest,
+  data: RegistroCientificoRequest
 ): Promise<ResponseApi> => {
   try {
     const response = await api.post<ResponseApi>(
@@ -36,10 +34,11 @@ export const RegistroCientifico = async (
         headers: {
           "Content-Type": "application/json",
         },
-      },
+      }
     );
     return response.data;
   } catch (error) {
     throw error;
   }
 };
+export default { Login, RegistroCientifico };

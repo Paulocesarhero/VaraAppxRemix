@@ -3,7 +3,7 @@ export interface LoginViewModel {
   Contraseña: string;
 }
 
-export interface Response {
+export interface ResponseApi {
   error: boolean;
   message: string[];
   data: {
