@@ -1,15 +1,16 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://uv.mx.local",
+  baseURL: "http://192.168.1.108",
 });
 api.interceptors.request.use(
   (config) => {
-    /*console.log("URL completa de la solicitud:", config.baseURL + config.url)*/ return config;
+    /*console.log("URL completa de la solicitud:", config.baseURL + config.url)*/
+    return config;
   },
   (error) => {
     return Promise.reject(error);
-  },
+  }
 );
 
 export default api;
