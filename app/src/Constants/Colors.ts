@@ -1,13 +1,16 @@
-export const COLORS = {
-  primary: "#3498db",
-  secondary: "#2ecc71",
-  accent: "#e74c3c",
-  background: "#f5f5f5",
-  text: "#333333",
-  white: "#ffffff",
-  black: "#000000",
-  gray: "#7f8c8d",
-  gradientStart: "#024D76",
-  gradientMiddle: "#3b5998",
-  gradientEnd: "#54AD94",
+import { ColorValue } from "react-native";
+
+
+export enum ColorsEnum {
+  dark = "#333333",
+  light = "#f8f8f8",
+  lightGrey = "#b7bcc7",
+  grey = "#979797",
+}
+
+export const ColorsPalete: Record<keyof typeof ColorsEnum, ColorValue> = {
+  dark: ColorsEnum.dark,
+  light: ColorsEnum.light,
+  lightGrey: ColorsEnum.lightGrey,
+  grey: ColorsEnum.grey,
 };
