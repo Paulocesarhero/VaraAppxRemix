@@ -1,16 +1,43 @@
-import { Text } from "react-native";
-import BottomMenu from "../../components/BottomMenu/BottomMenu";
-import React from "react";
-import { COLORS } from "../../Constants/Colors";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { StrandingPageStyle } from "./StrandingPage.style";
+import { Pressable, View } from "react-native";
+import React, { useState } from "react";
+import { ColorsPalete } from "../../constants/COLORS";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
+import { useRouter } from "expo-router";
+import { AvisoForm } from "varaapplib/components/AvisoForm/AvisoForm";
 
 const StrandingPage: React.FC = () => {
+  const router = useRouter();
+  const handleBack = () => {
+    router.back();
+  };
+  const [loading, setLoading] = useState<boolean>(false);
+  const handleSubmitData = () => {};
   return (
-    <SafeAreaView style={StrandingPageStyle.container}>
-      <Text>Que onda desde stranding</Text>
-      <BottomMenu ViewStyleStranding={{ backgroundColor: COLORS.background }} />
-    </SafeAreaView>
+    <View style={{ flex: 1, backgroundColor: ColorsPalete.light }}>
+      <CustomizableHeader
+        containerStyle={{
+          backgroundColor: ColorsPalete.dark,
+          height: "6%",
+          borderTopEndRadius: 10,
+          borderTopStartRadius: 10,
+        }}
+        leftComponent={
+          <Pressable onPress={handleBack}>
+            <MaterialIcons
+              name="arrow-back"
+              size={24}
+              color={ColorsPalete.light}
+            />
+          </Pressable>
+        }
+      ></CustomizableHeader>
+      <AvisoForm
+        onSubmitData={handleSubmitData}
+        loading={loading}
+        setLoading={setLoading}
+      ></AvisoForm>
+    </View>
   );
 };
 

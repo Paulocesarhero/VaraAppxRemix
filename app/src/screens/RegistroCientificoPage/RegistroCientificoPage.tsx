@@ -1,16 +1,13 @@
 import { Alert, View } from "react-native";
-import CustomizableHeader from "../../components/CustomizableHeader/CustomizableHeader";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import InformacionPersonalForm from "varaapplib/components/InformacionPersonalForm/InformacionPersonalForm";
-import {
-  RegistroCientificoRequest,
-  ResponseApi,
-} from "../../services/AuthServiceInterfaces";
-import { useState } from "react";
+import { ResponseApi } from "../../services/AuthServiceInterfaces";
+import React, { useState } from "react";
 import { RegistroCientifico } from "../../services/AuthService";
 import { AxiosError } from "axios";
-import { FormValues } from "varaapplib/components/InformacionPersonalForm/types";
+import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
+import { ColorsPalete } from "../../constants/COLORS";
 
 const RegistroCientificoPage: React.FC = () => {
   const router = useRouter();
@@ -25,7 +22,7 @@ const RegistroCientificoPage: React.FC = () => {
       const respuesta: ResponseApi = await RegistroCientifico(data);
       Alert.alert(
         "Registro enviado",
-        "Deberá esperar a que el administrador acepte su cuenta",
+        "Deberá esperar a que el administrador acepte su cuenta"
       );
       router.back();
     } catch (error: unknown) {
@@ -37,7 +34,7 @@ const RegistroCientificoPage: React.FC = () => {
         console.error("Error al registrar al científico:", errorMessage);
         Alert.alert(
           "Error al registrar al científico",
-          "El correo ya esta en uso",
+          "El correo ya esta en uso"
         );
       } else {
         console.error("Error inesperado:", error);
@@ -48,9 +45,15 @@ const RegistroCientificoPage: React.FC = () => {
     }
   };
   return (
-    <View style={{ flex: 1 }}>
+    <View
+      style={{
+        flex: 1,
+        paddingBottom: 10,
+        backgroundColor: ColorsPalete.light,
+      }}
+    >
       <CustomizableHeader
-        containerStyle={{ backgroundColor: "#fff" }}
+        containerStyle={{ backgroundColor: ColorsPalete.light }}
         leftComponent={
           <Ionicons
             name="arrow-back"
@@ -61,7 +64,6 @@ const RegistroCientificoPage: React.FC = () => {
         }
         rightComponent={<View style={{ height: 24, width: 24 }}></View>}
       />
-
       <InformacionPersonalForm
         onSubmitData={handleOnSubmit}
         loading={loading}

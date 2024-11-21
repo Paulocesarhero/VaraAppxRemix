@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import { COLORS } from "../../Constants/Colors";
 
 export const RegistroCientificoStyle = StyleSheet.create({
   container: {
@@ -16,7 +15,7 @@ export const RegistroCientificoStyle = StyleSheet.create({
     alignSelf: "center",
   },
   cancelarButton: {
-    color: COLORS.white,
+    color: "white",
     fontSize: 15,
     padding: 5,
   },
