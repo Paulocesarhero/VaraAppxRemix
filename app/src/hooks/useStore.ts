@@ -1,15 +1,13 @@
 import { create } from "zustand";
 
-const useAuthStore = create((set) => ({
-  token: null,
+interface Token {
+  token: string;
+  setToken: (token: string) => void;
+}
 
+const useAuthStore = create<Token>((set) => ({
+  token: "",
   setToken: (newToken: string) => set({ token: newToken }),
-
-  clearToken: () => set({ token: null }),
-
-  isAuthenticated: () => {
-    return !!useAuthStore.getState().token;
-  },
 }));
 
 export default useAuthStore;
