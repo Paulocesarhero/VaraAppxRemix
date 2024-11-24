@@ -15,6 +15,13 @@ const StrandingPage: React.FC = () => {
   const handleSubmitData = () => {};
   return (
     <View style={{ flex: 1, backgroundColor: ColorsPalete.light }}>
+      <View style={{ height: "94%" }}>
+        <AvisoForm
+          onSubmitData={handleSubmitData}
+          loading={loading}
+          setLoading={setLoading}
+        ></AvisoForm>
+      </View>
       <CustomizableHeader
         containerStyle={{
           backgroundColor: ColorsPalete.dark,
@@ -32,11 +39,6 @@ const StrandingPage: React.FC = () => {
           </Pressable>
         }
       ></CustomizableHeader>
-      <AvisoForm
-        onSubmitData={handleSubmitData}
-        loading={loading}
-        setLoading={setLoading}
-      ></AvisoForm>
     </View>
   );
 };
