@@ -9,6 +9,9 @@ interface FormValuesAccionesYresultados {
   PosibleCausaDeMuerte: string;
   Participantes: string;
   Observaciones: string;
-  TipoDeMuestras: string[];
+  TipoDeMuestras: TipoMuestra[];
 }
+type TipoMuestra = {
+  TipoMuestra: number;
+};
 export default FormValuesAccionesYresultados;

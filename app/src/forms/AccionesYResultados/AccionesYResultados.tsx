@@ -191,6 +191,8 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
             name="DisposicionDelCadaver"
             render={({ field: { onChange, value } }) => (
               <MaterialSelector
+                iconName={"medical"}
+                iconFamily={"Ionicons"}
                 label={"Disposición del cadáver"}
                 estados={disposicionList}
                 onEstadoChange={(estado: string) => {
@@ -199,31 +201,35 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
               />
             )}
           />
-
-          <Controller
-            control={control}
-            name="TipoDeMuestras"
-            render={({ field: { onChange, value } }) => (
-              <MultiMaterialSelector
-                label={"Colecta de muestras"}
-                estados={muestrasList}
-                onEstadoChange={(nuevasMuestras: string[]) =>
-                  onChange(nuevasMuestras)
-                }
-              ></MultiMaterialSelector>
-            )}
-          />
-
           <InputField
             nameInput={"DisposicionOtro"}
-            iconName="information-circle"
-            iconFamily="Ionicons"
+            iconName={"medical"}
+            iconFamily={"Ionicons"}
             label="Otra disposición (si aplica)"
             placeholder="Especificar si se seleccionó 'Otro'"
             maxLength={100}
             autoCorrect={false}
             control={control}
             isRequired={false}
+          />
+
+          <Controller
+            control={control}
+            name="TipoDeMuestras"
+            render={({ field: { onChange, value } }) => (
+              <MultiMaterialSelector
+                iconFamily={"Ionicons"}
+                iconName={"pie-chart"}
+                label={"Colecta de muestras"}
+                estados={muestrasList}
+                onEstadoChange={(nuevasMuestras: string[]) => {
+                  const formattedMuestras = nuevasMuestras.map((muestra) => ({
+                    TipoMuestra: parseInt(muestra, 10),
+                  }));
+                  onChange(formattedMuestras);
+                }}
+              ></MultiMaterialSelector>
+            )}
           />
 
           <InputField
