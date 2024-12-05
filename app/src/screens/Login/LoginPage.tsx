@@ -41,9 +41,10 @@ const LoginPage: React.FC = () => {
       }
     } catch (error) {
       Alert.alert(
-        "Credenciales incorrectas",
-        "Revise que esté bien su correo electrónico y contraseña"
+        "Error en el servidor",
+        "Contacte al administrador del servidor"
       );
+      setLoading(false);
     }
   };
 

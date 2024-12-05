@@ -1,10 +1,11 @@
-import { Pressable, View } from "react-native";
+import { Pressable, View, Text } from "react-native";
 import React, { useState } from "react";
 import { ColorsPalete } from "../../constants/COLORS";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
 import { useRouter } from "expo-router";
 import { AvisoForm } from "varaapplib/components/AvisoForm/AvisoForm";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 const StrandingPage: React.FC = () => {
   const router = useRouter();
@@ -26,16 +27,20 @@ const StrandingPage: React.FC = () => {
         containerStyle={{
           backgroundColor: ColorsPalete.dark,
           height: "6%",
-          borderTopEndRadius: 10,
-          borderTopStartRadius: 10,
         }}
         leftComponent={
           <Pressable onPress={handleBack}>
-            <MaterialIcons
-              name="arrow-back"
-              size={24}
-              color={ColorsPalete.light}
-            />
+            <MaterialIcons name="logout" size={24} color={ColorsPalete.light} />
+          </Pressable>
+        }
+        centerComponent={
+          <View>
+            <Text style={{ color: ColorsPalete.light }}>Menu</Text>
+          </View>
+        }
+        rightComponent={
+          <Pressable>
+            <Ionicons name="settings" size={24} color="white" />
           </Pressable>
         }
       ></CustomizableHeader>

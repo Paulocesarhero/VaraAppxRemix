@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Pressable } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import RecommendationsPage from "varaapplib/components/Recommendations/RecommendationsPage";
 import { ColorsPalete } from "../../constants/COLORS";
 import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
@@ -13,7 +13,7 @@ const Recommendations: React.FC = () => {
     router.back();
   };
   const handleRegistrarAviso = () => {
-    router.push("src/screens/Stranding/StrandingPage");
+    router.push("src/screens/AccionesYResultadosPage/AccionesYResultadosPage");
   };
 
   return (
@@ -23,8 +23,6 @@ const Recommendations: React.FC = () => {
         containerStyle={{
           backgroundColor: ColorsPalete.dark,
           height: "6%",
-          borderTopEndRadius: 10,
-          borderTopStartRadius: 10,
         }}
         leftComponent={
           <Pressable onPress={handleBack}>
