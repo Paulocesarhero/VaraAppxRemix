@@ -17,6 +17,10 @@ interface AccionesYResultadosFormProps {
    * @param loading - Un valor booleano que representa el nuevo estado de carga.
    */
   setLoading: (loading: boolean) => void;
+
+  initialValues: FormValuesAccionesYresultados;
+
+  onValuesChange: (values: Partial<FormValuesAccionesYresultados>) => void;
 }
 
 export default AccionesYResultadosFormProps;

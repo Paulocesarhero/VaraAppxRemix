@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -12,7 +12,7 @@ import RoundedButton from "varaapplib/components/RoundedButton/RoundedButton";
 import InputField from "varaapplib/components/MaterialInput/MaterialInput";
 import CustomCheckBox from "varaapplib/components/CustomCheckBox/CustomCheckBox";
 import FormValuesAccionesYresultados from "./FormValuesAccionesYresultados";
-import AccionesYResultadosFormProps from "./AccionesYResultadosProps";
+import AccionesYResultadosFormProps from "./types";
 import MaterialSelector from "varaapplib/components/MaterialSelector/MaterialSelector";
 import { Estado } from "varaapplib/components/MaterialSelector/types";
 import MultiMaterialSelector from "../../components/MultiMaterialSelector/MultiMaterialSelector";
@@ -20,24 +20,20 @@ import MultiMaterialSelector from "../../components/MultiMaterialSelector/MultiM
 const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
   onSubmitData,
   loading,
+  initialValues,
+  onValuesChange,
   setLoading,
 }: AccionesYResultadosFormProps) => {
-  const { handleSubmit, control } = useForm<FormValuesAccionesYresultados>({
-    mode: "onSubmit",
-    defaultValues: {
-      Autoridades: "",
-      TelefonoAutoridades: "",
-      Morfometria: false,
-      Necropsia: false,
-      DisposicionDelCadaver: 0,
-      DisposicionOtro: "",
-      PosibleCausaDelVaramiento: "",
-      PosibleCausaDeMuerte: "",
-      Participantes: "",
-      Observaciones: "",
-      TipoDeMuestras: [],
-    },
-  });
+  const { handleSubmit, control, watch } =
+    useForm<FormValuesAccionesYresultados>({
+      mode: "onSubmit",
+      defaultValues: initialValues,
+    });
+
+  const watchedValues = watch();
+  useEffect(() => {
+    onValuesChange(watchedValues);
+  }, [watchedValues]);
 
   const onSubmit: SubmitHandler<FormValuesAccionesYresultados> = (data) => {
     console.log(data);
@@ -195,6 +191,7 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
                 iconFamily={"Ionicons"}
                 label={"Disposición del cadáver"}
                 estados={disposicionList}
+                value={value}
                 onEstadoChange={(estado: string) => {
                   onChange(estado);
                 }}
@@ -222,11 +219,9 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
                 iconName={"pie-chart"}
                 label={"Colecta de muestras"}
                 estados={muestrasList}
+                value={value}
                 onEstadoChange={(nuevasMuestras: string[]) => {
-                  const formattedMuestras = nuevasMuestras.map((muestra) => ({
-                    TipoMuestra: parseInt(muestra, 10),
-                  }));
-                  onChange(formattedMuestras);
+                  onChange(nuevasMuestras);
                 }}
               ></MultiMaterialSelector>
             )}
