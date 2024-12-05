@@ -65,4 +65,10 @@ export interface EstadoSelectorProps {
    * Puede ser `"Ionicons"` o `"Entypo"`. Es opcional y, por defecto, se establece en `"Ionicons"`.
    */
   iconFamily?: "Ionicons" | "Entypo";
+
+  /**
+   * El valor seleccionado por el usuario en forma de un arreglo.
+   * Es opcional y puede contener cualquier tipo de datos.
+   */
+  value?: any[];
 }

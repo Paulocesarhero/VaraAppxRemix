@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { FlatList, Modal, Text, TouchableOpacity, View } from "react-native";
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { Estado, EstadoSelectorProps } from "./types";
@@ -16,10 +16,20 @@ const MultiMaterialSelector: FC<EstadoSelectorProps> = ({
   estados,
   onEstadoChange,
   iconName = "map",
+  value = [],
   iconFamily = "Entypo",
 }: EstadoSelectorProps) => {
   const [selectedEstados, setSelectedEstados] = useState<Estado[]>([]);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (value.length > 0) {
+      const estadosSeleccionados = estados.filter((estado) =>
+        value.includes(estado.apiValue.toString())
+      );
+      setSelectedEstados(estadosSeleccionados);
+    }
+  }, [value, estados]);
 
   const handleSelectEstado = (estado: Estado) => {
     const isSelected = selectedEstados.some((item) => item.id === estado.id);
@@ -28,7 +38,7 @@ const MultiMaterialSelector: FC<EstadoSelectorProps> = ({
       : [...selectedEstados, estado];
 
     setSelectedEstados(newSelectedEstados);
-    onEstadoChange(newSelectedEstados.map((item) => item.apiValue));
+    onEstadoChange(newSelectedEstados.map((item) => item.apiValue.toString())); // Pasa solo los `apiValue`
   };
 
   const renderIcon = () => {
