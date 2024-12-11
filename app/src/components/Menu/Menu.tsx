@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
-import { ColorsPalete } from "../../constants/COLORS";
 import { Entypo } from "@expo/vector-icons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
+import { ColorsPalete } from "../../constants/COLORS";
 
 const Menu: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);

@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import { RegistroCientifico } from "../../services/AuthService";
 import { AxiosError } from "axios";
 import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
-import { ColorsPalete } from "../../constants/COLORS";
+import { ColorsPalete } from "../../Constants/Colors";
 
 const RegistroCientificoPage: React.FC = () => {
   const router = useRouter();
