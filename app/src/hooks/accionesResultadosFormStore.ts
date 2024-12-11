@@ -43,7 +43,6 @@ const useFormStore = create<FormStore>((set) => ({
     set((state) => {
       const newFormValues = { ...state.formValues, ...values };
 
-      // Verificar si realmente hay cambios antes de actualizar
       if (JSON.stringify(state.formValues) === JSON.stringify(newFormValues)) {
         return state; // No actualiza si no hay cambios
       }

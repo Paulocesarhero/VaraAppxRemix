@@ -40,8 +40,6 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
     onSubmitData(data);
   };
 
-  const scrollViewRef = useRef<ScrollView>(null);
-
   const disposicionList: Estado[] = [
     {
       id: "Enterrado",
@@ -98,13 +96,19 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
     },
   ];
 
+  const scrollViewRef = useRef<ScrollView>(null);
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView ref={scrollViewRef} keyboardShouldPersistTaps="handled">
+        <ScrollView
+          style={{ paddingTop: 10 }}
+          ref={scrollViewRef}
+          keyboardShouldPersistTaps="handled"
+        >
           <RoundedButton
             style={{ paddingHorizontal: 10 }}
             onPress={handleSubmit(onSubmit)}
@@ -274,6 +278,7 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
             control={control}
             isRequired={false}
           />
+          <View style={{ paddingBottom: 50 }}></View>
         </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

@@ -18,6 +18,12 @@ const Menu: React.FC = () => {
   const handleAcciones = () => {
     router.push("src/screens/AccionesYResultadosPage/AccionesYResultadosPage");
   };
+  const handleFormatoGeneral = () => {
+    router.push("src/screens/Stranding/StrandingPage");
+  };
+  const handleCaracteristicasFisicasAmbientales = () => {
+    router.push("src/screens/AccionesYResultadosPage/AccionesYResultadosPage");
+  };
 
   return (
     <View style={styles.container}>
@@ -35,10 +41,17 @@ const Menu: React.FC = () => {
           <Pressable style={styles.closeButton} onPress={toggleModal}>
             <Ionicons name="close" size={24} color="black" />
           </Pressable>
-
           <View style={styles.menuContent}>
+            <Pressable onPress={handleFormatoGeneral}>
+              <Text style={styles.menuItem}>Formato general</Text>
+            </Pressable>
             <Pressable onPress={handleAcciones}>
               <Text style={styles.menuItem}>Acciones y resultados</Text>
+            </Pressable>
+            <Pressable onPress={handleCaracteristicasFisicasAmbientales}>
+              <Text style={styles.menuItem}>
+                Características físicas y ambientales
+              </Text>
             </Pressable>
           </View>
         </View>

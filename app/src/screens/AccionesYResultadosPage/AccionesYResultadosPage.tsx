@@ -10,6 +10,7 @@ import AccionesYResultadosForm from "../../forms/AccionesYResultados/AccionesYRe
 import FormValuesAccionesYresultados from "../../forms/AccionesYResultados/FormValuesAccionesYresultados";
 import { SafeAreaView } from "react-native-safe-area-context";
 import accionesResultadosFormStore from "../../hooks/accionesResultadosFormStore";
+import Menu from "../../components/Menu/Menu";
 
 const Recommendations: React.FC = () => {
   const router = useRouter();
@@ -24,7 +25,18 @@ const Recommendations: React.FC = () => {
     accionesResultadosFormStore();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: ColorsPalete.light }}>
+    <SafeAreaView
+      edges={["bottom"]}
+      style={{ flex: 1, backgroundColor: ColorsPalete.light }}
+    >
+      <CustomizableHeader
+        containerStyle={{ backgroundColor: ColorsPalete.dark }}
+        centerComponent={
+          <View>
+            <Text style={{ color: "white" }}>Acciones y resultados</Text>
+          </View>
+        }
+      ></CustomizableHeader>
       <AccionesYResultadosForm
         onSubmitData={(data: FormValuesAccionesYresultados) => {
           console.log("Datos enviados:", data);
@@ -38,8 +50,9 @@ const Recommendations: React.FC = () => {
       ></AccionesYResultadosForm>
       <CustomizableHeader
         containerStyle={{
+          position: "sticky",
+          bottom: "4%",
           backgroundColor: ColorsPalete.dark,
-          height: "6%",
         }}
         leftComponent={
           <Pressable onPress={handleBack}>
@@ -48,7 +61,7 @@ const Recommendations: React.FC = () => {
         }
         centerComponent={
           <View>
-            <Text style={{ color: ColorsPalete.light }}>Menu</Text>
+            <Menu />
           </View>
         }
         rightComponent={
