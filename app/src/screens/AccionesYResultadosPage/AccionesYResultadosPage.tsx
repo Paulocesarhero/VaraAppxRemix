@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Pressable } from "react-native";
 import RecommendationsPage from "varaapplib/components/Recommendations/RecommendationsPage";
-import { ColorsPalete } from "../../Constants/Colors";
+import { ColorsPalete } from "../../constants/COLORS";
 import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useRouter } from "expo-router";
@@ -52,7 +52,7 @@ const Recommendations: React.FC = () => {
         containerStyle={{
           position: "sticky",
           bottom: "4%",
-          backgroundColor: ColorsPalete.dark,
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
         }}
         leftComponent={
           <Pressable onPress={handleBack}>

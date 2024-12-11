@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import RecommendationsPage from "varaapplib/components/Recommendations/RecommendationsPage";
-import { ColorsPalete } from "../../Constants/Colors";
+import { ColorsPalete } from "../../constants/COLORS";
 import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useRouter } from "expo-router";
