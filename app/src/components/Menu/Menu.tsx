@@ -3,7 +3,6 @@ import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { ColorsPalete } from "../../constants/COLORS";
 import { Entypo } from "@expo/vector-icons";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import { useRouter } from "expo-router";
 
 const Menu: React.FC = () => {
@@ -28,7 +27,7 @@ const Menu: React.FC = () => {
   return (
     <View style={styles.container}>
       <Pressable onPress={toggleModal}>
-        <Entypo name="menu" size={24} color={Colors.white} />
+        <Entypo name="menu" size={24} color={"#fff"} />
       </Pressable>
 
       <Modal
