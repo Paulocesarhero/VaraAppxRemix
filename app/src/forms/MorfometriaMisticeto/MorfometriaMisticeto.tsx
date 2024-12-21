@@ -21,6 +21,7 @@ import LabelAndImage from "../../components/InputAndImage/LabelAndImage";
 const MorfometriaMisticeto: React.FC<MorfometriaMisticetoProps> = ({
   data,
   onValuesChange,
+  isDisabled,
 }) => {
   const { handleSubmit, control, setValue, getValues, watch } =
     useForm<FormValuesMorfometriaMisticeto>({
@@ -221,10 +222,12 @@ const MorfometriaMisticeto: React.FC<MorfometriaMisticetoProps> = ({
                         label={formatFieldName(key)}
                         key={key}
                         control={control}
+                        maxLength={20}
                         nameInput={key}
                         placeholder={"Ejemplo: Blanco"}
                         iconName={"color-palette"}
                         iconFamily={"Ionicons"}
+                        isDisabled={isDisabled}
                       />
                     </>
                   ) : (
@@ -232,6 +235,7 @@ const MorfometriaMisticeto: React.FC<MorfometriaMisticetoProps> = ({
                       <InputField
                         label={formatFieldName(key)}
                         key={key}
+                        maxLength={20}
                         control={control}
                         nameInput={key}
                         onChangeText={(text) =>
@@ -241,6 +245,7 @@ const MorfometriaMisticeto: React.FC<MorfometriaMisticetoProps> = ({
                         keyboardType={"numeric"}
                         iconName={"ruler"}
                         iconFamily={"Entypo"}
+                        isDisabled={isDisabled}
                       />
                     </>
                   )}
