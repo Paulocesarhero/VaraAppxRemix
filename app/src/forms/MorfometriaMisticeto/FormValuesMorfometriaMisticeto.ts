@@ -1,4 +1,4 @@
-type FormValuesMorfometriaMisticeto = {
+interface FormValuesMorfometriaMisticeto {
   NumeroDeBarbas: string;
   BarbasColor: string;
   BarbaLargo: string;
@@ -59,5 +59,5 @@ type FormValuesMorfometriaMisticeto = {
   M40LongitudDeLaAberturaMamariaC: string;
   M41LongitudDeLaAberturaGenitalC: string;
   M42LongitudDeLaAberturaAnalC: string;
-};
+}
 export default FormValuesMorfometriaMisticeto;
