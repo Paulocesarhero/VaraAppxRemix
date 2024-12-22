@@ -14,9 +14,12 @@ import { useForm } from "react-hook-form";
 import InputField from "varaapplib/components/MaterialInput/MaterialInput";
 import FormValuesMorfometriaMisticeto from "./FormValuesMorfometriaMisticeto";
 import MorfometriaMisticetoProps from "./types";
-import handleNumericInput from "../../hooks/validations";
+import {
+  handleNumericInput,
+  handleNumericInputWithOnepoint,
+} from "../../hooks/validations";
 import { MorfometriaMisticetoStyle } from "./MorfometriaMisticetoStyle";
-import LabelAndImage from "../../components/InputAndImage/LabelAndImage";
+import LabelAndImage from "../../components/LabelAndImage/LabelAndImage";
 
 const MorfometriaMisticeto: React.FC<MorfometriaMisticetoProps> = ({
   data,
@@ -239,7 +242,7 @@ const MorfometriaMisticeto: React.FC<MorfometriaMisticetoProps> = ({
                         control={control}
                         nameInput={key}
                         onChangeText={(text) =>
-                          handleNumericInput(key, text, setValue)
+                          handleNumericInputWithOnepoint(key, text, setValue)
                         }
                         placeholder={"Ejemplo: 1223 cm"}
                         keyboardType={"numeric"}
