@@ -1,11 +1,12 @@
-import React from "react";
-import { Pressable, Text, View } from "react-native";
-import RecommendationsPage from "varaapplib/components/Recommendations/RecommendationsPage";
-import { ColorsPalete } from "../../constants/COLORS";
-import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useRouter } from "expo-router";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import React from "react";
+import { Pressable, Text, View } from "react-native";
+import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
+import RecommendationsPage from "varaapplib/components/Recommendations/RecommendationsPage";
+
+import { ColorsPalete } from "../../constants/COLORS";
 
 const Recommendations: React.FC = () => {
   const router = useRouter();
@@ -13,12 +14,12 @@ const Recommendations: React.FC = () => {
     router.back();
   };
   const handleRegistrarAviso = () => {
-    router.push("src/screens/AccionesYResultadosPage/AccionesYResultadosPage");
+    router.push("src/components/ListaAvisos/ListaAvisos");
   };
 
   return (
     <View style={{ flex: 1, backgroundColor: ColorsPalete.light }}>
-      <RecommendationsPage></RecommendationsPage>
+      <RecommendationsPage />
       <CustomizableHeader
         containerStyle={{
           backgroundColor: ColorsPalete.dark,
@@ -31,7 +32,7 @@ const Recommendations: React.FC = () => {
         }
         centerComponent={
           <Pressable onPress={handleRegistrarAviso}>
-            <Text style={{ color: ColorsPalete.light }}>Registrar aviso</Text>
+            <Text style={{ color: ColorsPalete.light }}>Avisos</Text>
           </Pressable>
         }
         rightComponent={
@@ -39,7 +40,7 @@ const Recommendations: React.FC = () => {
             <Ionicons name="settings" size={24} color="white" />
           </Pressable>
         }
-      ></CustomizableHeader>
+      />
     </View>
   );
 };

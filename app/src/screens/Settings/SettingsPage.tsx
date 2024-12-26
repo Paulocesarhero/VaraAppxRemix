@@ -1,6 +1,7 @@
-import { Text } from "react-native";
 import React from "react";
+import { Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { SettingsPageStyle } from "./SettingsPage.style";
 
 const SettingsPage: React.FC = () => {

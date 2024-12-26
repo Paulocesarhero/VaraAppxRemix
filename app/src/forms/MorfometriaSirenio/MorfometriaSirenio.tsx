@@ -1,3 +1,5 @@
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -6,15 +8,14 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import MorfometriaSirenioProps from "./types";
-import { ColorsPalete } from "../../constants/COLORS";
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import RegistroMorfometricoSirenio from "./RegistroMorfometricoSirenio";
-import { handleNumericInput } from "../../hooks/validations";
 import InputField from "varaapplib/components/MaterialInput/MaterialInput";
-import { MorfometriaMisticetoStyle } from "../MorfometriaMisticeto/MorfometriaMisticetoStyle";
+
+import RegistroMorfometricoSirenio from "./RegistroMorfometricoSirenio";
+import MorfometriaSirenioProps from "./types";
 import LabelAndImage from "../../components/LabelAndImage/LabelAndImage";
+import { ColorsPalete } from "../../constants/COLORS";
+import { handleNumericInput } from "../../hooks/validations";
+import { MorfometriaMisticetoStyle } from "../MorfometriaMisticeto/MorfometriaMisticetoStyle";
 
 const MorfometriaSirenio: React.FC<MorfometriaSirenioProps> = ({
   onValuesChange,
@@ -150,7 +151,7 @@ const MorfometriaSirenio: React.FC<MorfometriaSirenioProps> = ({
                       <View style={MorfometriaMisticetoStyle.divider} />
                       <LabelAndImage
                         image={imageUrl} // Mostrar la URL de la imagen
-                        label={"Referencia de la medida"} // La etiqueta con el nombre del campo formateado
+                        label="Referencia de la medida" // La etiqueta con el nombre del campo formateado
                       />
                     </>
                   )}
@@ -162,9 +163,9 @@ const MorfometriaSirenio: React.FC<MorfometriaSirenioProps> = ({
                       control={control}
                       maxLength={20}
                       nameInput={key}
-                      placeholder={"Ejemplo: Paulo Cesar"}
-                      iconName={"people"}
-                      iconFamily={"Ionicons"}
+                      placeholder="Ejemplo: Paulo Cesar"
+                      iconName="people"
+                      iconFamily="Ionicons"
                       isDisabled={isDisabled}
                     />
                   ) : (
@@ -176,12 +177,12 @@ const MorfometriaSirenio: React.FC<MorfometriaSirenioProps> = ({
                         handleNumericInput(key, value, setValue);
                       }}
                       control={control}
-                      keyboardType={"numeric"}
+                      keyboardType="numeric"
                       maxLength={20}
                       nameInput={key}
-                      placeholder={"Ejemplo: 1224 cm"}
-                      iconName={"ruler"}
-                      iconFamily={"Entypo"}
+                      placeholder="Ejemplo: 1224 cm"
+                      iconName="ruler"
+                      iconFamily="Entypo"
                       isDisabled={isDisabled}
                     />
                   )}

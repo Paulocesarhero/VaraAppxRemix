@@ -1,8 +1,9 @@
+import { Entypo, Ionicons } from "@expo/vector-icons";
 import React, { FC, useEffect, useState } from "react";
 import { FlatList, Modal, Text, TouchableOpacity, View } from "react-native";
-import { Entypo, Ionicons } from "@expo/vector-icons";
-import { Estado, EstadoSelectorProps } from "./types";
+
 import { MultiMaterialSelectorStyle } from "./MultiMaterialSelectorStyle";
+import { Estado, EstadoSelectorProps } from "./types";
 
 /**
  * Componente de selección múltiple que permite al usuario seleccionar más de un valor.
@@ -44,10 +45,10 @@ const MultiMaterialSelector: FC<EstadoSelectorProps> = ({
   const renderIcon = () => {
     if (iconFamily === "Ionicons") {
       // @ts-ignore
-      return <Ionicons name={iconName} size={24} color={"#000"} />;
+      return <Ionicons name={iconName} size={24} color="#000" />;
     } else if (iconFamily === "Entypo") {
       // @ts-ignore
-      return <Entypo name={iconName} size={24} color={"#000"} />;
+      return <Entypo name={iconName} size={24} color="#000" />;
     }
     return null;
   };
@@ -68,7 +69,7 @@ const MultiMaterialSelector: FC<EstadoSelectorProps> = ({
             ? selectedEstados.map((estado) => estado.label).join(", ")
             : "Seleccione opciones"}
         </Text>
-        <Entypo name="chevron-down" size={24} color={"#000000"} />
+        <Entypo name="chevron-down" size={24} color="#000000" />
       </TouchableOpacity>
 
       <Modal visible={isModalVisible} transparent animationType="slide">
@@ -96,7 +97,7 @@ const MultiMaterialSelector: FC<EstadoSelectorProps> = ({
                       <Ionicons
                         name="checkmark"
                         size={20}
-                        color={"#000"}
+                        color="#000"
                         style={{ marginLeft: 10 }}
                       />
                     )}
@@ -108,7 +109,7 @@ const MultiMaterialSelector: FC<EstadoSelectorProps> = ({
               style={MultiMaterialSelectorStyle.closeButton}
               onPress={() => setIsModalVisible(false)}
             >
-              <Ionicons name="close-circle" size={30} color={"#000000"} />
+              <Ionicons name="close-circle" size={30} color="#000000" />
             </TouchableOpacity>
           </View>
         </View>

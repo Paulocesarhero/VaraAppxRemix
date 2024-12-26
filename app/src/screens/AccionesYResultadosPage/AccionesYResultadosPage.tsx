@@ -1,16 +1,17 @@
-import React from "react";
-import { View, Text, Pressable } from "react-native";
-import RecommendationsPage from "varaapplib/components/Recommendations/RecommendationsPage";
-import { ColorsPalete } from "../../constants/COLORS";
-import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useRouter } from "expo-router";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import React from "react";
+import { View, Text, Pressable } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
+import RecommendationsPage from "varaapplib/components/Recommendations/RecommendationsPage";
+
+import Menu from "../../components/Menu/Menu";
+import { ColorsPalete } from "../../constants/COLORS";
 import AccionesYResultadosForm from "../../forms/AccionesYResultados/AccionesYResultados";
 import FormValuesAccionesYresultados from "../../forms/AccionesYResultados/FormValuesAccionesYresultados";
-import { SafeAreaView } from "react-native-safe-area-context";
 import accionesResultadosFormStore from "../../hooks/accionesResultadosFormStore";
-import Menu from "../../components/Menu/Menu";
 
 const Recommendations: React.FC = () => {
   const router = useRouter();
@@ -36,7 +37,7 @@ const Recommendations: React.FC = () => {
             <Text style={{ color: "white" }}>Acciones y resultados</Text>
           </View>
         }
-      ></CustomizableHeader>
+      />
       <AccionesYResultadosForm
         onSubmitData={(data: FormValuesAccionesYresultados) => {
           console.log("Datos enviados:", data);
@@ -47,7 +48,7 @@ const Recommendations: React.FC = () => {
         }}
         initialValues={formValues}
         onValuesChange={setFormValues}
-      ></AccionesYResultadosForm>
+      />
       <CustomizableHeader
         containerStyle={{
           position: "sticky",
@@ -69,7 +70,7 @@ const Recommendations: React.FC = () => {
             <Ionicons name="settings" size={24} color="white" />
           </Pressable>
         }
-      ></CustomizableHeader>
+      />
     </SafeAreaView>
   );
 };

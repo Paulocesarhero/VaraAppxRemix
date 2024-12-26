@@ -1,8 +1,8 @@
-import MaterialCard from "varaapplib/components/MaterialCard/MaterialCard";
 import { Image } from "expo-image";
+import { useRouter } from "expo-router";
 import React from "react";
 import { View } from "react-native";
-import { useRouter } from "expo-router";
+import MaterialCard from "varaapplib/components/MaterialCard/MaterialCard";
 
 const MenuRegistrarAviso: React.FC = () => {
   const router = useRouter();
@@ -17,22 +17,22 @@ const MenuRegistrarAviso: React.FC = () => {
         leftComponent={
           <Image
             source={require("../../assets/dolphin.imageset/dolphin.png")}
-            contentFit={"cover"}
+            contentFit="cover"
             style={{ width: 50, height: 50 }}
           />
         }
-        label={"Aviso individual"}
-      ></MaterialCard>
+        label="Aviso individual"
+      />
       <MaterialCard
         leftComponent={
           <Image
             source={require("../../assets/whale.imageset/whale.png")}
-            contentFit={"cover"}
+            contentFit="cover"
             style={{ width: 50, height: 50 }}
           />
         }
-        label={"Varamiento masivo"}
-      ></MaterialCard>
+        label="Varamiento masivo"
+      />
     </View>
   );
 };

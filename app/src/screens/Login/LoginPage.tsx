@@ -1,11 +1,12 @@
 import { useRouter } from "expo-router";
-import { Alert, Pressable, Text, View } from "react-native";
 import { useState } from "react";
+import { Alert, Pressable, Text, View } from "react-native";
 import LoginForm from "varaapplib/components/LoginForm/LoginForm";
+
 import { LoginPageStyle } from "./LoginPage.style";
-import { LoginViewModel } from "../../services/AuthServiceInterfaces";
-import { Login } from "../../services/AuthService";
 import useAuthStore from "../../hooks/useStore";
+import { Login } from "../../services/AuthService";
+import { LoginViewModel } from "../../services/AuthServiceInterfaces";
 
 const LoginPage: React.FC = () => {
   const router = useRouter();

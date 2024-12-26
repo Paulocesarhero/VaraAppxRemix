@@ -1,9 +1,10 @@
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { Image } from "expo-image";
 import React, { useState } from "react";
 import { Modal, Text, TouchableOpacity, View } from "react-native";
-import { Image } from "expo-image";
-import InputAndImageProps from "./types";
+
 import { LabelAndImageStyle } from "./labelAndImageStyle";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import InputAndImageProps from "./types";
 
 const LabelAndImage: React.FC<InputAndImageProps> = ({ image, label }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -34,7 +35,7 @@ const LabelAndImage: React.FC<InputAndImageProps> = ({ image, label }) => {
 
       <Modal
         animationType="fade"
-        transparent={true}
+        transparent
         visible={modalVisible}
         onRequestClose={closeModal}
       >
@@ -48,7 +49,7 @@ const LabelAndImage: React.FC<InputAndImageProps> = ({ image, label }) => {
             </TouchableOpacity>
             {image && (
               <Image
-                contentFit={"contain"}
+                contentFit="contain"
                 source={image}
                 style={LabelAndImageStyle.modalImage}
               />

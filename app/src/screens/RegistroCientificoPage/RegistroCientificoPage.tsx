@@ -1,13 +1,14 @@
-import { Alert, View } from "react-native";
-import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import InformacionPersonalForm from "varaapplib/components/InformacionPersonalForm/InformacionPersonalForm";
-import { ResponseApi } from "../../services/AuthServiceInterfaces";
-import React, { useState } from "react";
-import { RegistroCientifico } from "../../services/AuthService";
 import { AxiosError } from "axios";
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
+import { Alert, View } from "react-native";
 import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
+import InformacionPersonalForm from "varaapplib/components/InformacionPersonalForm/InformacionPersonalForm";
+
 import { ColorsPalete } from "../../constants/COLORS";
+import { RegistroCientifico } from "../../services/AuthService";
+import { ResponseApi } from "../../services/AuthServiceInterfaces";
 
 const RegistroCientificoPage: React.FC = () => {
   const router = useRouter();
@@ -62,13 +63,13 @@ const RegistroCientificoPage: React.FC = () => {
             onPress={handleBack}
           />
         }
-        rightComponent={<View style={{ height: 24, width: 24 }}></View>}
+        rightComponent={<View style={{ height: 24, width: 24 }} />}
       />
       <InformacionPersonalForm
         onSubmitData={handleOnSubmit}
         loading={loading}
         setLoading={setLoading}
-      ></InformacionPersonalForm>
+      />
     </View>
   );
 };

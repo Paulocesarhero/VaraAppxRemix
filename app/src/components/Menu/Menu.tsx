@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
+import React, { useState } from "react";
+import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
+
 import { ColorsPalete } from "../../constants/COLORS";
 
 const Menu: React.FC = () => {
@@ -27,12 +28,12 @@ const Menu: React.FC = () => {
   return (
     <View style={styles.container}>
       <Pressable onPress={toggleModal}>
-        <Entypo name="menu" size={24} color={"#fff"} />
+        <Entypo name="menu" size={24} color="#fff" />
       </Pressable>
 
       <Modal
         animationType="slide"
-        transparent={true}
+        transparent
         visible={modalVisible}
         onRequestClose={toggleModal}
       >

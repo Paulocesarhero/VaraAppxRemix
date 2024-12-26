@@ -7,7 +7,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "eslint .",
+    "lint": "eslint \"**/*.{js,jsx,ts,tsx}\"",
     "format": "prettier --write app/src/components app/src/screens app/src/services app/src/hooks"
   },
   "dependencies": {
@@ -35,6 +35,7 @@
     "eslint": "^8.57.0",
     "eslint-config-expo": "^7.1.2",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-config-universe": "^14.0.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react-native": "^4.1.0",
     "prettier": "^3.3.3",

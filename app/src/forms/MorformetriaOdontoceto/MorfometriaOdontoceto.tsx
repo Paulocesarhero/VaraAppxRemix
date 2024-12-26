@@ -1,3 +1,5 @@
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -6,16 +8,15 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { MorformetriaOdontocetoProps } from "./types";
-import { useForm } from "react-hook-form";
-import RegistroMorfometricoOdontoceto from "./RegistroMorfometricoOdontoceto";
-import React, { useEffect } from "react";
-import { ColorsPalete } from "../../constants/COLORS";
-import FormValuesMorfometriaMisticeto from "../MorfometriaMisticeto/FormValuesMorfometriaMisticeto";
-import { handleNumericInputWithOnepoint } from "../../hooks/validations";
 import InputField from "varaapplib/components/MaterialInput/MaterialInput";
-import { MorfometriaMisticetoStyle } from "../MorfometriaMisticeto/MorfometriaMisticetoStyle";
+
+import RegistroMorfometricoOdontoceto from "./RegistroMorfometricoOdontoceto";
+import { MorformetriaOdontocetoProps } from "./types";
 import LabelAndImage from "../../components/LabelAndImage/LabelAndImage";
+import { ColorsPalete } from "../../constants/COLORS";
+import { handleNumericInputWithOnepoint } from "../../hooks/validations";
+import FormValuesMorfometriaMisticeto from "../MorfometriaMisticeto/FormValuesMorfometriaMisticeto";
+import { MorfometriaMisticetoStyle } from "../MorfometriaMisticeto/MorfometriaMisticetoStyle";
 
 const MorfometriaOdontoceto: React.FC<MorformetriaOdontocetoProps> = ({
   onSubmitData,
@@ -204,7 +205,7 @@ const MorfometriaOdontoceto: React.FC<MorformetriaOdontocetoProps> = ({
                       <View style={MorfometriaMisticetoStyle.divider} />
                       <LabelAndImage
                         image={imagenReferencia.image} // Mostrar la URL de la imagen
-                        label={"Referencia de la medida"}
+                        label="Referencia de la medida"
                       />
                     </>
                   )}
@@ -218,10 +219,10 @@ const MorfometriaOdontoceto: React.FC<MorformetriaOdontocetoProps> = ({
                     onChangeText={(text) =>
                       handleNumericInputWithOnepoint(key, text, setValue)
                     }
-                    placeholder={"Ejemplo: 1223 cm"}
-                    keyboardType={"numeric"}
-                    iconName={"ruler"}
-                    iconFamily={"Entypo"}
+                    placeholder="Ejemplo: 1223 cm"
+                    keyboardType="numeric"
+                    iconName="ruler"
+                    iconFamily="Entypo"
                     isDisabled={isDisabled}
                   />
                 </View>

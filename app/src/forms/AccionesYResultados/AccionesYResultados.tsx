@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -7,14 +8,14 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import RoundedButton from "varaapplib/components/RoundedButton/RoundedButton";
-import InputField from "varaapplib/components/MaterialInput/MaterialInput";
 import CustomCheckBox from "varaapplib/components/CustomCheckBox/CustomCheckBox";
-import FormValuesAccionesYresultados from "./FormValuesAccionesYresultados";
-import AccionesYResultadosFormProps from "./types";
+import InputField from "varaapplib/components/MaterialInput/MaterialInput";
 import MaterialSelector from "varaapplib/components/MaterialSelector/MaterialSelector";
 import { Estado } from "varaapplib/components/MaterialSelector/types";
+import RoundedButton from "varaapplib/components/RoundedButton/RoundedButton";
+
+import FormValuesAccionesYresultados from "./FormValuesAccionesYresultados";
+import AccionesYResultadosFormProps from "./types";
 import MultiMaterialSelector from "../../components/MultiMaterialSelector/MultiMaterialSelector";
 
 const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
@@ -112,13 +113,13 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
           <RoundedButton
             style={{ paddingHorizontal: 10 }}
             onPress={handleSubmit(onSubmit)}
-            color={"#000"}
-            text={"Enviar"}
+            color="#000"
+            text="Enviar"
             loading={loading}
           />
 
           <InputField
-            nameInput={"Autoridades"}
+            nameInput="Autoridades"
             iconName="briefcase"
             iconFamily="Ionicons"
             label="Autoridades"
@@ -130,12 +131,12 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
           />
 
           <InputField
-            nameInput={"TelefonoAutoridades"}
+            nameInput="TelefonoAutoridades"
             iconName="call"
             iconFamily="Ionicons"
             label="Teléfono de Autoridades"
             placeholder="123456789"
-            keyboardType={"phone-pad"}
+            keyboardType="phone-pad"
             maxLength={10}
             autoCorrect={false}
             control={control}
@@ -191,9 +192,9 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
             name="DisposicionDelCadaver"
             render={({ field: { onChange, value } }) => (
               <MaterialSelector
-                iconName={"medical"}
-                iconFamily={"Ionicons"}
-                label={"Disposición del cadáver"}
+                iconName="medical"
+                iconFamily="Ionicons"
+                label="Disposición del cadáver"
                 estados={disposicionList}
                 value={value}
                 onEstadoChange={(estado: string) => {
@@ -203,9 +204,9 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
             )}
           />
           <InputField
-            nameInput={"DisposicionOtro"}
-            iconName={"medical"}
-            iconFamily={"Ionicons"}
+            nameInput="DisposicionOtro"
+            iconName="medical"
+            iconFamily="Ionicons"
             label="Otra disposición (si aplica)"
             placeholder="Especificar si se seleccionó 'Otro'"
             maxLength={100}
@@ -219,20 +220,20 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
             name="TipoDeMuestras"
             render={({ field: { onChange, value } }) => (
               <MultiMaterialSelector
-                iconFamily={"Ionicons"}
-                iconName={"pie-chart"}
-                label={"Colecta de muestras"}
+                iconFamily="Ionicons"
+                iconName="pie-chart"
+                label="Colecta de muestras"
                 estados={muestrasList}
                 value={value}
                 onEstadoChange={(nuevasMuestras: string[]) => {
                   onChange(nuevasMuestras);
                 }}
-              ></MultiMaterialSelector>
+              />
             )}
           />
 
           <InputField
-            nameInput={"PosibleCausaDelVaramiento"}
+            nameInput="PosibleCausaDelVaramiento"
             iconName="help-circle"
             iconFamily="Ionicons"
             label="Posible Causa del Varamiento"
@@ -244,7 +245,7 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
           />
 
           <InputField
-            nameInput={"PosibleCausaDeMuerte"}
+            nameInput="PosibleCausaDeMuerte"
             iconName="alert-circle"
             iconFamily="Ionicons"
             label="Posible Causa de Muerte"
@@ -256,7 +257,7 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
           />
 
           <InputField
-            nameInput={"Participantes"}
+            nameInput="Participantes"
             iconName="people"
             iconFamily="Ionicons"
             label="Participantes"
@@ -268,7 +269,7 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
           />
 
           <InputField
-            nameInput={"Observaciones"}
+            nameInput="Observaciones"
             iconName="clipboard"
             iconFamily="Ionicons"
             label="Observaciones"
@@ -278,7 +279,7 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
             control={control}
             isRequired={false}
           />
-          <View style={{ paddingBottom: 50 }}></View>
+          <View style={{ paddingBottom: 50 }} />
         </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

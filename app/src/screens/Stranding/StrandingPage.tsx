@@ -1,14 +1,15 @@
-import { Pressable, Text, View } from "react-native";
-import React, { useState } from "react";
-import { ColorsPalete } from "../../constants/COLORS";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
-import { useRouter } from "expo-router";
-import { AvisoForm } from "varaapplib/components/AvisoForm/AvisoForm";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { AvisoValues } from "varaapplib/components/AvisoForm/types";
-import Menu from "../../components/Menu/Menu";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
+import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { AvisoForm } from "varaapplib/components/AvisoForm/AvisoForm";
+import { AvisoValues } from "varaapplib/components/AvisoForm/types";
+import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
+
+import Menu from "../../components/Menu/Menu";
+import { ColorsPalete } from "../../constants/COLORS";
 
 const StrandingPage: React.FC = () => {
   const router = useRouter();
@@ -29,7 +30,7 @@ const StrandingPage: React.FC = () => {
             <Text style={{ color: "white" }}>Formato general</Text>
           </View>
         }
-      ></CustomizableHeader>
+      />
       <AvisoForm
         onSubmitData={handleSubmitData}
         loading={loading}
@@ -54,7 +55,7 @@ const StrandingPage: React.FC = () => {
           Latitud: "",
           Longitud: "",
         }}
-      ></AvisoForm>
+      />
       <CustomizableHeader
         containerStyle={{
           position: "sticky",
@@ -76,7 +77,7 @@ const StrandingPage: React.FC = () => {
             <Ionicons name="settings" size={24} color="white" />
           </Pressable>
         }
-      ></CustomizableHeader>
+      />
     </SafeAreaView>
   );
 };

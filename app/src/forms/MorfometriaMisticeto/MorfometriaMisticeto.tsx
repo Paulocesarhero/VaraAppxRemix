@@ -1,3 +1,5 @@
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -7,19 +9,18 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import React, { useEffect } from "react";
-import { ColorsPalete } from "../../constants/COLORS";
 import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
-import { useForm } from "react-hook-form";
 import InputField from "varaapplib/components/MaterialInput/MaterialInput";
+
 import FormValuesMorfometriaMisticeto from "./FormValuesMorfometriaMisticeto";
+import { MorfometriaMisticetoStyle } from "./MorfometriaMisticetoStyle";
 import MorfometriaMisticetoProps from "./types";
+import LabelAndImage from "../../components/LabelAndImage/LabelAndImage";
+import { ColorsPalete } from "../../constants/COLORS";
 import {
   handleNumericInput,
   handleNumericInputWithOnepoint,
 } from "../../hooks/validations";
-import { MorfometriaMisticetoStyle } from "./MorfometriaMisticetoStyle";
-import LabelAndImage from "../../components/LabelAndImage/LabelAndImage";
 
 const MorfometriaMisticeto: React.FC<MorfometriaMisticetoProps> = ({
   data,
@@ -215,7 +216,7 @@ const MorfometriaMisticeto: React.FC<MorfometriaMisticetoProps> = ({
                       <View style={MorfometriaMisticetoStyle.divider} />
                       <LabelAndImage
                         image={imagenReferencia.url} // Mostrar la URL de la imagen
-                        label={"Referencia de la medida"}
+                        label="Referencia de la medida"
                       />
                     </>
                   )}
@@ -227,9 +228,9 @@ const MorfometriaMisticeto: React.FC<MorfometriaMisticetoProps> = ({
                         control={control}
                         maxLength={20}
                         nameInput={key}
-                        placeholder={"Ejemplo: Blanco"}
-                        iconName={"color-palette"}
-                        iconFamily={"Ionicons"}
+                        placeholder="Ejemplo: Blanco"
+                        iconName="color-palette"
+                        iconFamily="Ionicons"
                         isDisabled={isDisabled}
                       />
                     </>
@@ -244,10 +245,10 @@ const MorfometriaMisticeto: React.FC<MorfometriaMisticetoProps> = ({
                         onChangeText={(text) =>
                           handleNumericInputWithOnepoint(key, text, setValue)
                         }
-                        placeholder={"Ejemplo: 1223 cm"}
-                        keyboardType={"numeric"}
-                        iconName={"ruler"}
-                        iconFamily={"Entypo"}
+                        placeholder="Ejemplo: 1223 cm"
+                        keyboardType="numeric"
+                        iconName="ruler"
+                        iconFamily="Entypo"
                         isDisabled={isDisabled}
                       />
                     </>

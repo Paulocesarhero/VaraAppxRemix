@@ -1,3 +1,5 @@
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -7,18 +9,17 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { ColorsPalete } from "../../constants/COLORS";
 import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import MorfometriaPinnipedoProps from "./types";
 import InputField from "varaapplib/components/MaterialInput/MaterialInput";
-import { MorfometriaMisticetoStyle } from "../MorfometriaMisticeto/MorfometriaMisticetoStyle";
+
+import MorfometriaPinnipedoProps from "./types";
 import LabelAndImage from "../../components/LabelAndImage/LabelAndImage";
+import { ColorsPalete } from "../../constants/COLORS";
 import {
   handleNumericInput,
   handleNumericInputWithOnepoint,
 } from "../../hooks/validations";
+import { MorfometriaMisticetoStyle } from "../MorfometriaMisticeto/MorfometriaMisticetoStyle";
 
 const MorfometriaPinnipedo: React.FC<MorfometriaPinnipedoProps> = ({
   data,
@@ -191,7 +192,7 @@ const MorfometriaPinnipedo: React.FC<MorfometriaPinnipedoProps> = ({
                       <View style={MorfometriaMisticetoStyle.divider} />
                       <LabelAndImage
                         image={imageUrl} // Mostrar la URL de la imagen
-                        label={"Referencia de la medida"} // La etiqueta con el nombre del campo formateado
+                        label="Referencia de la medida" // La etiqueta con el nombre del campo formateado
                       />
                     </>
                   )}
@@ -205,19 +206,19 @@ const MorfometriaPinnipedo: React.FC<MorfometriaPinnipedoProps> = ({
                           handleNumericInput(key, value, setValue);
                         }}
                         control={control}
-                        keyboardType={"numeric"}
+                        keyboardType="numeric"
                         maxLength={20}
                         nameInput={key}
-                        placeholder={"Ejemplo: 1 diente"}
-                        iconName={"scale"}
-                        iconFamily={"Ionicons"}
+                        placeholder="Ejemplo: 1 diente"
+                        iconName="scale"
+                        iconFamily="Ionicons"
                         isDisabled={isDisabled}
                       />
                     </>
                   ) : (
                     <InputField
                       isRequired={false}
-                      keyboardType={"numeric"}
+                      keyboardType="numeric"
                       label={formatFieldName(key)}
                       key={key}
                       onChangeText={(value: string) => {
@@ -226,9 +227,9 @@ const MorfometriaPinnipedo: React.FC<MorfometriaPinnipedoProps> = ({
                       control={control}
                       maxLength={20}
                       nameInput={key}
-                      placeholder={"Ejemplo: 12 cm"}
-                      iconName={"ruler"}
-                      iconFamily={"Entypo"}
+                      placeholder="Ejemplo: 12 cm"
+                      iconName="ruler"
+                      iconFamily="Entypo"
                       isDisabled={isDisabled}
                     />
                   )}

@@ -1,4 +1,5 @@
-import CaracteristicasFisicasYAmbientalesProps from "./types";
+import React, { useRef } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -7,13 +8,13 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import React, { useRef } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import InputField from "varaapplib/components/MaterialInput/MaterialInput";
-import RoundedButton from "varaapplib/components/RoundedButton/RoundedButton";
 import CustomCheckBox from "varaapplib/components/CustomCheckBox/CustomCheckBox";
+import InputField from "varaapplib/components/MaterialInput/MaterialInput";
 import MaterialSelector from "varaapplib/components/MaterialSelector/MaterialSelector";
 import { Estado } from "varaapplib/components/MaterialSelector/types";
+import RoundedButton from "varaapplib/components/RoundedButton/RoundedButton";
+
+import CaracteristicasFisicasYAmbientalesProps from "./types";
 
 const CaracteristicasFisicasYAmbientales: React.FC<
   CaracteristicasFisicasYAmbientalesProps
@@ -94,13 +95,13 @@ const CaracteristicasFisicasYAmbientales: React.FC<
           <RoundedButton
             style={{ paddingHorizontal: 10 }}
             onPress={handleSubmit(onSubmit)}
-            color={"#000"}
-            text={"Enviar"}
+            color="#000"
+            text="Enviar"
             loading={loading}
           />
 
           <InputField
-            nameInput={"temperaturaAmbiente"}
+            nameInput="temperaturaAmbiente"
             iconName="thermometer"
             iconFamily="Ionicons"
             label="Temperatura ambiente"
@@ -118,7 +119,7 @@ const CaracteristicasFisicasYAmbientales: React.FC<
             isRequired={false}
           />
           <InputField
-            nameInput={"precipitacionHoy"}
+            nameInput="precipitacionHoy"
             iconName="rainy"
             iconFamily="Ionicons"
             label="Precipitación hoy"
@@ -136,7 +137,7 @@ const CaracteristicasFisicasYAmbientales: React.FC<
             isRequired={false}
           />
           <InputField
-            nameInput={"precipitacionTormentaPrevia"}
+            nameInput="precipitacionTormentaPrevia"
             iconName="rainy"
             iconFamily="Ionicons"
             label="Precipitación de tormenta previa"
@@ -154,7 +155,7 @@ const CaracteristicasFisicasYAmbientales: React.FC<
             isRequired={false}
           />
           <InputField
-            nameInput={"temperaturaSupMar"}
+            nameInput="temperaturaSupMar"
             iconName="thermometer"
             iconFamily="Ionicons"
             label="Temp. sup. del mar"
@@ -176,9 +177,9 @@ const CaracteristicasFisicasYAmbientales: React.FC<
             name="marea"
             render={({ field: { onChange, value } }) => (
               <MaterialSelector
-                iconName={"water"}
-                iconFamily={"Ionicons"}
-                label={"Marea"}
+                iconName="water"
+                iconFamily="Ionicons"
+                label="Marea"
                 estados={mareaList}
                 onEstadoChange={(estado: string) => {
                   onChange(estado);
@@ -188,7 +189,7 @@ const CaracteristicasFisicasYAmbientales: React.FC<
             )}
           />
           <InputField
-            nameInput={"mareaMedida"}
+            nameInput="mareaMedida"
             iconName="water"
             iconFamily="Ionicons"
             label="Medida de la marea"
@@ -210,9 +211,9 @@ const CaracteristicasFisicasYAmbientales: React.FC<
             name="direccionDelViento"
             render={({ field: { onChange, value } }) => (
               <MaterialSelector
-                iconName={"compass"}
-                iconFamily={"Ionicons"}
-                label={"Direccion del viento"}
+                iconName="compass"
+                iconFamily="Ionicons"
+                label="Direccion del viento"
                 estados={direccionVientoList}
                 onEstadoChange={(estado: string) => {
                   onChange(estado);
@@ -222,7 +223,7 @@ const CaracteristicasFisicasYAmbientales: React.FC<
             )}
           />
           <InputField
-            nameInput={"velocidadDelViento"}
+            nameInput="velocidadDelViento"
             iconName="speedometer"
             iconFamily="Ionicons"
             label="Velocidad del viento"
@@ -240,7 +241,7 @@ const CaracteristicasFisicasYAmbientales: React.FC<
             isRequired={false}
           />
           <InputField
-            nameInput={"nubosidad"}
+            nameInput="nubosidad"
             iconName="cloud"
             iconFamily="Ionicons"
             label="Porcentaje de nubosidad"
@@ -258,7 +259,7 @@ const CaracteristicasFisicasYAmbientales: React.FC<
             isRequired={false}
           />
           <InputField
-            nameInput={"oleaje"}
+            nameInput="oleaje"
             iconName="boat"
             iconFamily="Ionicons"
             label="Oleaje"
@@ -276,7 +277,7 @@ const CaracteristicasFisicasYAmbientales: React.FC<
             isRequired={false}
           />
           <InputField
-            nameInput={"beaufort"}
+            nameInput="beaufort"
             iconName="flag"
             iconFamily="Ionicons"
             label="Escala de Beaufort"
@@ -320,7 +321,7 @@ const CaracteristicasFisicasYAmbientales: React.FC<
             )}
           />
           <InputField
-            nameInput={"anormalidadEnLaPesca"}
+            nameInput="anormalidadEnLaPesca"
             iconName="fish"
             iconFamily="Ionicons"
             label="Anormalidad en la pesca"
