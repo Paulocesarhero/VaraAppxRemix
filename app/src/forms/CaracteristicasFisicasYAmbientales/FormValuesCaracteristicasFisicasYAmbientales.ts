@@ -1,4 +1,4 @@
-interface FormValuesCaracteristicasFisicasYAmbientales {
+export interface FormValuesCaracteristicasFisicasYAmbientales {
   temperaturaAmbiente?: number;
   precipitacionHoy?: number;
   temperaturaSupMar?: number;

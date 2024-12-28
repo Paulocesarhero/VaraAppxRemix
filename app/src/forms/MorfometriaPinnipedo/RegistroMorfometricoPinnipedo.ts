@@ -1,4 +1,4 @@
-interface RegistroMorfometricoPinnipedo {
+export interface RegistroMorfometricoPinnipedo {
   lrNarizAColaCm: string;
   lcNarizAColaCm: string;
   cCuerpoDetrasDePectorales: string;
