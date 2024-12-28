@@ -13,7 +13,7 @@ import { ListaAvisosStyle } from "./ListaAvisosStyle";
 import { ColorsPalete } from "../../constants/COLORS";
 import { handleBack } from "../../hooks/router";
 import useAuthStore from "../../hooks/useStore";
-import { Aviso, getAvisos } from "../../services/Avisos";
+import { Aviso, getAvisos } from "../../services/Avisos/GetAvisos";
 import CardAvisos from "../CardAvisos/CardAvisos";
 
 const ListaAvisos: React.FC = () => {
