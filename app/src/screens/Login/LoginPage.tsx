@@ -5,8 +5,8 @@ import LoginForm from "varaapplib/components/LoginForm/LoginForm";
 
 import { LoginPageStyle } from "./LoginPage.style";
 import useAuthStore from "../../hooks/useStore";
-import { Login } from "../../services/AuthService";
-import { LoginViewModel } from "../../services/AuthServiceInterfaces";
+import { Login } from "../../services/Auth/AuthService";
+import { LoginViewModel } from "../../services/Auth/AuthServiceInterfaces";
 
 const LoginPage: React.FC = () => {
   const router = useRouter();

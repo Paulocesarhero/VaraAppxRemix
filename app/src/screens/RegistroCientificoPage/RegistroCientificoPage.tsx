@@ -7,8 +7,8 @@ import CustomizableHeader from "varaapplib/components/CustomizableHeader/Customi
 import InformacionPersonalForm from "varaapplib/components/InformacionPersonalForm/InformacionPersonalForm";
 
 import { ColorsPalete } from "../../constants/COLORS";
-import { RegistroCientifico } from "../../services/AuthService";
-import { ResponseApi } from "../../services/AuthServiceInterfaces";
+import { RegistroCientifico } from "../../services/Auth/AuthService";
+import { ResponseApi } from "../../services/Auth/AuthServiceInterfaces";
 
 const RegistroCientificoPage: React.FC = () => {
   const router = useRouter();

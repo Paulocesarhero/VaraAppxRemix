@@ -1,12 +1,14 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
 import RecommendationsPage from "varaapplib/components/Recommendations/RecommendationsPage";
 
+import EspecieSelector from "../../components/EspecieSelector/EspecieSelector";
 import { ColorsPalete } from "../../constants/COLORS";
+import { Especie } from "../../services/Especie/GetEspecie";
 
 const Recommendations: React.FC = () => {
   const router = useRouter();

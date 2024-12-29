@@ -2,10 +2,9 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useRouter } from "expo-router";
 import React from "react";
-import { View, Text, Pressable } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
-import RecommendationsPage from "varaapplib/components/Recommendations/RecommendationsPage";
 
 import Menu from "../../components/Menu/Menu";
 import { ColorsPalete } from "../../constants/COLORS";
