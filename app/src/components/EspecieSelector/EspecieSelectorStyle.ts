@@ -1,16 +1,10 @@
 import { StyleSheet } from "react-native";
 
 export const EspecieSelectorStyle = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginVertical: 10,
-    paddingHorizontal: 10,
-  },
   labelContainer: {
     fontSize: 16,
     fontWeight: "bold",
     color: "#000",
-    marginBottom: 5,
   },
   modalContainer: {
     flex: 1,
@@ -51,5 +45,25 @@ export const EspecieSelectorStyle = StyleSheet.create({
     shadowOpacity: 0.1, // Opacidad de la sombra
     shadowRadius: 3, // Radio de la sombra
     elevation: 3, // Elevación para Android
+  },
+  selectedText: {
+    fontSize: 16,
+    color: "#000",
+  },
+  selectorButton: {
+    boxShadow: "5px 5px 5px #000",
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#000",
+    borderRadius: 5,
+    marginVertical: 10,
+    width: "100%",
+    justifyContent: "space-between",
+  },
+  labelInfo: {
+    fontSize: 16,
+    color: "#000",
   },
 });
