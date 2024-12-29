@@ -1,7 +1,7 @@
 export interface FormValuesVaramientoMasivo {
-  AvesMuertas: string;
+  AvesMuertas: boolean;
   AvesMuertasCantidad: string;
-  PecesMuertos: string;
+  PecesMuertos: boolean;
   PecesMuertosCantidad: string;
   NumeroTotalDeAnimales: string;
   SubGrupos: string;

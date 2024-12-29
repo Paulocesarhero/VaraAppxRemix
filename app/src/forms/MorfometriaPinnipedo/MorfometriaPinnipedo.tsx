@@ -12,6 +12,7 @@ import {
 import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
 import InputField from "varaapplib/components/MaterialInput/MaterialInput";
 
+import { RegistroMorfometricoPinnipedo } from "./RegistroMorfometricoPinnipedo";
 import MorfometriaPinnipedoProps from "./types";
 import LabelAndImage from "../../components/LabelAndImage/LabelAndImage";
 import { ColorsPalete } from "../../constants/COLORS";
