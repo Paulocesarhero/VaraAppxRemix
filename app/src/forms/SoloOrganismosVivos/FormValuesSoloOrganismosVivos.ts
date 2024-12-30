@@ -1,12 +1,12 @@
 export interface FormValuesSoloOrganismosVivos {
-  TasaDeRespiracion: number;
-  Pulso: number;
-  Temperatura: number;
-  AntesDeVararse: string;
-  Varado: string;
-  Reflotacion: boolean;
-  DespuesDeReflotar: string;
-  AnimalTransferido: boolean;
-  LugarDeRehabilitacion: string;
-  DespuesDeVararse: string;
+  tasaDeRespiracion: string;
+  pulso: number;
+  temperatura: number;
+  antesDeVararse: string;
+  varado: string;
+  reflotacion: boolean;
+  despuesDeReflotar: string;
+  animalTransferido: boolean;
+  lugarDeRehabilitacion: string;
+  despuesDeVararse: string;
 }

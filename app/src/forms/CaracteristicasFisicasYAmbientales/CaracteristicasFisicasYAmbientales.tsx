@@ -14,6 +14,7 @@ import MaterialSelector from "varaapplib/components/MaterialSelector/MaterialSel
 import { Estado } from "varaapplib/components/MaterialSelector/types";
 import RoundedButton from "varaapplib/components/RoundedButton/RoundedButton";
 
+import { FormValuesCaracteristicasFisicasYAmbientales } from "./FormValuesCaracteristicasFisicasYAmbientales";
 import CaracteristicasFisicasYAmbientalesProps from "./types";
 
 const CaracteristicasFisicasYAmbientales: React.FC<

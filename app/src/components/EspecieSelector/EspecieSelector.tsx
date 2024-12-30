@@ -49,13 +49,13 @@ const EspecieSelector: React.FC<EspecieSelectorProps> = ({
     <TouchableOpacity onPress={() => handleSelectEspecie(item)}>
       <View style={EspecieSelectorStyle.itemContainer}>
         <View style={{ flexDirection: "column" }}>
-          <Text style={EspecieSelectorStyle.labelInfo}>
+          <Text ellipsizeMode="tail" style={EspecieSelectorStyle.labelInfo}>
             <Text style={EspecieSelectorStyle.labelContainer}>
               Nombre especie:
             </Text>
             {item.nombre}
           </Text>
-          <Text style={EspecieSelectorStyle.labelInfo}>
+          <Text ellipsizeMode="tail" style={EspecieSelectorStyle.labelInfo}>
             <Text style={EspecieSelectorStyle.labelContainer}>
               Nombre latin:
             </Text>
@@ -88,7 +88,7 @@ const EspecieSelector: React.FC<EspecieSelectorProps> = ({
 
   return (
     <>
-      <Text>Selecciona una especie:</Text>
+      <Text style={EspecieSelectorStyle.text}>Selecciona una especie:</Text>
 
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />

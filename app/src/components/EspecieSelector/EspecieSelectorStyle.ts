@@ -35,16 +35,17 @@ export const EspecieSelectorStyle = StyleSheet.create({
   },
   itemContainer: {
     flexDirection: "row",
+    flexWrap: "wrap",
     alignItems: "center",
-    backgroundColor: "#f5f5f5", // Color de fondo para los elementos
-    borderRadius: 8, // Bordes redondeados para cada elemento
-    padding: 10, // Espaciado interno
-    marginVertical: 5, // Espaciado vertical entre los elementos
-    shadowColor: "#000", // Color de la sombra
-    shadowOffset: { width: 0, height: 2 }, // Desplazamiento de la sombra
-    shadowOpacity: 0.1, // Opacidad de la sombra
-    shadowRadius: 3, // Radio de la sombra
-    elevation: 3, // Elevación para Android
+    backgroundColor: "#f5f5f5",
+    borderRadius: 8,
+    padding: 10,
+    marginVertical: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
   },
   selectedText: {
     fontSize: 16,
@@ -63,7 +64,14 @@ export const EspecieSelectorStyle = StyleSheet.create({
     justifyContent: "space-between",
   },
   labelInfo: {
+    flexWrap: "wrap",
     fontSize: 16,
     color: "#000",
+  },
+  text: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#000",
+    marginBottom: 5,
   },
 });

@@ -1,14 +1,13 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React from "react";
 import { Pressable, Text, View } from "react-native";
 import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
-import RecommendationsPage from "varaapplib/components/Recommendations/RecommendationsPage";
 
-import EspecieSelector from "../../components/EspecieSelector/EspecieSelector";
 import { ColorsPalete } from "../../constants/COLORS";
-import { Especie } from "../../services/Especie/GetEspecie";
+import Especimen from "../../forms/Especimen/Especimen";
+import { FormValuesEspecimen } from "../../forms/Especimen/FormValuesEspecimen";
 
 const Recommendations: React.FC = () => {
   const router = useRouter();
@@ -19,9 +18,46 @@ const Recommendations: React.FC = () => {
     router.push("src/components/ListaAvisos/ListaAvisos");
   };
 
+  const initialValues: FormValuesEspecimen = {
+    Latitud: "",
+    Longitud: "",
+    EspecieId: 0,
+    Especie: {
+      id: 0,
+      nombre: "",
+      nombreLatin: "",
+      taxa: 0,
+      familia: 0,
+    },
+    condicion: 0,
+    longitudTotalRectilinea: "",
+    peso: "",
+    sexo: 0,
+    grupoDeEdad: 0,
+    orientacionDelEspecimen: "",
+    sustrato: 0,
+    otroSustrato: "",
+    CantidadDeAnimales: 0,
+    heridasBala: "",
+    heridasBalaFoto: "",
+    presenciaDeRedes: "",
+    presenciaDeRedesFoto: "",
+    mordidas: "",
+    mordidasFoto: "",
+    golpes: "",
+    golpesFoto: "",
+    otroTipoDeHeridas: "",
+    otroTipoDeHeridasFoto: "",
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: ColorsPalete.light }}>
-      <RecommendationsPage />
+      <Especimen
+        initialValues={initialValues}
+        onValuesChange={(value) => {
+          console.log(value);
+        }}
+      />
       <CustomizableHeader
         containerStyle={{
           backgroundColor: ColorsPalete.dark,
