@@ -1,6 +1,14 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Alert, Pressable, Text, View } from "react-native";
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import LoginForm from "varaapplib/components/LoginForm/LoginForm";
 
 import { LoginPageStyle } from "./LoginPage.style";
@@ -50,19 +58,26 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#fff" }}>
-      <LoginForm
-        loading={loading}
-        email={email}
-        password={password}
-        onEmailChange={setEmail}
-        onPasswordChange={setPassword}
-        onLoginPress={handleLogin}
-      />
-      <Pressable onPress={HandleRegistroCientifico}>
-        <Text style={LoginPageStyle.TextCuenta}>Solicitar cuenta</Text>
-      </Pressable>
-    </View>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View style={{ flex: 1, backgroundColor: "#fff" }}>
+          <LoginForm
+            loading={loading}
+            email={email}
+            password={password}
+            onEmailChange={setEmail}
+            onPasswordChange={setPassword}
+            onLoginPress={handleLogin}
+          />
+          <Pressable onPress={HandleRegistroCientifico}>
+            <Text style={LoginPageStyle.TextCuenta}>Solicitar cuenta</Text>
+          </Pressable>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
