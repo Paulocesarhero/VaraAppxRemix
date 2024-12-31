@@ -1,3 +1,4 @@
+import { Redirect } from "expo-router";
 import React from "react";
 
 import useSettingStore from "./src/hooks/globalState/useSettingStore";
@@ -7,5 +8,9 @@ import LoginPage from "./src/screens/Login/LoginPage";
 export default function App() {
   const { isLoggedIn } = useSettingStore();
 
-  return isLoggedIn ? <Recommendations /> : <LoginPage />;
+  return isLoggedIn ? (
+    <Redirect href="src/screens/Home/Recommendations/Recommendations" />
+  ) : (
+    <LoginPage />
+  );
 }

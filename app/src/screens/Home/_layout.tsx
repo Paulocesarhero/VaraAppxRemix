@@ -1,13 +1,16 @@
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons"; // Corregido: Importación correcta de MaterialIcons
 import Feather from "@expo/vector-icons/build/Feather";
-import { Tabs } from "expo-router";
+import { router, Tabs } from "expo-router";
 import { Text, TouchableOpacity } from "react-native";
 
 export default function Layout() {
   const handleLogout = () => {
     console.log("Usuario deslogeado");
-    // Aquí iría tu lógica de logout, por ejemplo, limpiando el estado de autenticación o eliminando el token
+  };
+
+  const handleRegistrarAviso = () => {
+    router.replace("src/screens/Aviso/AvisoPage/AvisoPage");
   };
 
   return (
@@ -31,7 +34,7 @@ export default function Layout() {
           headerLeft: () => (
             <TouchableOpacity
               style={{ alignItems: "center", flex: 1 }}
-              onPress={handleLogout}
+              onPress={handleRegistrarAviso}
             >
               <Entypo name="news" size={24} color="black" />
               <Text style={{ fontSize: 10 }}>Nuevo aviso</Text>
