@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { ColorsPalete } from "../../constants/COLORS";
+import { ColorsPalete } from "../../../constants/COLORS";
 
 export const ListaAvisosStyle = StyleSheet.create({
   container: {

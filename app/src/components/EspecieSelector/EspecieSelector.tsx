@@ -11,7 +11,7 @@ import {
 
 import { EspecieSelectorStyle } from "./EspecieSelectorStyle";
 import EspecieSelectorProps from "./types";
-import useAuthStore from "../../hooks/useStore";
+import useAuthStore from "../../hooks/globalState/useAuthStore";
 import getEspecies, { Especie } from "../../services/Especie/GetEspecie";
 
 const EspecieSelector: React.FC<EspecieSelectorProps> = ({
