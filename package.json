@@ -8,7 +8,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "eslint \"**/*.{js,jsx,ts,tsx}\"",
-    "format": "prettier --write app/src/components app/src/screens app/src/services app/src/hooks",
+    "format": "prettier --write src/components app/src/screens app/src/services app/src/hooks",
     "test": "jest --watchAll"
   },
   "jest": {
@@ -21,6 +21,7 @@
     "@react-navigation/drawer": "^7.1.1",
     "axios": "^1.7.4",
     "babel-plugin-inline-import": "^3.0.0",
+    "drizzle-orm": "^0.38.3",
     "expo": "^52.0.0",
     "expo-drizzle-studio-plugin": "^0.1.1",
     "expo-image": "~2.0.1",
@@ -28,6 +29,7 @@
     "expo-localization": "~16.0.0",
     "expo-router": "~4.0.7",
     "expo-secure-store": "~14.0.0",
+    "expo-sqlite": "~15.0.5",
     "expo-status-bar": "~2.0.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
