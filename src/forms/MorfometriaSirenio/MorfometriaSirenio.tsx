@@ -16,6 +16,7 @@ import LabelAndImage from "../../components/LabelAndImage/LabelAndImage";
 import { ColorsPalete } from "../../constants/COLORS";
 import { handleNumericInput } from "../../hooks/validations";
 import { MorfometriaMisticetoStyle } from "../MorfometriaMisticeto/MorfometriaMisticetoStyle";
+import { RegistroMorfometricoPinnipedo } from "../MorfometriaPinnipedo/RegistroMorfometricoPinnipedo";
 
 const MorfometriaSirenio: React.FC<MorfometriaSirenioProps> = ({
   onValuesChange,

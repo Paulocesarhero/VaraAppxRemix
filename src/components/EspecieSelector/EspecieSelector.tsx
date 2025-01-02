@@ -28,7 +28,7 @@ const EspecieSelector: React.FC<EspecieSelectorProps> = ({
   useEffect(() => {
     const fetchEspecies = async () => {
       try {
-        const data = await getEspecies(token);
+        const data = await getEspecies(token ?? "");
         setEspecies(data.data); // Almacena los datos de especies
       } catch (err) {
         setError("Hubo un error al obtener las especies.");
