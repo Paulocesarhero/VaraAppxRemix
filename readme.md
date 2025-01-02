@@ -12,13 +12,11 @@ desarrollado componentes personalizados que están exclusivamente disponibles en
 
 Para empezar a trabajar con VaraAppx, sigue estos pasos:
 
-1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/tu-usuario/VaraAppx.git
-2. Instalar dependencias
+
+1. Instalar dependencias
      ```bash
     npm i
-3. Ejecuta el comando de inicialización del proyecto:
+2. Ejecuta el comando de inicialización del proyecto:
    ```bash
    npm start
    
@@ -31,6 +29,18 @@ Para empezar a trabajar con VaraAppx, sigue estos pasos:
    ```bash
    npm run format
    ```
+# Ejecutar documentación ADR
+1. instalar log4brains globalmente
+
+   ```bash
+   npm i -D drizzle-kit
+   ```
+2. Iniciar el servidor para previsualizar
+
+   ```bash
+   log4brains init  
+   ```
+
 
 Memento mori 
 Buena suerte :)
