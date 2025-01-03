@@ -1,5 +1,13 @@
+import { Entypo } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import CardAvisos from "../../../../components/CardAvisos/CardAvisos";
 import { ColorsPalete } from "../../../../constants/COLORS";
@@ -10,6 +18,10 @@ const ListaAvisos: React.FC = () => {
   const [avisos, setAvisos] = useState<Aviso[]>([]);
   const [orden, setOrden] = useState<"fecha" | "modificable">("fecha");
   const token = useAuthStore((state) => state.token);
+
+  const handleNuevoAviso = () => {
+    router.push("screens/AvisoPage/AvisoPage");
+  };
 
   useEffect(() => {
     const fetchAvisos = async () => {
@@ -30,6 +42,13 @@ const ListaAvisos: React.FC = () => {
 
   return (
     <View style={ListaAvisosStyle.container}>
+      <TouchableOpacity
+        style={ListaAvisosStyle.button}
+        onPress={handleNuevoAviso}
+      >
+        <Entypo name="new-message" size={24} color="black" />
+        <Text style={{ fontSize: 16, fontWeight: "bold" }}>Nuevo aviso</Text>
+      </TouchableOpacity>
       <FlatList
         data={avisos}
         keyExtractor={(item) => item.id.toString()}
@@ -60,9 +79,10 @@ const ListaAvisosStyle = StyleSheet.create({
     marginBottom: 10,
   },
   button: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: ColorsPalete.grey,
+    borderWidth: 0.5,
+    padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
   list: {
     paddingBottom: 20,

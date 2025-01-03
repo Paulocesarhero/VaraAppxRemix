@@ -9,10 +9,6 @@ export default function Layout() {
     console.log("Usuario deslogeado");
   };
 
-  const handleRegistrarAviso = () => {
-    router.replace("screens/Aviso/AvisoPage/AvisoPage");
-  };
-
   return (
     <Tabs screenOptions={{}}>
       <Tabs.Screen
@@ -30,15 +26,6 @@ export default function Layout() {
           title: "Avisos",
           tabBarIcon: ({ color, size }) => (
             <Feather name="alert-triangle" color={color} size={size} />
-          ),
-          headerLeft: () => (
-            <TouchableOpacity
-              style={{ alignItems: "center", flex: 1 }}
-              onPress={handleRegistrarAviso}
-            >
-              <Entypo name="news" size={24} color="black" />
-              <Text style={{ fontSize: 10 }}>Nuevo aviso</Text>
-            </TouchableOpacity>
           ),
         }}
       />
