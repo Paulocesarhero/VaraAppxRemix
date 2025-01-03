@@ -1,45 +1,16 @@
-import { useLiveQuery, drizzle } from "drizzle-orm/expo-sqlite";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
-import { ScrollView, Text, View, Button, Alert } from "react-native";
-import { AvisoValues } from "varaapplib/components/AvisoForm/types";
+import { Redirect } from "expo-router";
+import React from "react";
+import { Text, View } from "react-native";
 
+import useSettingStore from "../hooks/globalState/useSettingStore";
+import LoginPage from "./screens/Login/LoginPage";
 import { db } from "../database/connection/sqliteConnection";
 import migrations from "../database/migrations/drizzle/migrations";
-import { addAviso } from "../database/repsitory/avisoRepo";
-import { avisos } from "../database/schemas/avisoSchema";
 
-const App = () => {
-  const avisosToAgregate: AvisoValues = {
-    Nombre: "Paulito",
-    Telefono: "2282522839",
-    FacilAcceso: false,
-    Acantilado: false,
-    Sustrato: 0,
-    LugarDondeSeVio: 0,
-    FechaDeAvistamiento: "",
-    Observaciones: "",
-    CondicionDeAnimal: 0,
-    CantidadDeAnimales: "",
-    InformacionDeLocalizacion: "",
-    Latitud: "12",
-    Longitud: "12",
-    Fotografia: null,
-  };
-
-  const addAvisoHandler = async () => {
-    try {
-      await addAviso(avisosToAgregate, "nombreAvisoPlaceholder");
-      Alert.alert("Éxito", "El aviso se ha agregado correctamente.");
-    } catch (error) {
-      // @ts-ignore
-      Alert.alert("Error", "No se pudo agregar el aviso: " + error.message);
-    }
-  };
-
-  // Re-renders automatically when data changes
-  const { data } = useLiveQuery(db.select().from(avisos));
+export default function App() {
   const { success, error } = useMigrations(db, migrations);
-
+  const { isLoggedIn } = useSettingStore();
   if (error) {
     return (
       <View>
@@ -55,12 +26,9 @@ const App = () => {
     );
   }
 
-  return (
-    <ScrollView>
-      <Button title="Agregar Aviso" onPress={addAvisoHandler} />
-      <Text>{JSON.stringify(data, null, 2)}</Text>
-    </ScrollView>
+  return isLoggedIn ? (
+    <Redirect href="screens/Home/Recommendations/Recommendations" />
+  ) : (
+    <LoginPage />
   );
-};
-
-export default App;
+}
