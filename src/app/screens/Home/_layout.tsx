@@ -1,8 +1,10 @@
-import { Entypo, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons"; // Corregido: Importación correcta de MaterialIcons
 import Feather from "@expo/vector-icons/build/Feather";
-import { router, Tabs } from "expo-router";
+import { Tabs } from "expo-router";
 import { Text, TouchableOpacity } from "react-native";
+
+import { ColorsPalete } from "../../../constants/COLORS";
 
 export default function Layout() {
   const handleLogout = () => {
@@ -10,7 +12,14 @@ export default function Layout() {
   };
 
   return (
-    <Tabs screenOptions={{}}>
+    <Tabs
+      screenOptions={{
+        headerTintColor: "#fff",
+        headerStyle: {
+          backgroundColor: ColorsPalete.primaryBlue,
+        },
+      }}
+    >
       <Tabs.Screen
         name="Recommendations/Recommendations"
         options={{

@@ -1,5 +1,5 @@
 import api from "../Api";
-import { Aviso, getAvisos } from "../Avisos/GetAvisos";
+import { AvisoApiGet, getAvisosVaraWeb } from "../Avisos/GetAvisosVaraWeb";
 
 jest.mock("../Api");
 
@@ -7,7 +7,7 @@ describe("getAvisos", () => {
   const mockedApi = api as jest.Mocked<typeof api>;
 
   it("debe retornar una lista de avisos cuando la API responde correctamente", async () => {
-    const mockData: Aviso[] = [
+    const mockData: AvisoApiGet[] = [
       {
         id: 1,
         fechaDeAvistamiento: "2024-12-01",
@@ -26,7 +26,7 @@ describe("getAvisos", () => {
     mockedApi.get.mockResolvedValue({ data: mockData });
 
     // Llamada a la función
-    const result = await getAvisos("mockedToken");
+    const result = await getAvisosVaraWeb("mockedToken");
 
     // Validaciones
     expect(result).toEqual(mockData);
@@ -40,7 +40,7 @@ describe("getAvisos", () => {
     mockedApi.get.mockRejectedValue(new Error("Error de red"));
 
     // Validar que se lanza el error correcto
-    await expect(getAvisos("mockedToken")).rejects.toThrow(
+    await expect(getAvisosVaraWeb("mockedToken")).rejects.toThrow(
       "No se pudieron obtener los avisos."
     );
     expect(mockedApi.get).toHaveBeenCalledWith("api/Aviso/Avisos", {

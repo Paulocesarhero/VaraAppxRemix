@@ -1,16 +1,18 @@
 import api from "../Api";
 
-export interface Aviso {
-  id: number;
+export interface AvisoApiGet {
+  id: number | string;
   fechaDeAvistamiento?: string;
   cantidadDeAnimales?: string;
   fotografia: string | null;
   isModificable?: boolean;
 }
 
-export const getAvisos = async (barrerToken: string): Promise<Aviso[]> => {
+export const getAvisosVaraWeb = async (
+  barrerToken: string
+): Promise<AvisoApiGet[]> => {
   try {
-    const response = await api.get<Aviso[]>("api/Aviso/Avisos", {
+    const response = await api.get<AvisoApiGet[]>("api/Aviso/Avisos", {
       headers: {
         Authorization: `Bearer ${barrerToken}`,
       },
