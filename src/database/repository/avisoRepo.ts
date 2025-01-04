@@ -1,4 +1,5 @@
 import { eq } from "drizzle-orm";
+import { SQLiteRunResult } from "expo-sqlite";
 import { AvisoValues } from "varaapplib/components/AvisoForm/types";
 
 import { db } from "../connection/sqliteConnection";
@@ -64,6 +65,13 @@ export const updateAviso = async (
     .where(eq(avisos.id, idAviso))
     .returning({ updateId: avisos.id });
   return result[0].updateId;
+};
+
+export const deleteAvisoById = async (
+  idAviso: number
+): Promise<SQLiteRunResult> => {
+  const result = await db.delete(avisos).where(eq(avisos.id, idAviso));
+  return result;
 };
 
 export const getAvisoByIdLocalDb = async (
