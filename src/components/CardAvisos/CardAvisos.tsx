@@ -7,6 +7,7 @@ import { Alert, StyleSheet, Text, View } from "react-native";
 import CardAvisosProps from "./types";
 import { ColorsPalete } from "../../constants/COLORS";
 import { deleteAvisoById } from "../../database/repository/avisoRepo";
+import useListAvisoStore from "../../hooks/globalState/useListAvisosStore";
 import { BASE_URL } from "../../services/Api";
 
 const CardAvisos: React.FC<CardAvisosProps> = ({
@@ -15,10 +16,10 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
   fechasDeAvistamiento,
   cantidadDeAnimales,
   id,
-  onDelete,
+  onDelete = () => {},
 }) => {
   const handleUrlImage = (urlImage: string | null) => {
-    if (!urlImage) {
+    if (!urlImage || urlImage === "") {
       return require("./logo/logo.png");
     }
     if (
@@ -35,17 +36,20 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
       "Confirmar eliminación",
       "¿Estás seguro de que deseas eliminar este aviso?",
       [
-        {
-          text: "Cancelar",
-          style: "cancel",
-        },
+        { text: "Cancelar", style: "cancel" },
         {
           text: "Eliminar",
-          onPress: () => {
-            if (onDelete) {
-              onDelete(id);
+          onPress: async () => {
+            try {
+              await handledeleteAviso(id);
+              onDelete?.(id);
+            } catch (error) {
+              console.error("Error al eliminar:", error);
+              Alert.alert(
+                "Error",
+                "No se pudo eliminar el aviso. Inténtalo de nuevo más tarde."
+              );
             }
-            deleteAviso(id);
           },
           style: "destructive",
         },
@@ -54,10 +58,11 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
     );
   };
 
-  const deleteAviso = async (idAviso: number | string) => {
-    if (!idAviso || typeof idAviso !== "number") return;
+  const handledeleteAviso = async (idAviso: number | string) => {
+    if (!idAviso) return;
     try {
-      const result = await deleteAvisoById(idAviso);
+      const result = await deleteAvisoById(Number(idAviso));
+
       console.log("Resultado de la eliminación:", result);
     } catch (error) {
       console.error("Error al eliminar el aviso:", error);
@@ -109,11 +114,11 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
 
 const styles = StyleSheet.create({
   card: {
+    marginHorizontal: "5%",
     backgroundColor: ColorsPalete.light,
     flexDirection: "row",
     borderRadius: 15,
     marginVertical: 20,
-    marginHorizontal: 120,
     alignSelf: "center",
     height: 200,
     width: "100%",

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-
+// este hook se usa para manejar el estado del aviso seleccionado tanto en lista de avisos como su formulario
 interface AvisosState {
   idSelected: number;
   setIdSelected: (id: number) => void;

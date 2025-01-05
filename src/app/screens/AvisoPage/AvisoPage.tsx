@@ -12,11 +12,14 @@ import {
   getAvisosBdLocal,
 } from "../../../database/repository/avisoRepo";
 import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
+import useListAvisosStore from "../../../hooks/globalState/useListAvisosStore";
 import { getDateNow } from "../../../hooks/helpers";
+import { AvisoApiGet } from "../../../services/Avisos/GetAvisosVaraWeb";
 
 const AvisoPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const idSelected = useAvisoStore((state) => state.idSelected);
+  const { addAvisoStore, fetchAvisosLocales } = useListAvisosStore();
   const [dataAvisos, setDataAvisos] = useState<AvisoValues>({
     Nombre: "",
     Telefono: "",
@@ -65,17 +68,31 @@ const AvisoPage: React.FC = () => {
 
     loadAvisos();
   }, [idSelected]);
-  const handleButtonPress = (data: AvisoValues) => {
-    const nombreAviso = Date.now().toString();
-    const result = addAviso(data, nombreAviso).then((respueste: number) => {
-      console.log("respuesta de add aviso" + respueste);
-    });
-    console.log(result);
-    const avisosResult = getAvisosBdLocal().then((respuesta: any) => {
+  const handleButtonPress = async (data: AvisoValues) => {
+    try {
+      const nombreAviso = Date.now().toString();
+
+      const idAvisoSqlite = await addAviso(data, nombreAviso);
+      console.log("respuesta de add aviso: ", idAvisoSqlite);
+
+      const avisoData: AvisoApiGet = {
+        id: idAvisoSqlite,
+        fotografia: data.Fotografia,
+        isModificable: true,
+        fechaDeAvistamiento: data.FechaDeAvistamiento,
+        cantidadDeAnimales: data.CantidadDeAnimales,
+      };
+
+      addAvisoStore(avisoData);
+
+      const avisosResult = await getAvisosBdLocal();
       console.log(
-        "respuesta de get avisos" + JSON.stringify(respuesta, null, 2)
+        "respuesta de get avisos",
+        JSON.stringify(avisosResult, null, 2)
       );
-    });
+    } catch (error) {
+      console.error("Error al manejar los avisos", error);
+    }
   };
 
   const headerHeight = useHeaderHeight();

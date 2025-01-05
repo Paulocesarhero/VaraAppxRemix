@@ -1,6 +1,6 @@
 import { Entypo } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   FlatList,
   StyleSheet,
@@ -11,102 +11,49 @@ import {
 
 import CardAvisos from "../../../../components/CardAvisos/CardAvisos";
 import { ColorsPalete } from "../../../../constants/COLORS";
-import { getAvisosBdLocal } from "../../../../database/repository/avisoRepo";
 import useAuthStore from "../../../../hooks/globalState/useAuthStore";
-import {
-  AvisoApiGet,
-  getAvisosVaraWeb,
-} from "../../../../services/Avisos/GetAvisosVaraWeb";
+import useListAvisoStore from "../../../../hooks/globalState/useListAvisosStore";
 
 const ListaAvisos: React.FC = () => {
-  const [avisos, setAvisos] = useState<AvisoApiGet[]>([]);
-  const [orden, setOrden] = useState<"fecha" | "modificable">("fecha");
+  const { avisos, fetchAvisosLocales, fetchAvisosRemotos, deleteAviso } =
+    useListAvisoStore();
   const token = useAuthStore((state) => state.token);
+
+  useEffect(() => {
+    fetchAvisosLocales();
+    if (token) {
+      fetchAvisosRemotos(token);
+    }
+  }, [fetchAvisosLocales, fetchAvisosRemotos, token]);
 
   const handleNuevoAviso = () => {
     router.push("screens/AvisoPage/AvisoPage");
   };
 
-  const handleDeleteAviso = (idAviso: string | number) => {
-    // Filtrar el aviso eliminado de la lista
-    const nuevosAvisos = avisos.filter(
-      (aviso) => aviso.id !== idAviso.toString()
-    );
-
-    // Actualizar el estado con la nueva lista
-    setAvisos(nuevosAvisos);
+  const handleDeleteAviso = (id: string | number) => {
+    deleteAviso(id);
   };
-  const CardAvisosMemo = React.memo(CardAvisos);
-
-  const getAvisosDesdeApi = async (token: string) => {
-    try {
-      const avisosDataApi = await getAvisosVaraWeb(token);
-      return avisosDataApi.map((aviso) => ({
-        fechaDeAvistamiento: aviso.fechaDeAvistamiento,
-        cantidadDeAnimales: aviso.cantidadDeAnimales,
-        fotografia: aviso.fotografia,
-        id: `${Date.now()}_${Math.random()}`,
-        isModificable: false,
-      }));
-    } catch (error) {
-      console.error("Error al obtener avisos desde la API:", error);
-      return [];
-    }
-  };
-
-  const getAvisosDesdeBdLocal = async () => {
-    try {
-      const avisosBdLocal = await getAvisosBdLocal();
-      return avisosBdLocal.map((aviso) => ({
-        isModificable: true,
-        id: aviso.id,
-        fechaDeAvistamiento: aviso.FechaDeAvistamiento,
-        cantidadDeAnimales: aviso.CantidadDeAnimales,
-        fotografia: aviso.Fotografia,
-      }));
-    } catch (error) {
-      console.error(
-        "Error al obtener avisos desde la base de datos local:",
-        error
-      );
-      return [];
-    }
-  };
-
-  useEffect(() => {
-    const fetchAvisos = async () => {
-      if (!token) return;
-
-      const avisosApi = await getAvisosDesdeApi(token);
-      const avisosBdLocal = await getAvisosDesdeBdLocal();
-
-      setAvisos([...avisosApi, ...avisosBdLocal]);
-    };
-
-    fetchAvisos();
-  }, [token, avisos]);
 
   const ITEM_HEIGHT = 200;
+
   return (
-    <View style={ListaAvisosStyle.container}>
-      <TouchableOpacity
-        style={ListaAvisosStyle.button}
-        onPress={handleNuevoAviso}
-      >
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.button} onPress={handleNuevoAviso}>
         <Entypo name="new-message" size={24} color="black" />
-        <Text style={{ fontSize: 16, fontWeight: "bold" }}>Nuevo aviso</Text>
+        <Text style={styles.buttonText}>Nuevo aviso</Text>
       </TouchableOpacity>
       <FlatList
         data={avisos}
+        keyExtractor={(item) => item.id.toString()}
         getItemLayout={(data, index) => ({
           length: ITEM_HEIGHT,
           offset: ITEM_HEIGHT * index,
           index,
         })}
-        keyExtractor={(item) => item.id.toString()}
+        initialNumToRender={5}
         refreshing={false}
         renderItem={({ item }) => (
-          <CardAvisosMemo
+          <CardAvisos
             id={item.id}
             urlImage={item.fotografia}
             isModificable={item.isModificable}
@@ -119,32 +66,32 @@ const ListaAvisos: React.FC = () => {
             onDelete={handleDeleteAviso}
           />
         )}
-        contentContainerStyle={ListaAvisosStyle.list}
+        contentContainerStyle={styles.list}
       />
     </View>
   );
 };
 
-const ListaAvisosStyle = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: ColorsPalete.light,
-    overflow: "visible",
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 10,
+    padding: 10,
   },
   button: {
-    borderWidth: 0.5,
-    padding: 10,
+    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
+    padding: 10,
+    borderWidth: 0.5,
+    marginBottom: 10,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginLeft: 8,
   },
   list: {
     paddingBottom: 20,
-    paddingHorizontal: 10,
   },
 });
 
