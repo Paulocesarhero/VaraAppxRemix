@@ -1,5 +1,6 @@
-import { Stack } from "expo-router";
-import { Platform } from "react-native";
+import { Stack, useNavigation } from "expo-router";
+import { useEffect } from "react";
+import { Alert, Platform } from "react-native";
 
 const Layout: React.FC = () => {
   return (

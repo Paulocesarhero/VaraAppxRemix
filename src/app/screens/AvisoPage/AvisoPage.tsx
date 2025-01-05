@@ -1,7 +1,8 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Platform, Text } from "react-native";
+import { Button, Platform, Text } from "react-native";
 import { AvisoForm } from "varaapplib/components/AvisoForm/AvisoForm";
 import { AvisoValues } from "varaapplib/components/AvisoForm/types";
 
@@ -55,7 +56,6 @@ const AvisoPage: React.FC = () => {
       if (idSelected > 0) {
         try {
           const aviso = await getAvisoByIdLocalDb(idSelected);
-          console.error("aviso obtenido: ", aviso);
           setDataAvisos(aviso);
         } catch (error) {
           console.error("Error al obtener aviso: ", error);
@@ -107,7 +107,7 @@ const AvisoPage: React.FC = () => {
       addAvisoStore(avisoData);
 
       const avisosResult = await getAvisosBdLocal();
-      console.error(
+      console.log(
         "respuesta de get avisos",
         JSON.stringify(avisosResult, null, 2)
       );

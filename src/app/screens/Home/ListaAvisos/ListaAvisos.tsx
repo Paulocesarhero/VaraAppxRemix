@@ -1,6 +1,6 @@
 import { Entypo } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FlatList,
   StyleSheet,
@@ -20,9 +20,9 @@ const ListaAvisos: React.FC = () => {
     useListAvisoStore();
   const token = useAuthStore((state) => state.token);
   const { setIdSelected } = useAvisoStore();
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
-    setIdSelected(0);
     fetchAvisosLocales();
     if (token) {
       fetchAvisosRemotos(token);
@@ -39,6 +39,15 @@ const ListaAvisos: React.FC = () => {
 
   const ITEM_HEIGHT = 200;
 
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await fetchAvisosLocales(); // Recargar los avisos locales
+    if (token) {
+      await fetchAvisosRemotos(token); // Recargar los avisos remotos si el token está disponible
+    }
+    setRefreshing(false); // Detener la animación de carga
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={handleNuevoAviso}>
@@ -46,6 +55,7 @@ const ListaAvisos: React.FC = () => {
         <Text style={styles.buttonText}>Nuevo aviso</Text>
       </TouchableOpacity>
       <FlatList
+        onRefresh={handleRefresh}
         data={avisos}
         keyExtractor={(item) => item.id.toString()}
         getItemLayout={(data, index) => ({
