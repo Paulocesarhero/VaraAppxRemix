@@ -2,7 +2,7 @@ interface CardAvisosProps {
   urlImage: string | null;
   id: number | string;
   isModificable?: boolean;
-  fechasDeAvistamiento?: Date | null;
+  fechasDeAvistamiento?: string;
   cantidadDeAnimales?: string;
   onDelete?: (idAviso: number | string) => void;
 }

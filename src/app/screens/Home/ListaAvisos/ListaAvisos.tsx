@@ -20,6 +20,7 @@ const ListaAvisos: React.FC = () => {
   const token = useAuthStore((state) => state.token);
 
   useEffect(() => {
+    console.log("Fetching avisos...");
     fetchAvisosLocales();
     if (token) {
       fetchAvisosRemotos(token);
@@ -57,11 +58,7 @@ const ListaAvisos: React.FC = () => {
             id={item.id}
             urlImage={item.fotografia}
             isModificable={item.isModificable}
-            fechasDeAvistamiento={
-              item.fechaDeAvistamiento
-                ? new Date(item.fechaDeAvistamiento)
-                : null
-            }
+            fechasDeAvistamiento={item?.fechaDeAvistamiento}
             cantidadDeAnimales={item.cantidadDeAnimales}
             onDelete={handleDeleteAviso}
           />

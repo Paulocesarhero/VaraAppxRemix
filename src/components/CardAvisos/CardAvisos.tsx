@@ -1,5 +1,6 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/build/Feather";
+import { format } from "date-fns";
 import { Image } from "expo-image";
 import React from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
@@ -7,7 +8,7 @@ import { Alert, StyleSheet, Text, View } from "react-native";
 import CardAvisosProps from "./types";
 import { ColorsPalete } from "../../constants/COLORS";
 import { deleteAvisoById } from "../../database/repository/avisoRepo";
-import useListAvisoStore from "../../hooks/globalState/useListAvisosStore";
+import { formatDate } from "../../hooks/helpers";
 import { BASE_URL } from "../../services/Api";
 
 const CardAvisos: React.FC<CardAvisosProps> = ({
@@ -83,7 +84,7 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
         <Text style={styles.titleText}>
           Fecha de avistamiento:{" "}
           {fechasDeAvistamiento
-            ? fechasDeAvistamiento.toLocaleDateString()
+            ? formatDate(fechasDeAvistamiento)
             : "No disponible"}
         </Text>
         <Text style={styles.subtitleText}>
