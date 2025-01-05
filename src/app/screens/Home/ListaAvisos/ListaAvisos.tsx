@@ -12,15 +12,17 @@ import {
 import CardAvisos from "../../../../components/CardAvisos/CardAvisos";
 import { ColorsPalete } from "../../../../constants/COLORS";
 import useAuthStore from "../../../../hooks/globalState/useAuthStore";
+import useAvisoStore from "../../../../hooks/globalState/useAvisoStore";
 import useListAvisoStore from "../../../../hooks/globalState/useListAvisosStore";
 
 const ListaAvisos: React.FC = () => {
   const { avisos, fetchAvisosLocales, fetchAvisosRemotos, deleteAviso } =
     useListAvisoStore();
   const token = useAuthStore((state) => state.token);
+  const { setIdSelected } = useAvisoStore();
 
   useEffect(() => {
-    console.log("Fetching avisos...");
+    setIdSelected(0);
     fetchAvisosLocales();
     if (token) {
       fetchAvisosRemotos(token);

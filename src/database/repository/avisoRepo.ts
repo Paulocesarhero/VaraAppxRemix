@@ -37,28 +37,46 @@ export const addAviso = async (
 };
 
 export const updateAviso = async (
-  avisoValues: AvisoValues,
-  nombreAviso: string,
+  avisoValues: Partial<AvisoValues>,
+  nombreAviso: string | null,
   idAviso: number
 ): Promise<number> => {
+  // Supón que obtienes los valores actuales de la base de datos, por ejemplo:
+  const avisoExistente = await db
+    .select()
+    .from(avisos)
+    .where(eq(avisos.id, idAviso));
+
+  const avisoObjeto = avisoExistente[0];
+
   const aviso: newAviso = {
-    nombre: nombreAviso,
-    nombreObservador: avisoValues.Nombre,
-    telefono: avisoValues.Telefono,
-    facilAcceso: avisoValues.FacilAcceso ? 1 : 0,
-    acantilado: avisoValues.Acantilado ? 1 : 0,
-    sustrato: avisoValues.Sustrato,
-    lugarDondeSeVio: avisoValues.LugarDondeSeVio,
-    fechaDeAvistamiento: avisoValues.FechaDeAvistamiento,
-    tipoDeAnimal: avisoValues.TipoDeAnimal,
-    condicionDeAnimal: avisoValues.CondicionDeAnimal,
-    informacionDeLocalizacion: avisoValues.InformacionDeLocalizacion,
-    cantidadDeAnimales: +avisoValues.CantidadDeAnimales,
-    latitud: avisoValues.Latitud,
-    longitud: avisoValues.Longitud,
-    observaciones: avisoValues.Observaciones,
-    fotografia: avisoValues.Fotografia,
+    nombre: nombreAviso ?? avisoObjeto.nombre, // Si no se pasa nombreAviso, mantener el valor actual
+    nombreObservador: avisoValues.Nombre ?? avisoObjeto.nombreObservador,
+    telefono: avisoValues.Telefono ?? avisoObjeto.telefono,
+    // @ts-ignore
+    facilAcceso: avisoValues.FacilAcceso ? 1 : (0 ?? avisoObjeto.facilAcceso),
+    // @ts-ignore
+    acantilado: avisoValues.Acantilado ? 1 : (0 ?? avisoObjeto.acantilado),
+    sustrato: avisoValues.Sustrato ?? avisoObjeto.sustrato,
+    lugarDondeSeVio: avisoValues.LugarDondeSeVio ?? avisoObjeto.lugarDondeSeVio,
+    fechaDeAvistamiento:
+      avisoValues.FechaDeAvistamiento ?? avisoObjeto.fechaDeAvistamiento,
+    tipoDeAnimal: avisoValues.TipoDeAnimal ?? avisoObjeto.tipoDeAnimal,
+    condicionDeAnimal:
+      avisoValues.CondicionDeAnimal ?? avisoObjeto.condicionDeAnimal,
+    informacionDeLocalizacion:
+      avisoValues.InformacionDeLocalizacion ??
+      avisoObjeto.informacionDeLocalizacion,
+    cantidadDeAnimales: +(
+      (avisoValues.CantidadDeAnimales ?? avisoObjeto.cantidadDeAnimales) ||
+      "0"
+    ),
+    latitud: avisoValues.Latitud ?? avisoObjeto.latitud,
+    longitud: avisoValues.Longitud ?? avisoObjeto.longitud,
+    observaciones: avisoValues.Observaciones ?? avisoObjeto.observaciones,
+    fotografia: avisoValues.Fotografia ?? avisoObjeto.fotografia,
   };
+
   const result = await db
     .update(avisos)
     .set(aviso)

@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useHeaderHeight } from "@react-navigation/elements";
 import React, { useEffect, useState } from "react";
-import { Platform, StyleSheet } from "react-native";
+import { Platform, Text } from "react-native";
 import { AvisoForm } from "varaapplib/components/AvisoForm/AvisoForm";
 import { AvisoValues } from "varaapplib/components/AvisoForm/types";
 
@@ -10,6 +10,7 @@ import {
   addAviso,
   getAvisoByIdLocalDb,
   getAvisosBdLocal,
+  updateAviso,
 } from "../../../database/repository/avisoRepo";
 import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 import useListAvisosStore from "../../../hooks/globalState/useListAvisosStore";
@@ -38,14 +39,27 @@ const AvisoPage: React.FC = () => {
   });
 
   const handleValuesChange = async (values: Partial<AvisoValues>) => {
-    //console.log(values);
+    if (idSelected > 0) {
+      try {
+        const aviso = await updateAviso(values, dataAvisos.Nombre, idSelected);
+      } catch (error) {
+        console.error("Error al actualizar aviso: ", error);
+      }
+    }
   };
 
   useEffect(() => {
+    console.log("idSelected desde avisoPage  ", idSelected);
+
     const loadAvisos = async () => {
       if (idSelected > 0) {
-        const aviso = await getAvisoByIdLocalDb(idSelected);
-        setDataAvisos(aviso);
+        try {
+          const aviso = await getAvisoByIdLocalDb(idSelected);
+          console.error("aviso obtenido: ", aviso);
+          setDataAvisos(aviso);
+        } catch (error) {
+          console.error("Error al obtener aviso: ", error);
+        }
       } else {
         setDataAvisos({
           Nombre: "",
@@ -66,8 +80,15 @@ const AvisoPage: React.FC = () => {
       }
     };
 
+    // Llamamos a la función
     loadAvisos();
   }, [idSelected]);
+
+  useEffect(() => {
+    // Observa cambios en dataAvisos
+    console.log("avisos desde avisoPage estado actualizado", dataAvisos);
+  }, [dataAvisos]);
+
   const handleButtonPress = async (data: AvisoValues) => {
     try {
       const nombreAviso = Date.now().toString();
@@ -86,7 +107,7 @@ const AvisoPage: React.FC = () => {
       addAvisoStore(avisoData);
 
       const avisosResult = await getAvisosBdLocal();
-      console.log(
+      console.error(
         "respuesta de get avisos",
         JSON.stringify(avisosResult, null, 2)
       );
@@ -111,22 +132,46 @@ const AvisoPage: React.FC = () => {
       />
     );
   };
+  if (idSelected < 1) {
+    return (
+      <AvisoForm
+        scroolViewStyles={{
+          paddingTop: Platform.OS === "android" ? 0 : headerHeight,
+          paddingHorizontal: 0,
+        }}
+        reactNodeButton={CustomButton}
+        onSubmitData={(value) => {
+          handleButtonPress(value);
+        }}
+        loading={loading}
+        setLoading={setLoading}
+        onValuesChange={handleValuesChange}
+        data={dataAvisos}
+      />
+    );
+  }
 
   return (
-    <AvisoForm
-      scroolViewStyles={{
-        paddingTop: Platform.OS === "android" ? 0 : headerHeight,
-        paddingHorizontal: 0,
-      }}
-      reactNodeButton={CustomButton}
-      onSubmitData={(value) => {
-        handleButtonPress(value);
-      }}
-      loading={loading}
-      setLoading={setLoading}
-      onValuesChange={handleValuesChange}
-      data={dataAvisos}
-    />
+    <>
+      {dataAvisos.FechaDeAvistamiento && dataAvisos.CantidadDeAnimales ? (
+        <AvisoForm
+          scroolViewStyles={{
+            paddingTop: Platform.OS === "android" ? 0 : headerHeight,
+            paddingHorizontal: 0,
+          }}
+          reactNodeButton={CustomButton}
+          onSubmitData={(value) => {
+            handleButtonPress(value);
+          }}
+          loading={loading}
+          setLoading={setLoading}
+          onValuesChange={handleValuesChange}
+          data={dataAvisos}
+        />
+      ) : (
+        <Text>Cargando datos...</Text> // Puedes poner un loading spinner aquí si prefieres
+      )}
+    </>
   );
 };
 
