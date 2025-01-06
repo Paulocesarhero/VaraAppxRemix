@@ -10,7 +10,9 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import RoundedButton from "varaapplib/components/RoundedButton/RoundedButton";
 
+import { db } from "../../../../database/connection/sqliteConnection";
 import { getAvisosBdLocal } from "../../../../database/repository/avisoRepo";
+import { avisos as dbAvisos } from "../../../../database/schemas/avisoSchema";
 import useListAvisoStore from "../../../../hooks/globalState/useListAvisosStore";
 
 const SettingsPage: React.FC = () => {
@@ -22,6 +24,10 @@ const SettingsPage: React.FC = () => {
   };
   const avisosZustand = () => {
     console.log(JSON.stringify(avisos, null, 2));
+  };
+
+  const handleDelete = async () => {
+    await db.delete(dbAvisos);
   };
 
   return (
@@ -41,6 +47,11 @@ const SettingsPage: React.FC = () => {
         onPress={avisosZustand}
         color="#151515"
         text="GetAvisos de zustand"
+      />
+      <RoundedButton
+        onPress={handleDelete}
+        color="#151515"
+        text="borrar todos los avisos"
       />
 
       <ScrollView />
