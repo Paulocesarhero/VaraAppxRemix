@@ -6,6 +6,12 @@ de manera más eficiente. Los componentes proporcionados por la biblioteca [Comp
 la lógica de la aplicación. Sin embargo, debido a los requisitos únicos del campo de investigación, también he
 desarrollado componentes personalizados que están exclusivamente disponibles en VaraAppx.
 
+## Drizzle orm
+Como tal probablemente no sea necesario modificar las migraciones que estan en el proyecto
+pero si por alguna razón cambia el esquema de la base de datos o los requisotos
+1. Se modifica el esquema esta dentro de [schemas](src/database/schemas)
+2. ejecutar el comando `npx drizzle-kit generate
+` para generar la migración
 
 
 ## Instalación
