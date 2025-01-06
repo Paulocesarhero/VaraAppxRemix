@@ -7,7 +7,7 @@ const Layout: React.FC = () => {
     <Stack>
       <Stack.Screen name="Home" options={{ headerShown: false }} />
       <Stack.Screen
-        name="AvisoPage"
+        name="AvisoPage/AvisoPage"
         options={{
           title: "Aviso",
           headerBackTitle: "regresar",
