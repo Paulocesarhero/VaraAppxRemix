@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useHeaderHeight } from "@react-navigation/elements";
 import React, { useEffect, useState } from "react";
-import { Button, Platform, Text } from "react-native";
+import { Platform, Text } from "react-native";
 import { AvisoForm } from "varaapplib/components/AvisoForm/AvisoForm";
 import { AvisoValues } from "varaapplib/components/AvisoForm/types";
 
@@ -22,6 +22,7 @@ const AvisoPage: React.FC = () => {
   const { setIdSelected } = useAvisoStore();
   const { addAvisoStore } = useListAvisosStore();
   const headerHeight = useHeaderHeight();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [dataAvisos, setDataAvisos] = useState<AvisoValues>({
     Nombre: "",
@@ -33,7 +34,7 @@ const AvisoPage: React.FC = () => {
     FechaDeAvistamiento: getDateNow(),
     Observaciones: "",
     CondicionDeAnimal: 0,
-    CantidadDeAnimales: "",
+    CantidadDeAnimales: "1",
     InformacionDeLocalizacion: "",
     Latitud: "",
     Longitud: "",
@@ -41,25 +42,28 @@ const AvisoPage: React.FC = () => {
   });
 
   const loadAvisos = async () => {
-    if (idSelected > 0) {
-      try {
+    setIsLoading(true); // Activar estado de carga
+    try {
+      if (idSelected > 0) {
         const aviso = await getAvisoByIdLocalDb(idSelected);
         setDataAvisos(aviso);
-      } catch (error) {
-        console.error("Error al obtener aviso: ", error);
+      } else {
+        setDataAvisos({
+          ...dataAvisos,
+          FechaDeAvistamiento: "",
+        });
       }
-    } else {
-      setDataAvisos({
-        ...dataAvisos,
-        FechaDeAvistamiento: "",
-      });
+    } catch (error) {
+      console.error("Error al obtener aviso: ", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleValuesChange = async (values: Partial<AvisoValues>) => {
     if (idSelected > 0) {
       try {
-        await updateAviso(values, dataAvisos.Nombre, idSelected);
+        await updateAviso(values, dataAvisos.Nombre ?? "", idSelected);
       } catch (error) {
         console.error("Error al actualizar aviso: ", error);
       }
@@ -81,7 +85,6 @@ const AvisoPage: React.FC = () => {
 
       addAvisoStore(avisoData);
       setIdSelected(Number(idAvisoSqlite));
-      await getAvisosBdLocal();
     } catch (error) {
       console.error("Error al manejar los avisos", error);
     }
@@ -89,7 +92,7 @@ const AvisoPage: React.FC = () => {
 
   const CustomButton = ({ onPress }: { onPress?: () => void }) => (
     <InlineButton
-      text="Continuar"
+      text="Continuar y guardar"
       icon={
         <MaterialCommunityIcons
           name="page-next-outline"
@@ -105,7 +108,11 @@ const AvisoPage: React.FC = () => {
     loadAvisos();
   }, [idSelected]);
 
-  const renderAvisoForm = () => (
+  if (isLoading) {
+    return <Text>Cargando datos...</Text>;
+  }
+
+  return (
     <AvisoForm
       scroolViewStyles={{
         paddingTop: Platform.OS === "android" ? 0 : headerHeight,
@@ -118,13 +125,6 @@ const AvisoPage: React.FC = () => {
       onValuesChange={handleValuesChange}
       data={dataAvisos}
     />
-  );
-
-  return idSelected < 1 ||
-    (dataAvisos.FechaDeAvistamiento && dataAvisos.CantidadDeAnimales) ? (
-    renderAvisoForm()
-  ) : (
-    <Text>Cargando datos...</Text>
   );
 };
 
