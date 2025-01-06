@@ -1,6 +1,6 @@
 import { Entypo } from "@expo/vector-icons";
 import { router, usePathname } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   FlatList,
   StyleSheet,
@@ -23,11 +23,19 @@ const ListaAvisos: React.FC = () => {
   const [refreshing, setRefreshing] = useState(false);
   const pathname = usePathname();
 
-  useEffect(() => {
-    if (pathname === "/screens/Home/ListaAvisos/ListaAvisos") {
-      setIdSelected(0);
+  const loadData = useCallback(async () => {
+    setRefreshing(true);
+    try {
+      await fetchAvisosLocales();
+      if (token) {
+        await fetchAvisosRemotos(token);
+      }
+    } catch (error) {
+      console.error("Error al cargar avisos:", error);
+    } finally {
+      setRefreshing(false);
     }
-  }, [pathname]);
+  }, [token, fetchAvisosLocales, fetchAvisosRemotos]);
 
   const handleNuevoAviso = () => {
     router.push("screens/AvisoPage/AvisoPage");
@@ -39,15 +47,16 @@ const ListaAvisos: React.FC = () => {
 
   const ITEM_HEIGHT = 200;
 
-  const handleRefresh = async () => {
-    setRefreshing(true);
-    await fetchAvisosLocales(); // Recargar los avisos locales
-    if (token) {
-      await fetchAvisosRemotos(token); // Recargar los avisos remotos si el token está disponible
-    }
-    setRefreshing(false); // Detener la animación de carga
-  };
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
+  useEffect(() => {
+    if (pathname === "/screens/Home/ListaAvisos/ListaAvisos") {
+      setIdSelected(0);
+      console.log("se ejeciuto loadData");
+    }
+  }, [pathname]);
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={handleNuevoAviso}>
@@ -55,7 +64,7 @@ const ListaAvisos: React.FC = () => {
         <Text style={styles.buttonText}>Nuevo aviso</Text>
       </TouchableOpacity>
       <FlatList
-        onRefresh={handleRefresh}
+        onRefresh={loadData}
         data={avisos}
         keyExtractor={(item) => item.id.toString()}
         getItemLayout={(data, index) => ({
