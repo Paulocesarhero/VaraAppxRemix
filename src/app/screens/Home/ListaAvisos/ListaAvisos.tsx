@@ -1,5 +1,5 @@
 import { Entypo } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, usePathname } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   FlatList,
@@ -21,13 +21,13 @@ const ListaAvisos: React.FC = () => {
   const token = useAuthStore((state) => state.token);
   const { setIdSelected } = useAvisoStore();
   const [refreshing, setRefreshing] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    fetchAvisosLocales();
-    if (token) {
-      fetchAvisosRemotos(token);
+    if (pathname === "/screens/Home/ListaAvisos/ListaAvisos") {
+      setIdSelected(0);
     }
-  }, [fetchAvisosLocales, fetchAvisosRemotos, token]);
+  }, [pathname]);
 
   const handleNuevoAviso = () => {
     router.push("screens/AvisoPage/AvisoPage");
