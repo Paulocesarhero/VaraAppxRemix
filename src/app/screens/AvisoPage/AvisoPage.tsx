@@ -1,11 +1,13 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Platform, Text } from "react-native";
 import { AvisoForm } from "varaapplib/components/AvisoForm/AvisoForm";
 import { AvisoValues } from "varaapplib/components/AvisoForm/types";
 
 import InlineButton from "../../../components/InlineButton/InlineButton";
+import { addAmbienteIfNotExist } from "../../../database/repository/ambienteRepo";
 import {
   addAviso,
   getAvisoByIdLocalDb,
@@ -50,7 +52,6 @@ const AvisoPage: React.FC = () => {
       } else {
         setDataAvisos({
           ...dataAvisos,
-          FechaDeAvistamiento: "",
         });
       }
     } catch (error) {
@@ -70,23 +71,32 @@ const AvisoPage: React.FC = () => {
     }
   };
 
-  const handleButtonPress = async (data: AvisoValues) => {
+  const handleNextPagePress = async (data: AvisoValues) => {
     try {
-      const nombreAviso = Date.now().toString();
-      const idAvisoSqlite = await addAviso(data, nombreAviso);
+      if (idSelected < 1) {
+        const nombreAviso = Date.now().toString();
+        const idAvisoSqlite = await addAviso(data, nombreAviso);
 
-      const avisoData = {
-        id: idAvisoSqlite,
-        fotografia: data.Fotografia,
-        isModificable: true,
-        fechaDeAvistamiento: data.FechaDeAvistamiento,
-        cantidadDeAnimales: data.CantidadDeAnimales,
-      };
+        const avisoData = {
+          id: idAvisoSqlite,
+          fotografia: data.Fotografia,
+          isModificable: true,
+          fechaDeAvistamiento: data.FechaDeAvistamiento,
+          cantidadDeAnimales: data.CantidadDeAnimales,
+        };
 
-      addAvisoStore(avisoData);
-      setIdSelected(Number(idAvisoSqlite));
+        addAvisoStore(avisoData);
+        setIdSelected(Number(idAvisoSqlite));
+      }
     } catch (error) {
       console.error("Error al manejar los avisos", error);
+    } finally {
+      console.log("se ejecuto addAmbienteIfNotExist", idSelected);
+      await addAmbienteIfNotExist(idSelected);
+      router.navigate({
+        pathname:
+          "screens/Aviso/CaracteristicasFisicasYAmbientalesPage/CaracteristicasFisicasYAmbientalesPage",
+      });
     }
   };
 
@@ -119,7 +129,7 @@ const AvisoPage: React.FC = () => {
         paddingHorizontal: 0,
       }}
       reactNodeButton={CustomButton}
-      onSubmitData={handleButtonPress}
+      onSubmitData={handleNextPagePress}
       loading={loading}
       setLoading={setLoading}
       onValuesChange={handleValuesChange}
