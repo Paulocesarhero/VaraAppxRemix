@@ -7,11 +7,18 @@ import MaterialCard from "varaapplib/components/MaterialCard/MaterialCard";
 const MenuRegistrarAviso: React.FC = () => {
   const router = useRouter();
   const handleAvisoIndividual = () => {
-    router.push("screens/Stranding/StrandingPage");
+    router.push("screens/EspecimenPages/EspecimenPage");
   };
 
   return (
-    <View>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        gap: 40,
+      }}
+    >
       <MaterialCard
         onPress={handleAvisoIndividual}
         leftComponent={

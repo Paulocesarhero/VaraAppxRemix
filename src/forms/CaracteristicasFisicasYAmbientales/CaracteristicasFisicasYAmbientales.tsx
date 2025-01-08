@@ -1,5 +1,6 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import React, { useEffect, useRef } from "react";
+import { useHeaderHeight } from "@react-navigation/elements";
+import React, { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
   Keyboard,
@@ -13,7 +14,6 @@ import CustomCheckBox from "varaapplib/components/CustomCheckBox/CustomCheckBox"
 import InputField from "varaapplib/components/MaterialInput/MaterialInput";
 import MaterialSelector from "varaapplib/components/MaterialSelector/MaterialSelector";
 import { Estado } from "varaapplib/components/MaterialSelector/types";
-import RoundedButton from "varaapplib/components/RoundedButton/RoundedButton";
 
 import { FormValuesCaracteristicasFisicasYAmbientales } from "./FormValuesCaracteristicasFisicasYAmbientales";
 import CaracteristicasFisicasYAmbientalesProps from "./types";
@@ -23,10 +23,11 @@ import useAvisoStore from "../../hooks/globalState/useAvisoStore";
 
 const CaracteristicasFisicasYAmbientales: React.FC<
   CaracteristicasFisicasYAmbientalesProps
-> = ({ onSubmitData, loading, setLoading, initalValues }) => {
+> = ({ onSubmitData, initalValues }) => {
   const idSelected = useAvisoStore((state) => state.idSelected);
+  const headerHeight = useHeaderHeight();
 
-  const { handleSubmit, control, setValue, getValues, watch, reset } =
+  const { handleSubmit, control, watch, reset } =
     useForm<FormValuesCaracteristicasFisicasYAmbientales>({
       defaultValues: initalValues,
     });
@@ -94,6 +95,10 @@ const CaracteristicasFisicasYAmbientales: React.FC<
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
+      style={{
+        paddingTop: Platform.OS === "android" ? 0 : headerHeight,
+        paddingHorizontal: 0,
+      }}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView keyboardShouldPersistTaps="handled">

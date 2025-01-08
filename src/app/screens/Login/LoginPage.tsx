@@ -1,13 +1,13 @@
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
-  StyleSheet,
   Alert,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
   Pressable,
   ScrollView,
+  StyleSheet,
   Text,
   View,
 } from "react-native";
@@ -56,7 +56,7 @@ const LoginPage: React.FC = () => {
       const response = await Login(loginData);
       if (!response.error) {
         router.navigate({
-          pathname: "screens/Home/Recommendations/Recommendations",
+          pathname: "/screens/(home)/ListaAvisos/ListaAvisos",
         });
         setToken(response.data.token);
         actions.setLoggedIn(true);

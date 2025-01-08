@@ -1,12 +1,11 @@
+import { router, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 
 import {
   addAmbienteIfNotExist,
-  getAllAmbiente,
   getAmbienteByIdAvisoLocalDb,
 } from "../../../../database/repository/ambienteRepo";
-import { getAvisoByIdLocalDb } from "../../../../database/repository/avisoRepo";
 import CaracteristicasFisicasYAmbientales from "../../../../forms/CaracteristicasFisicasYAmbientales/CaracteristicasFisicasYAmbientales";
 import { FormValuesCaracteristicasFisicasYAmbientales } from "../../../../forms/CaracteristicasFisicasYAmbientales/FormValuesCaracteristicasFisicasYAmbientales";
 import useAvisoStore from "../../../../hooks/globalState/useAvisoStore";
@@ -16,6 +15,7 @@ const CaracteristicasFisicasYAmbientalesPage: React.FC = () => {
   const idSelected = useAvisoStore((state) => state.idSelected);
   const [formValues, setFormValues] =
     useState<FormValuesCaracteristicasFisicasYAmbientales>();
+  const router = useRouter();
 
   const loadAmbiente = async () => {
     setIsLoading(true);
@@ -35,7 +35,9 @@ const CaracteristicasFisicasYAmbientalesPage: React.FC = () => {
   useEffect(() => {
     loadAmbiente();
   }, [idSelected]);
-  const onSubmitData = async (data: any) => {};
+  const onSubmitData = async (data: any) => {
+    router.push("screens/MenuRegistrarAviso/MenuRegistrarAviso");
+  };
 
   if (isLoading) {
     return <Text>Cargando datos...</Text>;
@@ -46,10 +48,6 @@ const CaracteristicasFisicasYAmbientalesPage: React.FC = () => {
       <CaracteristicasFisicasYAmbientales
         initalValues={formValues}
         onSubmitData={onSubmitData}
-        loading={false}
-        setLoading={function (loading: boolean): void {
-          throw new Error("Function not implemented.");
-        }}
       />
     </View>
   );
