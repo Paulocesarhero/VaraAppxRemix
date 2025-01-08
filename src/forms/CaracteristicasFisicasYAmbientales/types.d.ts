@@ -15,6 +15,8 @@ interface CaracteristicasFisicasYAmbientalesProps {
    * @param loading - Un valor booleano que representa el nuevo estado de carga.
    */
   setLoading: (loading: boolean) => void;
+
+  initalValues?: FormValuesCaracteristicasFisicasYAmbientales;
 }
 
 export default CaracteristicasFisicasYAmbientalesProps;

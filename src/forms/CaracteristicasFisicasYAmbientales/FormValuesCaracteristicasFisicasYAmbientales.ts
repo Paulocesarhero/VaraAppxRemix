@@ -1,16 +1,16 @@
 export interface FormValuesCaracteristicasFisicasYAmbientales {
-  temperaturaAmbiente?: number;
-  precipitacionHoy?: number;
-  temperaturaSupMar?: number;
-  marea?: number;
-  mareaMedida?: number;
-  direccionCorriente?: number;
-  direccionDelViento?: number;
-  velocidadDelViento?: number;
-  nubosidad?: number;
-  oleaje?: number;
-  beaufort?: number;
-  precipitacionTormentaPrevia?: number;
+  temperaturaAmbiente?: string;
+  precipitacionHoy?: string;
+  temperaturaSupMar?: string;
+  marea?: string;
+  mareaMedida?: string;
+  direccionCorriente?: string;
+  direccionDelViento?: string;
+  velocidadDelViento?: string;
+  nubosidad?: string;
+  oleaje?: string;
+  beaufort?: string;
+  precipitacionTormentaPrevia?: string;
   anormalidadGeomagnetica: boolean;
   mareaRoja: boolean;
   anormalidadEnLaPesca?: string;

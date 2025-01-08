@@ -1,4 +1,5 @@
-import React, { useRef } from "react";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React, { useEffect, useRef } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
   Keyboard,
@@ -16,36 +17,35 @@ import RoundedButton from "varaapplib/components/RoundedButton/RoundedButton";
 
 import { FormValuesCaracteristicasFisicasYAmbientales } from "./FormValuesCaracteristicasFisicasYAmbientales";
 import CaracteristicasFisicasYAmbientalesProps from "./types";
+import InlineButton from "../../components/InlineButton/InlineButton";
+import { updateAmbienteByIdAviso } from "../../database/repository/ambienteRepo";
+import useAvisoStore from "../../hooks/globalState/useAvisoStore";
 
 const CaracteristicasFisicasYAmbientales: React.FC<
   CaracteristicasFisicasYAmbientalesProps
-> = ({ onSubmitData, loading, setLoading }) => {
-  const { handleSubmit, control } =
+> = ({ onSubmitData, loading, setLoading, initalValues }) => {
+  const idSelected = useAvisoStore((state) => state.idSelected);
+
+  const { handleSubmit, control, setValue, getValues, watch, reset } =
     useForm<FormValuesCaracteristicasFisicasYAmbientales>({
-      mode: "onSubmit",
-      defaultValues: {
-        temperaturaAmbiente: 20,
-        precipitacionHoy: 0,
-        temperaturaSupMar: 18,
-        marea: 0,
-        mareaMedida: 0,
-        direccionCorriente: 0,
-        direccionDelViento: 0,
-        velocidadDelViento: 0,
-        nubosidad: 0,
-        oleaje: 0,
-        beaufort: 0,
-        precipitacionTormentaPrevia: 0,
-        anormalidadGeomagnetica: false,
-        mareaRoja: false,
-        anormalidadEnLaPesca: "",
-      },
+      defaultValues: initalValues,
     });
+
+  const watchedValues = watch();
+
+  useEffect(() => {
+    if (initalValues) {
+      reset(initalValues);
+    }
+  }, [initalValues]);
+
+  useEffect(() => {
+    onValuesChange(watchedValues);
+  }, [watchedValues]);
 
   const onSubmit: SubmitHandler<
     FormValuesCaracteristicasFisicasYAmbientales
   > = (data) => {
-    console.log(data);
     onSubmitData(data);
   };
 
@@ -83,8 +83,12 @@ const CaracteristicasFisicasYAmbientales: React.FC<
       apiValue: "3",
     },
   ];
-
-  const scrollViewRef = useRef<ScrollView>(null);
+  const onValuesChange = async (
+    values: FormValuesCaracteristicasFisicasYAmbientales
+  ) => {
+    console.log("values desde form: ", values);
+    await updateAmbienteByIdAviso(idSelected, values);
+  };
 
   return (
     <KeyboardAvoidingView
@@ -92,15 +96,18 @@ const CaracteristicasFisicasYAmbientales: React.FC<
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView ref={scrollViewRef} keyboardShouldPersistTaps="handled">
-          <RoundedButton
-            style={{ paddingHorizontal: 10 }}
+        <ScrollView keyboardShouldPersistTaps="handled">
+          <InlineButton
+            text="Continuar y guardar"
+            icon={
+              <MaterialCommunityIcons
+                name="page-next-outline"
+                size={24}
+                color="black"
+              />
+            }
             onPress={handleSubmit(onSubmit)}
-            color="#000"
-            text="Enviar"
-            loading={loading}
           />
-
           <InputField
             nameInput="temperaturaAmbiente"
             iconName="thermometer"
