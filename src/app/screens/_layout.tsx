@@ -51,14 +51,14 @@ const Layout: React.FC = () => {
         }}
       />
       <Stack.Screen
-        name="EspecimenPages"
+        name="EspecimenPages/EspecimenPage"
         options={{
           title: "Home",
           headerTitle: headerHome,
           headerBackButtonDisplayMode: "minimal",
           headerBackTitle: "regresar",
-          headerTransparent: Platform.OS === "ios",
-          headerBlurEffect: Platform.OS === "ios" ? "regular" : undefined,
+          // headerTransparent: Platform.OS === "ios",
+          // headerBlurEffect: Platform.OS === "ios" ? "regular" : undefined,
         }}
       />
     </Stack>
