@@ -6,34 +6,31 @@ import { FormValuesEspecimen } from "../../../forms/Especimen/FormValuesEspecime
 
 const EspecimenPage: React.FC = () => {
   const initialValues: FormValuesEspecimen = {
-    Latitud: "51.1657",
-    Longitud: "10.4515",
+    Latitud: "",
+    Longitud: "",
     EspecieId: 1,
     condicion: 1,
-    longitudTotalRectilinea: "30 cm",
-    peso: "500 g",
+    longitudTotalRectilinea: "",
+    peso: "",
     sexo: 1,
     grupoDeEdad: 2,
-    orientacionDelEspecimen: "Norte",
+    orientacionDelEspecimen: "",
     sustrato: 1,
     otroSustrato: "Hojas",
     heridasBala: "No",
     heridasBalaFoto: "",
     presenciaDeRedes: "No",
     presenciaDeRedesFoto: "",
-    mordidas: "No",
+    mordidas: "",
     mordidasFoto: "",
-    golpes: "No",
+    golpes: "",
     golpesFoto: "",
-    otroTipoDeHeridas: "No",
+    otroTipoDeHeridas: "",
     otroTipoDeHeridasFoto: "",
-    Especie: {
-      id: 0,
-      nombre: "",
-      nombreLatin: "",
-      taxa: 0,
-      familia: 0,
-    },
+  };
+
+  const onSubmitData = (data: FormValuesEspecimen) => {
+    console.log(data);
   };
 
   return (
@@ -43,6 +40,7 @@ const EspecimenPage: React.FC = () => {
         onValuesChange={(values: Partial<FormValuesEspecimen>) => {
           console.log(values);
         }}
+        onSubmitData={onSubmitData}
       />
     </View>
   );

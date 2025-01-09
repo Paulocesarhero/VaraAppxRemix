@@ -3,8 +3,8 @@ import { Especie } from "../../services/Especie/GetEspecie";
 export interface FormValuesEspecimen {
   Latitud: string;
   Longitud: string;
-  EspecieId: number;
-  Especie: Especie;
+  EspecieId?: number;
+  Especie?: Especie;
   condicion: number;
   longitudTotalRectilinea: string;
   peso: string;

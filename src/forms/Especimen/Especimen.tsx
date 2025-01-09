@@ -1,5 +1,7 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import * as Location from "expo-location";
 import React, { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -18,16 +20,15 @@ import { Estado } from "varaapplib/components/MaterialSelector/types";
 import { FormValuesEspecimen } from "./FormValuesEspecimen";
 import { FormatoIndividualProps } from "./types";
 import EspecieSelector from "../../components/EspecieSelector/EspecieSelector";
+import InlineButton from "../../components/InlineButton/InlineButton";
 import PhotoAndInputForm from "../../components/PhotoAndInputs/PhotoAndInputs";
-import {
-  handleNumericInput,
-  handleNumericInputWithOnepoint,
-} from "../../hooks/validations";
+import { handleNumericInputWithOnepoint } from "../../hooks/validations";
 import { Especie } from "../../services/Especie/GetEspecie";
 
 const Especimen: React.FC<FormatoIndividualProps> = ({
   initialValues,
   onValuesChange,
+  onSubmitData,
   isDisabled,
 }) => {
   const { handleSubmit, control, watch, setValue, getValues } =
@@ -133,6 +134,23 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
       apiValue: "3",
     },
   ];
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        if (getValues("Latitud") === "" && getValues("Longitud") === "") {
+          const location = await Location.getCurrentPositionAsync({});
+          const { latitude, longitude } = location.coords;
+
+          setValue("Latitud", latitude.toString());
+          setValue("Longitud", longitude.toString());
+        }
+      } catch (error) {
+        console.error("Error al obtener la ubicación:", error);
+      }
+    };
+
+    fetchLocation();
+  }, [getValues, setValue]);
 
   const watchedValues = watch();
   useEffect(() => {
@@ -145,9 +163,20 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
-          style={{ paddingTop: 10 }}
+          style={{ paddingTop: 10, paddingHorizontal: 10 }}
           keyboardShouldPersistTaps="handled"
         >
+          <InlineButton
+            text="Continuar y guardar"
+            onPress={handleSubmit(onValuesChange)}
+            icon={
+              <MaterialCommunityIcons
+                name="page-next-outline"
+                size={24}
+                color="black"
+              />
+            }
+          />
           <InputField
             nameInput="Latitud"
             iconName="compass"
@@ -232,9 +261,7 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
           />
 
           <View style={{ height: 350, marginBottom: 5, marginTop: 15 }}>
-            <Text style={AvisoFormStyle.mapTitle}>
-              Ubicación del avistamiento
-            </Text>
+            <Text style={AvisoFormStyle.mapTitle}>Ubicación del espécimen</Text>
             {isDisabled ? (
               <Map
                 markerLatitude={+getValues("Latitud")}
@@ -260,7 +287,7 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
                 pointerEvents={isDisabled ? "none" : "auto"}
               >
                 <EspecieSelector
-                  selectedEspecie={value}
+                  selectedEspecie={value ?? null}
                   onSelectEspecie={(value) => {
                     handleEspecieSelecter(value);
                     onChange(value);

@@ -3,6 +3,14 @@ export type Especie = {
   id: number;
   nombre: string;
   nombreLatin: string;
+  /**
+   * @enum {number}
+   * @description Tipos de taxa:
+   * - 0: Misticeto
+   * - 1: Pinnipedo
+   * - 2: Odontoceto
+   * - 3: Sirenio
+   */
   taxa: number;
   familia: number;
 };

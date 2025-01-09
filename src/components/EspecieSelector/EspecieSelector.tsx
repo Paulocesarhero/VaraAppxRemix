@@ -9,10 +9,10 @@ import {
   View,
 } from "react-native";
 
-import { EspecieSelectorStyle } from "./EspecieSelectorStyle";
-import EspecieSelectorProps from "./types";
 import useAuthStore from "../../hooks/globalState/useAuthStore";
 import getEspecies, { Especie } from "../../services/Especie/GetEspecie";
+import { EspecieSelectorStyle } from "./EspecieSelectorStyle";
+import EspecieSelectorProps from "./types";
 
 const EspecieSelector: React.FC<EspecieSelectorProps> = ({
   onSelectEspecie,
@@ -29,11 +29,11 @@ const EspecieSelector: React.FC<EspecieSelectorProps> = ({
     const fetchEspecies = async () => {
       try {
         const data = await getEspecies(token ?? "");
-        setEspecies(data.data); // Almacena los datos de especies
+        setEspecies(data.data);
       } catch (err) {
         setError("Hubo un error al obtener las especies.");
       } finally {
-        setLoading(false); // Desactiva el estado de carga
+        setLoading(false);
       }
     };
 
@@ -42,7 +42,7 @@ const EspecieSelector: React.FC<EspecieSelectorProps> = ({
 
   const handleSelectEspecie = (especie: Especie) => {
     onSelectEspecie(especie);
-    setIsModalVisible(false); // Cierra el modal al seleccionar
+    setIsModalVisible(false);
   };
 
   const renderEspecieItem = ({ item }: { item: Especie }) => (
