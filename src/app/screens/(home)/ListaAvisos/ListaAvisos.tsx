@@ -54,7 +54,6 @@ const ListaAvisos: React.FC = () => {
   useEffect(() => {
     if (pathname === "/screens/ListaAvisos/ListaAvisos") {
       setIdSelected(0);
-      console.log("se ejeciuto loadData");
     }
   }, [pathname]);
   return (
