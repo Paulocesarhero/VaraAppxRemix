@@ -87,7 +87,6 @@ const CaracteristicasFisicasYAmbientales: React.FC<
   const onValuesChange = async (
     values: FormValuesCaracteristicasFisicasYAmbientales
   ) => {
-    console.log("values desde form: ", values);
     await updateAmbienteByIdAviso(idSelected, values);
   };
 

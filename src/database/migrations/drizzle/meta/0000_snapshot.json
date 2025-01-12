@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "86547cb1-f50e-4f81-95be-18d431b2d454",
+  "id": "1d808d37-102b-45b5-bf20-b1038cc81d6e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "ambiente": {
@@ -283,6 +283,2115 @@
       },
       "indexes": {},
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "especie": {
+      "name": "especie",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "nombre": {
+          "name": "nombre",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "nombreLatin": {
+          "name": "nombreLatin",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "taxa": {
+          "name": "taxa",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "familia": {
+          "name": "familia",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "especimen": {
+      "name": "especimen",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "latitud": {
+          "name": "latitud",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "longitud": {
+          "name": "longitud",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "condicion": {
+          "name": "condicion",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "longitudTotalRectilinea": {
+          "name": "longitudTotalRectilinea",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "peso": {
+          "name": "peso",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sexo": {
+          "name": "sexo",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "grupoDeEdad": {
+          "name": "grupoDeEdad",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "orientacionDelEspecimen": {
+          "name": "orientacionDelEspecimen",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sustrato": {
+          "name": "sustrato",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "otroSustrato": {
+          "name": "otroSustrato",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "heridasBala": {
+          "name": "heridasBala",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "heridasBalaFoto": {
+          "name": "heridasBalaFoto",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "presenciaDeRedes": {
+          "name": "presenciaDeRedes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "presenciaDeRedesFoto": {
+          "name": "presenciaDeRedesFoto",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "mordidas": {
+          "name": "mordidas",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "mordidasFoto": {
+          "name": "mordidasFoto",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "golpes": {
+          "name": "golpes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "golpesFoto": {
+          "name": "golpesFoto",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "otroTipoDeHeridas": {
+          "name": "otroTipoDeHeridas",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "otroTipoDeHeridasFoto": {
+          "name": "otroTipoDeHeridasFoto",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "especie_id": {
+          "name": "especie_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "aviso_id": {
+          "name": "aviso_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "varamiento_masivo_id": {
+          "name": "varamiento_masivo_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "recorrido_id": {
+          "name": "recorrido_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "especimen_especie_id_especie_id_fk": {
+          "name": "especimen_especie_id_especie_id_fk",
+          "tableFrom": "especimen",
+          "tableTo": "especie",
+          "columnsFrom": [
+            "especie_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "especimen_aviso_id_avisos_id_fk": {
+          "name": "especimen_aviso_id_avisos_id_fk",
+          "tableFrom": "especimen",
+          "tableTo": "avisos",
+          "columnsFrom": [
+            "aviso_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "especimen_varamiento_masivo_id_varamiento_masivo_id_fk": {
+          "name": "especimen_varamiento_masivo_id_varamiento_masivo_id_fk",
+          "tableFrom": "especimen",
+          "tableTo": "varamiento_masivo",
+          "columnsFrom": [
+            "varamiento_masivo_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "especimen_recorrido_id_recorrido_id_fk": {
+          "name": "especimen_recorrido_id_recorrido_id_fk",
+          "tableFrom": "especimen",
+          "tableTo": "recorrido",
+          "columnsFrom": [
+            "recorrido_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "localizacion": {
+      "name": "localizacion",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "pais": {
+          "name": "pais",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "estado": {
+          "name": "estado",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ciudad": {
+          "name": "ciudad",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "localidad": {
+          "name": "localidad",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "informacionAdicional": {
+          "name": "informacionAdicional",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "latitud": {
+          "name": "latitud",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "longitud": {
+          "name": "longitud",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "misticeto": {
+      "name": "misticeto",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "NumeroDeBarbas": {
+          "name": "NumeroDeBarbas",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "BarbasColor": {
+          "name": "BarbasColor",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "BarbaLargo": {
+          "name": "BarbaLargo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "BarbaAncho": {
+          "name": "BarbaAncho",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M1LongitudTotalLR": {
+          "name": "M1LongitudTotalLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M1LongitudTotalC": {
+          "name": "M1LongitudTotalC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M2LongitudRostroAlCentroDelAnoLR": {
+          "name": "M2LongitudRostroAlCentroDelAnoLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M2LongitudRostroAlCentroDelAnoC": {
+          "name": "M2LongitudRostroAlCentroDelAnoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M3LongitudRostroAlCentroDeLaAberturaGenitalLR": {
+          "name": "M3LongitudRostroAlCentroDeLaAberturaGenitalLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M3LongitudRostroAlCentroDeLaAberturaGenitalC": {
+          "name": "M3LongitudRostroAlCentroDeLaAberturaGenitalC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M4LongitudDelRostroALosPlieguesGularesLR": {
+          "name": "M4LongitudDelRostroALosPlieguesGularesLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M4LongitudDelRostroALosPlieguesGularesC": {
+          "name": "M4LongitudDelRostroALosPlieguesGularesC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M5LongitudDelRostroAlCentroDelOmbligoLR": {
+          "name": "M5LongitudDelRostroAlCentroDelOmbligoLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M5LongitudDelRostroAlCentroDelOmbligoC": {
+          "name": "M5LongitudDelRostroAlCentroDelOmbligoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M6LongitudDelRostroAPuntaDeAletaDorsalLR": {
+          "name": "M6LongitudDelRostroAPuntaDeAletaDorsalLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M7LongitudDelRostroAAletaDorsalEnParteAnteriorLR": {
+          "name": "M7LongitudDelRostroAAletaDorsalEnParteAnteriorLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M7LongitudDelRostroAAletaDorsalEnParteAnteriorC": {
+          "name": "M7LongitudDelRostroAAletaDorsalEnParteAnteriorC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M8LongitudDelRostroALaInsercionDeLaAletaPectoralLR": {
+          "name": "M8LongitudDelRostroALaInsercionDeLaAletaPectoralLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M8LongitudDelRostroALaInsercionDeLaAletaPectoralC": {
+          "name": "M8LongitudDelRostroALaInsercionDeLaAletaPectoralC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M9LongitudDelRostroAlCentroDelOrificioRespiratorioLR": {
+          "name": "M9LongitudDelRostroAlCentroDelOrificioRespiratorioLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M9LongitudDelRostroAlCentroDelOrificioRespiratorioC": {
+          "name": "M9LongitudDelRostroAlCentroDelOrificioRespiratorioC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M10LongitudDelRostroAlCentroDelOjoLR": {
+          "name": "M10LongitudDelRostroAlCentroDelOjoLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M10LongitudDelRostroAlCentroDelOjoC": {
+          "name": "M10LongitudDelRostroAlCentroDelOjoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M11LongitudDelRostroAlCentroDelOjoLR": {
+          "name": "M11LongitudDelRostroAlCentroDelOjoLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M11LongitudDelRostroAlCentroDelOjoC": {
+          "name": "M11LongitudDelRostroAlCentroDelOjoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M12LongitudDelRostroALaComisuraDeLaBocaLR": {
+          "name": "M12LongitudDelRostroALaComisuraDeLaBocaLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M13AnchoMaximoDelRostroLR": {
+          "name": "M13AnchoMaximoDelRostroLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M14NumeroDePlieguesGularesLR": {
+          "name": "M14NumeroDePlieguesGularesLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M15NumeroDeProtuberanciasDorsalesLR": {
+          "name": "M15NumeroDeProtuberanciasDorsalesLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M16ProyeccionDelMaxilarLR": {
+          "name": "M16ProyeccionDelMaxilarLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M17DistanciaMaximaDeOjoAOjoC": {
+          "name": "M17DistanciaMaximaDeOjoAOjoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M18AnchoMaximoDelOjoC": {
+          "name": "M18AnchoMaximoDelOjoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M19LongitudMaximaDelOjoC": {
+          "name": "M19LongitudMaximaDelOjoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M20LongitudMaximaDelCentroDelOjoALaComisuraDeLaBocaLR": {
+          "name": "M20LongitudMaximaDelCentroDelOjoALaComisuraDeLaBocaLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M20LongitudMaximaDelCentroDelOjoALaComisuraDeLaBocaC": {
+          "name": "M20LongitudMaximaDelCentroDelOjoALaComisuraDeLaBocaC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M21LongitudMaximaDelCentroDelOjoAlCentroDelOidoLR": {
+          "name": "M21LongitudMaximaDelCentroDelOjoAlCentroDelOidoLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M21LongitudMaximaDelCentroDelOjoAlCentroDelOidoC": {
+          "name": "M21LongitudMaximaDelCentroDelOjoAlCentroDelOidoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M22LongitudMaximaDelCentroDelOjoAlCentroDeLosOrificiosRespiratoriosLR": {
+          "name": "M22LongitudMaximaDelCentroDelOjoAlCentroDeLosOrificiosRespiratoriosLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M22LongitudMaximaDelCentroDelOjoAlCentroDeLosOrificiosRespiratoriosC": {
+          "name": "M22LongitudMaximaDelCentroDelOjoAlCentroDeLosOrificiosRespiratoriosC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M23LongitudMaximaDeLosOrificiosRespiratoriosC": {
+          "name": "M23LongitudMaximaDeLosOrificiosRespiratoriosC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M24AnchoMaximoDeLosOrificiosRespiratoriosC": {
+          "name": "M24AnchoMaximoDeLosOrificiosRespiratoriosC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M25AnchoMaximoDeLaAletaPectoralLR": {
+          "name": "M25AnchoMaximoDeLaAletaPectoralLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M26LongitudMaximaDeLaAletaPectoralEnLaParteAnteriorLR": {
+          "name": "M26LongitudMaximaDeLaAletaPectoralEnLaParteAnteriorLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M27LongitudMaximaDeLaAletaPectoralEnLaPartePosteriorLR": {
+          "name": "M27LongitudMaximaDeLaAletaPectoralEnLaPartePosteriorLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M28AlturaDeLaAletaDorsalLR": {
+          "name": "M28AlturaDeLaAletaDorsalLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M29LongitudDeLaBaseDeLaAletaDorsalLR": {
+          "name": "M29LongitudDeLaBaseDeLaAletaDorsalLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M30LongitudDeLaAletaCaudalLR": {
+          "name": "M30LongitudDeLaAletaCaudalLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M31AnchoDelLobuloCaudalLR": {
+          "name": "M31AnchoDelLobuloCaudalLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M32ProfundidadDeLaEscotaduraLR": {
+          "name": "M32ProfundidadDeLaEscotaduraLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M33LongitudDeLaEscotaduraAlAnoLR": {
+          "name": "M33LongitudDeLaEscotaduraAlAnoLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M34LongitudDeLaEscotaduraALaAberturaGenitalLR": {
+          "name": "M34LongitudDeLaEscotaduraALaAberturaGenitalLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M35LongitudDeLaEscotaduraAlOmbligoLR": {
+          "name": "M35LongitudDeLaEscotaduraAlOmbligoLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M35LongitudDeLaEscotaduraAlOmbligoC": {
+          "name": "M35LongitudDeLaEscotaduraAlOmbligoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M36CircunferenciaDelCuerpoDetrásDeLasPectoralesC": {
+          "name": "M36CircunferenciaDelCuerpoDetrásDeLasPectoralesC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M37CircunferenciaDelCuerpoANivelDelOmbligoC": {
+          "name": "M37CircunferenciaDelCuerpoANivelDelOmbligoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M38CircunferenciaDelCuerpoANivelDeLaAberturaGenitalC": {
+          "name": "M38CircunferenciaDelCuerpoANivelDeLaAberturaGenitalC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M39CircunferenciaDelCuerpoEnElPedunculoCaudalC": {
+          "name": "M39CircunferenciaDelCuerpoEnElPedunculoCaudalC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M40LongitudDeLaAberturaMamariaC": {
+          "name": "M40LongitudDeLaAberturaMamariaC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M41LongitudDeLaAberturaGenitalC": {
+          "name": "M41LongitudDeLaAberturaGenitalC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "M42LongitudDeLaAberturaAnalC": {
+          "name": "M42LongitudDeLaAberturaAnalC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "especimen_id": {
+          "name": "especimen_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "misticeto_especimen_id_especimen_id_fk": {
+          "name": "misticeto_especimen_id_especimen_id_fk",
+          "tableFrom": "misticeto",
+          "tableTo": "especimen",
+          "columnsFrom": [
+            "especimen_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "odontoceto": {
+      "name": "odontoceto",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "maxilarIzquierdo": {
+          "name": "maxilarIzquierdo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "maxilarDerecho": {
+          "name": "maxilarDerecho",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "mandibulaIzquierda": {
+          "name": "mandibulaIzquierda",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "mandibulaDerecha": {
+          "name": "mandibulaDerecha",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m1LongitudTotalLR": {
+          "name": "m1LongitudTotalLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m1LongitudTotalC": {
+          "name": "m1LongitudTotalC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m2LongitudRostroAlCentroDelAnoLR": {
+          "name": "m2LongitudRostroAlCentroDelAnoLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m2LongitudRostroAlCentroDelAnoC": {
+          "name": "m2LongitudRostroAlCentroDelAnoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m3LongitudRostroAlCentroDeLaAberturaGenitalLR": {
+          "name": "m3LongitudRostroAlCentroDeLaAberturaGenitalLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m3LongitudRostroAlCentroDeLaAberturaGenitalC": {
+          "name": "m3LongitudRostroAlCentroDeLaAberturaGenitalC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m4LongitudDelRostroAlCentroDelOmbligoLR": {
+          "name": "m4LongitudDelRostroAlCentroDelOmbligoLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m4LongitudDelRostroAlCentroDelOmbligoC": {
+          "name": "m4LongitudDelRostroAlCentroDelOmbligoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m5LongitudDelRostroAPuntaDeAletaDorsalLR": {
+          "name": "m5LongitudDelRostroAPuntaDeAletaDorsalLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m6LongitudDelRostroAAletaDorsalEnParteAnteriorLR": {
+          "name": "m6LongitudDelRostroAAletaDorsalEnParteAnteriorLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m6LongitudDelRostroAAletaDorsalEnParteAnteriorC": {
+          "name": "m6LongitudDelRostroAAletaDorsalEnParteAnteriorC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m7LongitudDelRostroAAletaPectoralEnparteAnteriorLR": {
+          "name": "m7LongitudDelRostroAAletaPectoralEnparteAnteriorLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m7LongitudDelRostroAAletaPectoralEnparteAnteriorC": {
+          "name": "m7LongitudDelRostroAAletaPectoralEnparteAnteriorC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m8LongitudDelRostroAlCentroDelOrificioRespiratorioLR": {
+          "name": "m8LongitudDelRostroAlCentroDelOrificioRespiratorioLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m8LongitudDelRostroAlCentroDelOrificioRespiratorioC": {
+          "name": "m8LongitudDelRostroAlCentroDelOrificioRespiratorioC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m9LongitudDeLaPuntaDelRostroALaBaseDelRostroLR": {
+          "name": "m9LongitudDeLaPuntaDelRostroALaBaseDelRostroLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m9LongitudDeLaPuntaDelRostroALaBaseDelRostroC": {
+          "name": "m9LongitudDeLaPuntaDelRostroALaBaseDelRostroC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m10LongitudDelRostroAlCentroDelOidoLR": {
+          "name": "m10LongitudDelRostroAlCentroDelOidoLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m10LongitudDelRostroAlCentroDelOidoC": {
+          "name": "m10LongitudDelRostroAlCentroDelOidoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m11LongitudDelRostroAlCentroDelOjoLR": {
+          "name": "m11LongitudDelRostroAlCentroDelOjoLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m11LongitudDelRostroAlCentroDelOjoC": {
+          "name": "m11LongitudDelRostroAlCentroDelOjoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m12LongitudDelRostroALaComisuraDeLaBocaLR": {
+          "name": "m12LongitudDelRostroALaComisuraDeLaBocaLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m12LongitudDelRostroALaComisuraDeLaBocaC": {
+          "name": "m12LongitudDelRostroALaComisuraDeLaBocaC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m13AnchoMaximoDelRostroLR": {
+          "name": "m13AnchoMaximoDelRostroLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m14ProyeccionDelMaxilarOMandibulaLR": {
+          "name": "m14ProyeccionDelMaxilarOMandibulaLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m15DistanciaMaximaDeOjoAOjoC": {
+          "name": "m15DistanciaMaximaDeOjoAOjoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m16AnchoMaximoDelOjoC": {
+          "name": "m16AnchoMaximoDelOjoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m17LongitudMaximaDelOjoC": {
+          "name": "m17LongitudMaximaDelOjoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m18LongitudMaximaDelCentroDelOjoALaComisuraDeLaBocaLR": {
+          "name": "m18LongitudMaximaDelCentroDelOjoALaComisuraDeLaBocaLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m18LongitudMaximaDelCentroDelOjoALaComisuraDeLaBocaC": {
+          "name": "m18LongitudMaximaDelCentroDelOjoALaComisuraDeLaBocaC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m19LongitudMaximaDelCentroDelOjoAlCentroDelOidoLR": {
+          "name": "m19LongitudMaximaDelCentroDelOjoAlCentroDelOidoLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m19LongitudMaximaDelCentroDelOjoAlCentroDelOidoC": {
+          "name": "m19LongitudMaximaDelCentroDelOjoAlCentroDelOidoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m20LongitudMaximaDelCentroDelOjoAlCentroDelOrificioRespiratorioLR": {
+          "name": "m20LongitudMaximaDelCentroDelOjoAlCentroDelOrificioRespiratorioLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m20LongitudMaximaDelCentroDelOjoAlCentroDelOrificioRespiratorioC": {
+          "name": "m20LongitudMaximaDelCentroDelOjoAlCentroDelOrificioRespiratorioC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m21M21LongitudMaximaDelOrificioRespiratorioC": {
+          "name": "m21M21LongitudMaximaDelOrificioRespiratorioC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m22AnchoMaximoDelOrificioRespiratorioC": {
+          "name": "m22AnchoMaximoDelOrificioRespiratorioC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m23AnchoMaximoDeLaAletaPectoralLR": {
+          "name": "m23AnchoMaximoDeLaAletaPectoralLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m24LongitudMaximaDeLaAletaPectoralEnLaParteAnteriorLR": {
+          "name": "m24LongitudMaximaDeLaAletaPectoralEnLaParteAnteriorLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m25LongitudMaximaDeLaAletaPectoralEnLaPartePosteriorLR": {
+          "name": "m25LongitudMaximaDeLaAletaPectoralEnLaPartePosteriorLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m26AlturaDeLaAletaDorsalLR": {
+          "name": "m26AlturaDeLaAletaDorsalLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m27LongitudDeLaBaseDeLaAletaDorsalLR": {
+          "name": "m27LongitudDeLaBaseDeLaAletaDorsalLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m28LongitudDeLaAletaCaudalLR": {
+          "name": "m28LongitudDeLaAletaCaudalLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m29AnchoDelLobuloCaudalLR": {
+          "name": "m29AnchoDelLobuloCaudalLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m30ProfundidadDeLaEscotaduraLR": {
+          "name": "m30ProfundidadDeLaEscotaduraLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m31LongitudDeLaEscotaduraAlAnoLR": {
+          "name": "m31LongitudDeLaEscotaduraAlAnoLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m31LongitudDeLaEscotaduraAlAnoC": {
+          "name": "m31LongitudDeLaEscotaduraAlAnoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m32LongitudDeLaEscotaduraALaAberturaGenitalLR": {
+          "name": "m32LongitudDeLaEscotaduraALaAberturaGenitalLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m32LongitudDeLaEscotaduraALaAberturaGenitalC": {
+          "name": "m32LongitudDeLaEscotaduraALaAberturaGenitalC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m33LongitudDeLaEscotaduraAlOmbligoLR": {
+          "name": "m33LongitudDeLaEscotaduraAlOmbligoLR",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m33LongitudDeLaEscotaduraAlOmbligoC": {
+          "name": "m33LongitudDeLaEscotaduraAlOmbligoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m34CircunferenciaDelCuerpoDetrásDeLasPectoralesC": {
+          "name": "m34CircunferenciaDelCuerpoDetrásDeLasPectoralesC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m35CircunferenciaMaximaC": {
+          "name": "m35CircunferenciaMaximaC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m36CircunferenciaDelCuerpoANivelDelOmbligoC": {
+          "name": "m36CircunferenciaDelCuerpoANivelDelOmbligoC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m37CircunferenciaDelCuerpoANivelDeLaAberturaGenitalC": {
+          "name": "m37CircunferenciaDelCuerpoANivelDeLaAberturaGenitalC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m38CircunferenciaDelCuerpoEnElPedunculoCaudalC": {
+          "name": "m38CircunferenciaDelCuerpoEnElPedunculoCaudalC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m39LongitudDeLaAberturaMamariaC": {
+          "name": "m39LongitudDeLaAberturaMamariaC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m40LongitudDeLaAberturaGenitalC": {
+          "name": "m40LongitudDeLaAberturaGenitalC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "m41LongitudDeLaAberturaAnalC": {
+          "name": "m41LongitudDeLaAberturaAnalC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "especimen_id": {
+          "name": "especimen_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "odontoceto_especimen_id_especimen_id_fk": {
+          "name": "odontoceto_especimen_id_especimen_id_fk",
+          "tableFrom": "odontoceto",
+          "tableTo": "especimen",
+          "columnsFrom": [
+            "especimen_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "pinnipedo": {
+      "name": "pinnipedo",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "lrNarizAColaCm": {
+          "name": "lrNarizAColaCm",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lcNarizAColaCm": {
+          "name": "lcNarizAColaCm",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "cCuerpoDetrasDePectorales": {
+          "name": "cCuerpoDetrasDePectorales",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "cCuerpoANivelDelOmbligo": {
+          "name": "cCuerpoANivelDelOmbligo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lNarizAlCentroDelOjo": {
+          "name": "lNarizAlCentroDelOjo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lNarizAlCentroDelOido": {
+          "name": "lNarizAlCentroDelOido",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lAletaPectoralEnParteAnterior": {
+          "name": "lAletaPectoralEnParteAnterior",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "aAletaPectoralANivelAxila": {
+          "name": "aAletaPectoralANivelAxila",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "aMaximoDeAletapectora": {
+          "name": "aMaximoDeAletapectora",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lAletaPosteriorParteAnterior": {
+          "name": "lAletaPosteriorParteAnterior",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "anchoMaximoAletaPosterior": {
+          "name": "anchoMaximoAletaPosterior",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lCola": {
+          "name": "lCola",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "eCapaDeGrasa": {
+          "name": "eCapaDeGrasa",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "cCraneoAlturaDeOrejas": {
+          "name": "cCraneoAlturaDeOrejas",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "aRostro": {
+          "name": "aRostro",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "aCabeza": {
+          "name": "aCabeza",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lCabeza": {
+          "name": "lCabeza",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lPoscaninosSuperiores": {
+          "name": "lPoscaninosSuperiores",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "anchoInterorbital": {
+          "name": "anchoInterorbital",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "anchoCigomatico": {
+          "name": "anchoCigomatico",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "anchoCondilobasal": {
+          "name": "anchoCondilobasal",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "maxilarIzquierdoPosCanino": {
+          "name": "maxilarIzquierdoPosCanino",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "maxilarIzquierdoCanino": {
+          "name": "maxilarIzquierdoCanino",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "maxilarIzquierdoIncisivo": {
+          "name": "maxilarIzquierdoIncisivo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "maxilarDerechoPosCanino": {
+          "name": "maxilarDerechoPosCanino",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "maxilarDerechoCanino": {
+          "name": "maxilarDerechoCanino",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "maxilarDerechoIncisivo": {
+          "name": "maxilarDerechoIncisivo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "mandibulaIzquierdoPosCanino": {
+          "name": "mandibulaIzquierdoPosCanino",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "mandibulaIzquierdoCanino": {
+          "name": "mandibulaIzquierdoCanino",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "mandibulaIzquierdoIncisivo": {
+          "name": "mandibulaIzquierdoIncisivo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "mandibulaDerechoPosCanino": {
+          "name": "mandibulaDerechoPosCanino",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "mandibulaDerechoCanino": {
+          "name": "mandibulaDerechoCanino",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "mandibulaDerechoIncisivo": {
+          "name": "mandibulaDerechoIncisivo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "especimen_id": {
+          "name": "especimen_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "pinnipedo_especimen_id_especimen_id_fk": {
+          "name": "pinnipedo_especimen_id_especimen_id_fk",
+          "tableFrom": "pinnipedo",
+          "tableTo": "especimen",
+          "columnsFrom": [
+            "especimen_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "recorrido": {
+      "name": "recorrido",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "fecha": {
+          "name": "fecha",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "horaInicio": {
+          "name": "horaInicio",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "horaFin": {
+          "name": "horaFin",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "coordenada_inicio_id": {
+          "name": "coordenada_inicio_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "coordenada_fin_id": {
+          "name": "coordenada_fin_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "referenciasInicio": {
+          "name": "referenciasInicio",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "referenciasFin": {
+          "name": "referenciasFin",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "distanciaRecorrido": {
+          "name": "distanciaRecorrido",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "observaciones": {
+          "name": "observaciones",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "participantes": {
+          "name": "participantes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "zonaSeguimiento": {
+          "name": "zonaSeguimiento",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ruta": {
+          "name": "ruta",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "reportesMasivos": {
+          "name": "reportesMasivos",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "recorrido_coordenada_inicio_id_localizacion_id_fk": {
+          "name": "recorrido_coordenada_inicio_id_localizacion_id_fk",
+          "tableFrom": "recorrido",
+          "tableTo": "localizacion",
+          "columnsFrom": [
+            "coordenada_inicio_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "recorrido_coordenada_fin_id_localizacion_id_fk": {
+          "name": "recorrido_coordenada_fin_id_localizacion_id_fk",
+          "tableFrom": "recorrido",
+          "tableTo": "localizacion",
+          "columnsFrom": [
+            "coordenada_fin_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "sirenio": {
+      "name": "sirenio",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "extremoHocicoAExtremoAletaCaudalL": {
+          "name": "extremoHocicoAExtremoAletaCaudalL",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "extremoHocicoAExtremoAletaCaudalC": {
+          "name": "extremoHocicoAExtremoAletaCaudalC",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "extremoHocicoACentroAno": {
+          "name": "extremoHocicoACentroAno",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "extremoHocicoAAberturaGenital": {
+          "name": "extremoHocicoAAberturaGenital",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "extremoHocicoACentroOmbligo": {
+          "name": "extremoHocicoACentroOmbligo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "extremoHocicoAOrigenAnteriorDeAletasPectorales": {
+          "name": "extremoHocicoAOrigenAnteriorDeAletasPectorales",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "extremoHocicoACentroOjo": {
+          "name": "extremoHocicoACentroOjo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "extremoHocicoACentroMeatoAuditivoExterno": {
+          "name": "extremoHocicoACentroMeatoAuditivoExterno",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "centroOjoACentroMeatoAuditivoExterno": {
+          "name": "centroOjoACentroMeatoAuditivoExterno",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "distanciaOjoAOjoDorso": {
+          "name": "distanciaOjoAOjoDorso",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "centroOjoAlCentroAberturaNasal": {
+          "name": "centroOjoAlCentroAberturaNasal",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "aletaPectoralOrigenAnteriorAlExtremo": {
+          "name": "aletaPectoralOrigenAnteriorAlExtremo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "aletaPectoralDeAxilaAlExtremo": {
+          "name": "aletaPectoralDeAxilaAlExtremo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "anchoMaxAletaPectoral": {
+          "name": "anchoMaxAletaPectoral",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "longuitudPerpenticularTetillasDerechas": {
+          "name": "longuitudPerpenticularTetillasDerechas",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "longuitudPerpenticularTetillasIzquierdas": {
+          "name": "longuitudPerpenticularTetillasIzquierdas",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "baseAletaCaudalAlExtremo": {
+          "name": "baseAletaCaudalAlExtremo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "anchoMaxAletaCaudal": {
+          "name": "anchoMaxAletaCaudal",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "diametroNivelDeBaseAletaCaudal": {
+          "name": "diametroNivelDeBaseAletaCaudal",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "diametroNivelAno": {
+          "name": "diametroNivelAno",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "diametroNivelOmbligo": {
+          "name": "diametroNivelOmbligo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "diametroNivelAxila": {
+          "name": "diametroNivelAxila",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "grosorPielDorsal": {
+          "name": "grosorPielDorsal",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "grosorPielLateral": {
+          "name": "grosorPielLateral",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "grosorPielVentral": {
+          "name": "grosorPielVentral",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "grosorCapasGrasaSuperiorDerecha": {
+          "name": "grosorCapasGrasaSuperiorDerecha",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "grosorCapasGrasaSuperiorIzquierda": {
+          "name": "grosorCapasGrasaSuperiorIzquierda",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "grosorCapasGrasaInferiorDerecha": {
+          "name": "grosorCapasGrasaInferiorDerecha",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "grosorCapasGrasaInferiorIzquierda": {
+          "name": "grosorCapasGrasaInferiorIzquierda",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "responsablesMorfometria": {
+          "name": "responsablesMorfometria",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "responsablesFormatoE1": {
+          "name": "responsablesFormatoE1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "grosorCapasGrasaExternaDorsal": {
+          "name": "grosorCapasGrasaExternaDorsal",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "grosorCapasGrasaExternaLateral": {
+          "name": "grosorCapasGrasaExternaLateral",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "grosorCapasGrasaExternaVentral": {
+          "name": "grosorCapasGrasaExternaVentral",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "grosorCapasGrasaInternaDorsal": {
+          "name": "grosorCapasGrasaInternaDorsal",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "grosorCapasGrasaInternaLateral": {
+          "name": "grosorCapasGrasaInternaLateral",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "grosorCapasGrasaInternaVentral": {
+          "name": "grosorCapasGrasaInternaVentral",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "numeroDientesSuperiorDerecha": {
+          "name": "numeroDientesSuperiorDerecha",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "numeroDientesSuperiorIzquierda": {
+          "name": "numeroDientesSuperiorIzquierda",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "numeroDientesInferiorDerecha": {
+          "name": "numeroDientesInferiorDerecha",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "numeroDientesInferiorIzquierda": {
+          "name": "numeroDientesInferiorIzquierda",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "especimen_id": {
+          "name": "especimen_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "sirenio_especimen_id_especimen_id_fk": {
+          "name": "sirenio_especimen_id_especimen_id_fk",
+          "tableFrom": "sirenio",
+          "tableTo": "especimen",
+          "columnsFrom": [
+            "especimen_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "varamiento_masivo": {
+      "name": "varamiento_masivo",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "avesMuertas": {
+          "name": "avesMuertas",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "avesMuertasCantidad": {
+          "name": "avesMuertasCantidad",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "pecesMuertos": {
+          "name": "pecesMuertos",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "pecesMuertosCantidad": {
+          "name": "pecesMuertosCantidad",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "numeroTotalDeAnimales": {
+          "name": "numeroTotalDeAnimales",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "subGrupos": {
+          "name": "subGrupos",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "animalesVivos": {
+          "name": "animalesVivos",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "animalesMuertos": {
+          "name": "animalesMuertos",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "observaciones": {
+          "name": "observaciones",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "aviso_id": {
+          "name": "aviso_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "varamiento_masivo_aviso_id_avisos_id_fk": {
+          "name": "varamiento_masivo_aviso_id_avisos_id_fk",
+          "tableFrom": "varamiento_masivo",
+          "tableTo": "avisos",
+          "columnsFrom": [
+            "aviso_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}

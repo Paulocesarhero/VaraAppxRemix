@@ -19,6 +19,8 @@ import {
   getAllAmbiente,
 } from "../../../../database/repository/ambienteRepo";
 import { getAvisosBdLocal } from "../../../../database/repository/avisoRepo";
+import { getEspeciesBdLocal } from "../../../../database/repository/especieRepo";
+import { getMisticetosBdLocal } from "../../../../database/repository/misticetoRepo";
 import {
   ambiente,
   avisos as dbAvisos,
@@ -52,6 +54,20 @@ const SettingsPage: React.FC = () => {
     } catch (error) {
       console.error("Error al obtener datos:", error);
     }
+  }
+
+  async function handleGetAllEspecie() {
+    const data = await getEspeciesBdLocal();
+    console.log("====== Result of get Especie ======");
+    console.log(JSON.stringify(data, null, 2));
+    console.log("====================================");
+  }
+
+  async function getAllMisticetos() {
+    const data = await getMisticetosBdLocal();
+    console.log("====== Result of get Misticetos ======");
+    console.log(JSON.stringify(data, null, 2));
+    console.log("====================================");
   }
 
   async function handleAddAmbiente() {
@@ -126,6 +142,17 @@ const SettingsPage: React.FC = () => {
           onPress={handleDeleteAllAmbiente}
           color="#151515"
           text="DeleteAllAmbiente"
+        />
+
+        <RoundedButton
+          onPress={handleGetAllEspecie}
+          color="#151515"
+          text="get all especie"
+        />
+        <RoundedButton
+          onPress={getAllMisticetos}
+          color="#151515"
+          text="get all especie"
         />
       </View>
       <ScrollView />

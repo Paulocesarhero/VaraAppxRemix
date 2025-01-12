@@ -4,7 +4,7 @@ import { FormValuesCaracteristicasFisicasYAmbientales } from "../../forms/Caract
 import { db } from "../connection/sqliteConnection";
 import { ambiente } from "../schemas/avisoSchema";
 
-type ambienteType = typeof ambiente.$inferInsert;
+type NewAmbiente = typeof ambiente.$inferInsert;
 
 export const getIdAmbienteByIdAviso = async (idAviso: number) => {
   try {
@@ -66,7 +66,7 @@ export const getAmbienteByIdAvisoLocalDb = async (
 };
 
 export const addAmbienteIfNotExist = async (idAviso: number): Promise<void> => {
-  const newambiente: ambienteType = {
+  const newambiente: NewAmbiente = {
     temperaturaAmbiente: 0,
     precipitacionHoy: 0,
     temperaturaSupMar: 0,
@@ -95,7 +95,6 @@ export const updateAmbienteByIdAviso = async (
   idAviso: number,
   ambienteData: Partial<FormValuesCaracteristicasFisicasYAmbientales>
 ): Promise<number> => {
-  // Obtener los valores existentes de la base de datos
   const ambienteExistente = await db
     .select()
     .from(ambiente)
@@ -110,7 +109,7 @@ export const updateAmbienteByIdAviso = async (
   }
 
   // Crear un nuevo objeto con los valores actualizados
-  const newAmbiente: ambienteType = {
+  const newAmbiente: NewAmbiente = {
     temperaturaAmbiente:
       ambienteData.temperaturaAmbiente !== undefined
         ? Number(ambienteData.temperaturaAmbiente)

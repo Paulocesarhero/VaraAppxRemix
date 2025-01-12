@@ -1,4 +1,5 @@
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
+import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
 import { Redirect } from "expo-router";
 import React from "react";
 import { Text, View } from "react-native";

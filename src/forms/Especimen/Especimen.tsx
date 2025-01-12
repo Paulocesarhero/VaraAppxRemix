@@ -22,6 +22,7 @@ import { FormatoIndividualProps } from "./types";
 import EspecieSelector from "../../components/EspecieSelector/EspecieSelector";
 import InlineButton from "../../components/InlineButton/InlineButton";
 import PhotoAndInputForm from "../../components/PhotoAndInputs/PhotoAndInputs";
+import useAvisoStore from "../../hooks/globalState/useAvisoStore";
 import { handleNumericInputWithOnepoint } from "../../hooks/validations";
 import { Especie } from "../../services/Especie/GetEspecie";
 
@@ -31,6 +32,7 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
   onSubmitData,
   isDisabled,
 }) => {
+  const { setIdtaxaEspecie } = useAvisoStore();
   const { handleSubmit, control, watch, setValue, getValues } =
     useForm<FormValuesEspecimen>({
       mode: "onBlur",
@@ -104,6 +106,7 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
     setValue("Longitud", getValues("Longitud"));
   };
   const handleEspecieSelecter = (especie: Especie) => {
+    setIdtaxaEspecie(especie.taxa);
     setValue("Especie.id", especie.id);
   };
 
@@ -168,7 +171,7 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
         >
           <InlineButton
             text="Continuar y guardar"
-            onPress={handleSubmit(onValuesChange)}
+            onPress={handleSubmit(onSubmitData)}
             icon={
               <MaterialCommunityIcons
                 name="page-next-outline"
@@ -176,6 +179,24 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
                 color="black"
               />
             }
+          />
+          <Controller
+            control={control}
+            name="Especie"
+            render={({ field: { value, onChange } }) => (
+              <View
+                style={{ paddingHorizontal: 10 }}
+                pointerEvents={isDisabled ? "none" : "auto"}
+              >
+                <EspecieSelector
+                  selectedEspecie={value ?? null}
+                  onSelectEspecie={(value) => {
+                    handleEspecieSelecter(value);
+                    onChange(value);
+                  }}
+                />
+              </View>
+            )}
           />
           <InputField
             nameInput="Latitud"
@@ -278,24 +299,6 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
               </View>
             )}
           </View>
-          <Controller
-            control={control}
-            name="Especie"
-            render={({ field: { value, onChange } }) => (
-              <View
-                style={{ paddingHorizontal: 10 }}
-                pointerEvents={isDisabled ? "none" : "auto"}
-              >
-                <EspecieSelector
-                  selectedEspecie={value ?? null}
-                  onSelectEspecie={(value) => {
-                    handleEspecieSelecter(value);
-                    onChange(value);
-                  }}
-                />
-              </View>
-            )}
-          />
           <Controller
             control={control}
             name="condicion"

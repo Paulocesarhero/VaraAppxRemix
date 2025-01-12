@@ -12,7 +12,7 @@ import {
 import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
 import InputField from "varaapplib/components/MaterialInput/MaterialInput";
 
-import FormValuesMorfometriaMisticeto from "./FormValuesMorfometriaMisticeto";
+import { FormValuesMorfometriaMisticeto } from "./FormValuesMorfometriaMisticeto";
 import { MorfometriaMisticetoStyle } from "./MorfometriaMisticetoStyle";
 import MorfometriaMisticetoProps from "./types";
 import LabelAndImage from "../../components/LabelAndImage/LabelAndImage";

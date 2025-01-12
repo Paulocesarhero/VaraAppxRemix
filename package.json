@@ -26,6 +26,7 @@
     "date-fns": "^4.1.0",
     "drizzle-orm": "^0.38.3",
     "expo": "^52.0.0",
+    "expo-drizzle-studio-plugin": "^0.1.1",
     "expo-image": "~2.0.1",
     "expo-linear-gradient": "~14.0.1",
     "expo-localization": "~16.0.0",
