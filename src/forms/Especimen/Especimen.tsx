@@ -1,7 +1,7 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Location from "expo-location";
 import React, { useEffect } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -31,6 +31,7 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
   onValuesChange,
   onSubmitData,
   isDisabled,
+  hasMorfometria,
 }) => {
   const { setIdtaxaEspecie } = useAvisoStore();
   const { handleSubmit, control, watch, setValue, getValues } =
@@ -180,24 +181,27 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
               />
             }
           />
-          <Controller
-            control={control}
-            name="Especie"
-            render={({ field: { value, onChange } }) => (
-              <View
-                style={{ paddingHorizontal: 10 }}
-                pointerEvents={isDisabled ? "none" : "auto"}
-              >
-                <EspecieSelector
-                  selectedEspecie={value ?? null}
-                  onSelectEspecie={(value) => {
-                    handleEspecieSelecter(value);
-                    onChange(value);
-                  }}
-                />
-              </View>
-            )}
-          />
+          {!hasMorfometria && (
+            <Controller
+              control={control}
+              name="Especie"
+              render={({ field: { value, onChange } }) => (
+                <View
+                  style={{ paddingHorizontal: 10 }}
+                  pointerEvents={isDisabled ? "none" : "auto"}
+                >
+                  <EspecieSelector
+                    selectedEspecie={value ?? null}
+                    onSelectEspecie={(value) => {
+                      handleEspecieSelecter(value);
+                      onChange(value);
+                    }}
+                  />
+                </View>
+              )}
+            />
+          )}
+
           <InputField
             nameInput="Latitud"
             iconName="compass"

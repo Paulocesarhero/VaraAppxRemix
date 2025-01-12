@@ -1,15 +1,6 @@
 import { eq } from "drizzle-orm";
-import React, { useEffect, useState } from "react";
-import {
-  ScrollView,
-  Text,
-  StyleSheet,
-  Button,
-  Pressable,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 import RoundedButton from "varaapplib/components/RoundedButton/RoundedButton";
 
 import { db } from "../../../../database/connection/sqliteConnection";
@@ -20,6 +11,7 @@ import {
 } from "../../../../database/repository/ambienteRepo";
 import { getAvisosBdLocal } from "../../../../database/repository/avisoRepo";
 import { getEspeciesBdLocal } from "../../../../database/repository/especieRepo";
+import { getAllEspecimen } from "../../../../database/repository/especimenRepo";
 import { getMisticetosBdLocal } from "../../../../database/repository/misticetoRepo";
 import {
   ambiente,
@@ -103,6 +95,17 @@ const SettingsPage: React.FC = () => {
     }
   }
 
+  async function handleGetAllEspecimen() {
+    try {
+      const data = await getAllEspecimen();
+      console.log("====== Result of get Misticetos ======");
+      console.log(JSON.stringify(data, null, 2));
+      console.log("====================================");
+    } catch (error) {
+      console.error("Error al obtener datos:", error);
+    }
+  }
+
   return (
     <ScrollView style={SettingsPageStyle.container}>
       <View
@@ -152,7 +155,12 @@ const SettingsPage: React.FC = () => {
         <RoundedButton
           onPress={getAllMisticetos}
           color="#151515"
-          text="get all especie"
+          text="get all misticetos"
+        />
+        <RoundedButton
+          onPress={handleGetAllEspecimen}
+          color="#151515"
+          text="get all especimen"
         />
       </View>
       <ScrollView />

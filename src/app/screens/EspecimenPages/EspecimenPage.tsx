@@ -5,6 +5,7 @@ import { Text, View } from "react-native";
 import {
   addEspecimenIfNotExist,
   getEspecimenByIdAvisoLocal,
+  hasRegistroMorfometrico,
   updateEspecimenByIdAviso,
 } from "../../../database/repository/especimenRepo";
 import Especimen from "../../../forms/Especimen/Especimen";
@@ -17,6 +18,7 @@ const EspecimenPage: React.FC = () => {
   const idEspecimen = useAvisoStore((state) => state.idEspecimen);
   const { setIdEspecimen } = useAvisoStore();
   const [formValues, setFormValues] = useState<FormValuesEspecimen>();
+  const [hasMorfometria, setHasMorfometria] = useState<boolean>();
   const router = useRouter();
   const MISTICETO = 0;
   const PINNIPEDO = 1;
@@ -56,6 +58,22 @@ const EspecimenPage: React.FC = () => {
         break;
     }
   };
+
+  const loadHasMorfometria = async () => {
+    setIsLoading(true);
+    try {
+      const result = await hasRegistroMorfometrico(idEspecimen);
+      setHasMorfometria(result);
+    } catch (error) {
+      console.error("Error al obtener el valor de morfometria: ", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    loadHasMorfometria();
+  }, [idEspecimen]);
+
   useEffect(() => {
     loadEspecimen();
   }, [idSelected]);
@@ -67,6 +85,7 @@ const EspecimenPage: React.FC = () => {
   return (
     <View>
       <Especimen
+        hasMorfometria={hasMorfometria ?? false}
         initialValues={formValues}
         onValuesChange={async (values: Partial<FormValuesEspecimen>) => {
           await updateEspecimenByIdAviso(idSelected, values);

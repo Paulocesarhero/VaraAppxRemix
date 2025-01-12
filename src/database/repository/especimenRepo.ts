@@ -2,7 +2,13 @@ import { eq } from "drizzle-orm";
 
 import { FormValuesEspecimen } from "../../forms/Especimen/FormValuesEspecimen";
 import { db } from "../connection/sqliteConnection";
-import { especimen } from "../schemas/avisoSchema";
+import {
+  especimen,
+  misticeto,
+  odontoceto,
+  pinnipedo,
+  sirenio,
+} from "../schemas/avisoSchema";
 
 type NewEspecimen = typeof especimen.$inferInsert;
 
@@ -152,4 +158,35 @@ export const getEspecimenByIdAvisoLocal = async (
     console.error("Error al obtener el especimen:", error);
     throw new Error(`Error al obtener el especimen para el aviso ${idAviso}`);
   }
+};
+
+export const getAllEspecimen = async () => {
+  const result = await db.select().from(especimen);
+  return result;
+};
+
+export const hasRegistroMorfometrico = async (idEspecimen: number) => {
+  const misticetoRequest = await db
+    .select()
+    .from(misticeto)
+    .where(eq(misticeto.especimenId, idEspecimen));
+  const odontocetoRequest = await db
+    .select()
+    .from(odontoceto)
+    .where(eq(odontoceto.especimenId, idEspecimen));
+  const pinnipedoRequest = await db
+    .select()
+    .from(pinnipedo)
+    .where(eq(pinnipedo.especimenId, idEspecimen));
+  const sirenioRequest = await db
+    .select()
+    .from(sirenio)
+    .where(eq(sirenio.especimenId, idEspecimen));
+
+  return (
+    misticetoRequest.length > 0 ||
+    odontocetoRequest.length > 0 ||
+    pinnipedoRequest.length > 0 ||
+    sirenioRequest.length > 0
+  );
 };

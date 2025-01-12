@@ -11,4 +11,5 @@ export interface FormatoIndividualProps {
    * @param {FormValuesFormatoIndividual} data - Datos del formulario de especimen.
    */
   onSubmitData: (data: FormValuesFormatoIndividual) => void;
+  hasMorfometria: boolean;
 }
