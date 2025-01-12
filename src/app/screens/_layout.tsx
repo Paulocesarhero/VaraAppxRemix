@@ -1,7 +1,7 @@
 import Entypo from "@expo/vector-icons/Entypo";
 import { Stack, useRouter } from "expo-router";
 import React from "react";
-import { Platform } from "react-native";
+import { Platform, Text, View } from "react-native";
 
 const Layout: React.FC = () => {
   const router = useRouter();
@@ -10,7 +10,9 @@ const Layout: React.FC = () => {
   };
   const headerHome = () => {
     return (
-      <Entypo name="home" size={24} color="black" onPress={navigateToHome} />
+      <View style={{ margin: 12 }}>
+        <Entypo name="home" size={24} color="black" onPress={navigateToHome} />
+      </View>
     );
   };
 
@@ -28,6 +30,7 @@ const Layout: React.FC = () => {
           headerBackButtonDisplayMode: "minimal",
           headerTransparent: Platform.OS === "ios",
           headerBlurEffect: Platform.OS === "ios" ? "regular" : undefined,
+          headerLeft: headerHome,
         }}
       />
       <Stack.Screen
@@ -38,6 +41,7 @@ const Layout: React.FC = () => {
           headerBackTitle: "regresar",
           headerTransparent: Platform.OS === "ios",
           headerBlurEffect: Platform.OS === "ios" ? "regular" : undefined,
+          headerLeft: headerHome,
         }}
       />
       <Stack.Screen
@@ -48,17 +52,18 @@ const Layout: React.FC = () => {
           headerBackTitle: "regresar",
           headerTransparent: Platform.OS === "ios",
           headerBlurEffect: Platform.OS === "ios" ? "regular" : undefined,
+          headerLeft: headerHome,
         }}
       />
       <Stack.Screen
         name="EspecimenPages/EspecimenPage"
         options={{
-          title: "Home",
-          headerTitle: headerHome,
+          title: "Espécimen",
           headerBackButtonDisplayMode: "minimal",
           headerBackTitle: "regresar",
-          // headerTransparent: Platform.OS === "ios",
-          // headerBlurEffect: Platform.OS === "ios" ? "regular" : undefined,
+          headerLeft: headerHome,
+          headerTransparent: Platform.OS === "ios",
+          headerBlurEffect: Platform.OS === "ios" ? "regular" : undefined,
         }}
       />
     </Stack>

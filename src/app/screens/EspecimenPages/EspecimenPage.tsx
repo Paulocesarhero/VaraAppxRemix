@@ -1,6 +1,7 @@
+import { useHeaderHeight } from "@react-navigation/elements";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Platform, Text, View } from "react-native";
 
 import {
   addEspecimenIfNotExist,
@@ -77,13 +78,14 @@ const EspecimenPage: React.FC = () => {
   useEffect(() => {
     loadEspecimen();
   }, [idSelected]);
+  const headerHeight = useHeaderHeight();
 
   if (isLoading) {
     return <Text>Cargando datos...</Text>;
   }
 
   return (
-    <View>
+    <View style={{ paddingTop: Platform.OS === "android" ? 0 : headerHeight }}>
       <Especimen
         hasMorfometria={hasMorfometria ?? false}
         initialValues={formValues}
