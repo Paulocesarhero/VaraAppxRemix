@@ -9,10 +9,14 @@ import {
   View,
 } from "react-native";
 
-import useAuthStore from "../../hooks/globalState/useAuthStore";
-import getEspecies, { Especie } from "../../services/Especie/GetEspecie";
 import { EspecieSelectorStyle } from "./EspecieSelectorStyle";
 import EspecieSelectorProps from "./types";
+import {
+  getEspeciesBdLocal,
+  setEspeciesBdLocal,
+} from "../../database/repository/especieRepo";
+import useAuthStore from "../../hooks/globalState/useAuthStore";
+import getEspecies, { Especie } from "../../services/Especie/GetEspecie";
 
 const EspecieSelector: React.FC<EspecieSelectorProps> = ({
   onSelectEspecie,
@@ -29,9 +33,14 @@ const EspecieSelector: React.FC<EspecieSelectorProps> = ({
     const fetchEspecies = async () => {
       try {
         const data = await getEspecies(token ?? "");
+        setEspeciesBdLocal(data.data as unknown as Especie[]);
         setEspecies(data.data);
       } catch (err) {
-        setError("Hubo un error al obtener las especies.");
+        const especiesBdLocal = await getEspeciesBdLocal();
+        if (especiesBdLocal.length > 0) {
+          setEspecies(especiesBdLocal as Especie[]);
+          setLoading(false);
+        }
       } finally {
         setLoading(false);
       }
