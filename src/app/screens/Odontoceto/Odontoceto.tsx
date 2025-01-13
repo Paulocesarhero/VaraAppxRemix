@@ -2,15 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Text } from "react-native";
 
 import {
-  addMisticetoIfNotExist,
-  getMisticetoByIdEspecimenLocal,
-} from "../../../database/repository/misticetoRepo";
-import {
   addOdontocetoIfNotExist,
   getOdontocetoByIdEspecimenLocal,
   updateOdontocetoByIdEspecimen,
 } from "../../../database/repository/odontocetoRepo";
-import { FormValuesMorfometriaMisticeto } from "../../../forms/MorfometriaMisticeto/FormValuesMorfometriaMisticeto";
 import MorfometriaOdontoceto from "../../../forms/MorformetriaOdontoceto/MorfometriaOdontoceto";
 import RegistroMorfometricoOdontoceto from "../../../forms/MorformetriaOdontoceto/RegistroMorfometricoOdontoceto";
 import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
