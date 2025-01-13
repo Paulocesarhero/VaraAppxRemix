@@ -6,4 +6,6 @@ export interface SoloOrganismosVivosProps {
   initialValues: FormValuesSoloOrganismosVivos;
 
   onValuesChange: (values: Partial<FormValuesSoloOrganismosVivos>) => void;
+
+  onSubmitData: (values: FormValuesSoloOrganismosVivos) => void;
 }

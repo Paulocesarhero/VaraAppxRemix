@@ -7,18 +7,7 @@ interface AccionesYResultadosFormProps {
    */
   onSubmitData: (data: FormValuesAccionesYresultados) => void;
 
-  /**
-   * Indica si el formulario está en estado de carga.
-   */
-  loading: boolean;
-
-  /**
-   * Función para actualizar el estado de carga del formulario.
-   * @param loading - Un valor booleano que representa el nuevo estado de carga.
-   */
-  setLoading: (loading: boolean) => void;
-
-  initialValues: FormValuesAccionesYresultados;
+  initialValues?: FormValuesAccionesYresultados;
 
   onValuesChange: (values: Partial<FormValuesAccionesYresultados>) => void;
 }

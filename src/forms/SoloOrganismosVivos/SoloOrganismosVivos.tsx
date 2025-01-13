@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
@@ -14,17 +15,20 @@ import InputField from "varaapplib/components/MaterialInput/MaterialInput";
 
 import { FormValuesSoloOrganismosVivos } from "./FormValuesSoloOrganismosVivos";
 import { SoloOrganismosVivosProps } from "./types";
+import InlineButton from "../../components/InlineButton/InlineButton";
 import { handleNumericInputWithOnepoint } from "../../hooks/validations";
 
 const SoloOrganismosVivos: React.FC<SoloOrganismosVivosProps> = ({
   initialValues,
   isDisabled,
   onValuesChange,
+  onSubmitData,
 }) => {
-  const { control, setValue, watch } = useForm<FormValuesSoloOrganismosVivos>({
-    mode: "onSubmit",
-    defaultValues: initialValues,
-  });
+  const { control, setValue, watch, handleSubmit } =
+    useForm<FormValuesSoloOrganismosVivos>({
+      mode: "onSubmit",
+      defaultValues: initialValues,
+    });
 
   const watchedValues = watch();
   useEffect(() => {
@@ -37,6 +41,17 @@ const SoloOrganismosVivos: React.FC<SoloOrganismosVivosProps> = ({
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView keyboardShouldPersistTaps="handled">
+          <InlineButton
+            text="Continuar y guardar"
+            onPress={handleSubmit(onSubmitData)}
+            icon={
+              <MaterialCommunityIcons
+                name="page-next-outline"
+                size={24}
+                color="black"
+              />
+            }
+          />
           <InputField
             nameInput="tasaDeRespiracion"
             iconName="help"

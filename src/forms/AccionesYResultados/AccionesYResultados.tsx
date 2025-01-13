@@ -20,10 +20,8 @@ import MultiMaterialSelector from "../../components/MultiMaterialSelector/MultiM
 
 const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
   onSubmitData,
-  loading,
   initialValues,
   onValuesChange,
-  setLoading,
 }: AccionesYResultadosFormProps) => {
   const { handleSubmit, control, watch } =
     useForm<FormValuesAccionesYresultados>({
@@ -110,14 +108,6 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
           ref={scrollViewRef}
           keyboardShouldPersistTaps="handled"
         >
-          <RoundedButton
-            style={{ paddingHorizontal: 10 }}
-            onPress={handleSubmit(onSubmit)}
-            color="#000"
-            text="Enviar"
-            loading={loading}
-          />
-
           <InputField
             nameInput="Autoridades"
             iconName="briefcase"

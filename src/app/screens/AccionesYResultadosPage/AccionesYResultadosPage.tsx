@@ -1,24 +1,54 @@
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { ColorsPalete } from "../../../constants/COLORS";
+import {
+  addAccionesIfNotExists,
+  getAccionesByIdEspecimenLocal,
+  NewAcciones,
+  updateAccionesByIdEspecimen,
+} from "../../../database/repository/AccionesRepo";
+import { updateOrganismoByIdEspecimen } from "../../../database/repository/SoloOrganismosVivosRepo";
 import AccionesYResultadosForm from "../../../forms/AccionesYResultados/AccionesYResultados";
 import FormValuesAccionesYresultados from "../../../forms/AccionesYResultados/FormValuesAccionesYresultados";
-import accionesResultadosFormStore from "../../../hooks/accionesResultadosFormStore";
+import { FormValuesSoloOrganismosVivos } from "../../../forms/SoloOrganismosVivos/FormValuesSoloOrganismosVivos";
+import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 
 const Recommendations: React.FC = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const idSelected = useAvisoStore((state) => state.idSelected);
+  const [formValues, setFormValues] = useState<FormValuesAccionesYresultados>();
+  const idEspecimen = useAvisoStore((state) => state.idEspecimen);
   const router = useRouter();
-  const handleBack = () => {
-    router.back();
+  const loadAcciones = async () => {
+    setIsLoading(true);
+    try {
+      if (idSelected > 0) {
+        const result = await addAccionesIfNotExists(idSelected);
+        const formValuesDbLocal =
+          await getAccionesByIdEspecimenLocal(idSelected);
+        setFormValues(formValuesDbLocal);
+      }
+    } catch (error) {
+      console.error("Error al obtener aviso: ", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
-  const handleSubmit = () => {};
-  const handleRegistrarAviso = () => {
-    router.push("screens/Stranding/StrandingPage");
+  useEffect(() => {
+    loadAcciones();
+  }, [idSelected]);
+  const handleValuesChange = async (
+    values: Partial<FormValuesAccionesYresultados>
+  ) => {
+    await updateAccionesByIdEspecimen(idEspecimen, values);
   };
-  const { formValues, setFormValues, resetForm } =
-    accionesResultadosFormStore();
 
+  if (isLoading) {
+    return <Text>Cargando datos...</Text>;
+  }
   return (
     <SafeAreaView
       edges={["bottom"]}
@@ -28,12 +58,8 @@ const Recommendations: React.FC = () => {
         onSubmitData={(data: FormValuesAccionesYresultados) => {
           console.log("Datos enviados:", data);
         }}
-        loading={false}
-        setLoading={function (loading: boolean): void {
-          throw new Error("Function not implemented.");
-        }}
         initialValues={formValues}
-        onValuesChange={setFormValues}
+        onValuesChange={handleValuesChange}
       />
     </SafeAreaView>
   );

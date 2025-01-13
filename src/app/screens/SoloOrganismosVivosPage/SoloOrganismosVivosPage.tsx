@@ -1,4 +1,5 @@
 import { useHeaderHeight } from "@react-navigation/elements";
+import { useExpoRouter } from "expo-router/build/global-state/router-store";
 import React, { useEffect, useState } from "react";
 import { Platform, Text, View } from "react-native";
 
@@ -15,6 +16,7 @@ const SoloOrganismosVivosPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const idEspecimen = useAvisoStore((state) => state.idEspecimen);
   const [formValues, setFormValues] = useState<FormValuesSoloOrganismosVivos>();
+  const router = useExpoRouter();
 
   const loadOrganismo = async () => {
     setIsLoading(true);
@@ -50,6 +52,9 @@ const SoloOrganismosVivosPage: React.FC = () => {
     );
   };
   const headerHeight = useHeaderHeight();
+  const onSubmitData = async () => {
+    router.navigate("screens/AccionesYResultadosPage/AccionesYResultadosPage");
+  };
 
   if (isLoading) {
     return <Text>Cargando datos...</Text>;
@@ -58,6 +63,7 @@ const SoloOrganismosVivosPage: React.FC = () => {
   return (
     <View style={{ paddingTop: Platform.OS === "android" ? 0 : headerHeight }}>
       <SoloOrganismosVivos
+        onSubmitData={onSubmitData}
         isDisabled={false}
         initialValues={formValues || ({} as FormValuesSoloOrganismosVivos)}
         onValuesChange={handleValuesChange}
