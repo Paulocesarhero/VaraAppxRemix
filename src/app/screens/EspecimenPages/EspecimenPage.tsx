@@ -1,5 +1,5 @@
 import { useHeaderHeight } from "@react-navigation/elements";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Platform, Text, View } from "react-native";
 
@@ -42,6 +42,12 @@ const EspecimenPage: React.FC = () => {
       setIsLoading(false);
     }
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      loadHasMorfometria();
+    }, [idSelected, idEspecimen])
+  );
 
   const onSubmitData = (data: FormValuesEspecimen) => {
     switch (idtaxaEspecie) {
