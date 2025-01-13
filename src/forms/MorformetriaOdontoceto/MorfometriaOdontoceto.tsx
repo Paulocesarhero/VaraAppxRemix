@@ -15,7 +15,7 @@ import { MorformetriaOdontocetoProps } from "./types";
 import LabelAndImage from "../../components/LabelAndImage/LabelAndImage";
 import { ColorsPalete } from "../../constants/COLORS";
 import { handleNumericInputWithOnepoint } from "../../hooks/validations";
-import FormValuesMorfometriaMisticeto from "../MorfometriaMisticeto/FormValuesMorfometriaMisticeto";
+import { FormValuesMorfometriaMisticeto } from "../MorfometriaMisticeto/FormValuesMorfometriaMisticeto";
 import { MorfometriaMisticetoStyle } from "../MorfometriaMisticeto/MorfometriaMisticetoStyle";
 
 const MorfometriaOdontoceto: React.FC<MorformetriaOdontocetoProps> = ({
