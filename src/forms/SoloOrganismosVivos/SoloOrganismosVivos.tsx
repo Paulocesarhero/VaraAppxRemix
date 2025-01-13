@@ -38,7 +38,7 @@ const SoloOrganismosVivos: React.FC<SoloOrganismosVivosProps> = ({
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView keyboardShouldPersistTaps="handled">
           <InputField
-            nameInput="TasaDeRespiracion"
+            nameInput="tasaDeRespiracion"
             iconName="help"
             iconFamily="Ionicons"
             label="Tasa de respiración"
@@ -46,7 +46,7 @@ const SoloOrganismosVivos: React.FC<SoloOrganismosVivosProps> = ({
             keyboardType="numeric"
             onChangeText={(text) =>
               handleNumericInputWithOnepoint(
-                "TasaDeRespiracion",
+                "tasaDeRespiracion",
                 text,
                 setValue
               )

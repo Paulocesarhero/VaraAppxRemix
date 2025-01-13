@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Text } from "react-native";
 
@@ -34,6 +35,11 @@ const Pinnipedo: React.FC = () => {
   useEffect(() => {
     loadPinnipedo();
   }, [idEspecimen]);
+  const router = useRouter();
+  const onSubmitData = async () => {
+    router.navigate("screens/SoloOrganismosVivosPage/SoloOrganismosVivosPage");
+  };
+
   if (isLoading) {
     return <Text>Cargando datos...</Text>;
   }
@@ -44,6 +50,7 @@ const Pinnipedo: React.FC = () => {
       onValuesChange={async (values) => {
         await updatePinnipedoByIdEspecimen(idEspecimen, values);
       }}
+      onSubmitData={onSubmitData}
     />
   );
 };

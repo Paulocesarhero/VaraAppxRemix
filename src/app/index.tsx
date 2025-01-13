@@ -28,7 +28,7 @@ export default function App() {
   }
 
   return isLoggedIn ? (
-    <Redirect href="screens/Home/Recommendations/Recommendations" />
+    <Redirect href="screens/(home)/Recommendations/Recommendations" />
   ) : (
     <LoginPage />
   );

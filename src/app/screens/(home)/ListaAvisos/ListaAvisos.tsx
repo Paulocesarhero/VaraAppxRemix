@@ -19,7 +19,7 @@ const ListaAvisos: React.FC = () => {
   const { avisos, fetchAvisosLocales, fetchAvisosRemotos, deleteAviso } =
     useListAvisoStore();
   const token = useAuthStore((state) => state.token);
-  const { setIdSelected } = useAvisoStore();
+  const { setIdSelected, setIdEspecimen, setIdtaxaEspecie } = useAvisoStore();
   const [refreshing, setRefreshing] = useState(false);
   const pathname = usePathname();
 
@@ -54,6 +54,8 @@ const ListaAvisos: React.FC = () => {
   useEffect(() => {
     if (pathname === "/screens/ListaAvisos/ListaAvisos") {
       setIdSelected(0);
+      setIdtaxaEspecie(0);
+      setIdEspecimen(0);
     }
   }, [pathname]);
   return (

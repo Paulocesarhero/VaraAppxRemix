@@ -1,3 +1,20 @@
+CREATE TABLE `acciones` (
+	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+	`autoridades` text,
+	`telefonoAutoridades` text,
+	`morfometria` integer,
+	`necropsia` integer,
+	`disposicionDelCadaver` integer,
+	`disposicionOtro` text,
+	`posibleCausaDelVaramiento` text,
+	`posibleCausaDeMuerte` text,
+	`participantes` text,
+	`observaciones` text,
+	`tipoDeMuestras` text,
+	`especimen_id` integer,
+	FOREIGN KEY (`especimen_id`) REFERENCES `especimen`(`id`) ON UPDATE no action ON DELETE no action
+);
+--> statement-breakpoint
 CREATE TABLE `ambiente` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`temperaturaAmbiente` integer,
@@ -221,6 +238,22 @@ CREATE TABLE `odontoceto` (
 	`m39LongitudDeLaAberturaMamariaC` text,
 	`m40LongitudDeLaAberturaGenitalC` text,
 	`m41LongitudDeLaAberturaAnalC` text,
+	`especimen_id` integer,
+	FOREIGN KEY (`especimen_id`) REFERENCES `especimen`(`id`) ON UPDATE no action ON DELETE no action
+);
+--> statement-breakpoint
+CREATE TABLE `organismo` (
+	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+	`tasaDeRespiracion` text,
+	`pulso` text,
+	`temperatura` text,
+	`antesDeVararse` text,
+	`varado` text,
+	`reflotacion` integer,
+	`despuesDeReflotar` text,
+	`animalTransferido` integer,
+	`lugarDeRehabilitacion` text,
+	`despuesDeVararse` text,
 	`especimen_id` integer,
 	FOREIGN KEY (`especimen_id`) REFERENCES `especimen`(`id`) ON UPDATE no action ON DELETE no action
 );

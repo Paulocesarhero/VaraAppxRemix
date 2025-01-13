@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -12,6 +13,7 @@ import InputField from "varaapplib/components/MaterialInput/MaterialInput";
 
 import RegistroMorfometricoOdontoceto from "./RegistroMorfometricoOdontoceto";
 import { MorformetriaOdontocetoProps } from "./types";
+import InlineButton from "../../components/InlineButton/InlineButton";
 import LabelAndImage from "../../components/LabelAndImage/LabelAndImage";
 import { ColorsPalete } from "../../constants/COLORS";
 import { handleNumericInputWithOnepoint } from "../../hooks/validations";
@@ -193,6 +195,17 @@ const MorfometriaOdontoceto: React.FC<MorformetriaOdontocetoProps> = ({
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <ScrollView>
+            <InlineButton
+              text="Continuar y guardar"
+              onPress={handleSubmit(onSubmitData)}
+              icon={
+                <MaterialCommunityIcons
+                  name="page-next-outline"
+                  size={24}
+                  color="black"
+                />
+              }
+            />
             {formKeys.map((key) => {
               const medidaKey = key.match(/m(\d+)/)?.[1];
               const imagenReferencia = images.find(
@@ -213,6 +226,7 @@ const MorfometriaOdontoceto: React.FC<MorformetriaOdontocetoProps> = ({
                   <InputField
                     label={formatFieldName(key)}
                     key={key}
+                    isRequired={false}
                     maxLength={20}
                     control={control}
                     nameInput={key}

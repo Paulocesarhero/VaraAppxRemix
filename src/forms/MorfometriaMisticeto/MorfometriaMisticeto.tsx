@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -15,6 +16,7 @@ import InputField from "varaapplib/components/MaterialInput/MaterialInput";
 import { FormValuesMorfometriaMisticeto } from "./FormValuesMorfometriaMisticeto";
 import { MorfometriaMisticetoStyle } from "./MorfometriaMisticetoStyle";
 import MorfometriaMisticetoProps from "./types";
+import InlineButton from "../../components/InlineButton/InlineButton";
 import LabelAndImage from "../../components/LabelAndImage/LabelAndImage";
 import { ColorsPalete } from "../../constants/COLORS";
 import {
@@ -26,6 +28,7 @@ const MorfometriaMisticeto: React.FC<MorfometriaMisticetoProps> = ({
   data,
   onValuesChange,
   isDisabled,
+  onSubmitData,
 }) => {
   const { handleSubmit, control, setValue, getValues, watch } =
     useForm<FormValuesMorfometriaMisticeto>({
@@ -193,6 +196,17 @@ const MorfometriaMisticeto: React.FC<MorfometriaMisticetoProps> = ({
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <ScrollView>
+            <InlineButton
+              text="Continuar y guardar"
+              onPress={handleSubmit(onSubmitData)}
+              icon={
+                <MaterialCommunityIcons
+                  name="page-next-outline"
+                  size={24}
+                  color="black"
+                />
+              }
+            />
             {formKeys.map((key, index) => {
               const medidaKey = key.match(/M(\d+)/)?.[1]; // Extraer el número de la medida
               const imagenReferencia = images.find(
@@ -224,6 +238,7 @@ const MorfometriaMisticeto: React.FC<MorfometriaMisticetoProps> = ({
                     <>
                       <InputField
                         label={formatFieldName(key)}
+                        isRequired={false}
                         key={key}
                         control={control}
                         maxLength={20}
@@ -238,6 +253,7 @@ const MorfometriaMisticeto: React.FC<MorfometriaMisticetoProps> = ({
                     <>
                       <InputField
                         label={formatFieldName(key)}
+                        isRequired={false}
                         key={key}
                         maxLength={20}
                         control={control}

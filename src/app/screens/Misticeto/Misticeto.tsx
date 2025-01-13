@@ -1,16 +1,12 @@
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Text } from "react-native";
 
-import {
-  addEspecimenIfNotExist,
-  getEspecimenByIdAvisoLocal,
-} from "../../../database/repository/especimenRepo";
 import {
   addMisticetoIfNotExist,
   getMisticetoByIdEspecimenLocal,
   updateMisticetoByIdEspecimen,
 } from "../../../database/repository/misticetoRepo";
-import { FormValuesEspecimen } from "../../../forms/Especimen/FormValuesEspecimen";
 import { FormValuesMorfometriaMisticeto } from "../../../forms/MorfometriaMisticeto/FormValuesMorfometriaMisticeto";
 import MorfometriaMisticeto from "../../../forms/MorfometriaMisticeto/MorfometriaMisticeto";
 import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
@@ -42,6 +38,11 @@ const Misticeto: React.FC = () => {
     loadMisticeto();
   }, [idEspecimen]);
 
+  const router = useRouter();
+  const onSubmitData = async () => {
+    router.navigate("screens/SoloOrganismosVivosPage/SoloOrganismosVivosPage");
+  };
+
   if (isLoading) {
     return <Text>Cargando datos...</Text>;
   }
@@ -52,6 +53,7 @@ const Misticeto: React.FC = () => {
       onValuesChange={async (values) => {
         await updateMisticetoByIdEspecimen(idEspecimen, values);
       }}
+      onSubmitData={onSubmitData}
     />
   );
 };

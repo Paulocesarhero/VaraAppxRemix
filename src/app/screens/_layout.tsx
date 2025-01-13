@@ -66,6 +66,53 @@ const Layout: React.FC = () => {
           headerBlurEffect: Platform.OS === "ios" ? "regular" : undefined,
         }}
       />
+      <Stack.Screen
+        name="SoloOrganismosVivosPage/SoloOrganismosVivosPage"
+        options={{
+          title: "Organismo vivo",
+          headerBackButtonDisplayMode: "minimal",
+          headerBackTitle: "regresar",
+          headerLeft: headerHome,
+          headerTransparent: Platform.OS === "ios",
+          headerBlurEffect: Platform.OS === "ios" ? "regular" : undefined,
+        }}
+      />
+      <Stack.Screen
+        name="Sirenio/Sirenio"
+        options={{
+          title: "Morfometria Sirenio",
+          headerBackButtonDisplayMode: "minimal",
+          headerBackTitle: "regresar",
+          headerLeft: headerHome,
+        }}
+      />
+      <Stack.Screen
+        name="Misticeto/Misticeto"
+        options={{
+          title: "Morfometria misticeto",
+          headerBackButtonDisplayMode: "minimal",
+          headerBackTitle: "regresar",
+          headerLeft: headerHome,
+        }}
+      />
+      <Stack.Screen
+        name="Odontoceto/Odontoceto"
+        options={{
+          title: "Morfometria odontoceto",
+          headerBackButtonDisplayMode: "minimal",
+          headerBackTitle: "regresar",
+          headerLeft: headerHome,
+        }}
+      />
+      <Stack.Screen
+        name="Pinnipedo/Pinnipedo"
+        options={{
+          title: "Morfometria pinnípedos",
+          headerBackButtonDisplayMode: "minimal",
+          headerBackTitle: "regresar",
+          headerLeft: headerHome,
+        }}
+      />
     </Stack>
   );
 };

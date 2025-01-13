@@ -1,5 +1,7 @@
+import { useHeaderHeight } from "@react-navigation/elements";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Text } from "react-native";
+import { Platform, Text, View } from "react-native";
 
 import {
   addOdontocetoIfNotExist,
@@ -35,12 +37,17 @@ const Odontoceto: React.FC = () => {
   useEffect(() => {
     loadOdontoceto();
   }, [idEspecimen]);
+  const router = useRouter();
+  const onSubmitData = async () => {
+    router.navigate("screens/SoloOrganismosVivosPage/SoloOrganismosVivosPage");
+  };
 
   if (isLoading) {
     return <Text>Cargando datos...</Text>;
   }
   return (
     <MorfometriaOdontoceto
+      onSubmitData={onSubmitData}
       data={formValues}
       onValuesChange={async (values) => {
         await updateOdontocetoByIdEspecimen(idEspecimen, values);

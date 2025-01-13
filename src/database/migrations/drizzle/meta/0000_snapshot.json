@@ -1,9 +1,124 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "1d808d37-102b-45b5-bf20-b1038cc81d6e",
+  "id": "9ec46481-506d-489e-b130-42ad72b943c7",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
+    "acciones": {
+      "name": "acciones",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "autoridades": {
+          "name": "autoridades",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "telefonoAutoridades": {
+          "name": "telefonoAutoridades",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "morfometria": {
+          "name": "morfometria",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "necropsia": {
+          "name": "necropsia",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "disposicionDelCadaver": {
+          "name": "disposicionDelCadaver",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "disposicionOtro": {
+          "name": "disposicionOtro",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "posibleCausaDelVaramiento": {
+          "name": "posibleCausaDelVaramiento",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "posibleCausaDeMuerte": {
+          "name": "posibleCausaDeMuerte",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "participantes": {
+          "name": "participantes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "observaciones": {
+          "name": "observaciones",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "tipoDeMuestras": {
+          "name": "tipoDeMuestras",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "especimen_id": {
+          "name": "especimen_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "acciones_especimen_id_especimen_id_fk": {
+          "name": "acciones_especimen_id_especimen_id_fk",
+          "tableFrom": "acciones",
+          "tableTo": "especimen",
+          "columnsFrom": [
+            "especimen_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
     "ambiente": {
       "name": "ambiente",
       "columns": {
@@ -1551,6 +1666,114 @@
         "odontoceto_especimen_id_especimen_id_fk": {
           "name": "odontoceto_especimen_id_especimen_id_fk",
           "tableFrom": "odontoceto",
+          "tableTo": "especimen",
+          "columnsFrom": [
+            "especimen_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "organismo": {
+      "name": "organismo",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "tasaDeRespiracion": {
+          "name": "tasaDeRespiracion",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "pulso": {
+          "name": "pulso",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "temperatura": {
+          "name": "temperatura",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "antesDeVararse": {
+          "name": "antesDeVararse",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "varado": {
+          "name": "varado",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "reflotacion": {
+          "name": "reflotacion",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "despuesDeReflotar": {
+          "name": "despuesDeReflotar",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "animalTransferido": {
+          "name": "animalTransferido",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lugarDeRehabilitacion": {
+          "name": "lugarDeRehabilitacion",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "despuesDeVararse": {
+          "name": "despuesDeVararse",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "especimen_id": {
+          "name": "especimen_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "organismo_especimen_id_especimen_id_fk": {
+          "name": "organismo_especimen_id_especimen_id_fk",
+          "tableFrom": "organismo",
           "tableTo": "especimen",
           "columnsFrom": [
             "especimen_id"

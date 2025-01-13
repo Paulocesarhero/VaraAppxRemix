@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -14,6 +15,7 @@ import InputField from "varaapplib/components/MaterialInput/MaterialInput";
 
 import { RegistroMorfometricoPinnipedo } from "./RegistroMorfometricoPinnipedo";
 import MorfometriaPinnipedoProps from "./types";
+import InlineButton from "../../components/InlineButton/InlineButton";
 import LabelAndImage from "../../components/LabelAndImage/LabelAndImage";
 import { ColorsPalete } from "../../constants/COLORS";
 import {
@@ -26,6 +28,7 @@ const MorfometriaPinnipedo: React.FC<MorfometriaPinnipedoProps> = ({
   data,
   isDisabled,
   onValuesChange,
+  onSubmitData,
 }) => {
   const { handleSubmit, control, setValue, getValues, watch } =
     useForm<RegistroMorfometricoPinnipedo>({
@@ -179,6 +182,17 @@ const MorfometriaPinnipedo: React.FC<MorfometriaPinnipedoProps> = ({
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <ScrollView>
+            <InlineButton
+              text="Continuar y guardar"
+              onPress={handleSubmit(onSubmitData)}
+              icon={
+                <MaterialCommunityIcons
+                  name="page-next-outline"
+                  size={24}
+                  color="black"
+                />
+              }
+            />
             {formKeys.map((key, index) => {
               const imageUrl = getImageUrl(key);
               return (

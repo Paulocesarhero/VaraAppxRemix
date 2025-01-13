@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -12,6 +13,7 @@ import InputField from "varaapplib/components/MaterialInput/MaterialInput";
 
 import RegistroMorfometricoSirenio from "./RegistroMorfometricoSirenio";
 import MorfometriaSirenioProps from "./types";
+import InlineButton from "../../components/InlineButton/InlineButton";
 import LabelAndImage from "../../components/LabelAndImage/LabelAndImage";
 import { ColorsPalete } from "../../constants/COLORS";
 import { handleNumericInput } from "../../hooks/validations";
@@ -142,6 +144,17 @@ const MorfometriaSirenio: React.FC<MorfometriaSirenioProps> = ({
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <ScrollView>
+            <InlineButton
+              text="Continuar y guardar"
+              onPress={handleSubmit(onSubmitData)}
+              icon={
+                <MaterialCommunityIcons
+                  name="page-next-outline"
+                  size={24}
+                  color="black"
+                />
+              }
+            />
             {formKeys.map((key, index) => {
               const imageUrl = getImageUrl(key);
 

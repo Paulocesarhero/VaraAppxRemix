@@ -347,3 +347,34 @@ export const sirenio = table("sirenio", {
   numeroDientesInferiorIzquierda: t.text(),
   especimenId: t.int("especimen_id").references(() => especimen.id),
 });
+
+export const organismo = table("organismo", {
+  id: t.int().primaryKey({ autoIncrement: true }),
+  tasaDeRespiracion: t.text(),
+  pulso: t.text(),
+  temperatura: t.text(),
+  antesDeVararse: t.text(),
+  varado: t.text(),
+  reflotacion: t.int().$type<0 | 1>(),
+  despuesDeReflotar: t.text(),
+  animalTransferido: t.int().$type<0 | 1>(),
+  lugarDeRehabilitacion: t.text(),
+  despuesDeVararse: t.text(),
+  especimenId: t.int("especimen_id").references(() => especimen.id),
+});
+
+export const acciones = table("acciones", {
+  id: t.int().primaryKey({ autoIncrement: true }),
+  autoridades: t.text(),
+  telefonoAutoridades: t.text(),
+  morfometria: t.int().$type<0 | 1>(),
+  necropsia: t.int().$type<0 | 1>(),
+  disposicionDelCadaver: t.int(),
+  disposicionOtro: t.text(),
+  posibleCausaDelVaramiento: t.text(),
+  posibleCausaDeMuerte: t.text(),
+  participantes: t.text(),
+  observaciones: t.text(),
+  tipoDeMuestras: t.text({ mode: "json" }),
+  especimenId: t.int("especimen_id").references(() => especimen.id),
+});

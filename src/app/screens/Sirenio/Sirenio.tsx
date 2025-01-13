@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Text } from "react-native";
 
@@ -34,6 +35,10 @@ const Sirenio: React.FC = () => {
   useEffect(() => {
     loadSirenio();
   }, [idEspecimen]);
+  const router = useRouter();
+  const onSubmitData = async () => {
+    router.navigate("screens/SoloOrganismosVivosPage/SoloOrganismosVivosPage");
+  };
 
   if (isLoading) {
     return <Text>Cargando datos...</Text>;
@@ -41,6 +46,7 @@ const Sirenio: React.FC = () => {
 
   return (
     <MorfometriaSirenio
+      onSubmitData={onSubmitData}
       data={formValues}
       onValuesChange={async (values) => {
         await updateSirenioByIdEspecimen(idEspecimen, values);

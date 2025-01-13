@@ -2,10 +2,10 @@ import { useRouter } from "expo-router";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { ColorsPalete } from "../../constants/COLORS";
-import AccionesYResultadosForm from "../../forms/AccionesYResultados/AccionesYResultados";
-import FormValuesAccionesYresultados from "../../forms/AccionesYResultados/FormValuesAccionesYresultados";
-import accionesResultadosFormStore from "../../hooks/accionesResultadosFormStore";
+import { ColorsPalete } from "../../../constants/COLORS";
+import AccionesYResultadosForm from "../../../forms/AccionesYResultados/AccionesYResultados";
+import FormValuesAccionesYresultados from "../../../forms/AccionesYResultados/FormValuesAccionesYresultados";
+import accionesResultadosFormStore from "../../../hooks/accionesResultadosFormStore";
 
 const Recommendations: React.FC = () => {
   const router = useRouter();

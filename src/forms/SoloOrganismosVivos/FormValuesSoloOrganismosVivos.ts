@@ -1,7 +1,7 @@
 export interface FormValuesSoloOrganismosVivos {
   tasaDeRespiracion: string;
-  pulso: number;
-  temperatura: number;
+  pulso: string;
+  temperatura: string;
   antesDeVararse: string;
   varado: string;
   reflotacion: boolean;
