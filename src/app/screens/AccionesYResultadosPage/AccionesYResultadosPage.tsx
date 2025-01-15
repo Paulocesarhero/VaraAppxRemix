@@ -18,7 +18,7 @@ import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 
 const Recommendations: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const idSelected = useAvisoStore((state) => state.idSelected);
+  const idSelected = useAvisoStore((state) => state.idAvisoSelected);
   const [formValues, setFormValues] = useState<FormValuesAccionesYresultados>();
   const idEspecimen = useAvisoStore((state) => state.idEspecimen);
   const router = useRouter();

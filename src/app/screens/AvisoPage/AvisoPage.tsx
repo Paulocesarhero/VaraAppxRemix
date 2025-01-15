@@ -20,8 +20,8 @@ import { getDateNow } from "../../../hooks/helpers";
 
 const AvisoPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const idSelected = useAvisoStore((state) => state.idSelected);
-  const { setIdSelected } = useAvisoStore();
+  const idSelected = useAvisoStore((state) => state.idAvisoSelected);
+  const { setIdAvisoSelected } = useAvisoStore();
   const { addAvisoStore } = useListAvisosStore();
   const headerHeight = useHeaderHeight();
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -86,7 +86,7 @@ const AvisoPage: React.FC = () => {
         };
 
         addAvisoStore(avisoData);
-        setIdSelected(Number(idAvisoSqlite));
+        setIdAvisoSelected(Number(idAvisoSqlite));
       }
     } catch (error) {
       console.error("Error al manejar los avisos", error);

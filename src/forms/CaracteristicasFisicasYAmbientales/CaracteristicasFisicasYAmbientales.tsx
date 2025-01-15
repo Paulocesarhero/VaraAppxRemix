@@ -24,7 +24,7 @@ import useAvisoStore from "../../hooks/globalState/useAvisoStore";
 const CaracteristicasFisicasYAmbientales: React.FC<
   CaracteristicasFisicasYAmbientalesProps
 > = ({ onSubmitData, initalValues }) => {
-  const idSelected = useAvisoStore((state) => state.idSelected);
+  const idSelected = useAvisoStore((state) => state.idAvisoSelected);
   const headerHeight = useHeaderHeight();
 
   const { handleSubmit, control, watch, reset } =

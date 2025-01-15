@@ -12,7 +12,7 @@ import useAvisoStore from "../../../../hooks/globalState/useAvisoStore";
 
 const CaracteristicasFisicasYAmbientalesPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const idSelected = useAvisoStore((state) => state.idSelected);
+  const idSelected = useAvisoStore((state) => state.idAvisoSelected);
   const [formValues, setFormValues] =
     useState<FormValuesCaracteristicasFisicasYAmbientales>();
   const router = useRouter();

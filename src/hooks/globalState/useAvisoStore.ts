@@ -1,23 +1,23 @@
 import { create } from "zustand";
 // este hook se usa para manejar el estado del aviso seleccionado tanto en lista de avisos como su formulario
 interface AvisosState {
-  idSelected: number;
+  idAvisoSelected: number;
   idtaxaEspecie: number;
   idEspecimen: number;
   setIdEspecimen: (id: number) => void;
   setIdtaxaEspecie: (id: number) => void;
-  setIdSelected: (id: number) => void;
-  clearIdSelected: () => void;
+  setIdAvisoSelected: (id: number) => void;
+  clearIdAvisoSelected: () => void;
 }
 
 const useAvisoStore = create<AvisosState>((set) => ({
-  idSelected: 0,
+  idAvisoSelected: 0,
   idtaxaEspecie: 0,
   idEspecimen: 0,
   setIdEspecimen: (id: number) => set({ idEspecimen: id }),
   setIdtaxaEspecie: (id: number) => set({ idtaxaEspecie: id }),
-  setIdSelected: (id: number) => set({ idSelected: id }),
-  clearIdSelected: () => set({ idSelected: 0 }),
+  setIdAvisoSelected: (id: number) => set({ idAvisoSelected: id }),
+  clearIdAvisoSelected: () => set({ idAvisoSelected: 0 }),
 }));
 
 export default useAvisoStore;

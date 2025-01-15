@@ -21,7 +21,7 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
   id,
   onDelete = () => {},
 }) => {
-  const { setIdSelected } = useAvisoStore();
+  const { setIdAvisoSelected } = useAvisoStore();
 
   const handleUrlImage = (urlImage: string | null) => {
     if (!urlImage || urlImage === "") {
@@ -64,7 +64,7 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
   };
 
   const handleUpdateAviso = async () => {
-    setIdSelected(Number(id));
+    setIdAvisoSelected(Number(id));
     router.push("screens/AvisoPage/AvisoPage");
   };
 

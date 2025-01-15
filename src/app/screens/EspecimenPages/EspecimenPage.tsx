@@ -12,10 +12,14 @@ import {
 import Especimen from "../../../forms/Especimen/Especimen";
 import { FormValuesEspecimen } from "../../../forms/Especimen/FormValuesEspecimen";
 import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
+import useVaramientoMasivoStore from "../../../hooks/globalState/useVaramientoMasivo";
 
 const EspecimenPage: React.FC = () => {
   const idtaxaEspecie = useAvisoStore((state) => state.idtaxaEspecie);
-  const idSelected = useAvisoStore((state) => state.idSelected);
+  const idSelected = useAvisoStore((state) => state.idAvisoSelected);
+  const idVaramientoMasivo = useVaramientoMasivoStore(
+    (state) => state.idVaramientoMasivoSelected
+  );
   const idEspecimen = useAvisoStore((state) => state.idEspecimen);
   const { setIdEspecimen } = useAvisoStore();
   const [formValues, setFormValues] = useState<FormValuesEspecimen>();

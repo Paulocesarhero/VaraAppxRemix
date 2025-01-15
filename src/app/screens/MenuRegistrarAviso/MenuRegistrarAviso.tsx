@@ -9,6 +9,9 @@ const MenuRegistrarAviso: React.FC = () => {
   const handleAvisoIndividual = () => {
     router.push("screens/EspecimenPages/EspecimenPage");
   };
+  const handleVaramientoMasivo = () => {
+    router.push("screens/VaramientoMasivoPage/VaramientoMasivoPage");
+  };
 
   return (
     <View
@@ -31,6 +34,7 @@ const MenuRegistrarAviso: React.FC = () => {
         label="Aviso individual"
       />
       <MaterialCard
+        onPress={handleVaramientoMasivo}
         leftComponent={
           <Image
             source={require("../../../assets/whale.imageset/whale.png")}

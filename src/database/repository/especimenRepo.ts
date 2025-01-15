@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 import { FormValuesEspecimen } from "../../forms/Especimen/FormValuesEspecimen";
 import { db } from "../connection/sqliteConnection";
@@ -51,6 +51,16 @@ export const addEspecimenIfNotExist = async (idAviso: number) => {
   } else {
     return existingEspecimen[0].id;
   }
+};
+const linkEspecimenToVaramientoMasivo = async (
+  idAviso: number,
+  idVaramientoMasivo: number
+): Promise<number> => {
+  const result = await db
+    .insert(especimen)
+    .values({ varamientoMasivoId: idVaramientoMasivo, avisoId: idAviso })
+    .returning({ updateId: especimen.id });
+  return result[0].updateId;
 };
 
 export const updateEspecimenByIdAviso = async (
@@ -189,4 +199,23 @@ export const hasRegistroMorfometrico = async (idEspecimen: number) => {
     pinnipedoRequest.length > 0 ||
     sirenioRequest.length > 0
   );
+};
+
+export const getAllEspecimenOfVaramientoMasivo = async (
+  idAviso: number,
+  idVaramientoMasivo: number
+) => {
+  const result = await db
+    .select({
+      idEspecimen: especimen.id,
+      longitudTotalRectilinea: especimen.longitudTotalRectilinea,
+    })
+    .from(especimen)
+    .where(
+      and(
+        eq(especimen.varamientoMasivoId, idVaramientoMasivo),
+        eq(especimen.avisoId, idAviso)
+      )
+    );
+  return result;
 };

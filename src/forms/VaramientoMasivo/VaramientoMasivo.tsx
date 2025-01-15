@@ -14,11 +14,14 @@ import InputField from "varaapplib/components/MaterialInput/MaterialInput";
 import { FormValuesVaramientoMasivo } from "./FormValuesVaramientoMasivo";
 import { VaramientoMasivoProps } from "./types";
 import { handleNumericInputWithOnepoint } from "../../hooks/validations";
+import InlineButton from "../../components/InlineButton/InlineButton";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const VaramientoMasivo: React.FC<VaramientoMasivoProps> = ({
   initialValues,
   isDisabled,
   onValuesChange,
+  onSubmitData,
 }) => {
   const { handleSubmit, control, watch, setValue } =
     useForm<FormValuesVaramientoMasivo>({
@@ -41,6 +44,17 @@ const VaramientoMasivo: React.FC<VaramientoMasivoProps> = ({
           style={{ paddingTop: 10 }}
           keyboardShouldPersistTaps="handled"
         >
+          <InlineButton
+            text="Continuar y guardar"
+            onPress={handleSubmit(onSubmitData)}
+            icon={
+              <MaterialCommunityIcons
+                name="page-next-outline"
+                size={24}
+                color="black"
+              />
+            }
+          />
           <Controller
             control={control}
             name="AvesMuertas"
@@ -93,7 +107,6 @@ const VaramientoMasivo: React.FC<VaramientoMasivoProps> = ({
               </View>
             )}
           />
-
           <InputField
             onChangeText={(text) =>
               handleNumericInputWithOnepoint(
