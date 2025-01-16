@@ -10,7 +10,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
 import InputField from "varaapplib/components/MaterialInput/MaterialInput";
 
 import { RegistroMorfometricoPinnipedo } from "./RegistroMorfometricoPinnipedo";
