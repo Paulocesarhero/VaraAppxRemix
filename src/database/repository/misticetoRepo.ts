@@ -81,9 +81,10 @@ export const addMisticetoIfNotExist = async (idEspecimen: number) => {
   }
 };
 export const updateMisticetoByIdEspecimen = async (
-  idEspecimen: number,
+  idEspecimen: number | null,
   misticetoData: Partial<NewMisticeto>
 ): Promise<number> => {
+  if (idEspecimen === null) throw new Error("Sin un idEspecimen especificado");
   const existingMisticeto = await db
     .select()
     .from(misticeto)

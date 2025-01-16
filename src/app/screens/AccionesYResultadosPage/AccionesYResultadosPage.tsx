@@ -18,17 +18,16 @@ import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 
 const Recommendations: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const idSelected = useAvisoStore((state) => state.idAvisoSelected);
   const [formValues, setFormValues] = useState<FormValuesAccionesYresultados>();
   const idEspecimen = useAvisoStore((state) => state.idEspecimen);
   const router = useRouter();
   const loadAcciones = async () => {
     setIsLoading(true);
     try {
-      if (idSelected > 0) {
-        const result = await addAccionesIfNotExists(idSelected);
+      if (idEspecimen != null && idEspecimen > 0) {
+        const result = await addAccionesIfNotExists(idEspecimen);
         const formValuesDbLocal =
-          await getAccionesByIdEspecimenLocal(idSelected);
+          await getAccionesByIdEspecimenLocal(idEspecimen);
         setFormValues(formValuesDbLocal);
       }
     } catch (error) {
@@ -39,7 +38,7 @@ const Recommendations: React.FC = () => {
   };
   useEffect(() => {
     loadAcciones();
-  }, [idSelected]);
+  }, [idEspecimen]);
   const handleValuesChange = async (
     values: Partial<FormValuesAccionesYresultados>
   ) => {

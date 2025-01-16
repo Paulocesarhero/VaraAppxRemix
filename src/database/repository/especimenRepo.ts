@@ -12,6 +12,53 @@ import {
 
 type NewEspecimen = typeof especimen.$inferInsert;
 
+export const getEspecimenByIdEspecimen = async (
+  idEspecimen: number
+): Promise<FormValuesEspecimen> => {
+  try {
+    const result = await db
+      .select()
+      .from(especimen)
+      .where(eq(especimen.id, idEspecimen));
+
+    if (!result || result.length === 0) {
+      throw new Error(`No se encontró un especimen con id ${idEspecimen}`);
+    }
+
+    const item = result[0];
+
+    const formValues: FormValuesEspecimen = {
+      Latitud: item.latitud ?? "",
+      Longitud: item.longitud ?? "",
+      EspecieId: item.especieId ?? undefined,
+      condicion: item.condicion ?? 0,
+      longitudTotalRectilinea: item.longitudTotalRectilinea ?? "",
+      peso: item.peso ?? "",
+      sexo: item.sexo ?? 0,
+      grupoDeEdad: item.grupoDeEdad ?? 0,
+      orientacionDelEspecimen: item.orientacionDelEspecimen ?? "",
+      sustrato: item.sustrato ?? 0,
+      otroSustrato: item.otroSustrato ?? "",
+      heridasBala: item.heridasBala ?? "",
+      heridasBalaFoto: item.heridasBalaFoto ?? "",
+      presenciaDeRedes: item.presenciaDeRedes ?? "",
+      presenciaDeRedesFoto: item.presenciaDeRedesFoto ?? "",
+      mordidas: item.mordidas ?? "",
+      mordidasFoto: item.mordidasFoto ?? "",
+      golpes: item.golpes ?? "",
+      golpesFoto: item.golpesFoto ?? "",
+      otroTipoDeHeridas: item.otroTipoDeHeridas ?? "",
+      otroTipoDeHeridasFoto: item.otroTipoDeHeridasFoto ?? "",
+    };
+
+    return formValues;
+  } catch (error) {
+    console.error("Error al obtener el especimen:", error);
+    throw new Error(
+      `Error al obtener el especimen para el id ${idEspecimen}: `
+    );
+  }
+};
 export const addEspecimenIfNotExist = async (idAviso: number) => {
   const newEspecimen: NewEspecimen = {
     condicion: 0,
@@ -52,7 +99,7 @@ export const addEspecimenIfNotExist = async (idAviso: number) => {
     return existingEspecimen[0].id;
   }
 };
-const linkEspecimenToVaramientoMasivo = async (
+export const addEspecimenToVaramientoMasivo = async (
   idAviso: number,
   idVaramientoMasivo: number
 ): Promise<number> => {
@@ -63,18 +110,21 @@ const linkEspecimenToVaramientoMasivo = async (
   return result[0].updateId;
 };
 
-export const updateEspecimenByIdAviso = async (
-  idAviso: number,
-  especimenData: Partial<NewEspecimen>
+export const updateEspecimenById = async (
+  especimenData: Partial<NewEspecimen>,
+  idEspecimen: number | null
 ): Promise<number> => {
-  const existingEspecimen = await db
+  if (idEspecimen === null) throw new Error("Sin un idEspecimen especificado");
+  let existingEspecimen;
+  let result;
+  existingEspecimen = await db
     .select()
     .from(especimen)
-    .where(eq(especimen.avisoId, idAviso));
+    .where(eq(especimen.id, idEspecimen));
 
   if (existingEspecimen.length === 0) {
     throw new Error(
-      `No se encontró un especimen para el aviso con id ${idAviso}`
+      `No se encontró un especimen para el aviso con id ${idEspecimen}`
     );
   }
 
@@ -113,30 +163,29 @@ export const updateEspecimenByIdAviso = async (
       especimenObjeto.presenciaDeRedesFoto,
     sexo: especimenData.sexo ?? especimenObjeto.sexo,
     sustrato: especimenData.sustrato ?? especimenObjeto.sustrato,
-    avisoId: idAviso,
+    avisoId: especimenObjeto.avisoId,
   };
-
-  const result = await db
+  result = await db
     .update(especimen)
     .set(updatedEspecimen)
-    .where(eq(especimen.avisoId, idAviso))
+    .where(eq(especimen.id, idEspecimen))
     .returning({ updateId: especimen.id });
 
   return result[0].updateId;
 };
 
-export const getEspecimenByIdAvisoLocal = async (
-  idAviso: number
+export const getEspecimenById = async (
+  idEspecimen: number
 ): Promise<FormValuesEspecimen> => {
   try {
     const result = await db
       .select()
       .from(especimen)
-      .where(eq(especimen.avisoId, idAviso));
+      .where(eq(especimen.id, idEspecimen));
 
     if (!result || result.length === 0) {
       throw new Error(
-        `No se encontró un especimen para el aviso con id ${idAviso}`
+        `No se encontró un especimen para el aviso con id ${idEspecimen}`
       );
     }
 
@@ -166,7 +215,9 @@ export const getEspecimenByIdAvisoLocal = async (
     };
   } catch (error) {
     console.error("Error al obtener el especimen:", error);
-    throw new Error(`Error al obtener el especimen para el aviso ${idAviso}`);
+    throw new Error(
+      `Error al obtener el especimen para el aviso ${idEspecimen}`
+    );
   }
 };
 
@@ -175,7 +226,8 @@ export const getAllEspecimen = async () => {
   return result;
 };
 
-export const hasRegistroMorfometrico = async (idEspecimen: number) => {
+export const hasRegistroMorfometrico = async (idEspecimen: number | null) => {
+  if (idEspecimen === null) return false;
   const misticetoRequest = await db
     .select()
     .from(misticeto)
@@ -199,23 +251,4 @@ export const hasRegistroMorfometrico = async (idEspecimen: number) => {
     pinnipedoRequest.length > 0 ||
     sirenioRequest.length > 0
   );
-};
-
-export const getAllEspecimenOfVaramientoMasivo = async (
-  idAviso: number,
-  idVaramientoMasivo: number
-) => {
-  const result = await db
-    .select({
-      idEspecimen: especimen.id,
-      longitudTotalRectilinea: especimen.longitudTotalRectilinea,
-    })
-    .from(especimen)
-    .where(
-      and(
-        eq(especimen.varamientoMasivoId, idVaramientoMasivo),
-        eq(especimen.avisoId, idAviso)
-      )
-    );
-  return result;
 };

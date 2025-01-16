@@ -19,7 +19,7 @@ const Pinnipedo: React.FC = () => {
   const loadPinnipedo = async () => {
     setIsLoading(true);
     try {
-      if (idEspecimen > 0) {
+      if (idEspecimen != null && idEspecimen > 0) {
         await addPinnipedoIfNotExists(idEspecimen);
         const formValuesDbLocal =
           await getPinnipedoByIdEspecimenLocal(idEspecimen);

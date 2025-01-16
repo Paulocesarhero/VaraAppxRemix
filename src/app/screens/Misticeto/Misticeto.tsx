@@ -21,7 +21,7 @@ const Misticeto: React.FC = () => {
     setIsLoading(true);
 
     try {
-      if (idEspecimen > 0) {
+      if (idEspecimen != null && idEspecimen > 0) {
         const result = await addMisticetoIfNotExist(idEspecimen);
         const formValuesDbLocal =
           await getMisticetoByIdEspecimenLocal(idEspecimen);

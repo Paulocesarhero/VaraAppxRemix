@@ -17,9 +17,10 @@ export const addOdontocetoIfNotExist = async (idEspecimen: number) => {
 };
 
 export const updateOdontocetoByIdEspecimen = async (
-  idEspecimen: number,
+  idEspecimen: number | null,
   odontocetoData: Partial<NewOdontoceto>
 ): Promise<number> => {
+  if (idEspecimen === null) throw new Error("Sin un idEspecimen especificado");
   const existingOdontoceto = await db
     .select()
     .from(odontoceto)

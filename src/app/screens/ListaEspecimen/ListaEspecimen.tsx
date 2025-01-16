@@ -1,6 +1,6 @@
 import { FlashList } from "@shopify/flash-list";
-import React, { useEffect, useState } from "react";
-import { Alert, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { ColorsPalete } from "../../../constants/COLORS";
 import Feather from "@expo/vector-icons/build/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -8,7 +8,12 @@ import InlineButton from "../../../components/InlineButton/InlineButton";
 import { Ionicons } from "@expo/vector-icons";
 import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 import useVaramientoMasivoStore from "../../../hooks/globalState/useVaramientoMasivo";
-import { getAllEspecimenOfVaramientoMasivo } from "../../../database/repository/especimenRepo";
+import { addEspecimenToVaramientoMasivo } from "../../../database/repository/especimenRepo";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { db } from "../../../database/connection/sqliteConnection";
+import { especimen } from "../../../database/schemas/avisoSchema";
+import { and, eq } from "drizzle-orm";
+import { useRouter } from "expo-router";
 
 interface ListaEspecimenProps {
   isModificable: boolean;
@@ -22,41 +27,44 @@ interface item {
 const ListaEspecimen: React.FC<ListaEspecimenProps> = ({
   isModificable = true,
 }) => {
-  const [itemList, setItemList] = useState<item[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
   const idAviso = useAvisoStore((state) => state.idAvisoSelected);
   const idVaramientoMasivo = useVaramientoMasivoStore(
     (state) => state.idVaramientoMasivoSelected
   );
-  const loadListaEspecimen = async () => {
-    setIsLoading(true);
-    try {
-      if (idVaramientoMasivo != null) {
-        const varamientos = await getAllEspecimenOfVaramientoMasivo(
-          idAviso,
-          idVaramientoMasivo
-        );
-        setItemList(varamientos as unknown as item[]);
-      }
-    } catch (error) {
-      Alert.alert(
-        "Error",
-        "Hubo un problema al obtener la lista de especímenes: " + String(error),
-        [{ text: "Aceptar" }]
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  useEffect(() => {
-    loadListaEspecimen();
-  }, [idAviso, idVaramientoMasivo]);
+  const setIdEspecimenSelected = useAvisoStore((state) => state.setIdEspecimen);
+  if (idVaramientoMasivo == null || idAviso == null) {
+    return <Text>Por favor selecciona un varamiento masivo válido</Text>;
+  }
+  const route = useRouter();
 
-  const handleUpdateAviso = () => {
-    // Update the specimen
+  const { data } = useLiveQuery(
+    db
+      .select({
+        idEspecimen: especimen.id,
+        longitudTotalRectilinea: especimen.longitudTotalRectilinea,
+      })
+      .from(especimen)
+      .where(
+        and(
+          eq(especimen.varamientoMasivoId, idVaramientoMasivo),
+          eq(especimen.avisoId, idAviso)
+        )
+      )
+  );
+
+  const handleUpdateAviso = (idEspecimen: number) => {
+    setIdEspecimenSelected(idEspecimen);
+    console.log("Se ejecutó handleUpdateAviso", idEspecimen);
+    route.push("screens/EspecimenPages/EspecimenPage");
   };
   const handleDelete = () => {};
+
+  function handleAddEspecimen(): void {
+    if (!idAviso || !idVaramientoMasivo) return;
+    const result = addEspecimenToVaramientoMasivo(idAviso, idVaramientoMasivo);
+  }
+
   const renderItem = ({
     item,
   }: {
@@ -81,7 +89,7 @@ const ListaEspecimen: React.FC<ListaEspecimenProps> = ({
             name="edit"
             size={24}
             color="green"
-            onPress={handleUpdateAviso}
+            onPress={() => handleUpdateAviso(item.idEspecimen)}
           />
           <AntDesign
             name="delete"
@@ -94,17 +102,6 @@ const ListaEspecimen: React.FC<ListaEspecimenProps> = ({
     </View>
   );
 
-  if (isLoading) {
-    return <Text>Cargando datos...</Text>;
-  }
-
-  function handleAddEspecimen(): void {
-    console.log(
-      "se ejecuto handleAddEspecimen id VaramientoMasivo: " + idVaramientoMasivo
-    );
-    console.log("se ejecuto handleAddEspecimen: idAviso: " + idAviso);
-  }
-
   return (
     <View style={styles.container}>
       <InlineButton
@@ -113,7 +110,7 @@ const ListaEspecimen: React.FC<ListaEspecimenProps> = ({
         onPress={handleAddEspecimen}
       ></InlineButton>
       <FlashList
-        data={itemList}
+        data={data as unknown as item[]}
         renderItem={renderItem}
         keyExtractor={(item) => item.idEspecimen.toString()}
         estimatedItemSize={200}

@@ -19,9 +19,10 @@ export const addAccionesIfNotExists = async (idEspecimen: number) => {
 };
 
 export const updateAccionesByIdEspecimen = async (
-  idEspecimen: number,
+  idEspecimen: number | null,
   accionesData: Partial<FormValuesAccionesYresultados>
 ): Promise<number> => {
+  if (idEspecimen === null) throw new Error("Sin un idEspecimen especificado");
   const existingAcciones = await db
     .select()
     .from(acciones)
@@ -108,7 +109,6 @@ export const getAccionesByIdEspecimenLocal = async (idEspecimen: number) => {
 
     return formValues;
   } catch (error) {
-    console.error("Error al obtener acciones:", error);
-    return null;
+    throw error;
   }
 };

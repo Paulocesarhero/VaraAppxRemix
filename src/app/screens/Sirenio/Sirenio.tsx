@@ -19,7 +19,7 @@ const Sirenio: React.FC = () => {
   const loadSirenio = async () => {
     setIsLoading(true);
     try {
-      if (idEspecimen > 0) {
+      if (idEspecimen != null && idEspecimen > 0) {
         await addSirenioIfNotExists(idEspecimen);
         const formValuesDbLocal =
           await getSirenioByIdEspecimenLocal(idEspecimen);

@@ -17,9 +17,10 @@ export const addSirenioIfNotExists = async (idEspecimen: number) => {
 };
 
 export const updateSirenioByIdEspecimen = async (
-  idEspecimen: number,
+  idEspecimen: number | null,
   sirenioData: Partial<NewSirenio>
 ): Promise<number> => {
+  if (idEspecimen === null) throw new Error("Sin un idEspecimen especificado");
   const existingSirenio = await db
     .select()
     .from(sirenio)

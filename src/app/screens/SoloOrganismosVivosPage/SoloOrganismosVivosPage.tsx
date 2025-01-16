@@ -21,7 +21,7 @@ const SoloOrganismosVivosPage: React.FC = () => {
   const loadOrganismo = async () => {
     setIsLoading(true);
     try {
-      if (idEspecimen > 0) {
+      if (idEspecimen != null && idEspecimen > 0) {
         await addOrganismoIfNotExists(idEspecimen);
         const formValuesDbLocal =
           (await getOrganismoByIdEspecimenLocal(idEspecimen)) || undefined;

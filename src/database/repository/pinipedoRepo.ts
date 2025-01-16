@@ -17,9 +17,10 @@ export const addPinnipedoIfNotExists = async (idEspecimen: number) => {
 };
 
 export const updatePinnipedoByIdEspecimen = async (
-  idEspecimen: number,
+  idEspecimen: number | null,
   pinnipedoData: Partial<NewPinipedo>
 ): Promise<number> => {
+  if (idEspecimen === null) throw new Error("Sin un idEspecimen especificado");
   const existingPinnipedo = await db
     .select()
     .from(pinnipedo)

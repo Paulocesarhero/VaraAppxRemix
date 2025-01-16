@@ -17,9 +17,10 @@ export const addOrganismoIfNotExists = async (idEspecimen: number) => {
 };
 
 export const updateOrganismoByIdEspecimen = async (
-  idEspecimen: number,
+  idEspecimen: number | null,
   organismoData: FormValuesSoloOrganismosVivos
 ): Promise<number> => {
+  if (idEspecimen === null) throw new Error("Sin un idEspecimen especificado");
   const existingOrganismo = await db
     .select()
     .from(organismo)
