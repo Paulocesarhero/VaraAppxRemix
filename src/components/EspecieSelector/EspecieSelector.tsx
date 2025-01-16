@@ -1,4 +1,5 @@
 import { Entypo } from "@expo/vector-icons";
+import { Image } from "expo-image";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -17,6 +18,20 @@ import {
 } from "../../database/repository/especieRepo";
 import useAuthStore from "../../hooks/globalState/useAuthStore";
 import getEspecies, { Especie } from "../../services/Especie/GetEspecie";
+/**
+ * @enum {number}
+ * @description Tipos de taxa:
+ * - 0: Misticeto
+ * - 1: Pinnipedo
+ * - 2: Odontoceto
+ * - 3: Sirenio
+ */
+const imagenes = [
+  { id: 0, image: require("./whale/whale.png") },
+  { id: 1, image: require("./pinniped/pinniped.png") },
+  { id: 2, image: require("./dolphin/dolphin.png") },
+  { id: 3, image: require("./sirenia/sirenia.png") },
+];
 
 const EspecieSelector: React.FC<EspecieSelectorProps> = ({
   onSelectEspecie,
@@ -54,26 +69,40 @@ const EspecieSelector: React.FC<EspecieSelectorProps> = ({
     setIsModalVisible(false);
   };
 
-  const renderEspecieItem = ({ item }: { item: Especie }) => (
-    <TouchableOpacity onPress={() => handleSelectEspecie(item)}>
-      <View style={EspecieSelectorStyle.itemContainer}>
-        <View style={{ flexDirection: "column" }}>
-          <Text ellipsizeMode="tail" style={EspecieSelectorStyle.labelInfo}>
-            <Text style={EspecieSelectorStyle.labelContainer}>
-              Nombre especie:
+  const renderEspecieItem = ({ item }: { item: Especie }) => {
+    // Encuentra la imagen correspondiente al taxa de la especie
+    const especieImagen = imagenes.find((img) => img.id === item.taxa);
+
+    return (
+      <TouchableOpacity onPress={() => handleSelectEspecie(item)}>
+        <View style={EspecieSelectorStyle.itemContainer}>
+          <View style={{ flexDirection: "column" }}>
+            <Text ellipsizeMode="tail" style={EspecieSelectorStyle.labelInfo}>
+              <Text style={EspecieSelectorStyle.labelContainer}>
+                Nombre especie:
+              </Text>
+              {item.nombre}
             </Text>
-            {item.nombre}
-          </Text>
-          <Text ellipsizeMode="tail" style={EspecieSelectorStyle.labelInfo}>
-            <Text style={EspecieSelectorStyle.labelContainer}>
-              Nombre latin:
+            <Text ellipsizeMode="tail" style={EspecieSelectorStyle.labelInfo}>
+              <Text style={EspecieSelectorStyle.labelContainer}>
+                Nombre latin:
+              </Text>
+              {item.nombreLatin}
             </Text>
-            {item.nombreLatin}
-          </Text>
+
+            {/* Renderiza la imagen según el taxa de la especie */}
+            {especieImagen && (
+              <Image
+                source={especieImagen.image} // Usa la imagen dinámica basada en el taxa
+                contentFit="cover"
+                style={{ alignSelf: "center", width: 50, height: 50 }}
+              />
+            )}
+          </View>
         </View>
-      </View>
-    </TouchableOpacity>
-  );
+      </TouchableOpacity>
+    );
+  };
 
   const renderModal = () => (
     <Modal visible={isModalVisible} transparent animationType="slide">
@@ -81,7 +110,7 @@ const EspecieSelector: React.FC<EspecieSelectorProps> = ({
         <View style={EspecieSelectorStyle.modalContent}>
           <FlatList
             data={especies}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => `${item.id}-${item.taxa}`}
             renderItem={renderEspecieItem}
           />
           <TouchableOpacity
@@ -94,6 +123,20 @@ const EspecieSelector: React.FC<EspecieSelectorProps> = ({
       </View>
     </Modal>
   );
+  const taxaText = (taxa: number) => {
+    switch (taxa) {
+      case 0:
+        return "Misticeto";
+      case 1:
+        return "Pinnipedo";
+      case 2:
+        return "Odontoceto";
+      case 3:
+        return "Sirenio";
+      default:
+        return "Desconocido";
+    }
+  };
 
   return (
     <>
@@ -109,12 +152,30 @@ const EspecieSelector: React.FC<EspecieSelectorProps> = ({
             style={EspecieSelectorStyle.selectorButton}
             onPress={() => setIsModalVisible(true)}
           >
-            <Text style={EspecieSelectorStyle.selectedText}>
-              {selectedEspecie
-                ? selectedEspecie.nombre
-                : "Selecciona una especie"}
-            </Text>
-            <Entypo name="chevron-down" size={24} color="#000" />
+            <View style={EspecieSelectorStyle.selectedText}>
+              {selectedEspecie ? (
+                <>
+                  <Text style={{ fontSize: 12 }}>
+                    Nombre: {selectedEspecie.nombre}
+                  </Text>
+                  <Text>Taxa: {taxaText(selectedEspecie.taxa)}</Text>
+                  {imagenes[selectedEspecie.taxa] && (
+                    <Image
+                      source={imagenes[selectedEspecie.taxa].image}
+                      style={{ width: 50, height: 50, alignSelf: "center" }}
+                    />
+                  )}
+                </>
+              ) : (
+                "Selecciona una especie"
+              )}
+            </View>
+            <Entypo
+              style={{ alignSelf: "center", paddingRight: 20 }}
+              name="chevron-down"
+              size={24}
+              color="#000"
+            />
           </TouchableOpacity>
           {renderModal()}
         </>

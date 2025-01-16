@@ -168,14 +168,6 @@ const MorfometriaPinnipedo: React.FC<MorfometriaPinnipedoProps> = ({
 
   return (
     <View style={{ flex: 1, backgroundColor: ColorsPalete.light }}>
-      <CustomizableHeader
-        containerStyle={{ backgroundColor: ColorsPalete.dark }}
-        centerComponent={
-          <Text style={{ color: ColorsPalete.light }}>
-            Registro Morfométrico de Pinnípedos varados
-          </Text>
-        }
-      />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === "ios" ? 70 : 0}

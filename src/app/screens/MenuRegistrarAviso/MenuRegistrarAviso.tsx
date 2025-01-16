@@ -3,6 +3,7 @@ import { useRouter } from "expo-router";
 import React from "react";
 import { View } from "react-native";
 import MaterialCard from "varaapplib/components/MaterialCard/MaterialCard";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const MenuRegistrarAviso: React.FC = () => {
   const router = useRouter();
@@ -25,22 +26,14 @@ const MenuRegistrarAviso: React.FC = () => {
       <MaterialCard
         onPress={handleAvisoIndividual}
         leftComponent={
-          <Image
-            source={require("../../../assets/dolphin.imageset/dolphin.png")}
-            contentFit="cover"
-            style={{ width: 50, height: 50 }}
-          />
+          <MaterialIcons name="add-to-queue" size={24} color="black" />
         }
         label="Aviso individual"
       />
       <MaterialCard
         onPress={handleVaramientoMasivo}
         leftComponent={
-          <Image
-            source={require("../../../assets/whale.imageset/whale.png")}
-            contentFit="cover"
-            style={{ width: 50, height: 50 }}
-          />
+          <MaterialIcons name="add-to-photos" size={50} color="black" />
         }
         label="Varamiento masivo"
       />

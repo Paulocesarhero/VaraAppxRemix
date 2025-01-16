@@ -7,6 +7,7 @@ export const EspecieSelectorStyle = StyleSheet.create({
     color: "#000",
   },
   modalContainer: {
+    paddingVertical: 60,
     flex: 1,
     justifyContent: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -48,7 +49,10 @@ export const EspecieSelectorStyle = StyleSheet.create({
     elevation: 3,
   },
   selectedText: {
-    fontSize: 16,
+    padding: 20,
+    flexDirection: "column",
+    gap: 4,
+    alignItems: "center",
     color: "#000",
   },
   selectorButton: {

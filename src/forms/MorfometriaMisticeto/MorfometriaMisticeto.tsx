@@ -182,14 +182,6 @@ const MorfometriaMisticeto: React.FC<MorfometriaMisticetoProps> = ({
 
   return (
     <View style={{ flex: 1, backgroundColor: ColorsPalete.light }}>
-      <CustomizableHeader
-        containerStyle={{ backgroundColor: ColorsPalete.dark }}
-        centerComponent={
-          <Text style={{ color: ColorsPalete.light }}>
-            Morfometría de misticeto
-          </Text>
-        }
-      />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === "ios" ? 70 : 0}
