@@ -2,7 +2,7 @@ import { AvisoValues } from "varaapplib/components/AvisoForm/types";
 
 import FormValuesAccionesYresultados from "../../forms/AccionesYResultados/FormValuesAccionesYresultados";
 import { FormValuesCaracteristicasFisicasYAmbientales } from "../../forms/CaracteristicasFisicasYAmbientales/FormValuesCaracteristicasFisicasYAmbientales";
-import FormValuesMorfometriaMisticeto from "../../forms/MorfometriaMisticeto/FormValuesMorfometriaMisticeto";
+import { FormValuesMorfometriaMisticeto } from "../../forms/MorfometriaMisticeto/FormValuesMorfometriaMisticeto";
 import { RegistroMorfometricoPinnipedo } from "../../forms/MorfometriaPinnipedo/RegistroMorfometricoPinnipedo";
 import RegistroMorfometricoSirenio from "../../forms/MorfometriaSirenio/RegistroMorfometricoSirenio";
 import RegistroMorfometricoOdontoceto from "../../forms/MorformetriaOdontoceto/RegistroMorfometricoOdontoceto";
