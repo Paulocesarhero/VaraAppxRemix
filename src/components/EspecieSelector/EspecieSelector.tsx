@@ -48,7 +48,8 @@ const EspecieSelector: React.FC<EspecieSelectorProps> = ({
     const fetchEspecies = async () => {
       try {
         const data = await getEspecies(token ?? "");
-        setEspeciesBdLocal(data.data as unknown as Especie[]);
+        console.log("fetch especies ", data);
+        setEspeciesBdLocal(data.data);
         setEspecies(data.data);
       } catch (err) {
         const especiesBdLocal = await getEspeciesBdLocal();
@@ -70,7 +71,6 @@ const EspecieSelector: React.FC<EspecieSelectorProps> = ({
   };
 
   const renderEspecieItem = ({ item }: { item: Especie }) => {
-    // Encuentra la imagen correspondiente al taxa de la especie
     const especieImagen = imagenes.find((img) => img.id === item.taxa);
 
     return (
@@ -79,21 +79,18 @@ const EspecieSelector: React.FC<EspecieSelectorProps> = ({
           <View style={{ flexDirection: "column" }}>
             <Text ellipsizeMode="tail" style={EspecieSelectorStyle.labelInfo}>
               <Text style={EspecieSelectorStyle.labelContainer}>
-                Nombre especie:
+                Nombre especie: {item.nombre}
               </Text>
-              {item.nombre}
             </Text>
             <Text ellipsizeMode="tail" style={EspecieSelectorStyle.labelInfo}>
               <Text style={EspecieSelectorStyle.labelContainer}>
-                Nombre latin:
+                Nombre latin: {item.nombreLatin}
               </Text>
-              {item.nombreLatin}
             </Text>
 
-            {/* Renderiza la imagen según el taxa de la especie */}
             {especieImagen && (
               <Image
-                source={especieImagen.image} // Usa la imagen dinámica basada en el taxa
+                source={especieImagen.image}
                 contentFit="cover"
                 style={{ alignSelf: "center", width: 50, height: 50 }}
               />
@@ -167,7 +164,7 @@ const EspecieSelector: React.FC<EspecieSelectorProps> = ({
                   )}
                 </>
               ) : (
-                "Selecciona una especie"
+                <Text>Selecciona una especie</Text>
               )}
             </View>
             <Entypo

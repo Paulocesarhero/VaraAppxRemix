@@ -16,6 +16,7 @@ import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 const EspecimenPage: React.FC = () => {
   const idtaxaEspecie = useAvisoStore((state) => state.idtaxaEspecie);
   const idAviso = useAvisoStore((state) => state.idAvisoSelected);
+  const { setIdtaxaEspecie } = useAvisoStore();
 
   const idEspecimen = useAvisoStore((state) => state.idEspecimen);
   const { setIdEspecimen } = useAvisoStore();
@@ -34,20 +35,17 @@ const EspecimenPage: React.FC = () => {
     try {
       if (idEspecimen === null) {
         const idEspecimenBD = await addEspecimenIfNotExist(idAviso);
-        console.log("idEspecimen BD sqlite", idEspecimenBD);
         setIdEspecimen(idEspecimenBD);
         especimenInfo = await getEspecimenByIdEspecimen(idEspecimenBD);
-
         setFormValues(especimenInfo);
         console.log(
           "info del especimen primera vez :",
           JSON.stringify(especimenInfo, null, 2)
         );
       } else {
-        console.log("idEspecimen", idEspecimen);
         especimenInfo = await getEspecimenByIdEspecimen(idEspecimen);
         console.log(
-          "info del especimen cuando no es null  :",
+          "info del especimen segunda vez :",
           JSON.stringify(especimenInfo, null, 2)
         );
         setFormValues(especimenInfo);
@@ -77,6 +75,7 @@ const EspecimenPage: React.FC = () => {
 
   useFocusEffect(
     React.useCallback(() => {
+      loadEspecimen();
       loadHasMorfometria();
     }, [idAviso, idEspecimen])
   );
@@ -84,8 +83,13 @@ const EspecimenPage: React.FC = () => {
     loadHasMorfometria();
   }, [idEspecimen]);
 
-  const onSubmitData = (data: FormValuesEspecimen) => {
-    switch (idtaxaEspecie) {
+  const onSubmitData = async (data: FormValuesEspecimen) => {
+    if (!data.Especie) return;
+    //console.log("data.Especie", JSON.stringify(data, null, 2));
+    //await updateEspecimenById(data, idEspecimen);
+    const taxaDelForm = data.Especie?.taxa;
+    setIdtaxaEspecie(taxaDelForm);
+    switch (taxaDelForm) {
       case MISTICETO:
         router.navigate("screens/Misticeto/Misticeto");
         break;
@@ -101,6 +105,10 @@ const EspecimenPage: React.FC = () => {
     }
   };
 
+  const handleValuesChange = async (values: Partial<FormValuesEspecimen>) => {
+    await updateEspecimenById(values, idEspecimen);
+  };
+
   const headerHeight = useHeaderHeight();
 
   if (isLoading || !formValues) {
@@ -113,7 +121,7 @@ const EspecimenPage: React.FC = () => {
         hasMorfometria={hasMorfometria ?? false}
         initialValues={formValues}
         onValuesChange={async (values: Partial<FormValuesEspecimen>) => {
-          await updateEspecimenById(values, idEspecimen);
+          await handleValuesChange(values);
         }}
         onSubmitData={onSubmitData}
       />

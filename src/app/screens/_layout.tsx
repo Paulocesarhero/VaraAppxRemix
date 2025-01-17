@@ -122,6 +122,15 @@ const Layout: React.FC = () => {
           headerLeft: headerHome,
         }}
       />
+      <Stack.Screen
+        name="AccionesYResultadosPage/AccionesYResultadosPage"
+        options={{
+          title: "Acciones y resultados",
+          headerBackButtonDisplayMode: "minimal",
+          headerBackTitle: "regresar",
+          headerLeft: headerHome,
+        }}
+      />
     </Stack>
   );
 };

@@ -25,6 +25,8 @@ import PhotoAndInputForm from "../../components/PhotoAndInputs/PhotoAndInputs";
 import useAvisoStore from "../../hooks/globalState/useAvisoStore";
 import { handleNumericInputWithOnepoint } from "../../hooks/validations";
 import { Especie } from "../../services/Especie/GetEspecie";
+import { EspecieSelectorStyle } from "../../components/EspecieSelector/EspecieSelectorStyle";
+import { Image } from "expo-image";
 
 const Especimen: React.FC<FormatoIndividualProps> = ({
   initialValues,
@@ -33,10 +35,9 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
   isDisabled,
   hasMorfometria,
 }) => {
-  const { setIdtaxaEspecie } = useAvisoStore();
   const { handleSubmit, control, watch, setValue, getValues } =
     useForm<FormValuesEspecimen>({
-      mode: "onBlur",
+      mode: "onChange",
       defaultValues: initialValues,
     });
 
@@ -80,6 +81,20 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
       apiValue: "3",
     },
   ];
+  /**
+   * @enum {number}
+   * @description Tipos de taxa:
+   * - 0: Misticeto
+   * - 1: Pinnipedo
+   * - 2: Odontoceto
+   * - 3: Sirenio
+   */
+  const imagenes = [
+    { id: 0, image: require("./whale/whale.png") },
+    { id: 1, image: require("./pinniped/pinniped.png") },
+    { id: 2, image: require("./dolphin/dolphin.png") },
+    { id: 3, image: require("./sirenia/sirenia.png") },
+  ];
 
   const condicionesList: Estado[] = [
     {
@@ -107,8 +122,7 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
     setValue("Longitud", getValues("Longitud"));
   };
   const handleEspecieSelecter = (especie: Especie) => {
-    setIdtaxaEspecie(especie.taxa);
-    setValue("Especie.id", especie.id);
+    setValue("EspecieId", especie.id);
   };
 
   const handleMarkerPositionChange = (longitude: number, latitude: number) => {
@@ -181,11 +195,14 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
               />
             }
           />
-          {!hasMorfometria && (
+          {!hasMorfometria ? (
             <Controller
               control={control}
               name="Especie"
-              render={({ field: { value, onChange } }) => (
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
                 <View
                   style={{ paddingHorizontal: 10 }}
                   pointerEvents={isDisabled ? "none" : "auto"}
@@ -197,11 +214,90 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
                       onChange(value);
                     }}
                   />
+                  {error && (
+                    <Text style={{ color: "red", marginTop: 5 }}>
+                      {error.message}
+                    </Text>
+                  )}
                 </View>
               )}
             />
-          )}
+          ) : (
+            <Controller
+              control={control}
+              name="Especie"
+              rules={{
+                required: "La especie es obligatoria",
+              }}
+              render={({ field: { value, onChange } }) => {
+                const especieImagen = imagenes.find(
+                  (img) => img.id === value?.taxa
+                );
+                const taxaValue = (() => {
+                  switch (value?.taxa) {
+                    case 0:
+                      return "Misticeto";
+                    case 1:
+                      return "Pinnipedo";
+                    case 2:
+                      return "Odontoceto";
+                    case 3:
+                      return "Sirenio";
+                    default:
+                      return "Desconocido";
+                  }
+                })();
+                return (
+                  <View
+                    style={[
+                      EspecieSelectorStyle.itemContainer,
+                      {
+                        backgroundColor: "",
+                        borderWidth: 1,
+                        margin: 10,
+                        marginTop: 30,
+                      },
+                    ]}
+                  >
+                    <View style={{ flexDirection: "column" }}>
+                      <Text
+                        ellipsizeMode="tail"
+                        style={EspecieSelectorStyle.labelInfo}
+                      >
+                        <Text style={EspecieSelectorStyle.labelContainer}>
+                          Nombre especie: {value?.nombre}
+                        </Text>
+                      </Text>
+                      <Text
+                        ellipsizeMode="tail"
+                        style={EspecieSelectorStyle.labelInfo}
+                      >
+                        <Text style={EspecieSelectorStyle.labelContainer}>
+                          Nombre latin: {value?.nombreLatin}
+                        </Text>
+                      </Text>
+                      <Text
+                        ellipsizeMode="tail"
+                        style={EspecieSelectorStyle.labelInfo}
+                      >
+                        <Text style={EspecieSelectorStyle.labelContainer}>
+                          Taxa: {taxaValue}
+                        </Text>
+                      </Text>
 
+                      {especieImagen && (
+                        <Image
+                          source={especieImagen.image}
+                          contentFit="cover"
+                          style={{ alignSelf: "center", width: 50, height: 50 }}
+                        />
+                      )}
+                    </View>
+                  </View>
+                );
+              }}
+            />
+          )}
           <InputField
             nameInput="Latitud"
             iconName="compass"
@@ -219,13 +315,10 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
               },
             }}
             onChangeText={(text) => {
-              // Primero, verifica si el guión está solo al principio
               if (text.indexOf("-") > 0) {
-                // Si el guión no está al principio, lo eliminamos
                 text = text.replace(/-/g, "");
               }
 
-              // Filtrar caracteres no numéricos y punto decimal
               const filteredText = text
                 .split("")
                 .filter((char) => {

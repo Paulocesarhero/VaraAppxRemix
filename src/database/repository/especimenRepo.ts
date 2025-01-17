@@ -9,6 +9,7 @@ import {
   pinnipedo,
   sirenio,
 } from "../schemas/avisoSchema";
+import { getEspecieById, getFistEspecie } from "./especieRepo";
 
 type NewEspecimen = typeof especimen.$inferInsert;
 
@@ -24,10 +25,17 @@ export const getEspecimenByIdEspecimen = async (
     if (!result || result.length === 0) {
       throw new Error(`No se encontró un especimen con id ${idEspecimen}`);
     }
+    console.log(
+      "result get especimen by id especimen :",
+      JSON.stringify(result, null, 2)
+    );
+    const EspecieBdLocal = await getEspecieById(result[0].especieId);
+    console.log(EspecieBdLocal);
 
     const item = result[0];
 
     const formValues: FormValuesEspecimen = {
+      Especie: EspecieBdLocal,
       Latitud: item.latitud ?? "",
       Longitud: item.longitud ?? "",
       EspecieId: item.especieId ?? undefined,
@@ -53,16 +61,16 @@ export const getEspecimenByIdEspecimen = async (
 
     return formValues;
   } catch (error) {
-    console.error("Error al obtener el especimen:", error);
     throw new Error(
       `Error al obtener el especimen para el id ${idEspecimen}: `
     );
   }
 };
 export const addEspecimenIfNotExist = async (idAviso: number) => {
+  const getEspecie = await getFistEspecie();
   const newEspecimen: NewEspecimen = {
     condicion: 0,
-    especieId: 0,
+    especieId: getEspecie.id,
     golpes: "",
     golpesFoto: "",
     grupoDeEdad: 0,
@@ -111,7 +119,7 @@ export const addEspecimenToVaramientoMasivo = async (
 };
 
 export const updateEspecimenById = async (
-  especimenData: Partial<NewEspecimen>,
+  especimenData: Partial<FormValuesEspecimen>,
   idEspecimen: number | null
 ): Promise<number> => {
   if (idEspecimen === null) throw new Error("Sin un idEspecimen especificado");
@@ -132,15 +140,15 @@ export const updateEspecimenById = async (
 
   const updatedEspecimen: NewEspecimen = {
     condicion: especimenData.condicion ?? especimenObjeto.condicion,
-    especieId: especimenData.especieId ?? especimenObjeto.especieId,
+    especieId: especimenData.EspecieId ?? especimenObjeto.especieId,
     golpes: especimenData.golpes ?? especimenObjeto.golpes,
     golpesFoto: especimenData.golpesFoto ?? especimenObjeto.golpesFoto,
     grupoDeEdad: especimenData.grupoDeEdad ?? especimenObjeto.grupoDeEdad,
     heridasBala: especimenData.heridasBala ?? especimenObjeto.heridasBala,
     heridasBalaFoto:
       especimenData.heridasBalaFoto ?? especimenObjeto.heridasBalaFoto,
-    latitud: especimenData.latitud ?? especimenObjeto.latitud,
-    longitud: especimenData.longitud ?? especimenObjeto.longitud,
+    latitud: especimenData.Latitud ?? especimenObjeto.latitud,
+    longitud: especimenData.Longitud ?? especimenObjeto.longitud,
     longitudTotalRectilinea:
       especimenData.longitudTotalRectilinea ??
       especimenObjeto.longitudTotalRectilinea,
@@ -165,60 +173,23 @@ export const updateEspecimenById = async (
     sustrato: especimenData.sustrato ?? especimenObjeto.sustrato,
     avisoId: especimenObjeto.avisoId,
   };
+  console.log(
+    "updated especimen",
+    JSON.stringify(updatedEspecimen, null, 2) + idEspecimen
+  );
   result = await db
     .update(especimen)
     .set(updatedEspecimen)
     .where(eq(especimen.id, idEspecimen))
     .returning({ updateId: especimen.id });
+  const resultInsercion = await db
+    .select()
+    .from(especimen)
+    .where(eq(especimen.id, idEspecimen));
+  console.log("result desde update", result);
+  console.log("result desde update insercion", resultInsercion);
 
   return result[0].updateId;
-};
-
-export const getEspecimenById = async (
-  idEspecimen: number
-): Promise<FormValuesEspecimen> => {
-  try {
-    const result = await db
-      .select()
-      .from(especimen)
-      .where(eq(especimen.id, idEspecimen));
-
-    if (!result || result.length === 0) {
-      throw new Error(
-        `No se encontró un especimen para el aviso con id ${idEspecimen}`
-      );
-    }
-
-    const especimenResult = result[0];
-
-    return {
-      condicion: especimenResult.condicion ?? 0,
-      golpes: especimenResult.golpes ?? "",
-      golpesFoto: especimenResult.golpesFoto ?? "",
-      grupoDeEdad: especimenResult.grupoDeEdad ?? 0,
-      heridasBala: especimenResult.heridasBala ?? "",
-      heridasBalaFoto: especimenResult.heridasBalaFoto ?? "",
-      Latitud: especimenResult.latitud ?? "",
-      Longitud: especimenResult.longitud ?? "",
-      longitudTotalRectilinea: especimenResult.longitudTotalRectilinea ?? "",
-      mordidas: especimenResult.mordidas ?? "",
-      mordidasFoto: especimenResult.mordidasFoto ?? "",
-      orientacionDelEspecimen: especimenResult.orientacionDelEspecimen ?? "",
-      otroSustrato: especimenResult.otroSustrato ?? "",
-      otroTipoDeHeridas: especimenResult.otroTipoDeHeridas ?? "",
-      otroTipoDeHeridasFoto: especimenResult.otroTipoDeHeridasFoto ?? "",
-      peso: especimenResult.peso ?? "",
-      presenciaDeRedes: especimenResult.presenciaDeRedes ?? "",
-      presenciaDeRedesFoto: especimenResult.presenciaDeRedesFoto ?? "",
-      sexo: especimenResult.sexo ?? 0,
-      sustrato: especimenResult.sustrato ?? 0,
-    };
-  } catch (error) {
-    console.error("Error al obtener el especimen:", error);
-    throw new Error(
-      `Error al obtener el especimen para el aviso ${idEspecimen}`
-    );
-  }
 };
 
 export const getAllEspecimen = async () => {
