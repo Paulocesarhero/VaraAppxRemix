@@ -223,3 +223,23 @@ export const hasRegistroMorfometrico = async (idEspecimen: number | null) => {
     sirenioRequest.length > 0
   );
 };
+
+export const deleteEspecimenById = async (idEspecimen: number | null) => {
+  if (idEspecimen === null) throw new Error("Sin un idEspecimen especificado");
+  const existingEspecimen = await db
+    .select()
+    .from(especimen)
+    .where(eq(especimen.id, idEspecimen));
+
+  if (existingEspecimen.length === 0) {
+    throw new Error(
+      `No se encontró un especimen para el aviso con id ${idEspecimen}`
+    );
+  }
+
+  const especimenObjeto = existingEspecimen[0];
+
+  await db.delete(especimen).where(eq(especimen.id, idEspecimen));
+
+  return especimenObjeto.id;
+};
