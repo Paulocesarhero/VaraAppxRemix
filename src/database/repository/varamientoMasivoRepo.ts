@@ -125,3 +125,13 @@ export const getVaramientoMasivoByIdAvisoLocal = async (
     throw error;
   }
 };
+
+export const hasVaramientoMasivo = async (idAviso: number | null) => {
+  if (idAviso === null) return false;
+  const varamientoMasivoRequest = await db
+    .select()
+    .from(varamientoMasivo)
+    .where(eq(varamientoMasivo.avisoId, idAviso));
+
+  return varamientoMasivoRequest.length > 0;
+};

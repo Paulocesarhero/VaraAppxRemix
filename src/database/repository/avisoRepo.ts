@@ -41,7 +41,6 @@ export const updateAviso = async (
   nombreAviso: string | null,
   idAviso: number
 ): Promise<number> => {
-  // Supón que obtienes los valores actuales de la base de datos, por ejemplo:
   const avisoExistente = await db
     .select()
     .from(avisos)
