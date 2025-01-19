@@ -71,11 +71,9 @@ const ListaEspecimen: React.FC<ListaEspecimenProps> = ({
     item: { idEspecimen: number; longitudTotalRectilinea: string };
   }) => (
     <View style={styles.itemContainer}>
+      <Text style={styles.itemText}>Id del especimen: {item.idEspecimen}</Text>
       <Text style={styles.itemText}>
-        "Id del especimen " {item.idEspecimen}
-      </Text>
-      <Text style={styles.itemText}>
-        "Longitud total rectilinea " {item.longitudTotalRectilinea}
+        Longitud total rectilinea: {item.longitudTotalRectilinea}
       </Text>
       {isModificable && (
         <View
@@ -130,8 +128,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     borderWidth: 1,
     borderRadius: 15,
-    height: 100,
-    padding: 10,
+    gap: 10,
+    height: 150,
+    padding: 20,
   },
   itemText: {
     fontSize: 18,
