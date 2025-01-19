@@ -6,12 +6,21 @@ import { Text, View } from "react-native";
 
 import useSettingStore from "../hooks/globalState/useSettingStore";
 import LoginPage from "./screens/Login/LoginPage";
-import { db } from "../database/connection/sqliteConnection";
+
 import migrations from "../database/migrations/drizzle/migrations";
+import { SQLiteProvider } from "expo-sqlite";
+import { db } from "../database/connection/sqliteConnection";
 
 export default function App() {
   const { success, error } = useMigrations(db, migrations);
   const { isLoggedIn } = useSettingStore();
+  const renderComponente = () => {
+    if (isLoggedIn) {
+      return <Redirect href="screens/(home)/Recommendations/Recommendations" />;
+    } else {
+      return <LoginPage />;
+    }
+  };
   if (error) {
     return (
       <View>
@@ -27,9 +36,5 @@ export default function App() {
     );
   }
 
-  return isLoggedIn ? (
-    <Redirect href="screens/(home)/Recommendations/Recommendations" />
-  ) : (
-    <LoginPage />
-  );
+  return <>{renderComponente()}</>;
 }
