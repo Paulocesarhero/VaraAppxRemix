@@ -40,7 +40,9 @@ export const ambiente = table(
     anormalidadGeomagnetica: t.int(),
     mareaRoja: t.int().$type<0 | 1>().default(0),
     anormalidadEnLaPesca: t.text(),
-    avisoId: t.int("aviso_id").references(() => avisos.id),
+    avisoId: t
+      .int("aviso_id")
+      .references(() => avisos.id, { onDelete: "cascade" }),
   },
   (table) => {
     return {
@@ -75,8 +77,10 @@ export const especimen = table("especimen", {
   avisoId: t.int("aviso_id").references(() => avisos.id),
   varamientoMasivoId: t
     .int("varamiento_masivo_id")
-    .references(() => varamientoMasivo.id),
-  recorridoId: t.int("recorrido_id").references(() => recorrido.id),
+    .references(() => varamientoMasivo.id, { onDelete: "cascade" }),
+  recorridoId: t
+    .int("recorrido_id")
+    .references(() => recorrido.id, { onDelete: "cascade" }),
 });
 export const especie = table("especie", {
   id: t.int().primaryKey({ autoIncrement: true }),
@@ -97,7 +101,9 @@ export const varamientoMasivo = table("varamiento_masivo", {
   animalesVivos: t.text(),
   animalesMuertos: t.text(),
   observaciones: t.text(),
-  avisoId: t.int("aviso_id").references(() => avisos.id),
+  avisoId: t
+    .int("aviso_id")
+    .references(() => avisos.id, { onDelete: "cascade" }),
 });
 
 export const localizacion = table("localizacion", {
@@ -194,7 +200,9 @@ export const misticeto = table("misticeto", {
   M40LongitudDeLaAberturaMamariaC: t.text(),
   M41LongitudDeLaAberturaGenitalC: t.text(),
   M42LongitudDeLaAberturaAnalC: t.text(),
-  especimenId: t.int("especimen_id").references(() => especimen.id),
+  especimenId: t
+    .int("especimen_id")
+    .references(() => especimen.id, { onDelete: "cascade" }),
 });
 
 export const odontoceto = table("odontoceto", {
@@ -261,7 +269,9 @@ export const odontoceto = table("odontoceto", {
   m39LongitudDeLaAberturaMamariaC: t.text(),
   m40LongitudDeLaAberturaGenitalC: t.text(),
   m41LongitudDeLaAberturaAnalC: t.text(),
-  especimenId: t.int("especimen_id").references(() => especimen.id),
+  especimenId: t
+    .int("especimen_id")
+    .references(() => especimen.id, { onDelete: "cascade" }),
 });
 
 export const pinnipedo = table("pinnipedo", {
@@ -299,7 +309,9 @@ export const pinnipedo = table("pinnipedo", {
   mandibulaDerechoPosCanino: t.text(),
   mandibulaDerechoCanino: t.text(),
   mandibulaDerechoIncisivo: t.text(),
-  especimenId: t.int("especimen_id").references(() => especimen.id),
+  especimenId: t
+    .int("especimen_id")
+    .references(() => especimen.id, { onDelete: "cascade" }),
 });
 
 export const sirenio = table("sirenio", {
@@ -345,7 +357,9 @@ export const sirenio = table("sirenio", {
   numeroDientesSuperiorIzquierda: t.text(),
   numeroDientesInferiorDerecha: t.text(),
   numeroDientesInferiorIzquierda: t.text(),
-  especimenId: t.int("especimen_id").references(() => especimen.id),
+  especimenId: t
+    .int("especimen_id")
+    .references(() => especimen.id, { onDelete: "cascade" }),
 });
 
 export const organismo = table("organismo", {
@@ -360,7 +374,9 @@ export const organismo = table("organismo", {
   animalTransferido: t.int().$type<0 | 1>(),
   lugarDeRehabilitacion: t.text(),
   despuesDeVararse: t.text(),
-  especimenId: t.int("especimen_id").references(() => especimen.id),
+  especimenId: t
+    .int("especimen_id")
+    .references(() => especimen.id, { onDelete: "cascade" }),
 });
 
 export const acciones = table("acciones", {
@@ -376,5 +392,7 @@ export const acciones = table("acciones", {
   participantes: t.text(),
   observaciones: t.text(),
   tipoDeMuestras: t.text({ mode: "json" }),
-  especimenId: t.int("especimen_id").references(() => especimen.id),
+  especimenId: t
+    .int("especimen_id")
+    .references(() => especimen.id, { onDelete: "cascade" }),
 });
