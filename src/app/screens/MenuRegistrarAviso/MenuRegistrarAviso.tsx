@@ -4,6 +4,16 @@ import React from "react";
 import { View } from "react-native";
 import MaterialCard from "varaapplib/components/MaterialCard/MaterialCard";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { hasVaramientoMasivo } from "../../../database/repository/varamientoMasivoRepo";
+import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
+import {
+  avisos,
+  especimen,
+  varamientoMasivo,
+} from "../../../database/schemas/avisoSchema";
+import { db } from "../../../database/connection/sqliteConnection";
+import { eq } from "drizzle-orm";
 
 const MenuRegistrarAviso: React.FC = () => {
   const router = useRouter();
@@ -12,6 +22,72 @@ const MenuRegistrarAviso: React.FC = () => {
   };
   const handleVaramientoMasivo = () => {
     router.push("screens/VaramientoMasivoPage/VaramientoMasivoPage");
+  };
+  const { idAvisoSelected } = useAvisoStore();
+
+  const { data: dataVaramientoMasivo } = useLiveQuery(
+    db
+      .select()
+      .from(varamientoMasivo)
+      .where(eq(varamientoMasivo.avisoId, idAvisoSelected))
+  );
+
+  const { data: dataAvisoEspecimen } = useLiveQuery(
+    db.select().from(especimen).where(eq(especimen.avisoId, idAvisoSelected))
+  );
+  const hasAvisoIndividual = dataAvisoEspecimen?.length > 0;
+
+  const hasVaramientoMasivoLocal = dataVaramientoMasivo?.length > 0;
+
+  const renderCards = () => {
+    console.log("id aviso selected menu registar", idAvisoSelected);
+    console.log("has aviso individual", hasAvisoIndividual);
+    console.log("has varamiento masivo local", hasVaramientoMasivoLocal);
+    console.log("data aviso especímen", dataAvisoEspecimen);
+    console.log("data varamiento masivo", dataVaramientoMasivo);
+    if (hasAvisoIndividual && !hasVaramientoMasivoLocal) {
+      return (
+        <MaterialCard
+          onPress={handleAvisoIndividual}
+          leftComponent={
+            <MaterialIcons name="add-to-queue" size={50} color="black" />
+          }
+          label="Aviso individual"
+        />
+      );
+    }
+    if (hasVaramientoMasivoLocal) {
+      return (
+        <MaterialCard
+          onPress={handleVaramientoMasivo}
+          leftComponent={
+            <MaterialIcons name="add-to-photos" size={50} color="black" />
+          }
+          label="Varamiento masivo"
+        />
+      );
+    }
+    if (!hasAvisoIndividual && !hasVaramientoMasivoLocal) {
+      return (
+        <>
+          <MaterialCard
+            onPress={handleAvisoIndividual}
+            leftComponent={
+              <MaterialIcons name="add-to-queue" size={50} color="black" />
+            }
+            label="Aviso individual"
+          />
+          <MaterialCard
+            onPress={handleVaramientoMasivo}
+            leftComponent={
+              <MaterialIcons name="add-to-photos" size={50} color="black" />
+            }
+            label="Varamiento masivo"
+          />
+        </>
+      );
+    }
+    return null;
   };
 
   return (
@@ -23,20 +99,7 @@ const MenuRegistrarAviso: React.FC = () => {
         gap: 40,
       }}
     >
-      <MaterialCard
-        onPress={handleAvisoIndividual}
-        leftComponent={
-          <MaterialIcons name="add-to-queue" size={24} color="black" />
-        }
-        label="Aviso individual"
-      />
-      <MaterialCard
-        onPress={handleVaramientoMasivo}
-        leftComponent={
-          <MaterialIcons name="add-to-photos" size={50} color="black" />
-        }
-        label="Varamiento masivo"
-      />
+      {renderCards()}
     </View>
   );
 };
