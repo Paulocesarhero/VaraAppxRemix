@@ -131,6 +131,15 @@ const Layout: React.FC = () => {
           headerLeft: headerHome,
         }}
       />
+      <Stack.Screen
+        name="ListaEspecimen/ListaEspecimen"
+        options={{
+          title: "Lista espécimen",
+          headerBackButtonDisplayMode: "minimal",
+          headerBackTitle: "regresar",
+          headerLeft: headerHome,
+        }}
+      />
     </Stack>
   );
 };
