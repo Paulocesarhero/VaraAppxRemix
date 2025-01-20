@@ -46,7 +46,7 @@ interface Item {
 }
 
 const ListaAvisos: React.FC = () => {
-  const [useLocalDB, setUseLocalDB] = useState<boolean>(false);
+  const [useLocalDB, setUseLocalDB] = useState<boolean>(true);
   const [data, setData] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const { token: barrerToken } = useAuthStore();
