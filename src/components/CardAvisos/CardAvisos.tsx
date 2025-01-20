@@ -19,7 +19,6 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
   fechasDeAvistamiento,
   cantidadDeAnimales,
   id,
-  onDelete = () => {},
 }) => {
   const { setIdAvisoSelected } = useAvisoStore();
 
@@ -47,7 +46,6 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
           onPress: async () => {
             try {
               await handledeleteAviso(id);
-              onDelete?.(id);
             } catch (error) {
               console.error("Error al eliminar:", error);
               Alert.alert(
