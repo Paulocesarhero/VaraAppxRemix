@@ -1,60 +1,112 @@
-import { Entypo } from "@expo/vector-icons";
-import { router, usePathname } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
+import { getAvisosVaraWeb } from "../../../../services/Avisos/GetAvisosVaraWeb";
+import useAvisoStore from "../../../../hooks/globalState/useAvisoStore";
+import useAuthStore from "../../../../hooks/globalState/useAuthStore";
+import { router, usePathname } from "expo-router";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { db } from "../../../../database/connection/sqliteConnection";
+import { avisos } from "../../../../database/schemas/avisoSchema";
 import {
   FlatList,
   StyleSheet,
+  Switch,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-
+import Entypo from "@expo/vector-icons/Entypo";
 import CardAvisos from "../../../../components/CardAvisos/CardAvisos";
 import { ColorsPalete } from "../../../../constants/COLORS";
-import useAuthStore from "../../../../hooks/globalState/useAuthStore";
-import useAvisoStore from "../../../../hooks/globalState/useAvisoStore";
-import useListAvisoStore from "../../../../hooks/globalState/useListAvisosStore";
+
+const fetchDataFromAPI = async (token: string): Promise<Item[]> => {
+  try {
+    const avisosApi = await getAvisosVaraWeb(token);
+
+    const avisosTransformados: Item[] = avisosApi.map((aviso) => ({
+      fechaDeAvistamiento: aviso.fechaDeAvistamiento,
+      cantidadDeAnimales: Number(aviso.cantidadDeAnimales),
+      fotografia: aviso.fotografia,
+      id: `${Date.now()}_${Math.random()}`,
+      isModificable: false,
+    }));
+
+    return avisosTransformados;
+  } catch (error) {
+    console.error("Error al obtener avisos desde la API:", error);
+    return [];
+  }
+};
+
+interface Item {
+  id: number | string;
+  fechaDeAvistamiento?: string | null;
+  cantidadDeAnimales?: number | null;
+  fotografia: string | null;
+  isModificable?: boolean;
+}
 
 const ListaAvisos: React.FC = () => {
-  const { avisos, fetchAvisosLocales, fetchAvisosRemotos, deleteAviso } =
-    useListAvisoStore();
-  const token = useAuthStore((state) => state.token);
+  const [useLocalDB, setUseLocalDB] = useState<boolean>(false);
+  const [data, setData] = useState<Item[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const { token: barrerToken } = useAuthStore();
+
   const {
     setIdAvisoSelected,
     setIdEspecimen,
     setIdtaxaEspecie,
     clearIdEspecimen,
   } = useAvisoStore();
-  const [refreshing, setRefreshing] = useState(false);
+
   const pathname = usePathname();
 
-  const loadData = useCallback(async () => {
-    setRefreshing(true);
-    try {
-      await fetchAvisosLocales();
-      if (token) {
-        await fetchAvisosRemotos(token);
-      }
-    } catch (error) {
-      console.error("Error al cargar avisos:", error);
-    } finally {
-      setRefreshing(false);
+  const { data: localData } = useLiveQuery(
+    db
+      .select({
+        id: avisos.id,
+        fechaDeAvistamiento: avisos.fechaDeAvistamiento,
+        cantidadDeAnimales: avisos.cantidadDeAnimales,
+        fotografia: avisos.fotografia,
+      })
+      .from(avisos)
+  );
+  useEffect(() => {
+    if (localData && useLocalDB) {
+      const transformedData: Item[] = localData.map((item) => ({
+        id: item.id,
+        fechaDeAvistamiento: item.fechaDeAvistamiento,
+        cantidadDeAnimales: item.cantidadDeAnimales,
+        fotografia: item.fotografia,
+        isModificable: true,
+      }));
+      setData(transformedData);
+      setLoading(false); // Una vez que los datos están listos, setea loading a false
     }
-  }, [token, fetchAvisosLocales, fetchAvisosRemotos]);
-
-  const handleNuevoAviso = () => {
-    router.push("screens/AvisoPage/AvisoPage");
-  };
-
-  const handleDeleteAviso = (id: string | number) => {
-    deleteAviso(id);
-  };
-
-  const ITEM_HEIGHT = 200;
+  }, [localData, useLocalDB]);
 
   useEffect(() => {
-    loadData();
-  }, [loadData]);
+    if (!useLocalDB) {
+      setLoading(true);
+
+      getAvisosVaraWeb(barrerToken)
+        .then((data) => {
+          const transformedData: Item[] = data.map((item) => ({
+            id: item.id,
+            fechaDeAvistamiento: item.fechaDeAvistamiento,
+            cantidadDeAnimales: Number(item.cantidadDeAnimales), // Convierte a número
+            fotografia: item.fotografia,
+            isModificable: false,
+          }));
+
+          setData(transformedData);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error al obtener los datos:", error);
+          setLoading(false);
+        });
+    }
+  }, [useLocalDB]);
 
   useEffect(() => {
     if (pathname === "/screens/ListaAvisos/ListaAvisos") {
@@ -62,16 +114,34 @@ const ListaAvisos: React.FC = () => {
       setIdtaxaEspecie(0);
       clearIdEspecimen();
     }
-  }, [pathname]);
+  }, [pathname, setIdAvisoSelected, setIdtaxaEspecie, clearIdEspecimen]);
+
+  const handleNuevoAviso = useCallback(() => {
+    router.push("screens/AvisoPage/AvisoPage");
+  }, []);
+
+  const ITEM_HEIGHT = 200;
+
   return (
     <View style={styles.container}>
+      <View style={styles.switchContainer}>
+        <Text style={styles.switchLabel}>Avisos en la nube</Text>
+        <Switch
+          trackColor={{ false: "#81b0ff", true: "#282853" }}
+          thumbColor={useLocalDB ? "#54AD94" : "#f4f3f4"}
+          value={useLocalDB}
+          onValueChange={(value) => {
+            setUseLocalDB(value);
+          }}
+        />
+        <Text style={styles.switchLabel}>Avisos en el dispositivo</Text>
+      </View>
       <TouchableOpacity style={styles.button} onPress={handleNuevoAviso}>
         <Entypo name="new-message" size={24} color="black" />
         <Text style={styles.buttonText}>Nuevo aviso</Text>
       </TouchableOpacity>
       <FlatList
-        onRefresh={loadData}
-        data={avisos}
+        data={data}
         keyExtractor={(item) => item.id.toString()}
         getItemLayout={(data, index) => ({
           length: ITEM_HEIGHT,
@@ -79,7 +149,7 @@ const ListaAvisos: React.FC = () => {
           index,
         })}
         initialNumToRender={5}
-        refreshing={false}
+        refreshing={loading}
         renderItem={({ item }) => (
           <CardAvisos
             id={item.id}
@@ -87,7 +157,6 @@ const ListaAvisos: React.FC = () => {
             isModificable={item.isModificable}
             fechasDeAvistamiento={item?.fechaDeAvistamiento}
             cantidadDeAnimales={item.cantidadDeAnimales}
-            onDelete={handleDeleteAviso}
           />
         )}
         contentContainerStyle={styles.list}
@@ -95,7 +164,6 @@ const ListaAvisos: React.FC = () => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -116,6 +184,18 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingBottom: 20,
+  },
+  switchContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 2,
+    alignItems: "center",
+    marginBottom: 20,
+    marginHorizontal: 5,
+  },
+  switchLabel: {
+    fontSize: 12,
+    marginRight: 10,
   },
 });
 
