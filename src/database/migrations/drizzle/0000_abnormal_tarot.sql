@@ -12,7 +12,7 @@ CREATE TABLE `acciones` (
 	`observaciones` text,
 	`tipoDeMuestras` text,
 	`especimen_id` integer,
-	FOREIGN KEY (`especimen_id`) REFERENCES `especimen`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`especimen_id`) REFERENCES `especimen`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE TABLE `ambiente` (
@@ -33,7 +33,7 @@ CREATE TABLE `ambiente` (
 	`mareaRoja` integer DEFAULT 0,
 	`anormalidadEnLaPesca` text,
 	`aviso_id` integer,
-	FOREIGN KEY (`aviso_id`) REFERENCES `avisos`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`aviso_id`) REFERENCES `avisos`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE INDEX `aviso_idx` ON `ambiente` (`aviso_id`);--> statement-breakpoint
@@ -93,8 +93,8 @@ CREATE TABLE `especimen` (
 	`recorrido_id` integer,
 	FOREIGN KEY (`especie_id`) REFERENCES `especie`(`id`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`aviso_id`) REFERENCES `avisos`(`id`) ON UPDATE no action ON DELETE no action,
-	FOREIGN KEY (`varamiento_masivo_id`) REFERENCES `varamiento_masivo`(`id`) ON UPDATE no action ON DELETE no action,
-	FOREIGN KEY (`recorrido_id`) REFERENCES `recorrido`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`varamiento_masivo_id`) REFERENCES `varamiento_masivo`(`id`) ON UPDATE no action ON DELETE cascade,
+	FOREIGN KEY (`recorrido_id`) REFERENCES `recorrido`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE TABLE `localizacion` (
@@ -171,7 +171,7 @@ CREATE TABLE `misticeto` (
 	`M41LongitudDeLaAberturaGenitalC` text,
 	`M42LongitudDeLaAberturaAnalC` text,
 	`especimen_id` integer,
-	FOREIGN KEY (`especimen_id`) REFERENCES `especimen`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`especimen_id`) REFERENCES `especimen`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE TABLE `odontoceto` (
@@ -239,7 +239,7 @@ CREATE TABLE `odontoceto` (
 	`m40LongitudDeLaAberturaGenitalC` text,
 	`m41LongitudDeLaAberturaAnalC` text,
 	`especimen_id` integer,
-	FOREIGN KEY (`especimen_id`) REFERENCES `especimen`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`especimen_id`) REFERENCES `especimen`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE TABLE `organismo` (
@@ -255,7 +255,7 @@ CREATE TABLE `organismo` (
 	`lugarDeRehabilitacion` text,
 	`despuesDeVararse` text,
 	`especimen_id` integer,
-	FOREIGN KEY (`especimen_id`) REFERENCES `especimen`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`especimen_id`) REFERENCES `especimen`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE TABLE `pinnipedo` (
@@ -294,7 +294,7 @@ CREATE TABLE `pinnipedo` (
 	`mandibulaDerechoCanino` text,
 	`mandibulaDerechoIncisivo` text,
 	`especimen_id` integer,
-	FOREIGN KEY (`especimen_id`) REFERENCES `especimen`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`especimen_id`) REFERENCES `especimen`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE TABLE `recorrido` (
@@ -360,7 +360,7 @@ CREATE TABLE `sirenio` (
 	`numeroDientesInferiorDerecha` text,
 	`numeroDientesInferiorIzquierda` text,
 	`especimen_id` integer,
-	FOREIGN KEY (`especimen_id`) REFERENCES `especimen`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`especimen_id`) REFERENCES `especimen`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE TABLE `varamiento_masivo` (
@@ -375,5 +375,5 @@ CREATE TABLE `varamiento_masivo` (
 	`animalesMuertos` text,
 	`observaciones` text,
 	`aviso_id` integer,
-	FOREIGN KEY (`aviso_id`) REFERENCES `avisos`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`aviso_id`) REFERENCES `avisos`(`id`) ON UPDATE no action ON DELETE cascade
 );
