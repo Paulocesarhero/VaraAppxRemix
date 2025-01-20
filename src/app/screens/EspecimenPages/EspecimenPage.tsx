@@ -12,6 +12,7 @@ import {
 import Especimen from "../../../forms/Especimen/Especimen";
 import { FormValuesEspecimen } from "../../../forms/Especimen/FormValuesEspecimen";
 import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
+import { saveImage } from "../../../hooks/helpers";
 
 const EspecimenPage: React.FC = () => {
   const idtaxaEspecie = useAvisoStore((state) => state.idtaxaEspecie);
@@ -32,6 +33,7 @@ const EspecimenPage: React.FC = () => {
   const loadEspecimen = async () => {
     setIsLoading(true);
     let especimenInfo: any;
+    console.log("idEspecimen en especimenPage", idEspecimen);
     try {
       if (idEspecimen === null) {
         const idEspecimenBD = await addEspecimenIfNotExist(idAviso);
@@ -61,6 +63,7 @@ const EspecimenPage: React.FC = () => {
     setIsLoading(true);
     try {
       const result = await hasRegistroMorfometrico(idEspecimen);
+      console.log("result loadHasMorfometria", result);
       setHasMorfometria(result);
     } catch (error) {
       console.error("Error al obtener el valor de morfometria: ", error);
@@ -106,7 +109,33 @@ const EspecimenPage: React.FC = () => {
   };
 
   const handleValuesChange = async (values: Partial<FormValuesEspecimen>) => {
-    await updateEspecimenById(values, idEspecimen);
+    if (values.golpesFoto) {
+      const imagePersistence = await saveImage(values.golpesFoto);
+      values.golpesFoto = imagePersistence;
+      await updateEspecimenById(values, idEspecimen);
+    }
+    if (values.heridasBalaFoto) {
+      const imagePersistence = await saveImage(values.heridasBalaFoto);
+      values.heridasBalaFoto = imagePersistence;
+      await updateEspecimenById(values, idEspecimen);
+    }
+    if (values.presenciaDeRedesFoto) {
+      const imagePersistence = await saveImage(values.presenciaDeRedesFoto);
+      values.presenciaDeRedesFoto = imagePersistence;
+      await updateEspecimenById(values, idEspecimen);
+    }
+    if (values.mordidasFoto) {
+      const imagePersistence = await saveImage(values.mordidasFoto);
+      values.mordidasFoto = imagePersistence;
+      await updateEspecimenById(values, idEspecimen);
+    }
+    if (values.otroTipoDeHeridasFoto) {
+      const imagePersistence = await saveImage(values.otroTipoDeHeridasFoto);
+      values.otroTipoDeHeridasFoto = imagePersistence;
+      await updateEspecimenById(values, idEspecimen);
+    } else {
+      await updateEspecimenById(values, idEspecimen);
+    }
   };
 
   const headerHeight = useHeaderHeight();
