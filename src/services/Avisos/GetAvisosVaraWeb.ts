@@ -9,8 +9,11 @@ export interface AvisoApiGet {
 }
 
 export const getAvisosVaraWeb = async (
-  barrerToken: string
+  barrerToken: string | null
 ): Promise<AvisoApiGet[]> => {
+  if (!barrerToken) {
+    return [];
+  }
   try {
     const response = await api.get<AvisoApiGet[]>("api/Aviso/Avisos", {
       headers: {
