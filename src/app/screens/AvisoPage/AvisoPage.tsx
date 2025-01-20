@@ -2,7 +2,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Platform, Text } from "react-native";
+import { Platform, Text, View } from "react-native";
 import { AvisoForm } from "varaapplib/components/AvisoForm/AvisoForm";
 import { AvisoValues } from "varaapplib/components/AvisoForm/types";
 
@@ -16,7 +16,7 @@ import {
 } from "../../../database/repository/avisoRepo";
 import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 import useListAvisosStore from "../../../hooks/globalState/useListAvisosStore";
-import { getDateNow } from "../../../hooks/helpers";
+import { getDateNow, saveImage } from "../../../hooks/helpers";
 
 const AvisoPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -60,26 +60,43 @@ const AvisoPage: React.FC = () => {
       setIsLoading(false);
     }
   };
+  useEffect(() => {
+    console.log("Fotografía actualizada: ", dataAvisos.Fotografia);
+    loadAvisos();
+    router.navigate("screens/AvisoPage/AvisoPage");
+  }, [dataAvisos.Fotografia]);
 
   const handleValuesChange = async (values: Partial<AvisoValues>) => {
     if (idSelected > 0) {
       try {
+        if (values.Fotografia) {
+          const imagePersistence = await saveImage(values.Fotografia);
+          if (imagePersistence !== dataAvisos.Fotografia) {
+            setDataAvisos((prevData) => ({
+              ...prevData,
+              Fotografia: imagePersistence,
+            }));
+          }
+          values.Fotografia = imagePersistence;
+        }
+        console.log("datos avisos ", dataAvisos);
+
         await updateAviso(values, dataAvisos.Nombre ?? "", idSelected);
       } catch (error) {
         console.error("Error al actualizar aviso: ", error);
       }
     }
   };
-
   const handleNextPagePress = async (data: AvisoValues) => {
     try {
       if (idSelected < 1) {
         const nombreAviso = Date.now().toString();
         const idAvisoSqlite = await addAviso(data, nombreAviso);
+        const imagePersistence = await saveImage(data.Fotografia);
 
         const avisoData = {
           id: idAvisoSqlite,
-          fotografia: data.Fotografia,
+          fotografia: imagePersistence,
           isModificable: true,
           fechaDeAvistamiento: data.FechaDeAvistamiento,
           cantidadDeAnimales: data.CantidadDeAnimales,
@@ -123,18 +140,20 @@ const AvisoPage: React.FC = () => {
   }
 
   return (
-    <AvisoForm
-      scroolViewStyles={{
-        paddingTop: Platform.OS === "android" ? 0 : headerHeight,
-        paddingHorizontal: 0,
-      }}
-      reactNodeButton={CustomButton}
-      onSubmitData={handleNextPagePress}
-      loading={loading}
-      setLoading={setLoading}
-      onValuesChange={handleValuesChange}
-      data={dataAvisos}
-    />
+    <View style={{ marginHorizontal: 5 }}>
+      <AvisoForm
+        scroolViewStyles={{
+          paddingTop: Platform.OS === "android" ? 0 : headerHeight,
+          paddingHorizontal: 0,
+        }}
+        reactNodeButton={CustomButton}
+        onSubmitData={handleNextPagePress}
+        loading={loading}
+        setLoading={setLoading}
+        onValuesChange={handleValuesChange}
+        data={dataAvisos}
+      />
+    </View>
   );
 };
 
