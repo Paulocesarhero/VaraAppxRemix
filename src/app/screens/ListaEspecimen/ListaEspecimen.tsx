@@ -8,7 +8,10 @@ import InlineButton from "../../../components/InlineButton/InlineButton";
 import { Ionicons } from "@expo/vector-icons";
 import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 import useVaramientoMasivoStore from "../../../hooks/globalState/useVaramientoMasivo";
-import { addEspecimenToVaramientoMasivo } from "../../../database/repository/especimenRepo";
+import {
+  addEspecimenToVaramientoMasivo,
+  deleteEspecimenById,
+} from "../../../database/repository/especimenRepo";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { db } from "../../../database/connection/sqliteConnection";
 import { especimen } from "../../../database/schemas/avisoSchema";
@@ -58,7 +61,14 @@ const ListaEspecimen: React.FC<ListaEspecimenProps> = ({
     console.log("Se ejecutó handleUpdateAviso", idEspecimen);
     route.push("screens/EspecimenPages/EspecimenPage");
   };
-  const handleDelete = () => {};
+  const handleDelete = async (idEspecimen: number) => {
+    try {
+      await deleteEspecimenById(idEspecimen);
+    } catch (error) {
+      console.error("Error al eliminar el espécimen:", error);
+      alert("No se pudo eliminar el espécimen. Por favor, intenta nuevamente.");
+    }
+  };
 
   function handleAddEspecimen(): void {
     if (!idAviso || !idVaramientoMasivo) return;
@@ -93,7 +103,7 @@ const ListaEspecimen: React.FC<ListaEspecimenProps> = ({
             name="delete"
             size={24}
             color="red"
-            onPress={handleDelete}
+            onPress={() => handleDelete(item.idEspecimen)}
           />
         </View>
       )}
