@@ -8,12 +8,14 @@ import useSettingStore from "../hooks/globalState/useSettingStore";
 import LoginPage from "./screens/Login/LoginPage";
 
 import migrations from "../database/migrations/drizzle/migrations";
-import { SQLiteProvider } from "expo-sqlite";
+import { SQLiteProvider, useSQLiteContext } from "expo-sqlite";
 import { db } from "../database/connection/sqliteConnection";
 
 export default function App() {
   const { success, error } = useMigrations(db, migrations);
   const { isLoggedIn } = useSettingStore();
+  const sqliteContext = useSQLiteContext();
+  useDrizzleStudio(sqliteContext);
   const renderComponente = () => {
     if (isLoggedIn) {
       return <Redirect href="screens/(home)/Recommendations/Recommendations" />;
