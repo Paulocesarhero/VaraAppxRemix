@@ -1,5 +1,6 @@
 import * as t from "drizzle-orm/sqlite-core";
 import { sqliteTable as table } from "drizzle-orm/sqlite-core/table";
+import { InferSelectModel, relations } from "drizzle-orm";
 
 export const avisos = table("avisos", {
   id: t.int().primaryKey({ autoIncrement: true }),
@@ -396,3 +397,126 @@ export const acciones = table("acciones", {
     .int("especimen_id")
     .references(() => especimen.id, { onDelete: "cascade" }),
 });
+
+export const avisosRelations = relations(avisos, ({ many, one }) => ({
+  especimenes: many(especimen),
+  ambiente: one(ambiente, {
+    fields: [avisos.id],
+    references: [ambiente.avisoId],
+  }),
+  varamientoMasivo: one(varamientoMasivo),
+}));
+
+export const especimenRelations = relations(especimen, ({ one }) => ({
+  aviso: one(avisos, {
+    fields: [especimen.avisoId],
+    references: [avisos.id],
+  }),
+  especie: one(especie, {
+    fields: [especimen.especieId],
+    references: [especie.id],
+  }),
+  varamientoMasivo: one(varamientoMasivo, {
+    fields: [especimen.varamientoMasivoId],
+    references: [varamientoMasivo.id],
+  }),
+  recorrido: one(recorrido, {
+    fields: [especimen.recorridoId],
+    references: [recorrido.id],
+  }),
+  // Relaciones one-to-one con las tablas de medidas
+  misticeto: one(misticeto), // opcional
+  odontoceto: one(odontoceto), // opcional
+  pinnipedo: one(pinnipedo), // opcional
+  sirenio: one(sirenio), // opcional
+  organismo: one(organismo), // opcional
+  acciones: one(acciones), // opcional
+}));
+
+// Relaciones inversas desde las tablas de medidas
+export const misticetoRelations = relations(misticeto, ({ one }) => ({
+  especimen: one(especimen, {
+    fields: [misticeto.especimenId],
+    references: [especimen.id],
+  }),
+}));
+
+export const odontocetoRelations = relations(odontoceto, ({ one }) => ({
+  especimen: one(especimen, {
+    fields: [odontoceto.especimenId],
+    references: [especimen.id],
+  }),
+}));
+
+export const pinnipedoRelations = relations(pinnipedo, ({ one }) => ({
+  especimen: one(especimen, {
+    fields: [pinnipedo.especimenId],
+    references: [especimen.id],
+  }),
+}));
+
+export const sirenioRelations = relations(sirenio, ({ one }) => ({
+  especimen: one(especimen, {
+    fields: [sirenio.especimenId],
+    references: [especimen.id],
+  }),
+}));
+
+export const organismoRelations = relations(organismo, ({ one }) => ({
+  especimen: one(especimen, {
+    fields: [organismo.especimenId],
+    references: [especimen.id],
+  }),
+}));
+
+export const accionesRelations = relations(acciones, ({ one }) => ({
+  especimen: one(especimen, {
+    fields: [acciones.especimenId],
+    references: [especimen.id],
+  }),
+}));
+
+export const especieRelations = relations(especie, ({ one }) => ({
+  aviso: one(especimen, {
+    fields: [especie.id],
+    references: [especimen.especieId],
+  }),
+}));
+export const ambienteRelations = relations(ambiente, ({ one }) => ({
+  aviso: one(avisos, {
+    fields: [ambiente.avisoId],
+    references: [avisos.id],
+  }),
+}));
+
+export type AvisoDb = InferSelectModel<typeof avisos>;
+export type EspecimenDb = InferSelectModel<typeof especimen>;
+export type EspecieDb = InferSelectModel<typeof especie>;
+export type VaramientoMasivoDb = InferSelectModel<typeof varamientoMasivo>;
+export type RecorridoDb = InferSelectModel<typeof recorrido>;
+export type MisticetoDb = InferSelectModel<typeof misticeto>;
+export type OdontocetoDb = InferSelectModel<typeof odontoceto>;
+export type PinnipedoDb = InferSelectModel<typeof pinnipedo>;
+export type SirenioDb = InferSelectModel<typeof sirenio>;
+export type OrganismoDb = InferSelectModel<typeof organismo>;
+export type AccionesDb = InferSelectModel<typeof acciones>;
+export type AmbienteDb = InferSelectModel<typeof ambiente>;
+export type AvisoWithRelations = AvisoDb & {
+  ambiente: InferSelectModel<typeof ambiente> | null;
+  pinnipedo: InferSelectModel<typeof pinnipedo> | null;
+  misticeto: InferSelectModel<typeof misticeto> | null;
+  odontoceto: InferSelectModel<typeof odontoceto> | null;
+  sirenio: InferSelectModel<typeof sirenio> | null;
+  especimenes: EspecimenWithRelations[];
+};
+export type EspecimenWithRelations = EspecimenDb & {
+  especie: EspecieDb | null;
+  varamientoMasivo: VaramientoMasivoDb | null;
+  recorrido: RecorridoDb | null;
+  misticeto: MisticetoDb | null;
+  odontoceto: OdontocetoDb | null;
+  pinnipedo: PinnipedoDb | null;
+  sirenio: SirenioDb | null;
+  organismo: OrganismoDb | null;
+  acciones: AccionesDb | null;
+};

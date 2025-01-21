@@ -1,6 +1,5 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/build/Feather";
-import { format } from "date-fns";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import React from "react";
@@ -12,6 +11,8 @@ import { deleteAvisoById } from "../../database/repository/avisoRepo";
 import useAvisoStore from "../../hooks/globalState/useAvisoStore";
 import { formatDate } from "../../hooks/helpers";
 import { BASE_URL } from "../../services/Api";
+import { saveAviso } from "../../services/Avisos/SaveAviso";
+import useAuthStore from "../../hooks/globalState/useAuthStore";
 
 const CardAvisos: React.FC<CardAvisosProps> = ({
   urlImage,
@@ -21,6 +22,7 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
   id,
 }) => {
   const { setIdAvisoSelected } = useAvisoStore();
+  const token = useAuthStore((state) => state.token);
 
   const handleUrlImage = (urlImage: string | null) => {
     if (!urlImage || urlImage === "") {
@@ -77,6 +79,16 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
     }
   };
 
+  async function handleCloudUpload() {
+    try {
+      if (!id || !token) return;
+      const result = await saveAviso(Number(id), token);
+      console.log("Resultado de la subida al servidor:", result);
+    } catch (error) {
+      console.error("Error al subir al servidor:", error);
+    }
+  }
+
   return (
     <View style={styles.card}>
       <View style={styles.imageContainer}>
@@ -111,7 +123,12 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
               color="green"
               onPress={handleUpdateAviso}
             />
-            <AntDesign name="cloudupload" size={24} color="blue" />
+            <AntDesign
+              name="cloudupload"
+              size={24}
+              color="blue"
+              onPress={handleCloudUpload}
+            />
             <AntDesign
               name="delete"
               size={24}

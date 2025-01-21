@@ -3,7 +3,7 @@ import { SQLiteRunResult } from "expo-sqlite";
 import { AvisoValues } from "varaapplib/components/AvisoForm/types";
 
 import { db } from "../connection/sqliteConnection";
-import { avisos } from "../schemas/avisoSchema";
+import { avisos, AvisoWithRelations } from "../schemas/avisoSchema";
 
 type newAviso = typeof avisos.$inferInsert;
 
@@ -146,6 +146,38 @@ export const getAvisosBdLocal = async (): Promise<AvisoWithId[]> => {
     Longitud: aviso.longitud ?? "",
     Fotografia: aviso.fotografia ?? "",
   }));
+};
+
+export const getAvisoBdLocal = async (
+  idAviso: number
+): Promise<AvisoWithRelations | null> => {
+  try {
+    const aviso = await db.query.avisos.findFirst({
+      where: (avisos, { eq }) => eq(avisos.id, idAviso),
+      with: {
+        ambiente: true,
+        especimenes: {
+          with: {
+            especie: true,
+            varamientoMasivo: true,
+            recorrido: true,
+            misticeto: true,
+            odontoceto: true,
+            pinnipedo: true,
+            sirenio: true,
+            organismo: true,
+            acciones: true,
+          },
+        },
+      },
+    });
+    console.log("aviso", JSON.stringify(aviso, null, 2));
+
+    return aviso as AvisoWithRelations;
+  } catch (error) {
+    console.error("Error al obtener aviso bd local:", error);
+    throw error;
+  }
 };
 
 export interface AvisoWithId extends AvisoValues {
