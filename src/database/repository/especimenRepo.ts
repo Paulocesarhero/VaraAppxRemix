@@ -1,4 +1,4 @@
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 
 import { FormValuesEspecimen } from "../../forms/Especimen/FormValuesEspecimen";
 import { db } from "../connection/sqliteConnection";

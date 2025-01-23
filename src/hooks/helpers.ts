@@ -77,7 +77,7 @@ export const saveImage = async (photoUri: string | null): Promise<string> => {
     throw error; // Lanza el error para que pueda ser manejado
   }
 };
-const deleteImage = async (imageUri: string) => {
+export const deleteImage = async (imageUri: string) => {
   try {
     await FileSystem.deleteAsync(imageUri);
     console.log("Image deleted:", imageUri);

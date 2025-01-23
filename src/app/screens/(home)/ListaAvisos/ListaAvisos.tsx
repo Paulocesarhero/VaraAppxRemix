@@ -152,7 +152,7 @@ const ListaAvisos: React.FC = () => {
         refreshing={loading}
         renderItem={({ item }) => (
           <CardAvisos
-            id={item.id}
+            idAviso={item.id}
             urlImage={item.fotografia}
             isModificable={item.isModificable}
             fechasDeAvistamiento={item?.fechaDeAvistamiento}

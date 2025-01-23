@@ -4,6 +4,7 @@ import { AvisoValues } from "varaapplib/components/AvisoForm/types";
 
 import { db } from "../connection/sqliteConnection";
 import { avisos, AvisoWithRelations } from "../schemas/avisoSchema";
+import { deleteImage } from "../../hooks/helpers";
 
 type newAviso = typeof avisos.$inferInsert;
 
@@ -82,6 +83,16 @@ export const updateAviso = async (
     .where(eq(avisos.id, idAviso))
     .returning({ updateId: avisos.id });
   return result[0].updateId;
+};
+export const deletePhotoByIdAviso = async (idAviso: number): Promise<any> => {
+  const result = await db.select().from(avisos).where(eq(avisos.id, idAviso));
+  const avisoObjeto = result[0];
+  const fotografia = avisoObjeto.fotografia;
+  if (fotografia) {
+    const fotografiaUri = fotografia;
+    return await deleteImage(fotografiaUri);
+  }
+  return null;
 };
 
 export const deleteAvisoById = async (
@@ -174,6 +185,34 @@ export const getAvisoBdLocal = async (
     console.log("aviso", JSON.stringify(aviso, null, 2));
 
     return aviso as AvisoWithRelations;
+  } catch (error) {
+    console.error("Error al obtener aviso bd local:", error);
+    throw error;
+  }
+};
+
+export const hasEspecieAviso = async (
+  idAviso: number
+): Promise<boolean | null> => {
+  try {
+    const aviso = await db.query.avisos.findFirst({
+      where: (avisos, { eq }) => eq(avisos.id, idAviso),
+      with: {
+        especimenes: {
+          with: {
+            especie: true,
+          },
+        },
+      },
+    });
+    console.log("aviso desde hasEspecieAviso", JSON.stringify(aviso, null, 2));
+
+    // @ts-ignore
+    if (aviso && aviso.especimenes[0]?.especie != null) {
+      return true;
+    } else {
+      return false;
+    }
   } catch (error) {
     console.error("Error al obtener aviso bd local:", error);
     throw error;

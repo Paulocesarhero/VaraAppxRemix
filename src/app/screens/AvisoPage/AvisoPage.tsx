@@ -1,141 +1,103 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { router } from "expo-router";
+import { useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Platform, Text, View } from "react-native";
+import { Alert, Platform, Text, View } from "react-native";
 import { AvisoForm } from "varaapplib/components/AvisoForm/AvisoForm";
 import { AvisoValues } from "varaapplib/components/AvisoForm/types";
 
 import InlineButton from "../../../components/InlineButton/InlineButton";
-import { addAmbienteIfNotExist } from "../../../database/repository/ambienteRepo";
 import {
   addAviso,
-  getAvisoByIdLocalDb,
-  getAvisosBdLocal,
+  deletePhotoByIdAviso,
   updateAviso,
 } from "../../../database/repository/avisoRepo";
 import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
-import useListAvisosStore from "../../../hooks/globalState/useListAvisosStore";
 import { getDateNow, saveImage } from "../../../hooks/helpers";
+import { db } from "../../../database/connection/sqliteConnection";
+import { avisos } from "../../../database/schemas/avisoSchema";
+import { eq } from "drizzle-orm";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 
 const AvisoPage: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(false);
   const idSelected = useAvisoStore((state) => state.idAvisoSelected);
   const { setIdAvisoSelected } = useAvisoStore();
-  const { addAvisoStore } = useListAvisosStore();
   const headerHeight = useHeaderHeight();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const navigation = useNavigation();
 
-  const [dataAvisos, setDataAvisos] = useState<AvisoValues>({
-    Nombre: "",
-    Telefono: "",
-    FacilAcceso: false,
-    Acantilado: false,
-    Sustrato: 0,
-    LugarDondeSeVio: 0,
-    FechaDeAvistamiento: getDateNow(),
-    Observaciones: "",
-    CondicionDeAnimal: 0,
-    CantidadDeAnimales: "1",
-    InformacionDeLocalizacion: "",
-    Latitud: "",
-    Longitud: "",
-    Fotografia: null,
-  });
-
-  const loadAvisos = async () => {
-    setIsLoading(true); // Activar estado de carga
-    try {
-      if (idSelected > 0) {
-        const aviso = await getAvisoByIdLocalDb(idSelected);
-        setDataAvisos(aviso);
-      } else {
-        setDataAvisos({
-          ...dataAvisos,
-        });
-      }
-    } catch (error) {
-      console.error("Error al obtener aviso: ", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
   useEffect(() => {
-    console.log("Fotografía actualizada: ", dataAvisos.Fotografia);
-    loadAvisos();
-    router.navigate("screens/AvisoPage/AvisoPage");
-  }, [dataAvisos.Fotografia]);
+    const unsubscribe = navigation.addListener("beforeRemove", (e) => {
+      Alert.alert(
+        "Salir de la pantalla",
+        "Presione el botón de guardar antes de salir. ¿Desea continuar sin guardar?",
+        [
+          {
+            text: "Cancelar",
+            style: "cancel",
+            onPress: () => {},
+          },
+          {
+            text: "Aceptar",
+            style: "destructive",
+            onPress: () => navigation.dispatch(e.data.action),
+          },
+        ]
+      );
+    });
 
-  const handleValuesChange = async (values: Partial<AvisoValues>) => {
-    if (idSelected > 0) {
-      try {
-        if (values.Fotografia) {
-          const imagePersistence = await saveImage(values.Fotografia);
-          if (imagePersistence !== dataAvisos.Fotografia) {
-            setDataAvisos((prevData) => ({
-              ...prevData,
-              Fotografia: imagePersistence,
-            }));
-          }
-          values.Fotografia = imagePersistence;
-        }
-        console.log("datos avisos ", dataAvisos);
+    return () => {
+      unsubscribe();
+    };
+  }, [navigation]);
 
-        await updateAviso(values, dataAvisos.Nombre ?? "", idSelected);
-      } catch (error) {
-        console.error("Error al actualizar aviso: ", error);
-      }
-    }
-  };
-  const handleNextPagePress = async (data: AvisoValues) => {
+  const { data: avisosDbLocal } = useLiveQuery(
+    db.select().from(avisos).where(eq(avisos.id, idSelected)),
+    [idSelected]
+  );
+
+  const handleSaveAviso = async (data: AvisoValues) => {
     try {
       if (idSelected < 1) {
-        const nombreAviso = Date.now().toString();
-        const idAvisoSqlite = await addAviso(data, nombreAviso);
-        const imagePersistence = await saveImage(data.Fotografia);
-
-        const avisoData = {
-          id: idAvisoSqlite,
-          fotografia: imagePersistence,
-          isModificable: true,
-          fechaDeAvistamiento: data.FechaDeAvistamiento,
-          cantidadDeAnimales: data.CantidadDeAnimales,
-        };
-
-        addAvisoStore(avisoData);
-        setIdAvisoSelected(Number(idAvisoSqlite));
+        await handleNewAviso(data);
+      } else {
+        await handleExistingAviso(data);
       }
     } catch (error) {
       console.error("Error al manejar los avisos", error);
-    } finally {
-      console.log("se ejecuto addAmbienteIfNotExist", idSelected);
-      await addAmbienteIfNotExist(idSelected);
-      router.navigate({
-        pathname:
-          "screens/Aviso/CaracteristicasFisicasYAmbientalesPage/CaracteristicasFisicasYAmbientalesPage",
-      });
+    }
+  };
+
+  const handleNewAviso = async (data: AvisoValues) => {
+    const nombreAviso = Date.now().toString();
+    data.Fotografia = await saveImage(data.Fotografia);
+    const idAvisoSqlite = await addAviso(data, nombreAviso);
+    setIdAvisoSelected(Number(idAvisoSqlite));
+  };
+
+  const handleExistingAviso = async (data: AvisoValues) => {
+    try {
+      if (data.Fotografia) {
+        data.Fotografia = await saveImage(data.Fotografia);
+      }
+      await deletePhotoByIdAviso(idSelected);
+      await updateAviso(data, data.Nombre ?? "", idSelected);
+    } catch (error) {
+      console.error("Error al actualizar aviso: ", error);
     }
   };
 
   const CustomButton = ({ onPress }: { onPress?: () => void }) => (
     <InlineButton
-      text="Continuar y guardar"
+      text="Guardar"
       icon={
-        <MaterialCommunityIcons
-          name="page-next-outline"
-          size={24}
-          color="black"
-        />
+        <MaterialCommunityIcons name="content-save" size={24} color="black" />
       }
       onPress={onPress}
     />
   );
 
-  useEffect(() => {
-    loadAvisos();
-  }, [idSelected]);
-
-  if (isLoading) {
+  if (isLoading || (avisosDbLocal.length === 0 && idSelected > 0)) {
     return <Text>Cargando datos...</Text>;
   }
 
@@ -147,11 +109,31 @@ const AvisoPage: React.FC = () => {
           paddingHorizontal: 0,
         }}
         reactNodeButton={CustomButton}
-        onSubmitData={handleNextPagePress}
-        loading={loading}
-        setLoading={setLoading}
-        onValuesChange={handleValuesChange}
-        data={dataAvisos}
+        onSubmitData={handleSaveAviso}
+        loading={false}
+        setLoading={() => {}}
+        onValuesChange={(values) => {}}
+        data={{
+          Nombre: avisosDbLocal[0]?.nombre ?? "",
+          Telefono: avisosDbLocal[0]?.telefono ?? "",
+          FacilAcceso: avisosDbLocal[0]?.facilAcceso === 1,
+          Acantilado: avisosDbLocal[0]?.acantilado === 1,
+          Sustrato: avisosDbLocal[0]?.sustrato ?? 0,
+          LugarDondeSeVio: avisosDbLocal[0]?.lugarDondeSeVio ?? 0,
+          FechaDeAvistamiento:
+            avisosDbLocal[0]?.fechaDeAvistamiento ?? getDateNow(),
+          TipoDeAnimal: avisosDbLocal[0]?.tipoDeAnimal ?? 0,
+          Observaciones: avisosDbLocal[0]?.observaciones ?? "",
+          CondicionDeAnimal: avisosDbLocal[0]?.condicionDeAnimal ?? 0,
+          CantidadDeAnimales: (
+            avisosDbLocal[0]?.cantidadDeAnimales ?? ""
+          ).toString(),
+          InformacionDeLocalizacion:
+            avisosDbLocal[0]?.informacionDeLocalizacion ?? "",
+          Latitud: avisosDbLocal[0]?.latitud ?? "",
+          Longitud: avisosDbLocal[0]?.longitud ?? "",
+          Fotografia: avisosDbLocal[0]?.fotografia ?? "",
+        }}
       />
     </View>
   );

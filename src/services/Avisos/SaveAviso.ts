@@ -57,8 +57,8 @@ interface Peticion {
   AccionesYResultados: FormValuesAccionesYresultados;
   SoloOrganismoVivo: FormValuesSoloOrganismosVivos;
   Condicion: number;
-  LongitudTotalRectilinea: string | number;
-  Peso: string | null;
+  LongitudTotalRectilinea: number | null;
+  Peso: number | null;
   Sexo: number;
   GrupoDeEdad: number;
   OrientacionDelEspecimen: string;
@@ -69,6 +69,15 @@ interface Peticion {
   Mordidas: string;
   Golpes: string;
   OtroTipoDeHeridas: string;
+}
+
+interface Response {
+  error: boolean;
+  message: any[];
+  data: {
+    idEspecimen: number;
+    idAviso: number;
+  };
 }
 
 const generatePeticion = async (idAviso: number): Promise<Peticion | null> => {
@@ -117,9 +126,13 @@ const generatePeticion = async (idAviso: number): Promise<Peticion | null> => {
 
     EspecieId: resultSqlite.especimenes[0]?.especieId ?? 1,
     Condicion: resultSqlite.condicionDeAnimal ?? 0,
-    LongitudTotalRectilinea:
-      resultSqlite.especimenes[0]?.longitudTotalRectilinea ?? 1,
-    Peso: resultSqlite.especimenes[0]?.peso ?? null,
+    LongitudTotalRectilinea: resultSqlite.especimenes[0]
+      ?.longitudTotalRectilinea
+      ? Number(resultSqlite.especimenes[0]?.longitudTotalRectilinea)
+      : null,
+    Peso: resultSqlite.especimenes[0]?.peso
+      ? Number(resultSqlite.especimenes[0]?.peso)
+      : null,
     Sexo: resultSqlite.especimenes[0]?.sexo ?? 0,
     GrupoDeEdad: resultSqlite.especimenes[0]?.grupoDeEdad ?? 0,
     OrientacionDelEspecimen:
@@ -167,7 +180,7 @@ export const saveAviso = async (idAviso: number, token: string) => {
     console.log("Peticion generada:", JSON.stringify(peticion, null, 2));
     if (peticion) {
       try {
-        const response = await api.post(
+        const response: Response = await api.post(
           `api/Aviso/ReportarVaramientoIndividual`,
           peticion,
           {
@@ -177,7 +190,7 @@ export const saveAviso = async (idAviso: number, token: string) => {
             },
           }
         );
-        return response.data;
+        return response;
       } catch (error) {
         console.error(
           "Error al reportar varamiento individual:",
@@ -191,3 +204,4 @@ export const saveAviso = async (idAviso: number, token: string) => {
     console.log("Ya existe un varamiento masivo para este aviso");
   }
 };
+export const saveFotoAviso = async (idAviso: number, token: string) => {};

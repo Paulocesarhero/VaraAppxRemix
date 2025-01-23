@@ -1,12 +1,31 @@
 import Entypo from "@expo/vector-icons/Entypo";
-import { Stack, useRouter } from "expo-router";
+import { router, Stack, useRouter } from "expo-router";
 import React from "react";
 import { Platform, Text, View } from "react-native";
+import Feather from "@expo/vector-icons/build/Feather";
 
 const Layout: React.FC = () => {
   const router = useRouter();
   const navigateToHome = () => {
     router.replace("/screens/(home)/ListaAvisos/ListaAvisos");
+  };
+  const NavigateToCaracteristicasFisicas = () => {
+    const handleNavigation = () => {
+      router.push(
+        "/screens/Aviso/CaracteristicasFisicasYAmbientalesPage/CaracteristicasFisicasYAmbientalesPage"
+      );
+    };
+
+    return (
+      <View style={{ margin: 12 }}>
+        <Feather
+          name="arrow-right"
+          size={24}
+          color="black"
+          onPress={handleNavigation}
+        />
+      </View>
+    );
   };
   const headerHome = () => {
     return (
@@ -31,6 +50,7 @@ const Layout: React.FC = () => {
           headerTransparent: Platform.OS === "ios",
           headerBlurEffect: Platform.OS === "ios" ? "regular" : undefined,
           headerLeft: headerHome,
+          headerRight: NavigateToCaracteristicasFisicas,
         }}
       />
       <Stack.Screen

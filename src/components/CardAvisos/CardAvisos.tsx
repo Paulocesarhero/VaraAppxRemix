@@ -7,19 +7,23 @@ import { Alert, StyleSheet, Text, View } from "react-native";
 
 import CardAvisosProps from "./types";
 import { ColorsPalete } from "../../constants/COLORS";
-import { deleteAvisoById } from "../../database/repository/avisoRepo";
+import {
+  deleteAvisoById,
+  hasEspecieAviso,
+} from "../../database/repository/avisoRepo";
 import useAvisoStore from "../../hooks/globalState/useAvisoStore";
 import { formatDate } from "../../hooks/helpers";
 import { BASE_URL } from "../../services/Api";
 import { saveAviso } from "../../services/Avisos/SaveAviso";
 import useAuthStore from "../../hooks/globalState/useAuthStore";
+import { hasRegistroMorfometrico } from "../../database/repository/especimenRepo";
 
 const CardAvisos: React.FC<CardAvisosProps> = ({
   urlImage,
   isModificable,
   fechasDeAvistamiento,
   cantidadDeAnimales,
-  id,
+  idAviso,
 }) => {
   const { setIdAvisoSelected } = useAvisoStore();
   const token = useAuthStore((state) => state.token);
@@ -47,7 +51,7 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
           text: "Eliminar",
           onPress: async () => {
             try {
-              await handledeleteAviso(id);
+              await handledeleteAviso(idAviso);
             } catch (error) {
               console.error("Error al eliminar:", error);
               Alert.alert(
@@ -64,7 +68,7 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
   };
 
   const handleUpdateAviso = async () => {
-    setIdAvisoSelected(Number(id));
+    setIdAvisoSelected(Number(idAviso));
     router.push("screens/AvisoPage/AvisoPage");
   };
 
@@ -80,12 +84,28 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
   };
 
   async function handleCloudUpload() {
-    try {
-      if (!id || !token) return;
-      const result = await saveAviso(Number(id), token);
-      console.log("Resultado de la subida al servidor:", result);
-    } catch (error) {
-      console.error("Error al subir al servidor:", error);
+    const hasEspecie = await hasEspecieAviso(Number(idAviso));
+    if (!hasEspecie) {
+      Alert.alert(
+        "No se selecciono una especie",
+        "Para poder subir un aviso es necesario que seleccione una especie llene el formulario completo",
+        [
+          {
+            text: "Cancelar",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
+          },
+        ],
+        { cancelable: false }
+      );
+    } else {
+      try {
+        if (!idAviso || !token) return;
+        const result = await saveAviso(Number(idAviso), token);
+        console.log("Resultado de la subida al servidor:", result);
+      } catch (error) {
+        console.error("Error al subir al servidor:", error);
+      }
     }
   }
 

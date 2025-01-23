@@ -9,7 +9,10 @@ import {
   deleteAllAmbiente,
   getAllAmbiente,
 } from "../../../../database/repository/ambienteRepo";
-import { getAvisosBdLocal } from "../../../../database/repository/avisoRepo";
+import {
+  getAvisoBdLocal,
+  getAvisosBdLocal,
+} from "../../../../database/repository/avisoRepo";
 import { getEspeciesBdLocal } from "../../../../database/repository/especieRepo";
 import { getAllEspecimen } from "../../../../database/repository/especimenRepo";
 import { getMisticetosBdLocal } from "../../../../database/repository/misticetoRepo";
@@ -106,6 +109,11 @@ const SettingsPage: React.FC = () => {
     }
   }
 
+  async function handleGetAvisos() {
+    let result = await getAvisoBdLocal(19);
+    console.log("result get aviso ", result);
+  }
+
   return (
     <ScrollView style={SettingsPageStyle.container}>
       <View
@@ -161,6 +169,11 @@ const SettingsPage: React.FC = () => {
           onPress={handleGetAllEspecimen}
           color="#151515"
           text="get all especimen"
+        />
+        <RoundedButton
+          onPress={handleGetAvisos}
+          color="#151515"
+          text="get avisos dsadsadasdasa"
         />
       </View>
       <ScrollView />
