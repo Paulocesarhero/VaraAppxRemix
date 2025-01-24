@@ -1,28 +1,41 @@
 import React from "react";
 import { SQLiteProvider } from "expo-sqlite";
 import { Stack } from "expo-router";
+import ErrorBoundary from "../components/ErrorBoundary";
+import { View, Text } from "react-native";
 
 const Layout = () => {
+  const error = () => {
+    return (
+      <View>
+        <Text>
+          Algo inesperado ocurrió. Intente volver a iniciar la aplicación.
+        </Text>
+      </View>
+    );
+  };
   return (
-    <SQLiteProvider
-      databaseName="db.db"
-      options={{ enableChangeListener: true }}
-    >
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          gestureEnabled: false,
-          fullScreenGestureEnabled: true,
-        }}
+    <ErrorBoundary fallback={error()}>
+      <SQLiteProvider
+        databaseName="db.db"
+        options={{ enableChangeListener: true }}
       >
-        <Stack.Screen
-          name="index"
-          options={{
-            title: "Login",
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            gestureEnabled: false,
+            fullScreenGestureEnabled: true,
           }}
-        />
-      </Stack>
-    </SQLiteProvider>
+        >
+          <Stack.Screen
+            name="index"
+            options={{
+              title: "Login",
+            }}
+          />
+        </Stack>
+      </SQLiteProvider>
+    </ErrorBoundary>
   );
 };
 
