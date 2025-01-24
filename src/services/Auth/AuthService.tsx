@@ -4,6 +4,7 @@ import {
   RegistroCientificoRequest,
   ResponseApi,
 } from "./AuthServiceInterfaces";
+import axios from "axios";
 
 export const Login = async (data: LoginViewModel): Promise<ResponseApi> => {
   try {
@@ -16,7 +17,6 @@ export const Login = async (data: LoginViewModel): Promise<ResponseApi> => {
         },
       }
     );
-
     return response.data;
   } catch (error: any) {
     if (axios.isAxiosError(error)) {

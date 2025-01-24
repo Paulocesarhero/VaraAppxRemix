@@ -61,18 +61,9 @@ const LoginPage: React.FC = () => {
         setToken(response.data.token);
         actions.setLoggedIn(true);
         setLoading(false);
-      } else {
-        Alert.alert(
-          "Credenciales incorrectas",
-          "Revise que esté bien su correo electrónico y contraseña"
-        );
-        setLoading(false);
       }
-    } catch (error) {
-      Alert.alert(
-        "Error en el servidor",
-        "Contacte al administrador del servidor"
-      );
+    } catch (error: Error | any) {
+      Alert.alert("Error", error.message);
       setLoading(false);
     }
   };
