@@ -1,5 +1,5 @@
 import { hasVaramientoMasivo } from "../../database/repository/varamientoMasivoRepo";
-import api from "../Api";
+import api, { BASE_URL } from "../Api";
 import { Especie } from "../Especie/GetEspecie";
 import RegistroMorfometricoSirenio from "../../forms/MorfometriaSirenio/RegistroMorfometricoSirenio";
 import RegistroMorfometricoOdontoceto from "../../forms/MorformetriaOdontoceto/RegistroMorfometricoOdontoceto";
@@ -8,6 +8,10 @@ import { FormValuesMorfometriaMisticeto } from "../../forms/MorfometriaMisticeto
 import FormValuesAccionesYresultados from "../../forms/AccionesYResultados/FormValuesAccionesYresultados";
 import { FormValuesSoloOrganismosVivos } from "../../forms/SoloOrganismosVivos/FormValuesSoloOrganismosVivos";
 import { getAvisoBdLocal } from "../../database/repository/avisoRepo";
+import * as FileSystem from "expo-file-system";
+import { db } from "../../database/connection/sqliteConnection";
+import { avisos } from "../../database/schemas/avisoSchema";
+import { eq } from "drizzle-orm";
 
 type Aviso = {
   Acantilado: boolean;
@@ -75,55 +79,63 @@ interface Response {
   error: boolean;
   message: any[];
   data: {
-    idEspecimen: number;
-    idAviso: number;
+    data: {
+      idEspecimen: number;
+      idAviso: string;
+    };
   };
 }
+
+const generateAviso = (resultSqlite: any): Aviso => ({
+  Acantilado: resultSqlite.acantilado === 1,
+  FacilAcceso: resultSqlite.facilAcceso === 1,
+  LugarDondeSeVio: resultSqlite.lugarDondeSeVio ?? 0,
+  Sustrato: resultSqlite.sustrato ?? 0,
+  FechaDeAvistamiento: resultSqlite.fechaDeAvistamiento ?? "",
+  Observaciones: resultSqlite.observaciones ?? "",
+  TipoDeAnimal: resultSqlite.tipoDeAnimal ?? 0,
+  CondicionDeAnimal: resultSqlite.condicionDeAnimal ?? 0,
+  CantidadDeAnimales: Number(resultSqlite.cantidadDeAnimales) ?? 1,
+  InformacionDeLocalizacion: resultSqlite.informacionDeLocalizacion ?? "",
+  Latitud: Number(resultSqlite.latitud) ?? 0,
+  Longitud: Number(resultSqlite.longitud) ?? 0,
+});
+
+const generateFormatoGeneral = (
+  resultSqlite: any,
+  aviso: Aviso
+): FormatoGeneral => ({
+  id: resultSqlite.id,
+  TemperaturaAmbiente: resultSqlite.ambiente?.temperaturaAmbiente ?? 0,
+  PrecipitacionHoy: resultSqlite.ambiente?.precipitacionHoy ?? 0,
+  TemperaturaSupMar: resultSqlite.ambiente?.temperaturaSupMar ?? 0,
+  Marea: resultSqlite.ambiente?.marea ?? 0,
+  MareaMedida: resultSqlite.ambiente?.mareaMedida ?? 0,
+  DireccionCorriente: resultSqlite.ambiente?.direccionCorriente ?? 0,
+  DireccionDelViento: resultSqlite.ambiente?.direccionDelViento ?? 0,
+  VelocidadDelViento: resultSqlite.ambiente?.velocidadDelViento ?? 0,
+  Nubosidad: resultSqlite.ambiente?.nubosidad ?? 0,
+  Oleaje: resultSqlite.ambiente?.oleaje ?? 0,
+  Beaufort: resultSqlite.ambiente?.beaufort ?? 0,
+  PrecipitacionTormentaPrevia:
+    resultSqlite.ambiente?.precipitacionTormentaPrevia ?? 0,
+  AnormalidadGeomagnetica: resultSqlite.ambiente?.anormalidadGeomagnetica === 1,
+  MareaRoja: !!resultSqlite.ambiente?.mareaRoja,
+  AnormalidadEnLaPesca: resultSqlite.ambiente?.anormalidadEnLaPesca ?? "",
+  Observaciones: resultSqlite.observaciones ?? "",
+  Aviso: aviso,
+});
 
 const generatePeticion = async (idAviso: number): Promise<Peticion | null> => {
   const resultSqlite = await getAvisoBdLocal(idAviso);
   if (!resultSqlite) return null;
-  const aviso: Aviso = {
-    Acantilado: resultSqlite.acantilado === 1,
-    FacilAcceso: resultSqlite.facilAcceso === 1,
-    LugarDondeSeVio: resultSqlite.lugarDondeSeVio ?? 0,
-    Sustrato: resultSqlite.sustrato ?? 0,
-    FechaDeAvistamiento: resultSqlite.fechaDeAvistamiento ?? "",
-    Observaciones: resultSqlite.observaciones ?? "",
-    TipoDeAnimal: resultSqlite.tipoDeAnimal ?? 0,
-    CondicionDeAnimal: resultSqlite.condicionDeAnimal ?? 0,
-    CantidadDeAnimales: Number(resultSqlite.cantidadDeAnimales) ?? 1,
-    InformacionDeLocalizacion: resultSqlite.informacionDeLocalizacion ?? "",
-    Latitud: Number(resultSqlite.latitud) ?? 0,
-    Longitud: Number(resultSqlite.longitud) ?? 0,
-  };
 
-  const formatoGeneral: FormatoGeneral = {
-    id: resultSqlite.id,
-    TemperaturaAmbiente: resultSqlite.ambiente?.temperaturaAmbiente ?? 0,
-    PrecipitacionHoy: resultSqlite.ambiente?.precipitacionHoy ?? 0,
-    TemperaturaSupMar: resultSqlite.ambiente?.temperaturaSupMar ?? 0,
-    Marea: resultSqlite.ambiente?.marea ?? 0,
-    MareaMedida: resultSqlite.ambiente?.mareaMedida ?? 0,
-    DireccionCorriente: resultSqlite.ambiente?.direccionCorriente ?? 0,
-    DireccionDelViento: resultSqlite.ambiente?.direccionDelViento ?? 0,
-    VelocidadDelViento: resultSqlite.ambiente?.velocidadDelViento ?? 0,
-    Nubosidad: resultSqlite.ambiente?.nubosidad ?? 0,
-    Oleaje: resultSqlite.ambiente?.oleaje ?? 0,
-    Beaufort: resultSqlite.ambiente?.beaufort ?? 0,
-    PrecipitacionTormentaPrevia:
-      resultSqlite.ambiente?.precipitacionTormentaPrevia ?? 0,
-    AnormalidadGeomagnetica:
-      resultSqlite.ambiente?.anormalidadGeomagnetica === 1,
-    MareaRoja: !!resultSqlite.ambiente?.mareaRoja,
-    AnormalidadEnLaPesca: resultSqlite.ambiente?.anormalidadEnLaPesca ?? "",
-    Observaciones: resultSqlite.observaciones ?? "",
-    Aviso: aviso,
-  };
+  const aviso = generateAviso(resultSqlite);
+  const formatoGeneral = generateFormatoGeneral(resultSqlite, aviso);
+
   return {
     Latitud: resultSqlite.latitud ?? "",
     Longitud: resultSqlite.longitud ?? "",
-
     EspecieId: resultSqlite.especimenes[0]?.especieId ?? 1,
     Condicion: resultSqlite.condicionDeAnimal ?? 0,
     LongitudTotalRectilinea: resultSqlite.especimenes[0]
@@ -172,6 +184,17 @@ const generatePeticion = async (idAviso: number): Promise<Peticion | null> => {
       ({} as FormValuesSoloOrganismosVivos),
   };
 };
+export const getImageUri = async (idAviso: number) => {
+  try {
+    const result = await db
+      .select({ imagen: avisos.fotografia })
+      .from(avisos)
+      .where(eq(avisos.id, idAviso));
+    return result[0].imagen;
+  } catch (error) {
+    return null;
+  }
+};
 
 export const saveAviso = async (idAviso: number, token: string) => {
   const hasVaramientoMasivoLocal = await hasVaramientoMasivo(idAviso);
@@ -190,6 +213,22 @@ export const saveAviso = async (idAviso: number, token: string) => {
             },
           }
         );
+        const imagen = await getImageUri(idAviso);
+        console.log("Imagen de aviso local:", imagen);
+        if (!imagen) {
+          return response;
+        }
+
+        const UpdateImageAviso = await uploadFileFotoAviso(
+          response.data.data.idAviso,
+          imagen,
+          token
+        );
+        console.log(
+          "Resultado de la subida de la foto de aviso:",
+          UpdateImageAviso
+        );
+
         return response;
       } catch (error) {
         console.error(
@@ -204,4 +243,40 @@ export const saveAviso = async (idAviso: number, token: string) => {
     console.log("Ya existe un varamiento masivo para este aviso");
   }
 };
-export const saveFotoAviso = async (idAviso: number, token: string) => {};
+
+export const uploadFileFotoAviso = async (
+  idAviso: string,
+  fileUri: string,
+  token: string
+) => {
+  console.log("Uploading file:", fileUri);
+  try {
+    const cachedUri = await copyFileToCache(fileUri);
+    console.log("cachedUri:", cachedUri);
+
+    const result = await FileSystem.uploadAsync(
+      `${BASE_URL}/api/Aviso/GuardarFotoAviso/${idAviso}`,
+      cachedUri,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+        fieldName: "Fotografias",
+        httpMethod: "POST",
+        uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+      }
+    );
+    console.log("Resultado de la subida de la foto de aviso:", result.body);
+  } catch (error) {
+    console.error("Error al subir la foto de aviso:", error);
+    throw error;
+  }
+};
+
+const copyFileToCache = async (fileUri: string): Promise<string> => {
+  const cachePath = `${FileSystem.cacheDirectory}temp.jpg`; // Nombre temporal
+  await FileSystem.copyAsync({ from: fileUri, to: cachePath });
+  console.log("Archivo copiado a cache:", cachePath);
+  return cachePath;
+};

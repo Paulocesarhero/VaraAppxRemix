@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import RoundedButton from "varaapplib/components/RoundedButton/RoundedButton";
+import * as FileSystem from "expo-file-system";
 
 import { db } from "../../../../database/connection/sqliteConnection";
 import {
@@ -113,6 +114,64 @@ const SettingsPage: React.FC = () => {
     let result = await getAvisoBdLocal(19);
     console.log("result get aviso ", result);
   }
+  const listarImagenesGuardadas = async () => {
+    try {
+      const directoryUri = FileSystem.cacheDirectory; // Directorio de documentos
+      console.log("Explorando el directorio:", directoryUri);
+
+      // Leer los archivos en el directorio
+      const archivos = await FileSystem.readDirectoryAsync(directoryUri);
+
+      // Filtrar solo imágenes por su extensión
+      const imagenes = archivos.filter((archivo) =>
+        archivo.match(/\.(jpg|jpeg|png|gif)$/i)
+      );
+
+      console.log("Imágenes encontradas:", imagenes);
+      return imagenes.map((imagen) => `${directoryUri}${imagen}`);
+    } catch (error) {
+      console.error("Error al listar las imágenes:", error);
+      return [];
+    }
+  };
+
+  const listarImagenesEnSubcarpeta = async () => {
+    try {
+      // Ruta completa de la subcarpeta donde están las imágenes
+      const subcarpetaUri = `${FileSystem.documentDirectory}VaraAppx/`;
+
+      console.log("Explorando la subcarpeta:", subcarpetaUri);
+
+      // Leer los archivos en la subcarpeta
+      const archivos = await FileSystem.readDirectoryAsync(subcarpetaUri);
+
+      // Filtrar solo imágenes por su extensión
+      const imagenes = archivos.filter((archivo) =>
+        archivo.match(/\.(jpg|jpeg|png|gif)$/i)
+      );
+      /*      for (const imagen of imagenes) {
+        const fileUri = `${subcarpetaUri}${imagen}`;
+        await FileSystem.deleteAsync(fileUri, { idempotent: true });
+        console.log(`Eliminado: ${fileUri}`);
+      }*/
+
+      console.log("Imágenes encontradas en la subcarpeta:", imagenes);
+
+      // Agregar la ruta base a cada archivo para obtener las rutas completas
+      return imagenes.map((imagen) => `${subcarpetaUri}${imagen}`);
+    } catch (error) {
+      console.error("Error al listar las imágenes en la subcarpeta:", error);
+      return [];
+    }
+  };
+  listarImagenesEnSubcarpeta().then((imagenes) => {
+    console.log("Rutas completas de las imágenes:", imagenes);
+  });
+
+  // Uso
+  listarImagenesGuardadas().then((imagenes) => {
+    console.log("Rutas completas de las imágenes:", imagenes);
+  });
 
   return (
     <ScrollView style={SettingsPageStyle.container}>
@@ -174,6 +233,16 @@ const SettingsPage: React.FC = () => {
           onPress={handleGetAvisos}
           color="#151515"
           text="get avisos dsadsadasdasa"
+        />
+        <RoundedButton
+          onPress={listarImagenesGuardadas}
+          color="#151515"
+          text="Listar imágenes guardadas"
+        />
+        <RoundedButton
+          onPress={listarImagenesEnSubcarpeta}
+          color="#151515"
+          text="Listar imágenes en subcarpeta"
         />
       </View>
       <ScrollView />
