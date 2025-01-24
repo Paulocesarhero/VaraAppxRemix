@@ -98,6 +98,12 @@ const Layout: React.FC = () => {
         }}
       />
       <Stack.Screen
+        name="RegistroCientificoPage/RegistroCientificoPage"
+        options={{
+          title: "Registro científico",
+        }}
+      />
+      <Stack.Screen
         name="Sirenio/Sirenio"
         options={{
           title: "Morfometria Sirenio",
