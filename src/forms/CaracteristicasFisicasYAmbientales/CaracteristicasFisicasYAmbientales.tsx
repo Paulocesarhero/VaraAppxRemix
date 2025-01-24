@@ -312,7 +312,7 @@ const CaracteristicasFisicasYAmbientales: React.FC<
             render={({ field: { onChange, value } }) => (
               <View style={{ paddingHorizontal: 10 }}>
                 <CustomCheckBox
-                  label="¿Se realizó Necropsia?"
+                  label="Anormalidad geomagnética"
                   isChecked={value}
                   onToggle={() => onChange(!value)}
                 />
@@ -338,14 +338,7 @@ const CaracteristicasFisicasYAmbientales: React.FC<
             iconFamily="Ionicons"
             label="Anormalidad en la pesca"
             placeholder="Presencia de restos de petróleo"
-            keyboardType="numeric"
-            validateRules={{
-              pattern: {
-                value: /^[0-9]$|^1[0-2]$/,
-                message: "Debe ser un número entre 0 y 12",
-              },
-            }}
-            maxLength={2}
+            maxLength={200}
             autoCorrect={false}
             control={control}
             isRequired={false}
