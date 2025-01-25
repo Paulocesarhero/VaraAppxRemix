@@ -10,7 +10,7 @@ import { FormValuesSoloOrganismosVivos } from "../../forms/SoloOrganismosVivos/F
 import { getAvisoBdLocal } from "../../database/repository/avisoRepo";
 import * as FileSystem from "expo-file-system";
 import { db } from "../../database/connection/sqliteConnection";
-import { avisos } from "../../database/schemas/avisoSchema";
+import { avisos, AvisoWithRelations } from "../../database/schemas/avisoSchema";
 import { eq } from "drizzle-orm";
 
 type Aviso = {
@@ -28,7 +28,6 @@ type Aviso = {
   Longitud: number;
 };
 type FormatoGeneral = {
-  id: number;
   TemperaturaAmbiente: number;
   PrecipitacionHoy: number;
   TemperaturaSupMar: number;
@@ -48,6 +47,37 @@ type FormatoGeneral = {
   Aviso: Aviso;
 };
 
+interface AccionesYResultados {
+  autoridades: string | null;
+  telefonoAutoridades: string | null;
+  morfometria: boolean;
+  necropsia: boolean;
+  disposicionDelCadaver: number;
+  disposicionOtro: string | null;
+  tipoDeMuestras:
+    | {
+        TipoMuestra: number;
+      }[]
+    | null;
+  posibleCausaDelVaramiento: string | null;
+  posibleCausaDeMuerte: string | null;
+  participantes: string | null;
+  observaciones: string | null;
+}
+
+interface SoloOrganismoVivo {
+  tasaDeRespiracion: string | null;
+  pulso: string | null;
+  temperatura: number | null;
+  antesDeVararse: string | null;
+  varado: string | null;
+  reflotacion: boolean;
+  despuesDeReflotar: string | null;
+  animalTransferido: boolean;
+  lugarDeRehabilitacion: string | null;
+  despuesDeVararse: string | null;
+}
+
 interface Peticion {
   Latitud: string;
   Longitud: string;
@@ -58,8 +88,8 @@ interface Peticion {
   RegistroMorfometricoOdontoceto: RegistroMorfometricoOdontoceto;
   RegistroMorfometricoPinnipedo: RegistroMorfometricoPinnipedo;
   RegistroMorfometricoMisticeto: FormValuesMorfometriaMisticeto;
-  AccionesYResultados: FormValuesAccionesYresultados;
-  SoloOrganismoVivo: FormValuesSoloOrganismosVivos;
+  AccionesYResultados: AccionesYResultados;
+  SoloOrganismoVivo: SoloOrganismoVivo;
   Condicion: number;
   LongitudTotalRectilinea: number | null;
   Peso: number | null;
@@ -86,7 +116,7 @@ interface Response {
   };
 }
 
-const generateAviso = (resultSqlite: any): Aviso => ({
+const generateAviso = (resultSqlite: AvisoWithRelations): Aviso => ({
   Acantilado: resultSqlite.acantilado === 1,
   FacilAcceso: resultSqlite.facilAcceso === 1,
   LugarDondeSeVio: resultSqlite.lugarDondeSeVio ?? 0,
@@ -105,7 +135,6 @@ const generateFormatoGeneral = (
   resultSqlite: any,
   aviso: Aviso
 ): FormatoGeneral => ({
-  id: resultSqlite.id,
   TemperaturaAmbiente: resultSqlite.ambiente?.temperaturaAmbiente ?? 0,
   PrecipitacionHoy: resultSqlite.ambiente?.precipitacionHoy ?? 0,
   TemperaturaSupMar: resultSqlite.ambiente?.temperaturaSupMar ?? 0,
@@ -125,6 +154,60 @@ const generateFormatoGeneral = (
   Observaciones: resultSqlite.observaciones ?? "",
   Aviso: aviso,
 });
+
+const generateSoloOrganismoVivo = (
+  resultSqlite: AvisoWithRelations
+): SoloOrganismoVivo => {
+  return {
+    tasaDeRespiracion:
+      resultSqlite.especimenes[0]?.organismo?.tasaDeRespiracion ?? null,
+    pulso: resultSqlite.especimenes[0]?.organismo?.pulso ?? null,
+    temperatura:
+      Number(resultSqlite.especimenes[0]?.organismo?.temperatura) ?? null,
+    antesDeVararse:
+      resultSqlite.especimenes[0]?.organismo?.antesDeVararse ?? null,
+    varado: resultSqlite.especimenes[0]?.organismo?.varado ?? null,
+    reflotacion: resultSqlite.especimenes[0]?.organismo?.reflotacion === 1,
+    despuesDeReflotar:
+      resultSqlite.especimenes[0]?.organismo?.despuesDeReflotar ?? null,
+    animalTransferido:
+      resultSqlite.especimenes[0]?.organismo?.animalTransferido === 1,
+    lugarDeRehabilitacion:
+      resultSqlite.especimenes[0]?.organismo?.lugarDeRehabilitacion ?? null,
+    despuesDeVararse:
+      resultSqlite.especimenes[0]?.organismo?.despuesDeVararse ?? null,
+  };
+};
+
+const generateAccionesYResultados = (
+  resultSqlite: AvisoWithRelations
+): AccionesYResultados => {
+  const tipoDeMuestras =
+    typeof resultSqlite.especimenes[0]?.acciones?.tipoDeMuestras === "string"
+      ? JSON.parse(resultSqlite.especimenes[0]?.acciones?.tipoDeMuestras).map(
+          (item: string) => ({ TipoMuestra: Number(item) })
+        )
+      : null;
+  return {
+    autoridades: resultSqlite.especimenes[0]?.acciones?.autoridades ?? "",
+    telefonoAutoridades:
+      resultSqlite.especimenes[0]?.acciones?.telefonoAutoridades ?? "",
+    morfometria: resultSqlite.especimenes[0]?.acciones?.morfometria === 1,
+    necropsia: resultSqlite.especimenes[0]?.acciones?.necropsia === 1,
+    disposicionDelCadaver: Number(
+      resultSqlite.especimenes[0]?.acciones?.disposicionDelCadaver
+    ),
+    disposicionOtro:
+      resultSqlite.especimenes[0]?.acciones?.disposicionOtro ?? "",
+    tipoDeMuestras: tipoDeMuestras,
+    posibleCausaDelVaramiento:
+      resultSqlite.especimenes[0].acciones?.posibleCausaDelVaramiento ?? "",
+    participantes: resultSqlite.especimenes[0]?.acciones?.participantes ?? "",
+    observaciones: resultSqlite.especimenes[0]?.acciones?.observaciones ?? "",
+    posibleCausaDeMuerte:
+      resultSqlite.especimenes[0]?.acciones?.posibleCausaDeMuerte ?? "",
+  };
+};
 
 const generatePeticion = async (idAviso: number): Promise<Peticion | null> => {
   const resultSqlite = await getAvisoBdLocal(idAviso);
@@ -173,17 +256,12 @@ const generatePeticion = async (idAviso: number): Promise<Peticion | null> => {
       (resultSqlite.especimenes[0]
         ?.odontoceto as RegistroMorfometricoOdontoceto) ??
       ({} as RegistroMorfometricoOdontoceto),
-    AccionesYResultados:
-      (resultSqlite.especimenes[0]
-        ?.acciones as unknown as FormValuesAccionesYresultados) ??
-      ({} as FormValuesAccionesYresultados),
+    AccionesYResultados: generateAccionesYResultados(resultSqlite),
     FormatoGeneral: formatoGeneral,
-    SoloOrganismoVivo:
-      (resultSqlite.especimenes[0]
-        ?.organismo as unknown as FormValuesSoloOrganismosVivos) ??
-      ({} as FormValuesSoloOrganismosVivos),
+    SoloOrganismoVivo: generateSoloOrganismoVivo(resultSqlite),
   };
 };
+
 export const getImageUri = async (idAviso: number) => {
   try {
     const result = await db
@@ -201,6 +279,7 @@ export const saveAviso = async (idAviso: number, token: string) => {
   if (!hasVaramientoMasivoLocal) {
     const peticion = await generatePeticion(idAviso);
     console.log("Peticion generada:", JSON.stringify(peticion, null, 2));
+
     if (peticion) {
       try {
         const response: Response = await api.post(

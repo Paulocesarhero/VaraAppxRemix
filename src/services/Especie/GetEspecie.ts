@@ -28,6 +28,7 @@ const getEspecies = async (token: string): Promise<ResponseEspecies> => {
         Authorization: `Bearer ${token}`,
       },
     });
+    console.log("response get especies", response);
     return response.data;
   } catch (error) {
     throw error;

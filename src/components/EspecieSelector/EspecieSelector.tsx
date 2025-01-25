@@ -48,7 +48,6 @@ const EspecieSelector: React.FC<EspecieSelectorProps> = ({
     const fetchEspecies = async () => {
       try {
         const data = await getEspecies(token ?? "");
-        console.log("fetch especies ", data);
         setEspeciesBdLocal(data.data);
         setEspecies(data.data);
       } catch (err) {

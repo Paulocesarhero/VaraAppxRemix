@@ -24,32 +24,6 @@ const AvisoPage: React.FC = () => {
   const { setIdAvisoSelected } = useAvisoStore();
   const headerHeight = useHeaderHeight();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("beforeRemove", (e) => {
-      Alert.alert(
-        "Salir de la pantalla",
-        "Presione el botón de guardar antes de salir. ¿Desea continuar sin guardar?",
-        [
-          {
-            text: "Cancelar",
-            style: "cancel",
-            onPress: () => {},
-          },
-          {
-            text: "Aceptar",
-            style: "destructive",
-            onPress: () => navigation.dispatch(e.data.action),
-          },
-        ]
-      );
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  }, [navigation]);
 
   const { data: avisosDbLocal } = useLiveQuery(
     db.select().from(avisos).where(eq(avisos.id, idSelected)),
@@ -76,15 +50,12 @@ const AvisoPage: React.FC = () => {
   };
 
   const handleExistingAviso = async (data: AvisoValues) => {
-    try {
-      if (data.Fotografia) {
-        data.Fotografia = await saveImage(data.Fotografia);
-      }
-      await deletePhotoByIdAviso(idSelected);
-      await updateAviso(data, data.Nombre ?? "", idSelected);
-    } catch (error) {
-      console.error("Error al actualizar aviso: ", error);
+    console.log("data fotografia", data.Fotografia);
+    if (data.Fotografia) {
+      data.Fotografia = await saveImage(data.Fotografia);
     }
+    await deletePhotoByIdAviso(idSelected);
+    await updateAviso(data, data.Nombre ?? "", idSelected);
   };
 
   const CustomButton = ({ onPress }: { onPress?: () => void }) => (

@@ -1,4 +1,4 @@
-import { router, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 
@@ -36,6 +36,8 @@ const CaracteristicasFisicasYAmbientalesPage: React.FC = () => {
     loadAmbiente();
   }, [idSelected]);
   const onSubmitData = async (data: any) => {
+    console.log(idSelected);
+    console.log("Datos enviados:", data);
     router.push("screens/MenuRegistrarAviso/MenuRegistrarAviso");
   };
 
