@@ -244,3 +244,49 @@ export const deleteEspecimenById = async (idEspecimen: number | null) => {
 
   return especimenObjeto.id;
 };
+
+export type FotoAndDescription = {
+  uriPhoto: string;
+  typeImagen: ImagenType;
+};
+
+export const getImagesEspecimen = async (
+  idEspecimen: number
+): Promise<FotoAndDescription[]> => {
+  try {
+    const resultDb = await db.query.especimen.findFirst({
+      columns: {
+        golpesFoto: true,
+        heridasBalaFoto: true,
+        presenciaDeRedesFoto: true,
+        mordidasFoto: true,
+        otroTipoDeHeridasFoto: true,
+      },
+      where: (especimen, { eq }) => eq(especimen.id, idEspecimen),
+    });
+
+    console.log("resultDb", resultDb);
+
+    if (!resultDb) return [];
+
+    const mappings: Record<keyof typeof resultDb, ImagenType> = {
+      golpesFoto: "golpes",
+      heridasBalaFoto: "heridasDeBala",
+      presenciaDeRedesFoto: "presenciaDeRedes",
+      mordidasFoto: "mordidas",
+      otroTipoDeHeridasFoto: "otros",
+    };
+
+    const result: FotoAndDescription[] = Object.entries(mappings)
+      .filter(([key]) => resultDb[key as keyof typeof resultDb]) // Filtrar las fotos existentes
+      .map(([key, typeImagen]) => ({
+        uriPhoto: resultDb[key as keyof typeof resultDb] as string,
+        typeImagen,
+      }));
+
+    return result;
+  } catch (error) {
+    console.error("Error al obtener aviso bd local:", error);
+    throw error;
+  }
+};
