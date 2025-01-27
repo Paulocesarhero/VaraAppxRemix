@@ -10,6 +10,7 @@ import {
   sirenio,
 } from "../schemas/avisoSchema";
 import { getEspecieById, getFistEspecie } from "./especieRepo";
+import { ImagenType } from "../../services/Avisos/SaveAviso";
 
 type NewEspecimen = typeof especimen.$inferInsert;
 
@@ -97,7 +98,7 @@ export const addEspecimenIfNotExist = async (idAviso: number) => {
     .select()
     .from(especimen)
     .where(eq(especimen.avisoId, idAviso));
-  if (existingEspecimen.length === 0) {
+  if (existingEspecimen.length <= 0) {
     const result = await db
       .insert(especimen)
       .values(newEspecimen)
