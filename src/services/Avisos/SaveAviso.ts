@@ -5,13 +5,15 @@ import RegistroMorfometricoSirenio from "../../forms/MorfometriaSirenio/Registro
 import RegistroMorfometricoOdontoceto from "../../forms/MorformetriaOdontoceto/RegistroMorfometricoOdontoceto";
 import { RegistroMorfometricoPinnipedo } from "../../forms/MorfometriaPinnipedo/RegistroMorfometricoPinnipedo";
 import { FormValuesMorfometriaMisticeto } from "../../forms/MorfometriaMisticeto/FormValuesMorfometriaMisticeto";
-import FormValuesAccionesYresultados from "../../forms/AccionesYResultados/FormValuesAccionesYresultados";
-import { FormValuesSoloOrganismosVivos } from "../../forms/SoloOrganismosVivos/FormValuesSoloOrganismosVivos";
 import { getAvisoBdLocal } from "../../database/repository/avisoRepo";
 import * as FileSystem from "expo-file-system";
 import { db } from "../../database/connection/sqliteConnection";
 import { avisos, AvisoWithRelations } from "../../database/schemas/avisoSchema";
 import { eq } from "drizzle-orm";
+import {
+  FotoAndDescription,
+  getImagesEspecimen,
+} from "../../database/repository/especimenRepo";
 
 type Aviso = {
   Acantilado: boolean;
@@ -194,9 +196,8 @@ const generateAccionesYResultados = (
       resultSqlite.especimenes[0]?.acciones?.telefonoAutoridades ?? "",
     morfometria: resultSqlite.especimenes[0]?.acciones?.morfometria === 1,
     necropsia: resultSqlite.especimenes[0]?.acciones?.necropsia === 1,
-    disposicionDelCadaver: Number(
-      resultSqlite.especimenes[0]?.acciones?.disposicionDelCadaver
-    ),
+    disposicionDelCadaver:
+      Number(resultSqlite.especimenes[0]?.acciones?.disposicionDelCadaver) ?? 0,
     disposicionOtro:
       resultSqlite.especimenes[0]?.acciones?.disposicionOtro ?? "",
     tipoDeMuestras: tipoDeMuestras,
@@ -307,6 +308,22 @@ export const saveAviso = async (idAviso: number, token: string) => {
           "Resultado de la subida de la foto de aviso:",
           UpdateImageAviso
         );
+        const imagenEspecimen: FotoAndDescription[] = await getImagesEspecimen(
+          response.data.data.idEspecimen
+        );
+
+        for (const imagen of imagenEspecimen) {
+          const UpdateImageEspecimen = await uploadFileEspecimen(
+            response.data.data.idEspecimen.toString(),
+            imagen.typeImagen,
+            imagen.uriPhoto,
+            token
+          );
+          console.log(
+            "Resultado de la subida de la foto de especimen:",
+            UpdateImageEspecimen
+          );
+        }
 
         return response;
       } catch (error) {
@@ -330,12 +347,9 @@ export const uploadFileFotoAviso = async (
 ) => {
   console.log("Uploading file:", fileUri);
   try {
-    const cachedUri = await copyFileToCache(fileUri);
-    console.log("cachedUri:", cachedUri);
-
     const result = await FileSystem.uploadAsync(
       `${BASE_URL}/api/Aviso/GuardarFotoAviso/${idAviso}`,
-      cachedUri,
+      fileUri,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -352,10 +366,39 @@ export const uploadFileFotoAviso = async (
     throw error;
   }
 };
+export type ImagenType =
+  | "golpes"
+  | "heridasDeBala"
+  | "otros"
+  | "mordidas"
+  | "presenciaDeRedes";
 
-const copyFileToCache = async (fileUri: string): Promise<string> => {
-  const cachePath = `${FileSystem.cacheDirectory}temp.jpg`; // Nombre temporal
-  await FileSystem.copyAsync({ from: fileUri, to: cachePath });
-  console.log("Archivo copiado a cache:", cachePath);
-  return cachePath;
+export const uploadFileEspecimen = async (
+  idEspecimen: string,
+  typeImagen: ImagenType,
+  fileUri: string,
+  token: string
+) => {
+  console.log("Uploading file:", fileUri);
+  try {
+    const result = await FileSystem.uploadAsync(
+      `${BASE_URL}/api/Aviso/GuardarFotoFormatoIndividual/${idEspecimen}/${typeImagen}`,
+      fileUri,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+        fieldName: "Fotografias",
+        httpMethod: "POST",
+        uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+      }
+    );
+    console.log("Resultado de la subida de la foto de especimen:", result.body);
+    console.log("Eliminando archivo temporal:", fileUri);
+    await FileSystem.deleteAsync(fileUri);
+  } catch (error) {
+    console.error("Error al subir la foto de especimen:", error);
+    throw error;
+  }
 };
