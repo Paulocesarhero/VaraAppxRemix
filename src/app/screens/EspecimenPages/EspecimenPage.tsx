@@ -1,7 +1,7 @@
 import { useHeaderHeight } from "@react-navigation/elements";
-import { useFocusEffect, useRouter } from "expo-router";
+import { SplashScreen, useFocusEffect, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Platform, Text, View } from "react-native";
+import { ActivityIndicator, Platform, Text, View } from "react-native";
 
 import {
   addEspecimenIfNotExist,
@@ -33,77 +33,60 @@ const EspecimenPage: React.FC = () => {
   const loadEspecimen = async () => {
     setIsLoading(true);
     let especimenInfo: any;
-    console.log("idEspecimen en especimenPage", idEspecimen);
-    try {
-      if (idEspecimen === null) {
-        const idEspecimenBD = await addEspecimenIfNotExist(idAviso);
-        setIdEspecimen(idEspecimenBD);
-        especimenInfo = await getEspecimenByIdEspecimen(idEspecimenBD);
-        setFormValues(especimenInfo);
-        console.log(
-          "info del especimen primera vez :",
-          JSON.stringify(especimenInfo, null, 2)
-        );
-      } else {
-        especimenInfo = await getEspecimenByIdEspecimen(idEspecimen);
-        console.log(
-          "info del especimen segunda vez :",
-          JSON.stringify(especimenInfo, null, 2)
-        );
-        setFormValues(especimenInfo);
-      }
-    } catch (error) {
-      console.error("Error al obtener aviso: ", error);
-    } finally {
-      setIsLoading(false);
+    console.log("load especimen", idEspecimen);
+
+    if (idEspecimen === null) {
+      const idEspecimenBD = await addEspecimenIfNotExist(idAviso);
+      setIdEspecimen(idEspecimenBD);
+      especimenInfo = await getEspecimenByIdEspecimen(idEspecimenBD);
+      setFormValues(especimenInfo);
+    } else {
+      especimenInfo = await getEspecimenByIdEspecimen(idEspecimen);
+      setFormValues(especimenInfo);
     }
+    setIsLoading(false);
   };
 
   const loadHasMorfometria = async () => {
+    console.log("loadHasMorfometria", idEspecimen, hasMorfometria);
     setIsLoading(true);
-    try {
-      const result = await hasRegistroMorfometrico(idEspecimen);
-      console.log("result loadHasMorfometria", result);
-      setHasMorfometria(result);
-    } catch (error) {
-      console.error("Error al obtener el valor de morfometria: ", error);
-    } finally {
-      setIsLoading(false);
-    }
+    const result = await hasRegistroMorfometrico(idEspecimen);
+    setHasMorfometria(result);
+    setIsLoading(false);
   };
+
   useEffect(() => {
-    console.log("idEspecimen zustand", idEspecimen);
-    loadEspecimen();
-  }, [idAviso]);
+    let isMounted = true;
+    loadEspecimen().then(() => {
+      if (isMounted) loadHasMorfometria();
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
-      loadEspecimen();
       loadHasMorfometria();
-    }, [idAviso, idEspecimen])
+    }, [idEspecimen])
   );
-  useEffect(() => {
-    loadHasMorfometria();
-  }, [idEspecimen]);
-
   const onSubmitData = async (data: FormValuesEspecimen) => {
     if (!data.Especie) return;
-    //console.log("data.Especie", JSON.stringify(data, null, 2));
-    //await updateEspecimenById(data, idEspecimen);
     const taxaDelForm = data.Especie?.taxa;
     setIdtaxaEspecie(taxaDelForm);
     switch (taxaDelForm) {
       case MISTICETO:
-        router.navigate("screens/Misticeto/Misticeto");
+        router.replace("screens/Misticeto/Misticeto");
         break;
       case PINNIPEDO:
-        router.navigate("screens/Pinnipedo/Pinnipedo");
+        router.replace("screens/Pinnipedo/Pinnipedo");
         break;
       case ODONTOCETO:
-        router.navigate("screens/Odontoceto/Odontoceto");
+        router.replace("screens/Odontoceto/Odontoceto");
         break;
       case SIRENIO:
-        router.navigate("screens/Sirenio/Sirenio");
+        router.replace("screens/Sirenio/Sirenio");
+
         break;
     }
   };
@@ -140,14 +123,24 @@ const EspecimenPage: React.FC = () => {
 
   const headerHeight = useHeaderHeight();
 
-  if (isLoading || !formValues) {
-    return <Text>Cargando datos...</Text>;
+  if (
+    isLoading ||
+    !formValues ||
+    idEspecimen === null ||
+    hasMorfometria == undefined
+  ) {
+    return (
+      <ActivityIndicator
+        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        size="large"
+      />
+    );
   }
 
   return (
     <View style={{ paddingTop: Platform.OS === "android" ? 0 : headerHeight }}>
       <Especimen
-        hasMorfometria={hasMorfometria ?? false}
+        hasMorfometria={hasMorfometria}
         initialValues={formValues}
         onValuesChange={async (values: Partial<FormValuesEspecimen>) => {
           await handleValuesChange(values);

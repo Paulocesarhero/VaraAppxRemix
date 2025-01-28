@@ -1,8 +1,9 @@
+/* eslint-disable no-console-log */
 import { eq } from "drizzle-orm";
+import * as FileSystem from "expo-file-system";
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import RoundedButton from "varaapplib/components/RoundedButton/RoundedButton";
-import * as FileSystem from "expo-file-system";
 
 import { db } from "../../../../database/connection/sqliteConnection";
 import {
@@ -21,20 +22,14 @@ import {
   ambiente,
   avisos as dbAvisos,
 } from "../../../../database/schemas/avisoSchema";
-import useListAvisoStore from "../../../../hooks/globalState/useListAvisosStore";
 
 const SettingsPage: React.FC = () => {
-  const { avisos, setAvisos } = useListAvisoStore();
-
   const getAvisos = async () => {
     console.log("====== Result of get avisos ======");
     const avisosBdLocal = await getAvisosBdLocal();
 
     console.log(JSON.stringify(avisosBdLocal, null, 2));
     console.log("====== ========= ======");
-  };
-  const avisosZustand = () => {
-    console.log(JSON.stringify(avisos, null, 2));
   };
 
   const handleDelete = async () => {
@@ -111,13 +106,17 @@ const SettingsPage: React.FC = () => {
   }
 
   async function handleGetAvisos() {
-    let result = await getAvisoBdLocal(19);
+    const result = await getAvisoBdLocal(19);
     console.log("result get aviso ", result);
   }
   const listarImagenesGuardadas = async () => {
     try {
       const directoryUri = FileSystem.cacheDirectory; // Directorio de documentos
       console.log("Explorando el directorio:", directoryUri);
+      if (directoryUri === null) {
+        console.log("No se encontró el directorio de documentos");
+        return;
+      }
 
       // Leer los archivos en el directorio
       const archivos = await FileSystem.readDirectoryAsync(directoryUri);
@@ -187,11 +186,6 @@ const SettingsPage: React.FC = () => {
           onPress={handlegetAmbiente}
           color="#151515"
           text="get todos los ambientes"
-        />
-        <RoundedButton
-          onPress={avisosZustand}
-          color="#151515"
-          text="GetAvisos de zustand"
         />
         <RoundedButton
           onPress={handleDelete}

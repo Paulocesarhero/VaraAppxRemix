@@ -1,5 +1,7 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { eq } from "drizzle-orm";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Alert, Platform, Text, View } from "react-native";
@@ -7,17 +9,15 @@ import { AvisoForm } from "varaapplib/components/AvisoForm/AvisoForm";
 import { AvisoValues } from "varaapplib/components/AvisoForm/types";
 
 import InlineButton from "../../../components/InlineButton/InlineButton";
+import { db } from "../../../database/connection/sqliteConnection";
 import {
   addAviso,
   deletePhotoByIdAviso,
   updateAviso,
 } from "../../../database/repository/avisoRepo";
+import { avisos } from "../../../database/schemas/avisoSchema";
 import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 import { getDateNow, saveImage } from "../../../hooks/helpers";
-import { db } from "../../../database/connection/sqliteConnection";
-import { avisos } from "../../../database/schemas/avisoSchema";
-import { eq } from "drizzle-orm";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 
 const AvisoPage: React.FC = () => {
   const idSelected = useAvisoStore((state) => state.idAvisoSelected);
@@ -31,18 +31,15 @@ const AvisoPage: React.FC = () => {
   );
 
   const handleSaveAviso = async (data: AvisoValues) => {
-    try {
-      if (idSelected < 1) {
-        await handleNewAviso(data);
-      } else {
-        await handleExistingAviso(data);
-      }
-    } catch (error) {
-      console.error("Error al manejar los avisos", error);
+    if (idSelected < 1) {
+      await handleNewAviso(data);
+    } else {
+      await handleExistingAviso(data);
     }
   };
 
   const handleNewAviso = async (data: AvisoValues) => {
+    console.log("dataAvisoValues", JSON.stringify(data, null, 2));
     const nombreAviso = Date.now().toString();
     data.Fotografia = await saveImage(data.Fotografia);
     const idAvisoSqlite = await addAviso(data, nombreAviso);
@@ -50,7 +47,6 @@ const AvisoPage: React.FC = () => {
   };
 
   const handleExistingAviso = async (data: AvisoValues) => {
-    console.log("data fotografia", data.Fotografia);
     if (data.Fotografia) {
       data.Fotografia = await saveImage(data.Fotografia);
     }

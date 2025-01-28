@@ -1,6 +1,6 @@
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useExpoRouter } from "expo-router/build/global-state/router-store";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Platform, Text, View } from "react-native";
 
 import {
@@ -11,6 +11,7 @@ import {
 import { FormValuesSoloOrganismosVivos } from "../../../forms/SoloOrganismosVivos/FormValuesSoloOrganismosVivos";
 import SoloOrganismosVivos from "../../../forms/SoloOrganismosVivos/SoloOrganismosVivos";
 import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
+import { useFocusEffect } from "expo-router";
 
 const SoloOrganismosVivosPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -34,9 +35,11 @@ const SoloOrganismosVivosPage: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    loadOrganismo();
-  }, [idEspecimen]);
+  useFocusEffect(
+    React.useCallback(() => {
+      loadOrganismo();
+    }, [idEspecimen])
+  );
 
   const handleValuesChange = async (
     values: Partial<FormValuesSoloOrganismosVivos>

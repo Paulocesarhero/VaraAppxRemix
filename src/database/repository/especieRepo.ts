@@ -1,8 +1,8 @@
 import { eq, sql } from "drizzle-orm";
 
+import { Especie } from "../../services/Especie/GetEspecie";
 import { db } from "../connection/sqliteConnection";
 import { especie } from "../schemas/avisoSchema";
-import { Especie } from "../../services/Especie/GetEspecie";
 
 type especieBd = typeof especie.$inferInsert;
 
@@ -19,7 +19,6 @@ export const setEspeciesBdLocal = async (especies: Especie[]) => {
     taxa: e.taxa,
     familia: e.familia,
   }));
-  console.log("datos a insertar", especiesInset);
   await db
     .insert(especie)
     .values(especiesInset)
@@ -41,7 +40,7 @@ export const getEspecieById = async (id: number | null): Promise<Especie> => {
   if (result.length === 0) {
     return {} as Especie;
   }
-  let resultItem: Especie = {
+  const resultItem: Especie = {
     id: result[0].id,
     nombre: result[0].nombre ?? "",
     nombreLatin: result[0].nombreLatin ?? "",
@@ -56,7 +55,7 @@ export const getFistEspecie = async (): Promise<Especie> => {
   if (result.length === 0) {
     return {} as Especie;
   }
-  let resultItem: Especie = {
+  const resultItem: Especie = {
     id: result[0].id,
     nombre: result[0].nombre ?? "",
     nombreLatin: result[0].nombreLatin ?? "",

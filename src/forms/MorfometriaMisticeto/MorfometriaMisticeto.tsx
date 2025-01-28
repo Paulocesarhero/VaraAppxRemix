@@ -29,7 +29,7 @@ const MorfometriaMisticeto: React.FC<MorfometriaMisticetoProps> = ({
   isDisabled,
   onSubmitData,
 }) => {
-  const { handleSubmit, control, setValue, getValues, watch } =
+  const { handleSubmit, control, setValue, watch } =
     useForm<FormValuesMorfometriaMisticeto>({
       defaultValues: data,
     });

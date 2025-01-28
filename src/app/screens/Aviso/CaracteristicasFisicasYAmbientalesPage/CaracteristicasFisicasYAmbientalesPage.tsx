@@ -26,7 +26,7 @@ const CaracteristicasFisicasYAmbientalesPage: React.FC = () => {
         setFormValues(formValuesDbLocal);
       }
     } catch (error) {
-      console.error("Error al obtener aviso: ", error);
+      throw error;
     } finally {
       setIsLoading(false);
     }
@@ -36,8 +36,6 @@ const CaracteristicasFisicasYAmbientalesPage: React.FC = () => {
     loadAmbiente();
   }, [idSelected]);
   const onSubmitData = async (data: any) => {
-    console.log(idSelected);
-    console.log("Datos enviados:", data);
     router.push("screens/MenuRegistrarAviso/MenuRegistrarAviso");
   };
 

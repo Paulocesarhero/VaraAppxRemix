@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons"; // Corregido: Importación correcta de MaterialIcons
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Feather from "@expo/vector-icons/build/Feather";
 import { Tabs } from "expo-router";
 import { Text, TouchableOpacity } from "react-native";
@@ -7,9 +7,7 @@ import { Text, TouchableOpacity } from "react-native";
 import { ColorsPalete } from "../../../constants/COLORS";
 
 export default function Layout() {
-  const handleLogout = () => {
-    console.log("Usuario deslogeado");
-  };
+  const handleLogout = () => {};
 
   return (
     <Tabs

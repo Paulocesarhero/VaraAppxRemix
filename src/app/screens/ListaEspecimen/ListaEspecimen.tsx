@@ -1,22 +1,23 @@
+import { Ionicons } from "@expo/vector-icons";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import Feather from "@expo/vector-icons/build/Feather";
 import { FlashList } from "@shopify/flash-list";
+import { and, eq } from "drizzle-orm";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { ColorsPalete } from "../../../constants/COLORS";
-import Feather from "@expo/vector-icons/build/Feather";
-import AntDesign from "@expo/vector-icons/AntDesign";
+
 import InlineButton from "../../../components/InlineButton/InlineButton";
-import { Ionicons } from "@expo/vector-icons";
-import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
-import useVaramientoMasivoStore from "../../../hooks/globalState/useVaramientoMasivo";
+import { ColorsPalete } from "../../../constants/COLORS";
+import { db } from "../../../database/connection/sqliteConnection";
 import {
   addEspecimenToVaramientoMasivo,
   deleteEspecimenById,
 } from "../../../database/repository/especimenRepo";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import { db } from "../../../database/connection/sqliteConnection";
 import { especimen } from "../../../database/schemas/avisoSchema";
-import { and, eq } from "drizzle-orm";
-import { useRouter } from "expo-router";
+import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
+import useVaramientoMasivoStore from "../../../hooks/globalState/useVaramientoMasivo";
 
 interface ListaEspecimenProps {
   isModificable: boolean;
@@ -30,12 +31,12 @@ interface item {
 const ListaEspecimen: React.FC<ListaEspecimenProps> = ({
   isModificable = true,
 }) => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const idAviso = useAvisoStore((state) => state.idAvisoSelected);
   const idVaramientoMasivo = useVaramientoMasivoStore(
     (state) => state.idVaramientoMasivoSelected
   );
   const setIdEspecimenSelected = useAvisoStore((state) => state.setIdEspecimen);
+
   if (idVaramientoMasivo == null || idAviso == null) {
     return <Text>Por favor selecciona un varamiento masivo válido</Text>;
   }
@@ -71,6 +72,8 @@ const ListaEspecimen: React.FC<ListaEspecimenProps> = ({
   };
 
   function handleAddEspecimen(): void {
+    console.log("desde especimen lista", idAviso, idVaramientoMasivo);
+
     if (!idAviso || !idVaramientoMasivo) return;
     const result = addEspecimenToVaramientoMasivo(idAviso, idVaramientoMasivo);
   }
@@ -116,7 +119,7 @@ const ListaEspecimen: React.FC<ListaEspecimenProps> = ({
         icon={<Ionicons name="add" size={24} color="black" />}
         text="Agregar Especimen"
         onPress={handleAddEspecimen}
-      ></InlineButton>
+      />
       <FlashList
         data={data as unknown as item[]}
         renderItem={renderItem}

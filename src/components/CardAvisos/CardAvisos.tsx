@@ -11,12 +11,12 @@ import {
   deleteAvisoById,
   hasEspecieAviso,
 } from "../../database/repository/avisoRepo";
+import { hasRegistroMorfometrico } from "../../database/repository/especimenRepo";
+import useAuthStore from "../../hooks/globalState/useAuthStore";
 import useAvisoStore from "../../hooks/globalState/useAvisoStore";
 import { formatDate } from "../../hooks/helpers";
 import { BASE_URL } from "../../services/Api";
 import { saveAviso } from "../../services/Avisos/SaveAviso";
-import useAuthStore from "../../hooks/globalState/useAuthStore";
-import { hasRegistroMorfometrico } from "../../database/repository/especimenRepo";
 
 const CardAvisos: React.FC<CardAvisosProps> = ({
   urlImage,

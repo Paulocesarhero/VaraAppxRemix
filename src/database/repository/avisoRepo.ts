@@ -2,9 +2,9 @@ import { eq } from "drizzle-orm";
 import { SQLiteRunResult } from "expo-sqlite";
 import { AvisoValues } from "varaapplib/components/AvisoForm/types";
 
+import { deleteImage } from "../../hooks/helpers";
 import { db } from "../connection/sqliteConnection";
 import { avisos, AvisoWithRelations } from "../schemas/avisoSchema";
-import { deleteImage } from "../../hooks/helpers";
 
 type newAviso = typeof avisos.$inferInsert;
 

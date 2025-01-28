@@ -1,4 +1,4 @@
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Text } from "react-native";
 
@@ -34,10 +34,11 @@ const Misticeto: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    loadMisticeto();
-  }, [idEspecimen]);
-
+  useFocusEffect(
+    React.useCallback(() => {
+      loadMisticeto();
+    }, [idEspecimen])
+  );
   const router = useRouter();
   const onSubmitData = async () => {
     router.navigate("screens/SoloOrganismosVivosPage/SoloOrganismosVivosPage");

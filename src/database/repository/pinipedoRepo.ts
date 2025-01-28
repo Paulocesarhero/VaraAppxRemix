@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 
 import { RegistroMorfometricoPinnipedo } from "../../forms/MorfometriaPinnipedo/RegistroMorfometricoPinnipedo";
 import { db } from "../connection/sqliteConnection";
-import { ambiente, pinnipedo } from "../schemas/avisoSchema";
+import { pinnipedo } from "../schemas/avisoSchema";
 
 type NewPinipedo = typeof pinnipedo.$inferInsert;
 

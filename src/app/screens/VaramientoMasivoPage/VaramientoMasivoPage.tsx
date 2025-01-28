@@ -1,15 +1,16 @@
-import { Text, View } from "react-native";
-import VaramientoMasivo from "../../../forms/VaramientoMasivo/VaramientoMasivo";
-import { FormValuesVaramientoMasivo } from "../../../forms/VaramientoMasivo/FormValuesVaramientoMasivo";
+import { useFocusEffect, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
+import { Text, View } from "react-native";
+
 import {
   addVaramientoMasivoIfNotExists,
   getVaramientoMasivoByIdAvisoLocal,
   updateVaramientoMasivoByIdAviso,
 } from "../../../database/repository/varamientoMasivoRepo";
+import { FormValuesVaramientoMasivo } from "../../../forms/VaramientoMasivo/FormValuesVaramientoMasivo";
+import VaramientoMasivo from "../../../forms/VaramientoMasivo/VaramientoMasivo";
+import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 import useVaramientoMasivoStore from "../../../hooks/globalState/useVaramientoMasivo";
-import { useRouter } from "expo-router";
 
 const VaramientoMasivoPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -45,9 +46,12 @@ const VaramientoMasivoPage: React.FC = () => {
       setIsLoading(false);
     }
   };
-  useEffect(() => {
-    loadVaramientoMasivo();
-  }, [idAviso]);
+  useFocusEffect(
+    React.useCallback(() => {
+      loadVaramientoMasivo();
+    }, [idAviso])
+  );
+
   if (isLoading) {
     return <Text>Cargando datos...</Text>;
   }

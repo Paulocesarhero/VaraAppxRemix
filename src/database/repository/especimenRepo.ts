@@ -1,6 +1,8 @@
 import { eq } from "drizzle-orm";
 
+import { getEspecieById, getFistEspecie } from "./especieRepo";
 import { FormValuesEspecimen } from "../../forms/Especimen/FormValuesEspecimen";
+import { ImagenType } from "../../services/Avisos/SaveAviso";
 import { db } from "../connection/sqliteConnection";
 import {
   especimen,
@@ -9,8 +11,6 @@ import {
   pinnipedo,
   sirenio,
 } from "../schemas/avisoSchema";
-import { getEspecieById, getFistEspecie } from "./especieRepo";
-import { ImagenType } from "../../services/Avisos/SaveAviso";
 
 type NewEspecimen = typeof especimen.$inferInsert;
 
@@ -26,12 +26,8 @@ export const getEspecimenByIdEspecimen = async (
     if (!result || result.length === 0) {
       throw new Error(`No se encontró un especimen con id ${idEspecimen}`);
     }
-    console.log(
-      "result get especimen by id especimen :",
-      JSON.stringify(result, null, 2)
-    );
+
     const EspecieBdLocal = await getEspecieById(result[0].especieId);
-    console.log(EspecieBdLocal);
 
     const item = result[0];
 
@@ -174,10 +170,6 @@ export const updateEspecimenById = async (
     sustrato: especimenData.sustrato ?? especimenObjeto.sustrato,
     avisoId: especimenObjeto.avisoId,
   };
-  console.log(
-    "updated especimen",
-    JSON.stringify(updatedEspecimen, null, 2) + idEspecimen
-  );
   result = await db
     .update(especimen)
     .set(updatedEspecimen)
@@ -187,8 +179,6 @@ export const updateEspecimenById = async (
     .select()
     .from(especimen)
     .where(eq(especimen.id, idEspecimen));
-  console.log("result desde update", result);
-  console.log("result desde update insercion", resultInsercion);
 
   return result[0].updateId;
 };
@@ -265,8 +255,6 @@ export const getImagesEspecimen = async (
       where: (especimen, { eq }) => eq(especimen.id, idEspecimen),
     });
 
-    console.log("resultDb", resultDb);
-
     if (!resultDb) return [];
 
     const mappings: Record<keyof typeof resultDb, ImagenType> = {
@@ -286,7 +274,6 @@ export const getImagesEspecimen = async (
 
     return result;
   } catch (error) {
-    console.error("Error al obtener aviso bd local:", error);
     throw error;
   }
 };

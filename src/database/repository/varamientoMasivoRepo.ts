@@ -1,7 +1,9 @@
-import { misticeto, varamientoMasivo } from "../schemas/avisoSchema";
 import { eq } from "drizzle-orm";
-import { db } from "../connection/sqliteConnection";
+
 import { FormValuesVaramientoMasivo } from "../../forms/VaramientoMasivo/FormValuesVaramientoMasivo";
+import { db } from "../connection/sqliteConnection";
+import { varamientoMasivo } from "../schemas/avisoSchema";
+
 type NewVaramientoMasivo = typeof varamientoMasivo.$inferInsert;
 
 export const addVaramientoMasivoIfNotExists = async (
@@ -14,7 +16,7 @@ export const addVaramientoMasivoIfNotExists = async (
   if (existingVaramientoMasivo.length === 0) {
     const insertedId = await db
       .insert(varamientoMasivo)
-      .values({ avisoId: avisoId })
+      .values({ avisoId })
       .returning({ insertId: varamientoMasivo.id });
     return insertedId[0].insertId;
   } else {
@@ -73,11 +75,6 @@ export const updateVaramientoMasivoByIdAviso = async (
       formData.Observaciones ?? varamientoMasivoObjeto.observaciones,
     avisoId: idAviso, // Aseguramos que el avisoId sea correcto
   };
-
-  console.log(
-    "Valores actualizados para la base de datos:",
-    updatedVaramientoMasivo
-  );
 
   // Actualizar en la base de datos
   const result = await db

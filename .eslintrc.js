@@ -3,6 +3,7 @@ module.exports = {
   plugins: ["react-native"],
   rules: {
     "prettier/prettier": "error",
+    "no-console": "error",
   },
   settings: {
     "react-native/style-sheet-object-names": ["StyleSheet"],

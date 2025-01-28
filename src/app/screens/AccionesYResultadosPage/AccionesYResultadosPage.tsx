@@ -7,13 +7,10 @@ import { ColorsPalete } from "../../../constants/COLORS";
 import {
   addAccionesIfNotExists,
   getAccionesByIdEspecimenLocal,
-  NewAcciones,
   updateAccionesByIdEspecimen,
 } from "../../../database/repository/AccionesRepo";
-import { updateOrganismoByIdEspecimen } from "../../../database/repository/SoloOrganismosVivosRepo";
 import AccionesYResultadosForm from "../../../forms/AccionesYResultados/AccionesYResultados";
 import FormValuesAccionesYresultados from "../../../forms/AccionesYResultados/FormValuesAccionesYresultados";
-import { FormValuesSoloOrganismosVivos } from "../../../forms/SoloOrganismosVivos/FormValuesSoloOrganismosVivos";
 import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 
 const Recommendations: React.FC = () => {
@@ -25,7 +22,7 @@ const Recommendations: React.FC = () => {
     setIsLoading(true);
     try {
       if (idEspecimen != null && idEspecimen > 0) {
-        const result = await addAccionesIfNotExists(idEspecimen);
+        await addAccionesIfNotExists(idEspecimen);
         const formValuesDbLocal =
           await getAccionesByIdEspecimenLocal(idEspecimen);
         setFormValues(formValuesDbLocal);

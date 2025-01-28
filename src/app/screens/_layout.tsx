@@ -1,8 +1,8 @@
 import Entypo from "@expo/vector-icons/Entypo";
+import Feather from "@expo/vector-icons/build/Feather";
 import { router, Stack, useRouter } from "expo-router";
 import React from "react";
 import { Platform, Text, View } from "react-native";
-import Feather from "@expo/vector-icons/build/Feather";
 
 const Layout: React.FC = () => {
   const router = useRouter();

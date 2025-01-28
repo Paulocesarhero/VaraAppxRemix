@@ -54,9 +54,8 @@ export const addVaramientoMasivo = async (
         },
       }
     );
-    return response.data; // Retorna solo los datos de la respuesta
+    return response.data;
   } catch (error) {
-    console.error("Error al reportar varamiento masivo:", error);
-    throw error; // Lanzar el error para que sea manejado por quien invoque la función
+    throw error;
   }
 };

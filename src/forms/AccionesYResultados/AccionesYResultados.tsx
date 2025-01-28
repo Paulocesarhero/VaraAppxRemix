@@ -12,7 +12,6 @@ import CustomCheckBox from "varaapplib/components/CustomCheckBox/CustomCheckBox"
 import InputField from "varaapplib/components/MaterialInput/MaterialInput";
 import MaterialSelector from "varaapplib/components/MaterialSelector/MaterialSelector";
 import { Estado } from "varaapplib/components/MaterialSelector/types";
-import RoundedButton from "varaapplib/components/RoundedButton/RoundedButton";
 
 import FormValuesAccionesYresultados from "./FormValuesAccionesYresultados";
 import AccionesYResultadosFormProps from "./types";
@@ -35,7 +34,6 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
   }, [watchedValues]);
 
   const onSubmit: SubmitHandler<FormValuesAccionesYresultados> = (data) => {
-    console.log(data);
     onSubmitData(data);
   };
 

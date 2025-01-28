@@ -144,7 +144,6 @@ export const getMisticetoByIdEspecimenLocal = async (
     delete item.especimenId;
     return item as FormValuesMorfometriaMisticeto;
   } catch (error) {
-    console.error("Error al obtener el misticeto:", error);
     throw new Error(
       `Error al obtener el misticeto para el aviso ${idEspecimen}`
     );

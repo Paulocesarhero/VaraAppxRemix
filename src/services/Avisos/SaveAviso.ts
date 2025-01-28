@@ -1,19 +1,20 @@
-import { hasVaramientoMasivo } from "../../database/repository/varamientoMasivoRepo";
-import api, { BASE_URL } from "../Api";
-import { Especie } from "../Especie/GetEspecie";
-import RegistroMorfometricoSirenio from "../../forms/MorfometriaSirenio/RegistroMorfometricoSirenio";
-import RegistroMorfometricoOdontoceto from "../../forms/MorformetriaOdontoceto/RegistroMorfometricoOdontoceto";
-import { RegistroMorfometricoPinnipedo } from "../../forms/MorfometriaPinnipedo/RegistroMorfometricoPinnipedo";
-import { FormValuesMorfometriaMisticeto } from "../../forms/MorfometriaMisticeto/FormValuesMorfometriaMisticeto";
-import { getAvisoBdLocal } from "../../database/repository/avisoRepo";
-import * as FileSystem from "expo-file-system";
-import { db } from "../../database/connection/sqliteConnection";
-import { avisos, AvisoWithRelations } from "../../database/schemas/avisoSchema";
 import { eq } from "drizzle-orm";
+import * as FileSystem from "expo-file-system";
+
+import { db } from "../../database/connection/sqliteConnection";
+import { getAvisoBdLocal } from "../../database/repository/avisoRepo";
 import {
   FotoAndDescription,
   getImagesEspecimen,
 } from "../../database/repository/especimenRepo";
+import { hasVaramientoMasivo } from "../../database/repository/varamientoMasivoRepo";
+import { avisos, AvisoWithRelations } from "../../database/schemas/avisoSchema";
+import { FormValuesMorfometriaMisticeto } from "../../forms/MorfometriaMisticeto/FormValuesMorfometriaMisticeto";
+import { RegistroMorfometricoPinnipedo } from "../../forms/MorfometriaPinnipedo/RegistroMorfometricoPinnipedo";
+import RegistroMorfometricoSirenio from "../../forms/MorfometriaSirenio/RegistroMorfometricoSirenio";
+import RegistroMorfometricoOdontoceto from "../../forms/MorformetriaOdontoceto/RegistroMorfometricoOdontoceto";
+import api, { BASE_URL } from "../Api";
+import { Especie } from "../Especie/GetEspecie";
 
 type Aviso = {
   Acantilado: boolean;
@@ -200,7 +201,7 @@ const generateAccionesYResultados = (
       Number(resultSqlite.especimenes[0]?.acciones?.disposicionDelCadaver) ?? 0,
     disposicionOtro:
       resultSqlite.especimenes[0]?.acciones?.disposicionOtro ?? "",
-    tipoDeMuestras: tipoDeMuestras,
+    tipoDeMuestras,
     posibleCausaDelVaramiento:
       resultSqlite.especimenes[0].acciones?.posibleCausaDelVaramiento ?? "",
     participantes: resultSqlite.especimenes[0]?.acciones?.participantes ?? "",
@@ -294,7 +295,6 @@ export const saveAviso = async (idAviso: number, token: string) => {
           }
         );
         const imagen = await getImageUri(idAviso);
-        console.log("Imagen de aviso local:", imagen);
         if (!imagen) {
           return response;
         }
@@ -327,16 +327,10 @@ export const saveAviso = async (idAviso: number, token: string) => {
 
         return response;
       } catch (error) {
-        console.error(
-          "Error al reportar varamiento individual:",
-          // @ts-ignore
-          error.response.data
-        );
-        throw error; // Lanzar el error para que sea manejado por quien invoque la función
+        throw error;
       }
     }
   } else {
-    console.log("Ya existe un varamiento masivo para este aviso");
   }
 };
 
@@ -360,9 +354,7 @@ export const uploadFileFotoAviso = async (
         uploadType: FileSystem.FileSystemUploadType.MULTIPART,
       }
     );
-    console.log("Resultado de la subida de la foto de aviso:", result.body);
   } catch (error) {
-    console.error("Error al subir la foto de aviso:", error);
     throw error;
   }
 };
@@ -379,9 +371,8 @@ export const uploadFileEspecimen = async (
   fileUri: string,
   token: string
 ) => {
-  console.log("Uploading file:", fileUri);
   try {
-    const result = await FileSystem.uploadAsync(
+    await FileSystem.uploadAsync(
       `${BASE_URL}/api/Aviso/GuardarFotoFormatoIndividual/${idEspecimen}/${typeImagen}`,
       fileUri,
       {
@@ -394,11 +385,8 @@ export const uploadFileEspecimen = async (
         uploadType: FileSystem.FileSystemUploadType.MULTIPART,
       }
     );
-    console.log("Resultado de la subida de la foto de especimen:", result.body);
-    console.log("Eliminando archivo temporal:", fileUri);
     await FileSystem.deleteAsync(fileUri);
   } catch (error) {
-    console.error("Error al subir la foto de especimen:", error);
     throw error;
   }
 };

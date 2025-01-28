@@ -1,5 +1,5 @@
 import { useHeaderHeight } from "@react-navigation/elements";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Platform, Text, View } from "react-native";
 
@@ -34,9 +34,12 @@ const Odontoceto: React.FC = () => {
       setIsLoading(false);
     }
   };
-  useEffect(() => {
-    loadOdontoceto();
-  }, [idEspecimen]);
+  useFocusEffect(
+    React.useCallback(() => {
+      loadOdontoceto();
+    }, [idEspecimen])
+  );
+
   const router = useRouter();
   const onSubmitData = async () => {
     router.navigate("screens/SoloOrganismosVivosPage/SoloOrganismosVivosPage");

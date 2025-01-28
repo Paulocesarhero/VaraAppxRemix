@@ -1,6 +1,6 @@
+import { InferSelectModel, relations } from "drizzle-orm";
 import * as t from "drizzle-orm/sqlite-core";
 import { sqliteTable as table } from "drizzle-orm/sqlite-core/table";
-import { InferSelectModel, relations } from "drizzle-orm";
 
 export const avisos = table("avisos", {
   id: t.int().primaryKey({ autoIncrement: true }),

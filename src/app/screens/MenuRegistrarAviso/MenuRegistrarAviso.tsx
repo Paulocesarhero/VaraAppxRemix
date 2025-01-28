@@ -1,19 +1,20 @@
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { eq } from "drizzle-orm";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React from "react";
 import { View } from "react-native";
 import MaterialCard from "varaapplib/components/MaterialCard/MaterialCard";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite";
+
+import { db } from "../../../database/connection/sqliteConnection";
 import { hasVaramientoMasivo } from "../../../database/repository/varamientoMasivoRepo";
-import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 import {
   avisos,
   especimen,
   varamientoMasivo,
 } from "../../../database/schemas/avisoSchema";
-import { db } from "../../../database/connection/sqliteConnection";
-import { eq } from "drizzle-orm";
+import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 
 const MenuRegistrarAviso: React.FC = () => {
   const router = useRouter();
@@ -29,22 +30,19 @@ const MenuRegistrarAviso: React.FC = () => {
     db
       .select()
       .from(varamientoMasivo)
-      .where(eq(varamientoMasivo.avisoId, idAvisoSelected))
+      .where(eq(varamientoMasivo.avisoId, idAvisoSelected)),
+    [idAvisoSelected]
   );
 
   const { data: dataAvisoEspecimen } = useLiveQuery(
-    db.select().from(especimen).where(eq(especimen.avisoId, idAvisoSelected))
+    db.select().from(especimen).where(eq(especimen.avisoId, idAvisoSelected)),
+    [idAvisoSelected]
   );
   const hasAvisoIndividual = dataAvisoEspecimen?.length > 0;
 
   const hasVaramientoMasivoLocal = dataVaramientoMasivo?.length > 0;
 
   const renderCards = () => {
-    console.log("id aviso selected menu registar", idAvisoSelected);
-    console.log("has aviso individual", hasAvisoIndividual);
-    console.log("has varamiento masivo local", hasVaramientoMasivoLocal);
-    console.log("data aviso especímen", dataAvisoEspecimen);
-    console.log("data varamiento masivo", dataVaramientoMasivo);
     if (hasAvisoIndividual && !hasVaramientoMasivoLocal) {
       return (
         <MaterialCard

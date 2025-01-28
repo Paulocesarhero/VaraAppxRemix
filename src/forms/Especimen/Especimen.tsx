@@ -1,4 +1,5 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Image } from "expo-image";
 import * as Location from "expo-location";
 import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -20,13 +21,11 @@ import { Estado } from "varaapplib/components/MaterialSelector/types";
 import { FormValuesEspecimen } from "./FormValuesEspecimen";
 import { FormatoIndividualProps } from "./types";
 import EspecieSelector from "../../components/EspecieSelector/EspecieSelector";
+import { EspecieSelectorStyle } from "../../components/EspecieSelector/EspecieSelectorStyle";
 import InlineButton from "../../components/InlineButton/InlineButton";
 import PhotoAndInputForm from "../../components/PhotoAndInputs/PhotoAndInputs";
-import useAvisoStore from "../../hooks/globalState/useAvisoStore";
 import { handleNumericInputWithOnepoint } from "../../hooks/validations";
 import { Especie } from "../../services/Especie/GetEspecie";
-import { EspecieSelectorStyle } from "../../components/EspecieSelector/EspecieSelectorStyle";
-import { Image } from "expo-image";
 
 const Especimen: React.FC<FormatoIndividualProps> = ({
   initialValues,

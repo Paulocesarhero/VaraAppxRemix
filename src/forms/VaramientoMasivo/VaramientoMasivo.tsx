@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
@@ -13,9 +14,8 @@ import InputField from "varaapplib/components/MaterialInput/MaterialInput";
 
 import { FormValuesVaramientoMasivo } from "./FormValuesVaramientoMasivo";
 import { VaramientoMasivoProps } from "./types";
-import { handleNumericInputWithOnepoint } from "../../hooks/validations";
 import InlineButton from "../../components/InlineButton/InlineButton";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { handleNumericInputWithOnepoint } from "../../hooks/validations";
 
 const VaramientoMasivo: React.FC<VaramientoMasivoProps> = ({
   initialValues,

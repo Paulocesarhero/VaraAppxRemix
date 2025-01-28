@@ -1,11 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { getAvisosVaraWeb } from "../../../../services/Avisos/GetAvisosVaraWeb";
-import useAvisoStore from "../../../../hooks/globalState/useAvisoStore";
-import useAuthStore from "../../../../hooks/globalState/useAuthStore";
-import { router, usePathname } from "expo-router";
+import Entypo from "@expo/vector-icons/Entypo";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import { db } from "../../../../database/connection/sqliteConnection";
-import { avisos } from "../../../../database/schemas/avisoSchema";
+import { router, usePathname } from "expo-router";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   FlatList,
   StyleSheet,
@@ -14,28 +10,14 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Entypo from "@expo/vector-icons/Entypo";
+
 import CardAvisos from "../../../../components/CardAvisos/CardAvisos";
 import { ColorsPalete } from "../../../../constants/COLORS";
-
-const fetchDataFromAPI = async (token: string): Promise<Item[]> => {
-  try {
-    const avisosApi = await getAvisosVaraWeb(token);
-
-    const avisosTransformados: Item[] = avisosApi.map((aviso) => ({
-      fechaDeAvistamiento: aviso.fechaDeAvistamiento,
-      cantidadDeAnimales: Number(aviso.cantidadDeAnimales),
-      fotografia: aviso.fotografia,
-      id: `${Date.now()}_${Math.random()}`,
-      isModificable: false,
-    }));
-
-    return avisosTransformados;
-  } catch (error) {
-    console.error("Error al obtener avisos desde la API:", error);
-    return [];
-  }
-};
+import { db } from "../../../../database/connection/sqliteConnection";
+import { avisos } from "../../../../database/schemas/avisoSchema";
+import useAuthStore from "../../../../hooks/globalState/useAuthStore";
+import useAvisoStore from "../../../../hooks/globalState/useAvisoStore";
+import { getAvisosVaraWeb } from "../../../../services/Avisos/GetAvisosVaraWeb";
 
 interface Item {
   id: number | string;
@@ -51,12 +33,8 @@ const ListaAvisos: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const { token: barrerToken } = useAuthStore();
 
-  const {
-    setIdAvisoSelected,
-    setIdEspecimen,
-    setIdtaxaEspecie,
-    clearIdEspecimen,
-  } = useAvisoStore();
+  const { setIdAvisoSelected, setIdtaxaEspecie, clearIdEspecimen } =
+    useAvisoStore();
 
   const pathname = usePathname();
 
@@ -80,7 +58,7 @@ const ListaAvisos: React.FC = () => {
         isModificable: true,
       }));
       setData(transformedData);
-      setLoading(false); // Una vez que los datos están listos, setea loading a false
+      setLoading(false);
     }
   }, [localData, useLocalDB]);
 

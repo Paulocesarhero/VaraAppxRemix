@@ -1,4 +1,4 @@
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Text } from "react-native";
 
@@ -32,9 +32,12 @@ const Pinnipedo: React.FC = () => {
       setIsLoading(false);
     }
   };
-  useEffect(() => {
-    loadPinnipedo();
-  }, [idEspecimen]);
+  useFocusEffect(
+    React.useCallback(() => {
+      loadPinnipedo();
+    }, [idEspecimen])
+  );
+
   const router = useRouter();
   const onSubmitData = async () => {
     router.navigate("screens/SoloOrganismosVivosPage/SoloOrganismosVivosPage");

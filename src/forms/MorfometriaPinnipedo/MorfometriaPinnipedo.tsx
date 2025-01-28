@@ -29,7 +29,7 @@ const MorfometriaPinnipedo: React.FC<MorfometriaPinnipedoProps> = ({
   onValuesChange,
   onSubmitData,
 }) => {
-  const { handleSubmit, control, setValue, getValues, watch } =
+  const { handleSubmit, control, setValue, watch } =
     useForm<RegistroMorfometricoPinnipedo>({
       defaultValues: data,
     });

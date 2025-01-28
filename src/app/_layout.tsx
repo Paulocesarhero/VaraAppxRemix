@@ -1,13 +1,21 @@
-import React from "react";
-import { SQLiteProvider } from "expo-sqlite";
 import { Stack } from "expo-router";
-import ErrorBoundary from "../components/ErrorBoundary";
+import { SQLiteProvider } from "expo-sqlite";
+import React from "react";
 import { View, Text } from "react-native";
+
+import ErrorBoundary from "../components/ErrorBoundary";
 
 const Layout = () => {
   const error = () => {
     return (
-      <View>
+      <View
+        style={{
+          justifyContent: "center",
+          flex: 1,
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
         <Text>
           Algo inesperado ocurrió. Intente volver a iniciar la aplicación.
         </Text>
