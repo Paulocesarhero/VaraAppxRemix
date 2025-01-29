@@ -32,56 +32,48 @@ export const formatDate = (date: string) => {
   return `${year}-${month}-${day}`;
 };
 
-export const saveImage = async (photoUri: string | null): Promise<string> => {
-  if (!photoUri) {
-    return "";
-  }
-
+type ResponseImage = {
+  uri: string;
+  existImage: boolean;
+};
+export const saveImage = async (photoUri: string): Promise<ResponseImage> => {
   try {
-    // Extrae el nombre del archivo
     const fileName = photoUri.split("/").pop();
-    // Definir la ruta de la nueva carpeta dentro de documentDirectory
     const newDir = FileSystem.documentDirectory + "VaraAppx";
-    // Definir la ruta completa de destino del archivo
     const newPath = `${newDir}/${fileName}`;
 
     const fileInfoRepeat = await FileSystem.getInfoAsync(newPath);
     if (fileInfoRepeat.exists) {
-      console.log("El archivo ya existe en la carpeta de destino:", newPath);
-      return newPath; // El archivo ya existe en la carpeta de destino, retorna su ruta
+      return {
+        uri: newPath,
+        existImage: true,
+      }; // El archivo ya existe en la carpeta de destino, retorna su ruta
     }
 
-    // Verifica si la carpeta de destino existe, si no la crea
     const dirInfo = await FileSystem.getInfoAsync(newDir);
     if (!dirInfo.exists) {
       await FileSystem.makeDirectoryAsync(newDir, { intermediates: true });
     }
 
-    // Verifica si el archivo de origen existe
     const fileInfo = await FileSystem.getInfoAsync(photoUri);
     if (!fileInfo.exists) {
-      console.error("El archivo de origen no existe");
       throw new Error("El archivo de origen no existe");
     }
 
-    // Mueve el archivo a la nueva ubicación
     await FileSystem.moveAsync({
       from: photoUri,
       to: newPath,
     });
 
-    console.log("Image saved to:", newPath);
-    return newPath; // Retorna el nuevo path
+    return { uri: newPath, existImage: false };
   } catch (error) {
-    console.error("Error saving image:", error);
     throw error; // Lanza el error para que pueda ser manejado
   }
 };
 export const deleteImage = async (imageUri: string) => {
   try {
     await FileSystem.deleteAsync(imageUri);
-    console.log("Image deleted:", imageUri);
   } catch (error) {
-    console.error("Error deleting image:", error);
+    throw error;
   }
 };

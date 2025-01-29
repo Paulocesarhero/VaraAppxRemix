@@ -9,24 +9,6 @@ const Layout: React.FC = () => {
   const navigateToHome = () => {
     router.replace("/screens/(home)/ListaAvisos/ListaAvisos");
   };
-  const NavigateToCaracteristicasFisicas = () => {
-    const handleNavigation = () => {
-      router.push(
-        "/screens/Aviso/CaracteristicasFisicasYAmbientalesPage/CaracteristicasFisicasYAmbientalesPage"
-      );
-    };
-
-    return (
-      <View style={{ margin: 12 }}>
-        <Feather
-          name="arrow-right"
-          size={24}
-          color="black"
-          onPress={handleNavigation}
-        />
-      </View>
-    );
-  };
   const headerHome = () => {
     return (
       <View style={{ margin: 12 }}>
@@ -50,7 +32,6 @@ const Layout: React.FC = () => {
           headerTransparent: Platform.OS === "ios",
           headerBlurEffect: Platform.OS === "ios" ? "regular" : undefined,
           headerLeft: headerHome,
-          headerRight: NavigateToCaracteristicasFisicas,
         }}
       />
       <Stack.Screen

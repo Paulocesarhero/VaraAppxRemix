@@ -2,7 +2,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { eq } from "drizzle-orm";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import { useNavigation } from "expo-router";
+import { useNavigation, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Alert, Platform, Text, View } from "react-native";
 import { AvisoForm } from "varaapplib/components/AvisoForm/AvisoForm";
@@ -24,6 +24,7 @@ const AvisoPage: React.FC = () => {
   const { setIdAvisoSelected } = useAvisoStore();
   const headerHeight = useHeaderHeight();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   const { data: avisosDbLocal } = useLiveQuery(
     db.select().from(avisos).where(eq(avisos.id, idSelected)),
@@ -36,21 +37,30 @@ const AvisoPage: React.FC = () => {
     } else {
       await handleExistingAviso(data);
     }
+    router.push(
+      "/screens/Aviso/CaracteristicasFisicasYAmbientalesPage/CaracteristicasFisicasYAmbientalesPage"
+    );
   };
 
   const handleNewAviso = async (data: AvisoValues) => {
     console.log("dataAvisoValues", JSON.stringify(data, null, 2));
     const nombreAviso = Date.now().toString();
-    data.Fotografia = await saveImage(data.Fotografia);
+    if (data.Fotografia) {
+      const responseImage = await saveImage(data.Fotografia);
+      data.Fotografia = responseImage.uri;
+    }
     const idAvisoSqlite = await addAviso(data, nombreAviso);
     setIdAvisoSelected(Number(idAvisoSqlite));
   };
 
   const handleExistingAviso = async (data: AvisoValues) => {
     if (data.Fotografia) {
-      data.Fotografia = await saveImage(data.Fotografia);
+      const response = await saveImage(data.Fotografia);
+      if (!response.existImage) {
+        await deletePhotoByIdAviso(idSelected);
+        data.Fotografia = response.uri;
+      }
     }
-    await deletePhotoByIdAviso(idSelected);
     await updateAviso(data, data.Nombre ?? "", idSelected);
   };
 
@@ -79,7 +89,7 @@ const AvisoPage: React.FC = () => {
         onSubmitData={handleSaveAviso}
         loading={false}
         setLoading={() => {}}
-        onValuesChange={(values) => {}}
+        onValuesChange={(vaxlues) => {}}
         data={{
           Nombre: avisosDbLocal[0]?.nombre ?? "",
           Telefono: avisosDbLocal[0]?.telefono ?? "",
