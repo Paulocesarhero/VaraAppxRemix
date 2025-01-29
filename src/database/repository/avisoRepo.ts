@@ -88,7 +88,6 @@ export const deletePhotoByIdAviso = async (idAviso: number): Promise<any> => {
   const result = await db.select().from(avisos).where(eq(avisos.id, idAviso));
   const avisoObjeto = result[0];
   const fotografia = avisoObjeto.fotografia;
-  console.log("Fotografia a borrar: ", fotografia);
   if (fotografia) {
     const fotografiaUri = fotografia;
     return await deleteImage(fotografiaUri);

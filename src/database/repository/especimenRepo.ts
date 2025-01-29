@@ -11,6 +11,7 @@ import {
   pinnipedo,
   sirenio,
 } from "../schemas/avisoSchema";
+import { deleteImage } from "../../hooks/helpers";
 
 type NewEspecimen = typeof especimen.$inferInsert;
 
@@ -275,5 +276,29 @@ export const getImagesEspecimen = async (
     return result;
   } catch (error) {
     throw error;
+  }
+};
+
+export const deletePhotoEspecimenById = async (
+  idEspecimen: number,
+  imageType: ImagenType
+) => {
+  const query = await db
+    .select()
+    .from(especimen)
+    .where(eq(especimen.id, idEspecimen));
+
+  const imageMap: Record<ImagenType, string | null> = {
+    golpes: query[0].golpesFoto,
+    heridasDeBala: query[0].heridasBalaFoto,
+    presenciaDeRedes: query[0].presenciaDeRedesFoto,
+    mordidas: query[0].mordidasFoto,
+    otros: query[0].otroTipoDeHeridasFoto,
+  };
+
+  const imageToDelete = imageMap[imageType];
+
+  if (imageToDelete) {
+    return await deleteImage(imageToDelete);
   }
 };

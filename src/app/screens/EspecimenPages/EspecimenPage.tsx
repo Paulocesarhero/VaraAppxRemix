@@ -5,6 +5,7 @@ import { ActivityIndicator, Platform, Text, View } from "react-native";
 
 import {
   addEspecimenIfNotExist,
+  deletePhotoEspecimenById,
   getEspecimenByIdEspecimen,
   hasRegistroMorfometrico,
   updateEspecimenById,
@@ -13,6 +14,7 @@ import Especimen from "../../../forms/Especimen/Especimen";
 import { FormValuesEspecimen } from "../../../forms/Especimen/FormValuesEspecimen";
 import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 import { saveImage } from "../../../hooks/helpers";
+import { deletePhotoByIdAviso } from "../../../database/repository/avisoRepo";
 
 const EspecimenPage: React.FC = () => {
   const idtaxaEspecie = useAvisoStore((state) => state.idtaxaEspecie);
@@ -48,78 +50,80 @@ const EspecimenPage: React.FC = () => {
   };
 
   const loadHasMorfometria = async () => {
-    console.log("loadHasMorfometria", idEspecimen, hasMorfometria);
     setIsLoading(true);
     const result = await hasRegistroMorfometrico(idEspecimen);
     setHasMorfometria(result);
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    let isMounted = true;
-    loadEspecimen().then(() => {
-      if (isMounted) loadHasMorfometria();
-    });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
   useFocusEffect(
     React.useCallback(() => {
+      loadEspecimen();
       loadHasMorfometria();
     }, [idEspecimen])
   );
   const onSubmitData = async (data: FormValuesEspecimen) => {
     if (!data.Especie) return;
+    if (idEspecimen === null) return;
+
+    if (data.golpesFoto) {
+      const response = await saveImage(data.golpesFoto);
+      console.log("Foto de golpes response save image: ", response);
+      if (!response.existImage) {
+        data.golpesFoto = response.uri;
+        await deletePhotoEspecimenById(idEspecimen, "golpes");
+      }
+    }
+    if (data.heridasBalaFoto) {
+      const response = await saveImage(data.heridasBalaFoto);
+      if (!response.existImage) {
+        await deletePhotoEspecimenById(idEspecimen, "heridasDeBala");
+        data.heridasBalaFoto = response.uri;
+      }
+    }
+    if (data.presenciaDeRedesFoto) {
+      const response = await saveImage(data.presenciaDeRedesFoto);
+      if (!response.existImage) {
+        await deletePhotoEspecimenById(idEspecimen, "presenciaDeRedes");
+        data.presenciaDeRedesFoto = response.uri;
+      }
+    }
+    if (data.mordidasFoto) {
+      const response = await saveImage(data.mordidasFoto);
+      if (!response.existImage) {
+        await deletePhotoEspecimenById(idEspecimen, "mordidas");
+        data.mordidasFoto = response.uri;
+      }
+    }
+    if (data.otroTipoDeHeridasFoto) {
+      const response = await saveImage(data.otroTipoDeHeridasFoto);
+      if (!response.existImage) {
+        await deletePhotoEspecimenById(idEspecimen, "otros");
+        data.otroTipoDeHeridasFoto = response.uri;
+      }
+    }
+    await updateEspecimenById(data, idEspecimen);
+
     const taxaDelForm = data.Especie?.taxa;
     setIdtaxaEspecie(taxaDelForm);
     switch (taxaDelForm) {
       case MISTICETO:
-        router.replace("screens/Misticeto/Misticeto");
+        router.push("screens/Misticeto/Misticeto");
         break;
       case PINNIPEDO:
-        router.replace("screens/Pinnipedo/Pinnipedo");
+        router.push("screens/Pinnipedo/Pinnipedo");
         break;
       case ODONTOCETO:
-        router.replace("screens/Odontoceto/Odontoceto");
+        router.push("screens/Odontoceto/Odontoceto");
         break;
       case SIRENIO:
-        router.replace("screens/Sirenio/Sirenio");
+        router.push("screens/Sirenio/Sirenio");
 
         break;
     }
   };
 
-  const handleValuesChange = async (values: Partial<FormValuesEspecimen>) => {
-    if (values.golpesFoto) {
-      const imagePersistence = await saveImage(values.golpesFoto);
-      values.golpesFoto = imagePersistence;
-      await updateEspecimenById(values, idEspecimen);
-    }
-    if (values.heridasBalaFoto) {
-      const imagePersistence = await saveImage(values.heridasBalaFoto);
-      values.heridasBalaFoto = imagePersistence;
-      await updateEspecimenById(values, idEspecimen);
-    }
-    if (values.presenciaDeRedesFoto) {
-      const imagePersistence = await saveImage(values.presenciaDeRedesFoto);
-      values.presenciaDeRedesFoto = imagePersistence;
-      await updateEspecimenById(values, idEspecimen);
-    }
-    if (values.mordidasFoto) {
-      const imagePersistence = await saveImage(values.mordidasFoto);
-      values.mordidasFoto = imagePersistence;
-      await updateEspecimenById(values, idEspecimen);
-    }
-    if (values.otroTipoDeHeridasFoto) {
-      const imagePersistence = await saveImage(values.otroTipoDeHeridasFoto);
-      values.otroTipoDeHeridasFoto = imagePersistence;
-      await updateEspecimenById(values, idEspecimen);
-    } else {
-      await updateEspecimenById(values, idEspecimen);
-    }
-  };
+  const handleValuesChange = async (values: Partial<FormValuesEspecimen>) => {};
 
   const headerHeight = useHeaderHeight();
 
