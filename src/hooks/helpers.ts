@@ -72,7 +72,10 @@ export const saveImage = async (photoUri: string): Promise<ResponseImage> => {
 };
 export const deleteImage = async (imageUri: string) => {
   try {
-    await FileSystem.deleteAsync(imageUri);
+    const fileInfo = await FileSystem.getInfoAsync(imageUri);
+    if (fileInfo.exists) {
+      await FileSystem.deleteAsync(imageUri);
+    }
   } catch (error) {
     throw error;
   }
