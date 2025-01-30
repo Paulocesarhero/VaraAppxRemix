@@ -108,6 +108,7 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
       } catch (error) {
         // @ts-ignore
         console.error("Error al subir al servidor:", error.response.data);
+        Alert.alert("Error", "Algo salió mal. Por favor, intenta nuevamente.");
       }
     }
   }
