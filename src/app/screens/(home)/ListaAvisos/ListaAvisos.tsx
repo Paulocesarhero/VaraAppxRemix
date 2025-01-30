@@ -25,6 +25,7 @@ interface Item {
   cantidadDeAnimales?: number | null;
   fotografia: string | null;
   isModificable?: boolean;
+  status?: string;
 }
 
 const ListaAvisos: React.FC = () => {
@@ -45,6 +46,7 @@ const ListaAvisos: React.FC = () => {
         fechaDeAvistamiento: avisos.fechaDeAvistamiento,
         cantidadDeAnimales: avisos.cantidadDeAnimales,
         fotografia: avisos.fotografia,
+        nombre: avisos.nombre,
       })
       .from(avisos)
   );
@@ -56,6 +58,7 @@ const ListaAvisos: React.FC = () => {
         cantidadDeAnimales: item.cantidadDeAnimales,
         fotografia: item.fotografia,
         isModificable: true,
+        status: item.nombre === "Subido" ? "En linea" : "Pendiente",
       }));
       setData(transformedData);
       setLoading(false);
@@ -135,6 +138,7 @@ const ListaAvisos: React.FC = () => {
             isModificable={item.isModificable}
             fechasDeAvistamiento={item?.fechaDeAvistamiento}
             cantidadDeAnimales={item.cantidadDeAnimales}
+            status={item.status}
           />
         )}
         contentContainerStyle={styles.list}

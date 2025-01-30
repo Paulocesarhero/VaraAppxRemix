@@ -96,6 +96,20 @@ export interface Peticion {
   OtroTipoDeHeridas: string;
 }
 
+export interface PeticionVaramientoMasivo {
+  AvesMuertas: boolean;
+  AvesMuertasCantidad: number;
+  PecesMuertos: boolean;
+  PecesMuertosCantidad: number;
+  NumeroTotalDeAnimales: 15;
+  FormatoGeneral: FormatoGeneral;
+  SubGrupos: number;
+  AnimalesVivos: number;
+  AnimalesMuertos: number;
+  Observaciones: string;
+  Especimenes: Peticion[];
+}
+
 export interface Response {
   error: boolean;
   message: any[];

@@ -397,6 +397,20 @@ export const acciones = table("acciones", {
     .int("especimen_id")
     .references(() => especimen.id, { onDelete: "cascade" }),
 });
+export const varamientoMasivoRealtions = relations(
+  varamientoMasivo,
+  ({ one, many }) => ({
+    especimenes: many(especimen),
+    aviso: one(avisos, {
+      fields: [varamientoMasivo.avisoId],
+      references: [avisos.id],
+    }),
+    ambiente: one(ambiente, {
+      fields: [varamientoMasivo.avisoId],
+      references: [ambiente.avisoId],
+    }),
+  })
+);
 
 export const avisosRelations = relations(avisos, ({ many, one }) => ({
   especimenes: many(especimen),
@@ -501,6 +515,12 @@ export type SirenioDb = InferSelectModel<typeof sirenio>;
 export type OrganismoDb = InferSelectModel<typeof organismo>;
 export type AccionesDb = InferSelectModel<typeof acciones>;
 export type AmbienteDb = InferSelectModel<typeof ambiente>;
+export type VaramientoMasivoWithRelations = VaramientoMasivoDb & {
+  aviso: AvisoDb | null;
+  ambiente: AmbienteDb | null;
+  especimenes: EspecimenWithRelations[];
+};
+
 export type AvisoWithRelations = AvisoDb & {
   ambiente: InferSelectModel<typeof ambiente> | null;
   pinnipedo: InferSelectModel<typeof pinnipedo> | null;

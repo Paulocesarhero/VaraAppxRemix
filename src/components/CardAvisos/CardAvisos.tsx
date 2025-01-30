@@ -10,6 +10,7 @@ import { ColorsPalete } from "../../constants/COLORS";
 import {
   deleteAvisoById,
   hasEspecieAviso,
+  setSubidoAviso,
 } from "../../database/repository/avisoRepo";
 import { hasRegistroMorfometrico } from "../../database/repository/especimenRepo";
 import useAuthStore from "../../hooks/globalState/useAuthStore";
@@ -23,6 +24,7 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
   isModificable,
   fechasDeAvistamiento,
   cantidadDeAnimales,
+  status,
   idAviso,
 }) => {
   const { setIdAvisoSelected } = useAvisoStore();
@@ -103,6 +105,7 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
         if (!idAviso || !token) return;
         const result = await saveAviso(Number(idAviso), token);
         if (!result) return;
+        await setSubidoAviso(Number(idAviso));
         Alert.alert("Éxito", "El aviso se subió correctamente.");
         return;
       } catch (error) {
@@ -132,6 +135,9 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
         </Text>
         <Text style={styles.subtitleText}>
           Cantidad de animales: {cantidadDeAnimales}
+        </Text>
+        <Text style={styles.subtitleText}>
+          Estatus del aviso: {status ?? "En varaweb"}
         </Text>
         {isModificable && (
           <View

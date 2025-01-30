@@ -2,7 +2,10 @@ import { eq } from "drizzle-orm";
 
 import { FormValuesVaramientoMasivo } from "../../forms/VaramientoMasivo/FormValuesVaramientoMasivo";
 import { db } from "../connection/sqliteConnection";
-import { varamientoMasivo } from "../schemas/avisoSchema";
+import {
+  varamientoMasivo,
+  VaramientoMasivoWithRelations,
+} from "../schemas/avisoSchema";
 
 type NewVaramientoMasivo = typeof varamientoMasivo.$inferInsert;
 
@@ -131,4 +134,29 @@ export const hasVaramientoMasivo = async (idAviso: number | null) => {
     .where(eq(varamientoMasivo.avisoId, idAviso));
 
   return varamientoMasivoRequest.length > 0;
+};
+
+export const getAllDataVaramientoMasivo = async (idAviso: number) => {
+  try {
+    const varamientoMasivoRequest = await db.query.varamientoMasivo.findFirst({
+      where: (varamientoMasivo, { eq }) =>
+        eq(varamientoMasivo.avisoId, idAviso),
+      with: {
+        aviso: true,
+        ambiente: true,
+        especimenes: {
+          with: {
+            odontoceto: true,
+            sirenio: true,
+            organismo: true,
+            acciones: true,
+          },
+        },
+      },
+    });
+    return varamientoMasivoRequest as VaramientoMasivoWithRelations;
+  } catch (error) {
+    console.error("Error al obtener el varamiento masivo:", error);
+    throw error;
+  }
 };

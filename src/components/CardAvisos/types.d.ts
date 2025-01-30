@@ -4,5 +4,6 @@ interface CardAvisosProps {
   isModificable?: boolean;
   fechasDeAvistamiento?: string | null;
   cantidadDeAnimales?: string | number | null;
+  status?: string;
 }
 export default CardAvisosProps;

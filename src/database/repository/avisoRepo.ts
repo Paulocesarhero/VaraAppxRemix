@@ -102,36 +102,6 @@ export const deleteAvisoById = async (
   return result;
 };
 
-export const getAvisoByIdLocalDb = async (
-  idAviso: number
-): Promise<AvisoValues> => {
-  const result = await db.select().from(avisos).where(eq(avisos.id, idAviso));
-
-  if (!result[0]) {
-    throw new Error(`Aviso with id ${idAviso} not found`);
-  }
-
-  const aviso = result[0];
-
-  return {
-    Nombre: aviso.nombre ?? "",
-    Telefono: aviso.telefono ?? "",
-    FacilAcceso: aviso.facilAcceso === 1,
-    Acantilado: aviso.acantilado === 1,
-    Sustrato: aviso.sustrato ?? 0,
-    LugarDondeSeVio: aviso.lugarDondeSeVio ?? 0,
-    FechaDeAvistamiento: aviso.fechaDeAvistamiento ?? "",
-    TipoDeAnimal: aviso.tipoDeAnimal ?? 0,
-    Observaciones: aviso.observaciones ?? "",
-    CondicionDeAnimal: aviso.condicionDeAnimal ?? 0,
-    CantidadDeAnimales: (aviso.cantidadDeAnimales ?? "").toString(),
-    InformacionDeLocalizacion: aviso.informacionDeLocalizacion ?? "",
-    Latitud: aviso.latitud ?? "",
-    Longitud: aviso.longitud ?? "",
-    Fotografia: aviso.fotografia ?? "",
-  };
-};
-
 export const getAvisosBdLocal = async (): Promise<AvisoWithId[]> => {
   const result = await db.select().from(avisos);
 
@@ -205,7 +175,6 @@ export const hasEspecieAviso = async (
         },
       },
     });
-    console.log("aviso desde hasEspecieAviso", JSON.stringify(aviso, null, 2));
 
     // @ts-ignore
     if (aviso && aviso.especimenes[0]?.especie != null) {
@@ -222,3 +191,10 @@ export const hasEspecieAviso = async (
 export interface AvisoWithId extends AvisoValues {
   id: number;
 }
+
+export const setSubidoAviso = async (idAviso: number) => {
+  await db
+    .update(avisos)
+    .set({ nombre: "Subido" })
+    .where(eq(avisos.id, idAviso));
+};
