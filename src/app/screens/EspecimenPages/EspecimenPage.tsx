@@ -1,7 +1,7 @@
 import { useHeaderHeight } from "@react-navigation/elements";
-import { SplashScreen, useFocusEffect, useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Platform, Text, View } from "react-native";
+import { useFocusEffect, useRouter } from "expo-router";
+import React, { useState } from "react";
+import { ActivityIndicator, Alert, Platform, View } from "react-native";
 
 import {
   addEspecimenIfNotExist,
@@ -14,7 +14,6 @@ import Especimen from "../../../forms/Especimen/Especimen";
 import { FormValuesEspecimen } from "../../../forms/Especimen/FormValuesEspecimen";
 import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 import { saveImage } from "../../../hooks/helpers";
-import { deletePhotoByIdAviso } from "../../../database/repository/avisoRepo";
 
 const EspecimenPage: React.FC = () => {
   const idtaxaEspecie = useAvisoStore((state) => state.idtaxaEspecie);
@@ -63,63 +62,68 @@ const EspecimenPage: React.FC = () => {
     }, [idEspecimen])
   );
   const onSubmitData = async (data: FormValuesEspecimen) => {
-    if (!data.Especie) return;
-    if (idEspecimen === null) return;
+    console.dir(data, { depth: null });
+    try {
+      if (!data.Especie) return;
+      if (idEspecimen === null) return;
 
-    if (data.golpesFoto) {
-      const response = await saveImage(data.golpesFoto);
-      console.log("Foto de golpes response save image: ", response);
-      if (!response.existImage) {
-        data.golpesFoto = response.uri;
-        await deletePhotoEspecimenById(idEspecimen, "golpes");
+      if (data.golpesFoto) {
+        const response = await saveImage(data.golpesFoto);
+        if (!response.existImage) {
+          data.golpesFoto = response.uri;
+          await deletePhotoEspecimenById(idEspecimen, "golpes");
+        }
       }
-    }
-    if (data.heridasBalaFoto) {
-      const response = await saveImage(data.heridasBalaFoto);
-      if (!response.existImage) {
-        await deletePhotoEspecimenById(idEspecimen, "heridasDeBala");
-        data.heridasBalaFoto = response.uri;
+      if (data.heridasBalaFoto) {
+        const response = await saveImage(data.heridasBalaFoto);
+        if (!response.existImage) {
+          await deletePhotoEspecimenById(idEspecimen, "heridasDeBala");
+          data.heridasBalaFoto = response.uri;
+        }
       }
-    }
-    if (data.presenciaDeRedesFoto) {
-      const response = await saveImage(data.presenciaDeRedesFoto);
-      if (!response.existImage) {
-        await deletePhotoEspecimenById(idEspecimen, "presenciaDeRedes");
-        data.presenciaDeRedesFoto = response.uri;
+      if (data.presenciaDeRedesFoto) {
+        const response = await saveImage(data.presenciaDeRedesFoto);
+        if (!response.existImage) {
+          await deletePhotoEspecimenById(idEspecimen, "presenciaDeRedes");
+          data.presenciaDeRedesFoto = response.uri;
+        }
       }
-    }
-    if (data.mordidasFoto) {
-      const response = await saveImage(data.mordidasFoto);
-      if (!response.existImage) {
-        await deletePhotoEspecimenById(idEspecimen, "mordidas");
-        data.mordidasFoto = response.uri;
+      if (data.mordidasFoto) {
+        const response = await saveImage(data.mordidasFoto);
+        if (!response.existImage) {
+          await deletePhotoEspecimenById(idEspecimen, "mordidas");
+          data.mordidasFoto = response.uri;
+        }
       }
-    }
-    if (data.otroTipoDeHeridasFoto) {
-      const response = await saveImage(data.otroTipoDeHeridasFoto);
-      if (!response.existImage) {
-        await deletePhotoEspecimenById(idEspecimen, "otros");
-        data.otroTipoDeHeridasFoto = response.uri;
+      if (data.otroTipoDeHeridasFoto) {
+        const response = await saveImage(data.otroTipoDeHeridasFoto);
+        if (!response.existImage) {
+          await deletePhotoEspecimenById(idEspecimen, "otros");
+          data.otroTipoDeHeridasFoto = response.uri;
+        }
       }
-    }
-    await updateEspecimenById(data, idEspecimen);
+      await updateEspecimenById(data, idEspecimen);
 
-    const taxaDelForm = data.Especie?.taxa;
-    setIdtaxaEspecie(taxaDelForm);
-    switch (taxaDelForm) {
-      case MISTICETO:
-        router.push("screens/Misticeto/Misticeto");
-        break;
-      case PINNIPEDO:
-        router.push("screens/Pinnipedo/Pinnipedo");
-        break;
-      case ODONTOCETO:
-        router.push("screens/Odontoceto/Odontoceto");
-        break;
-      case SIRENIO:
-        router.push("screens/Sirenio/Sirenio");
-
-        break;
+      const taxaDelForm = data.Especie?.taxa;
+      setIdtaxaEspecie(taxaDelForm);
+      switch (taxaDelForm) {
+        case MISTICETO:
+          router.push("screens/Misticeto/Misticeto");
+          break;
+        case PINNIPEDO:
+          router.push("screens/Pinnipedo/Pinnipedo");
+          break;
+        case ODONTOCETO:
+          router.push("screens/Odontoceto/Odontoceto");
+          break;
+        case SIRENIO:
+          router.push("screens/Sirenio/Sirenio");
+          break;
+      }
+    } catch (error) {
+      Alert.alert(
+        "Error al enviar los datos intenta volver a seleccionar las fotos"
+      );
     }
   };
 

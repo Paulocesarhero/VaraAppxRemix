@@ -57,7 +57,7 @@ export const saveImage = async (photoUri: string): Promise<ResponseImage> => {
 
     const fileInfo = await FileSystem.getInfoAsync(photoUri);
     if (!fileInfo.exists) {
-      throw new Error("El archivo de origen no existe");
+      throw new Error("El archivo de origen no existe" + photoUri);
     }
 
     await FileSystem.moveAsync({

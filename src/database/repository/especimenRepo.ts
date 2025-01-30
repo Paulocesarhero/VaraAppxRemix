@@ -2,7 +2,6 @@ import { eq } from "drizzle-orm";
 
 import { getEspecieById, getFistEspecie } from "./especieRepo";
 import { FormValuesEspecimen } from "../../forms/Especimen/FormValuesEspecimen";
-import { ImagenType } from "../../services/Avisos/SaveAviso";
 import { db } from "../connection/sqliteConnection";
 import {
   especimen,
@@ -12,6 +11,7 @@ import {
   sirenio,
 } from "../schemas/avisoSchema";
 import { deleteImage } from "../../hooks/helpers";
+import { ImagenType } from "../../services/Avisos/Types";
 
 type NewEspecimen = typeof especimen.$inferInsert;
 
@@ -242,23 +242,26 @@ export type FotoAndDescription = {
 };
 
 export const getImagesEspecimen = async (
-  idEspecimen: number
+  idAviso: number
 ): Promise<FotoAndDescription[]> => {
   try {
     const resultDb = await db.query.especimen.findFirst({
-      columns: {
-        golpesFoto: true,
-        heridasBalaFoto: true,
-        presenciaDeRedesFoto: true,
-        mordidasFoto: true,
-        otroTipoDeHeridasFoto: true,
+      where: (especimen, { eq }) => eq(especimen.avisoId, idAviso),
+      with: {
+        aviso: true,
       },
-      where: (especimen, { eq }) => eq(especimen.id, idEspecimen),
     });
+
+    console.log(
+      "Resultado de getImagesEspecimen: ",
+      JSON.stringify(resultDb, null, 2)
+    );
 
     if (!resultDb) return [];
 
-    const mappings: Record<keyof typeof resultDb, ImagenType> = {
+    const especimenData = resultDb;
+
+    const mappings: Record<string, ImagenType> = {
       golpesFoto: "golpes",
       heridasBalaFoto: "heridasDeBala",
       presenciaDeRedesFoto: "presenciaDeRedes",
@@ -267,15 +270,19 @@ export const getImagesEspecimen = async (
     };
 
     const result: FotoAndDescription[] = Object.entries(mappings)
-      .filter(([key]) => resultDb[key as keyof typeof resultDb]) // Filtrar las fotos existentes
+      .filter(([key]) => {
+        const value = especimenData[key as keyof typeof especimenData];
+        return value !== null && value !== undefined && value !== "";
+      })
       .map(([key, typeImagen]) => ({
-        uriPhoto: resultDb[key as keyof typeof resultDb] as string,
+        uriPhoto: especimenData[key as keyof typeof especimenData] as string,
         typeImagen,
       }));
 
     return result;
   } catch (error) {
-    throw error;
+    console.error("Error en getImagesEspecimen:", error);
+    throw new Error("Error al obtener las imágenes del espécimen");
   }
 };
 

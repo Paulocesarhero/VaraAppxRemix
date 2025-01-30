@@ -22,6 +22,7 @@ import {
   ambiente,
   avisos as dbAvisos,
 } from "../../../../database/schemas/avisoSchema";
+import ImageDebugger from "../../../../components/ImageDebuger";
 
 const SettingsPage: React.FC = () => {
   const getAvisos = async () => {
@@ -174,7 +175,7 @@ const SettingsPage: React.FC = () => {
 
   return (
     <ScrollView style={SettingsPageStyle.container}>
-      <View
+      {/*<View
         style={{ flex: 1, gap: 20, marginVertical: 20, marginHorizontal: 10 }}
       >
         <RoundedButton
@@ -213,7 +214,7 @@ const SettingsPage: React.FC = () => {
           color="#151515"
           text="get all especie"
         />
-        <RoundedButton
+        <RoundedButto
           onPress={getAllMisticetos}
           color="#151515"
           text="get all misticetos"
@@ -238,7 +239,8 @@ const SettingsPage: React.FC = () => {
           color="#151515"
           text="Listar imágenes en subcarpeta"
         />
-      </View>
+      </View>*/}
+      <ImageDebugger />
       <ScrollView />
     </ScrollView>
   );

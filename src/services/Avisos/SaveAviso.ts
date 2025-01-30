@@ -15,109 +15,30 @@ import RegistroMorfometricoSirenio from "../../forms/MorfometriaSirenio/Registro
 import RegistroMorfometricoOdontoceto from "../../forms/MorformetriaOdontoceto/RegistroMorfometricoOdontoceto";
 import api, { BASE_URL } from "../Api";
 import { Especie } from "../Especie/GetEspecie";
-
-type Aviso = {
-  Acantilado: boolean;
-  FacilAcceso: boolean;
-  LugarDondeSeVio: number;
-  Sustrato: number;
-  FechaDeAvistamiento: string;
-  Observaciones: string;
-  TipoDeAnimal: number;
-  CondicionDeAnimal: number;
-  CantidadDeAnimales: number;
-  InformacionDeLocalizacion: string;
-  Latitud: number;
-  Longitud: number;
+import {
+  AccionesYResultados,
+  Aviso,
+  FormatoGeneral,
+  ImagenType,
+  Peticion,
+  Response,
+  SoloOrganismoVivo,
+} from "./Types";
+// Mapeo de la taxa a su tipo de animal correspondiente en la API se reailizo con el fin de que se vea en varaweb el registro morfometrico
+const convertirTaxaToTipoDeAnimal = (taxa: number) => {
+  switch (taxa) {
+    case 0:
+      return 1;
+    case 1:
+      return 2;
+    case 2:
+      return 0;
+    case 3:
+      return 3;
+    default:
+      return 0;
+  }
 };
-type FormatoGeneral = {
-  TemperaturaAmbiente: number;
-  PrecipitacionHoy: number;
-  TemperaturaSupMar: number;
-  Marea: number;
-  MareaMedida: number;
-  DireccionCorriente: number;
-  DireccionDelViento: number;
-  VelocidadDelViento: number;
-  Nubosidad: number;
-  Oleaje: number;
-  Beaufort: number;
-  PrecipitacionTormentaPrevia: number;
-  AnormalidadGeomagnetica: boolean;
-  MareaRoja: boolean;
-  AnormalidadEnLaPesca: string;
-  Observaciones: string;
-  Aviso: Aviso;
-};
-
-interface AccionesYResultados {
-  autoridades: string | null;
-  telefonoAutoridades: string | null;
-  morfometria: boolean;
-  necropsia: boolean;
-  disposicionDelCadaver: number;
-  disposicionOtro: string | null;
-  tipoDeMuestras:
-    | {
-        TipoMuestra: number;
-      }[]
-    | null;
-  posibleCausaDelVaramiento: string | null;
-  posibleCausaDeMuerte: string | null;
-  participantes: string | null;
-  observaciones: string | null;
-}
-
-interface SoloOrganismoVivo {
-  tasaDeRespiracion: string | null;
-  pulso: string | null;
-  temperatura: number | null;
-  antesDeVararse: string | null;
-  varado: string | null;
-  reflotacion: boolean;
-  despuesDeReflotar: string | null;
-  animalTransferido: boolean;
-  lugarDeRehabilitacion: string | null;
-  despuesDeVararse: string | null;
-}
-
-interface Peticion {
-  Latitud: string;
-  Longitud: string;
-  EspecieId: number;
-  Especie: Especie;
-  FormatoGeneral: FormatoGeneral;
-  RegistroMorfometricoSirenio: RegistroMorfometricoSirenio;
-  RegistroMorfometricoOdontoceto: RegistroMorfometricoOdontoceto;
-  RegistroMorfometricoPinnipedo: RegistroMorfometricoPinnipedo;
-  RegistroMorfometricoMisticeto: FormValuesMorfometriaMisticeto;
-  AccionesYResultados: AccionesYResultados;
-  SoloOrganismoVivo: SoloOrganismoVivo;
-  Condicion: number;
-  LongitudTotalRectilinea: number | null;
-  Peso: number | null;
-  Sexo: number;
-  GrupoDeEdad: number;
-  OrientacionDelEspecimen: string;
-  Sustrato: number;
-  OtroSustrato: string;
-  HeridasBala: string;
-  PresenciaDeRedes: string;
-  Mordidas: string;
-  Golpes: string;
-  OtroTipoDeHeridas: string;
-}
-
-interface Response {
-  error: boolean;
-  message: any[];
-  data: {
-    data: {
-      idEspecimen: number;
-      idAviso: string;
-    };
-  };
-}
 
 const generateAviso = (resultSqlite: AvisoWithRelations): Aviso => ({
   Acantilado: resultSqlite.acantilado === 1,
@@ -126,7 +47,9 @@ const generateAviso = (resultSqlite: AvisoWithRelations): Aviso => ({
   Sustrato: resultSqlite.sustrato ?? 0,
   FechaDeAvistamiento: resultSqlite.fechaDeAvistamiento ?? "",
   Observaciones: resultSqlite.observaciones ?? "",
-  TipoDeAnimal: resultSqlite.tipoDeAnimal ?? 0,
+  TipoDeAnimal: convertirTaxaToTipoDeAnimal(
+    resultSqlite.especimenes[0]?.especie?.taxa ?? 0
+  ),
   CondicionDeAnimal: resultSqlite.condicionDeAnimal ?? 0,
   CantidadDeAnimales: Number(resultSqlite.cantidadDeAnimales) ?? 1,
   InformacionDeLocalizacion: resultSqlite.informacionDeLocalizacion ?? "",
@@ -284,7 +207,7 @@ export const saveAviso = async (idAviso: number, token: string) => {
 
     if (peticion) {
       try {
-        const response: Response = await api.post(
+        const reportarVaramientoIndividualResponse: Response = await api.post(
           `api/Aviso/ReportarVaramientoIndividual`,
           peticion,
           {
@@ -294,43 +217,51 @@ export const saveAviso = async (idAviso: number, token: string) => {
             },
           }
         );
+        console.log(
+          JSON.stringify(reportarVaramientoIndividualResponse, null, 2)
+        );
         const imagen = await getImageUri(idAviso);
         if (!imagen) {
-          return response;
+          return reportarVaramientoIndividualResponse;
         }
 
         const UpdateImageAviso = await uploadFileFotoAviso(
-          response.data.data.idAviso,
+          reportarVaramientoIndividualResponse.data.data.idAviso,
           imagen,
           token
         );
         console.log(
           "Resultado de la subida de la foto de aviso:",
-          UpdateImageAviso
+          JSON.stringify(UpdateImageAviso, null, 2)
         );
-        const imagenEspecimen: FotoAndDescription[] = await getImagesEspecimen(
-          response.data.data.idEspecimen
+        const imagenEspecimen: FotoAndDescription[] =
+          await getImagesEspecimen(idAviso);
+
+        console.log(
+          "Fotos especimen: ",
+          JSON.stringify(imagenEspecimen, null, 2)
         );
 
         for (const imagen of imagenEspecimen) {
-          const UpdateImageEspecimen = await uploadFileEspecimen(
-            response.data.data.idEspecimen.toString(),
+          uploadFileEspecimen(
+            reportarVaramientoIndividualResponse.data.data.idEspecimen.toString(),
             imagen.typeImagen,
             imagen.uriPhoto,
             token
-          );
-          console.log(
-            "Resultado de la subida de la foto de especimen:",
-            UpdateImageEspecimen
-          );
+          ).then((result) => {
+            console.log(
+              "Resultado de la subida de la foto de especimen:",
+              result
+            );
+            return result;
+          });
         }
 
-        return response;
+        return reportarVaramientoIndividualResponse;
       } catch (error) {
         throw error;
       }
     }
-  } else {
   }
 };
 
@@ -354,16 +285,11 @@ export const uploadFileFotoAviso = async (
         uploadType: FileSystem.FileSystemUploadType.MULTIPART,
       }
     );
+    return result;
   } catch (error) {
     throw error;
   }
 };
-export type ImagenType =
-  | "golpes"
-  | "heridasDeBala"
-  | "otros"
-  | "mordidas"
-  | "presenciaDeRedes";
 
 export const uploadFileEspecimen = async (
   idEspecimen: string,
@@ -372,7 +298,7 @@ export const uploadFileEspecimen = async (
   token: string
 ) => {
   try {
-    await FileSystem.uploadAsync(
+    const upload = await FileSystem.uploadAsync(
       `${BASE_URL}/api/Aviso/GuardarFotoFormatoIndividual/${idEspecimen}/${typeImagen}`,
       fileUri,
       {
@@ -385,7 +311,7 @@ export const uploadFileEspecimen = async (
         uploadType: FileSystem.FileSystemUploadType.MULTIPART,
       }
     );
-    await FileSystem.deleteAsync(fileUri);
+    return upload;
   } catch (error) {
     throw error;
   }
