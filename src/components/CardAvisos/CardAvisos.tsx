@@ -102,6 +102,9 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
       try {
         if (!idAviso || !token) return;
         const result = await saveAviso(Number(idAviso), token);
+        if (!result) return;
+        Alert.alert("Éxito", "El aviso se subió correctamente.");
+        return;
       } catch (error) {
         // @ts-ignore
         console.error("Error al subir al servidor:", error.response.data);
