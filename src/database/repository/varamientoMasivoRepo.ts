@@ -146,8 +146,11 @@ export const getAllDataVaramientoMasivo = async (idAviso: number) => {
         ambiente: true,
         especimenes: {
           with: {
+            especie: true,
             odontoceto: true,
             sirenio: true,
+            pinnipedo: true,
+            misticeto: true,
             organismo: true,
             acciones: true,
           },

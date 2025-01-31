@@ -11,7 +11,7 @@ import { avisos } from "../../database/schemas/avisoSchema";
 import api, { BASE_URL } from "../Api";
 import { ImagenType, Response } from "./Types";
 import { saveVaramientoMasivo } from "./SaveVaramientoMasivo";
-import { generatePeticion } from "./adapter";
+import { generatePeticionAvisoIndividual } from "./adapter";
 import { getAvisoBdLocal } from "../../database/repository/avisoRepo";
 
 export const getImageUri = async (idAviso: number) => {
@@ -30,7 +30,7 @@ export const saveAviso = async (idAviso: number, token: string) => {
   const hasVaramientoMasivoLocal = await hasVaramientoMasivo(idAviso);
   if (!hasVaramientoMasivoLocal) {
     const resultSqlite = await getAvisoBdLocal(idAviso);
-    const peticion = await generatePeticion(resultSqlite);
+    const peticion = await generatePeticionAvisoIndividual(resultSqlite);
     console.log("Peticion generada:", JSON.stringify(peticion, null, 2));
 
     if (peticion) {
@@ -92,7 +92,8 @@ export const saveAviso = async (idAviso: number, token: string) => {
     }
   } else {
     try {
-      await saveVaramientoMasivo(idAviso);
+      const response = await saveVaramientoMasivo(idAviso, token);
+      console.log("Response de la peticion de varamiento masivo:", response);
     } catch (error) {
       console.error("Error al obtener el varamiento masivo:", error);
     }

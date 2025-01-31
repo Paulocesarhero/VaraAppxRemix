@@ -35,7 +35,7 @@ export type FormatoGeneral = {
   MareaRoja: boolean;
   AnormalidadEnLaPesca: string;
   Observaciones: string;
-  Aviso: Aviso;
+  Aviso: Partial<Aviso>;
 };
 
 export interface AccionesYResultados {
@@ -74,7 +74,7 @@ export interface Peticion {
   Longitud: string;
   EspecieId: number;
   Especie: Especie;
-  FormatoGeneral: FormatoGeneral;
+  FormatoGeneral: Partial<FormatoGeneral>;
   RegistroMorfometricoSirenio: RegistroMorfometricoSirenio;
   RegistroMorfometricoOdontoceto: RegistroMorfometricoOdontoceto;
   RegistroMorfometricoPinnipedo: RegistroMorfometricoPinnipedo;
@@ -101,13 +101,13 @@ export interface PeticionVaramientoMasivo {
   AvesMuertasCantidad: number;
   PecesMuertos: boolean;
   PecesMuertosCantidad: number;
-  NumeroTotalDeAnimales: 15;
+  NumeroTotalDeAnimales: number;
   FormatoGeneral: FormatoGeneral;
   SubGrupos: number;
   AnimalesVivos: number;
   AnimalesMuertos: number;
   Observaciones: string;
-  Especimenes: Peticion[];
+  Especimenes: Partial<Peticion>[];
 }
 
 export interface Response {

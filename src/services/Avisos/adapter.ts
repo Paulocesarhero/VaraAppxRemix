@@ -1,15 +1,19 @@
-// Mapeo de la taxa a su tipo de animal correspondiente en la API se reailizo con el fin de que se vea en varaweb el registro morfometrico
 import {
+  AccionesDb,
   AmbienteDb,
   AvisoDb,
   avisosRelations,
   AvisoWithRelations,
+  EspecimenWithRelations,
+  OrganismoDb,
+  VaramientoMasivoWithRelations,
 } from "../../database/schemas/avisoSchema";
 import {
   AccionesYResultados,
   Aviso,
   FormatoGeneral,
   Peticion,
+  PeticionVaramientoMasivo,
   SoloOrganismoVivo,
 } from "./Types";
 import { getAvisoBdLocal } from "../../database/repository/avisoRepo";
@@ -19,6 +23,7 @@ import { RegistroMorfometricoPinnipedo } from "../../forms/MorfometriaPinnipedo/
 import RegistroMorfometricoSirenio from "../../forms/MorfometriaSirenio/RegistroMorfometricoSirenio";
 import RegistroMorfometricoOdontoceto from "../../forms/MorformetriaOdontoceto/RegistroMorfometricoOdontoceto";
 
+// Mapeo de la taxa a su tipo de animal correspondiente en la API se reailizo con el fin de que se vea en varaweb el registro morfometrico
 const convertirTaxaToTipoDeAnimal = (taxa: number) => {
   switch (taxa) {
     case 0:
@@ -76,57 +81,46 @@ const generateFormatoGeneral = (
   Aviso: aviso,
 });
 const generateSoloOrganismoVivo = (
-  resultSqlite: AvisoWithRelations
+  resultSqlite: OrganismoDb
 ): SoloOrganismoVivo => {
   return {
-    tasaDeRespiracion:
-      resultSqlite.especimenes[0]?.organismo?.tasaDeRespiracion ?? null,
-    pulso: resultSqlite.especimenes[0]?.organismo?.pulso ?? null,
-    temperatura:
-      Number(resultSqlite.especimenes[0]?.organismo?.temperatura) ?? null,
-    antesDeVararse:
-      resultSqlite.especimenes[0]?.organismo?.antesDeVararse ?? null,
-    varado: resultSqlite.especimenes[0]?.organismo?.varado ?? null,
-    reflotacion: resultSqlite.especimenes[0]?.organismo?.reflotacion === 1,
-    despuesDeReflotar:
-      resultSqlite.especimenes[0]?.organismo?.despuesDeReflotar ?? null,
-    animalTransferido:
-      resultSqlite.especimenes[0]?.organismo?.animalTransferido === 1,
-    lugarDeRehabilitacion:
-      resultSqlite.especimenes[0]?.organismo?.lugarDeRehabilitacion ?? null,
-    despuesDeVararse:
-      resultSqlite.especimenes[0]?.organismo?.despuesDeVararse ?? null,
+    tasaDeRespiracion: resultSqlite.tasaDeRespiracion ?? null,
+    pulso: resultSqlite.pulso ?? null,
+    temperatura: Number(resultSqlite.temperatura) ?? null,
+    antesDeVararse: resultSqlite.antesDeVararse ?? null,
+    varado: resultSqlite.varado ?? null,
+    reflotacion: resultSqlite.reflotacion === 1,
+    despuesDeReflotar: resultSqlite.despuesDeReflotar ?? null,
+    animalTransferido: resultSqlite.animalTransferido === 1,
+    lugarDeRehabilitacion: resultSqlite.lugarDeRehabilitacion ?? null,
+    despuesDeVararse: resultSqlite.despuesDeVararse ?? null,
   };
 };
 const generateAccionesYResultados = (
-  resultSqlite: AvisoWithRelations
+  resultSqlite: AccionesDb
 ): AccionesYResultados => {
   const tipoDeMuestras =
-    typeof resultSqlite.especimenes[0]?.acciones?.tipoDeMuestras === "string"
-      ? JSON.parse(resultSqlite.especimenes[0]?.acciones?.tipoDeMuestras).map(
-          (item: string) => ({ TipoMuestra: Number(item) })
-        )
+    typeof resultSqlite.tipoDeMuestras === "string"
+      ? JSON.parse(resultSqlite.tipoDeMuestras).map((item: string) => ({
+          TipoMuestra: Number(item),
+        }))
       : null;
   return {
-    autoridades: resultSqlite.especimenes[0]?.acciones?.autoridades ?? "",
-    telefonoAutoridades:
-      resultSqlite.especimenes[0]?.acciones?.telefonoAutoridades ?? "",
-    morfometria: resultSqlite.especimenes[0]?.acciones?.morfometria === 1,
-    necropsia: resultSqlite.especimenes[0]?.acciones?.necropsia === 1,
-    disposicionDelCadaver:
-      Number(resultSqlite.especimenes[0]?.acciones?.disposicionDelCadaver) ?? 0,
-    disposicionOtro:
-      resultSqlite.especimenes[0]?.acciones?.disposicionOtro ?? "",
+    autoridades: resultSqlite.autoridades ?? "",
+    telefonoAutoridades: resultSqlite.telefonoAutoridades ?? "",
+    morfometria: resultSqlite.morfometria === 1,
+    necropsia: resultSqlite.necropsia === 1,
+    disposicionDelCadaver: Number(resultSqlite.disposicionDelCadaver) ?? 0,
+    disposicionOtro: resultSqlite.disposicionOtro ?? "",
     tipoDeMuestras,
-    posibleCausaDelVaramiento:
-      resultSqlite.especimenes[0].acciones?.posibleCausaDelVaramiento ?? "",
-    participantes: resultSqlite.especimenes[0]?.acciones?.participantes ?? "",
-    observaciones: resultSqlite.especimenes[0]?.acciones?.observaciones ?? "",
-    posibleCausaDeMuerte:
-      resultSqlite.especimenes[0]?.acciones?.posibleCausaDeMuerte ?? "",
+    posibleCausaDelVaramiento: resultSqlite.posibleCausaDelVaramiento ?? "",
+    participantes: resultSqlite.participantes ?? "",
+    observaciones: resultSqlite.observaciones ?? "",
+    posibleCausaDeMuerte: resultSqlite.posibleCausaDeMuerte ?? "",
   };
 };
-export const generatePeticion = async (
+
+export const generatePeticionAvisoIndividual = async (
   resultSqlite: AvisoWithRelations | null
 ): Promise<Peticion | null> => {
   if (!resultSqlite) return null;
@@ -181,8 +175,83 @@ export const generatePeticion = async (
       (resultSqlite.especimenes[0]
         ?.odontoceto as RegistroMorfometricoOdontoceto) ??
       ({} as RegistroMorfometricoOdontoceto),
-    AccionesYResultados: generateAccionesYResultados(resultSqlite),
+    AccionesYResultados: generateAccionesYResultados(
+      resultSqlite.especimenes[0].acciones ?? ({} as AccionesDb)
+    ),
     FormatoGeneral: formatoGeneral,
-    SoloOrganismoVivo: generateSoloOrganismoVivo(resultSqlite),
+    SoloOrganismoVivo: generateSoloOrganismoVivo(
+      resultSqlite.especimenes[0].organismo ?? ({} as OrganismoDb)
+    ),
+  };
+};
+
+export const generatePeticionVaramientoMasivo = async (
+  varamientoMasivo: VaramientoMasivoWithRelations | null
+): Promise<PeticionVaramientoMasivo | null> => {
+  if (!varamientoMasivo) return null;
+  const avisoRaiz = generateAviso(
+    varamientoMasivo.aviso ?? ({} as AvisoDb),
+    varamientoMasivo.especimenes[0]?.especie?.taxa
+  );
+  const formatoGeneralRaiz = generateFormatoGeneral(
+    varamientoMasivo.ambiente ?? ({} as AmbienteDb),
+    varamientoMasivo.observaciones ?? "",
+    avisoRaiz
+  );
+
+  return {
+    AvesMuertas: varamientoMasivo.avesMuertas === 1,
+    AvesMuertasCantidad: Number(varamientoMasivo.avesMuertasCantidad) ?? 0,
+    PecesMuertos: varamientoMasivo.pecesMuertos === 1,
+    PecesMuertosCantidad: Number(varamientoMasivo.pecesMuertosCantidad) ?? 0,
+    NumeroTotalDeAnimales: Number(varamientoMasivo.numeroTotalDeAnimales) ?? 0,
+    SubGrupos: Number(varamientoMasivo.subGrupos) ?? 0,
+    AnimalesVivos: Number(varamientoMasivo.animalesVivos) ?? 0,
+    AnimalesMuertos: Number(varamientoMasivo.animalesMuertos) ?? 0,
+    Observaciones: varamientoMasivo.observaciones ?? "",
+    FormatoGeneral: formatoGeneralRaiz,
+    Especimenes: varamientoMasivo.especimenes.map((especimen) => {
+      return {
+        Latitud: especimen.latitud ?? "",
+        Longitud: especimen.longitud ?? "",
+        EspecieId: especimen.especieId ?? 0,
+        Condicion: especimen.condicion ?? 0,
+        LongitudTotalRectilinea: Number(especimen.longitudTotalRectilinea),
+        Peso: Number(especimen.peso),
+        Sexo: especimen.sexo ?? 0,
+        GrupoDeEdad: especimen.grupoDeEdad ?? 0,
+        OrientacionDelEspecimen: especimen.orientacionDelEspecimen ?? "",
+        Sustrato: especimen.sustrato ?? 0,
+        OtroSustrato: especimen.otroSustrato ?? "",
+        HeridasBala: especimen.heridasBala ?? "",
+        PresenciaDeRedes: especimen.presenciaDeRedes ?? "",
+        Mordidas: especimen.mordidas ?? "",
+        Golpes: especimen.golpes ?? "",
+        OtroTipoDeHeridas: especimen.otroTipoDeHeridas ?? "",
+        FormatoGeneral: {
+          Aviso: {
+            cantidadDeAnimales: 1,
+            TipoDeAnimal: convertirTaxaToTipoDeAnimal(
+              especimen.especie?.taxa ?? 0
+            ),
+          },
+        },
+        Especie: especimen.especie as Especie,
+        SoloOrganismoVivo: generateSoloOrganismoVivo(
+          especimen.organismo ?? ({} as OrganismoDb)
+        ),
+        RegistroMorfometricoMisticeto:
+          especimen.misticeto as FormValuesMorfometriaMisticeto,
+        RegistroMorfometricoPinnipedo:
+          especimen.pinnipedo as RegistroMorfometricoPinnipedo,
+        RegistroMorfometricoSirenio:
+          especimen.sirenio as RegistroMorfometricoSirenio,
+        RegistroMorfometricoOdontoceto:
+          especimen.odontoceto as RegistroMorfometricoOdontoceto,
+        AccionesYResultados: generateAccionesYResultados(
+          especimen.acciones ?? ({} as AccionesDb)
+        ),
+      };
+    }, null),
   };
 };
