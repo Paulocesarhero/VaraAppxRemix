@@ -127,3 +127,16 @@ export type ImagenType =
   | "otros"
   | "mordidas"
   | "presenciaDeRedes";
+
+export type VaramientoMasivoResponse = {
+  error?: boolean;
+  message?: string[];
+  data?: {
+    idVaramiento?: number;
+    idsEspecimenes?: {
+      idEspecimen?: number;
+      uuid?: string | null;
+    }[];
+    idAviso?: number;
+  };
+};

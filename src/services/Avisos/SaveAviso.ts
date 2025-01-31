@@ -10,7 +10,10 @@ import { hasVaramientoMasivo } from "../../database/repository/varamientoMasivoR
 import { avisos } from "../../database/schemas/avisoSchema";
 import api, { BASE_URL } from "../Api";
 import { ImagenType, Response } from "./Types";
-import { saveVaramientoMasivo } from "./SaveVaramientoMasivo";
+import {
+  saveFotosVaramientoMasivo,
+  saveVaramientoMasivo,
+} from "./SaveVaramientoMasivo";
 import { generatePeticionAvisoIndividual } from "./adapter";
 import { getAvisoBdLocal } from "../../database/repository/avisoRepo";
 
