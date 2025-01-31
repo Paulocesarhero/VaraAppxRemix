@@ -2,8 +2,8 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/build/Feather";
 import { Image } from "expo-image";
 import { router } from "expo-router";
-import React from "react";
-import { Alert, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { ActivityIndicator, Alert, StyleSheet, Text, View } from "react-native";
 
 import CardAvisosProps from "./types";
 import { ColorsPalete } from "../../constants/COLORS";
@@ -29,6 +29,7 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
 }) => {
   const { setIdAvisoSelected } = useAvisoStore();
   const token = useAuthStore((state) => state.token);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleUrlImage = (urlImage: string | null) => {
     if (!urlImage || urlImage === "") {
@@ -86,6 +87,7 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
   };
 
   async function handleCloudUpload() {
+    setIsLoading(true);
     const hasEspecie = await hasEspecieAviso(Number(idAviso));
     if (!hasEspecie) {
       Alert.alert(
@@ -107,6 +109,7 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
         if (!result) return;
         await setSubidoAviso(Number(idAviso));
         Alert.alert("Éxito", "El aviso se subió correctamente.");
+        setIsLoading(false);
         return;
       } catch (error) {
         // @ts-ignore
@@ -114,6 +117,7 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
         Alert.alert("Error", "Algo salió mal. Por favor, intenta nuevamente.");
       }
     }
+    setIsLoading(false);
   }
 
   return (
@@ -153,12 +157,17 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
               color="green"
               onPress={handleUpdateAviso}
             />
-            <AntDesign
-              name="cloudupload"
-              size={24}
-              color="blue"
-              onPress={handleCloudUpload}
-            />
+            {isLoading ? (
+              <ActivityIndicator size="small" color="blue" />
+            ) : (
+              <AntDesign
+                name="cloudupload"
+                size={24}
+                color="blue"
+                onPress={handleCloudUpload}
+                disabled={isLoading}
+              />
+            )}
             <AntDesign
               name="delete"
               size={24}
