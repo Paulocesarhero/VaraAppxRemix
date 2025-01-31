@@ -2,9 +2,7 @@ import {
   AccionesDb,
   AmbienteDb,
   AvisoDb,
-  avisosRelations,
   AvisoWithRelations,
-  EspecimenWithRelations,
   OrganismoDb,
   VaramientoMasivoWithRelations,
 } from "../../database/schemas/avisoSchema";
@@ -16,7 +14,6 @@ import {
   PeticionVaramientoMasivo,
   SoloOrganismoVivo,
 } from "./Types";
-import { getAvisoBdLocal } from "../../database/repository/avisoRepo";
 import { Especie } from "../Especie/GetEspecie";
 import { FormValuesMorfometriaMisticeto } from "../../forms/MorfometriaMisticeto/FormValuesMorfometriaMisticeto";
 import { RegistroMorfometricoPinnipedo } from "../../forms/MorfometriaPinnipedo/RegistroMorfometricoPinnipedo";
@@ -97,8 +94,9 @@ const generateSoloOrganismoVivo = (
   };
 };
 const generateAccionesYResultados = (
-  resultSqlite: AccionesDb
-): AccionesYResultados => {
+  resultSqlite: AccionesDb | null
+): AccionesYResultados | {} => {
+  if (!resultSqlite) return {};
   const tipoDeMuestras =
     typeof resultSqlite.tipoDeMuestras === "string"
       ? JSON.parse(resultSqlite.tipoDeMuestras).map((item: string) => ({
@@ -248,9 +246,7 @@ export const generatePeticionVaramientoMasivo = async (
           especimen.sirenio as RegistroMorfometricoSirenio,
         RegistroMorfometricoOdontoceto:
           especimen.odontoceto as RegistroMorfometricoOdontoceto,
-        AccionesYResultados: generateAccionesYResultados(
-          especimen.acciones ?? ({} as AccionesDb)
-        ),
+        AccionesYResultados: generateAccionesYResultados(especimen.acciones),
       };
     }, null),
   };
