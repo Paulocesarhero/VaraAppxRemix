@@ -178,6 +178,17 @@ export const hasEspecieAviso = async (
 
     // @ts-ignore
     if (aviso && aviso.especimenes[0]?.especie != null) {
+      const especimenes = await db.query.especimen.findMany({
+        where: (especimen, { eq }) => eq(especimen.avisoId, idAviso),
+        with: {
+          especie: true,
+        },
+      });
+      for (const especimen of especimenes) {
+        if (especimen.especie?.id == null) {
+          return false;
+        }
+      }
       return true;
     } else {
       return false;
