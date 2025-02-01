@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Feather from "@expo/vector-icons/build/Feather";
 import { Tabs } from "expo-router";
@@ -27,12 +27,22 @@ export default function Layout() {
           ),
         }}
       />
+
       <Tabs.Screen
         name="ListaAvisos/ListaAvisos"
         options={{
           title: "Avisos",
           tabBarIcon: ({ color, size }) => (
             <Feather name="alert-triangle" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="ListaRecorrido/ListaRecorrido"
+        options={{
+          title: "Recorridos",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="run-fast" size={size} color={color} />
           ),
         }}
       />
