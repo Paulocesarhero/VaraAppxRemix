@@ -38,9 +38,9 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
-        name="ListaRecorrido/ListaRecorrido"
+        name="Recorrido/ListaRecorrido"
         options={{
-          title: "Recorridos",
+          title: "Lista de recorridos",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="run-fast" size={size} color={color} />
           ),

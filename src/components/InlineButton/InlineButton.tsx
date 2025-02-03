@@ -1,18 +1,38 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  ViewStyle,
+} from "react-native";
 
 interface InlineButtonProps {
   onPress?: () => void;
   icon?: React.ReactNode;
   text?: string;
+  styleText?: StyleProp<TextStyle>;
+  styleView?: StyleProp<ViewStyle>;
 }
 
-const InlineButton: React.FC<InlineButtonProps> = ({ onPress, icon, text }) => {
+const InlineButton: React.FC<InlineButtonProps> = ({
+  onPress,
+  icon,
+  text,
+  styleText,
+  styleView,
+}) => {
   return (
-    <TouchableOpacity style={inlineButtonStyle.button} onPress={onPress}>
+    <TouchableOpacity
+      style={[inlineButtonStyle.button, styleView]}
+      onPress={onPress}
+    >
       {icon}
-      <Text style={{ fontSize: 16, fontWeight: "bold" }}>{text} </Text>
+      <Text style={[{ fontSize: 16, fontWeight: "bold" }, styleText]}>
+        {text}{" "}
+      </Text>
     </TouchableOpacity>
   );
 };

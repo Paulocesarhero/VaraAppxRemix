@@ -1,6 +1,6 @@
 import Entypo from "@expo/vector-icons/Entypo";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import { router, usePathname } from "expo-router";
+import { router, useFocusEffect, usePathname } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import {
   FlatList,
@@ -36,8 +36,6 @@ const ListaAvisos: React.FC = () => {
 
   const { setIdAvisoSelected, setIdtaxaEspecie, clearIdEspecimen } =
     useAvisoStore();
-
-  const pathname = usePathname();
 
   const { data: localData } = useLiveQuery(
     db
@@ -89,13 +87,13 @@ const ListaAvisos: React.FC = () => {
     }
   }, [useLocalDB]);
 
-  useEffect(() => {
-    if (pathname === "/screens/ListaAvisos/ListaAvisos") {
+  useFocusEffect(
+    useCallback(() => {
       setIdAvisoSelected(0);
       setIdtaxaEspecie(0);
       clearIdEspecimen();
-    }
-  }, [pathname, setIdAvisoSelected, setIdtaxaEspecie, clearIdEspecimen]);
+    }, [])
+  );
 
   const handleNuevoAviso = useCallback(() => {
     router.push("screens/AvisoPage/AvisoPage");

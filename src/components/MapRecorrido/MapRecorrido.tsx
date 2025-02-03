@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from "react";
-import MapView, { Polyline, Marker } from "react-native-maps";
+import MapView, { Marker, Polyline } from "react-native-maps";
 import * as Location from "expo-location";
+import { Alert } from "react-native";
+import { StyleProp } from "react-native/Libraries/StyleSheet/StyleSheet";
+import { ViewStyle } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
 interface MapRecorridoProps {
   isRecording: boolean;
+  mapStyle?: StyleProp<ViewStyle>;
+  routeCoordinates?: { latitude: number; longitude: number }[];
+  setRouteCoordinates: React.Dispatch<
+    React.SetStateAction<{ latitude: number; longitude: number }[]>
+  >;
 }
 
-const MapRecorrido: React.FC<MapRecorridoProps> = ({ isRecording }) => {
-  const [routeCoordinates, setRouteCoordinates] = useState<
-    { latitude: number; longitude: number }[]
-  >([]);
+const MapRecorrido: React.FC<MapRecorridoProps> = ({
+  isRecording,
+  mapStyle,
+  routeCoordinates,
+  setRouteCoordinates,
+}) => {
   const [currentLocation, setCurrentLocation] = useState<{
     latitude: number;
     longitude: number;
@@ -22,7 +32,7 @@ const MapRecorrido: React.FC<MapRecorridoProps> = ({ isRecording }) => {
     const startLocationTracking = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
-        console.log("Permission to access location was denied");
+        Alert.alert("Permiso para acceder a la ubicación denegado");
         return;
       }
 
@@ -35,24 +45,28 @@ const MapRecorrido: React.FC<MapRecorridoProps> = ({ isRecording }) => {
         (location) => {
           const { latitude, longitude } = location.coords;
           const newCoordinate = { latitude, longitude };
-          console.log("New location:", newCoordinate);
-
           setCurrentLocation(newCoordinate);
-          setRouteCoordinates((prevCoordinates) => [
-            ...prevCoordinates,
-            newCoordinate,
-          ]);
+
+          if (isRecording) {
+            setRouteCoordinates((prevCoordinates) => [
+              ...prevCoordinates,
+              newCoordinate,
+            ]);
+          } else {
+            if (watchId) {
+              watchId.remove();
+            }
+          }
         }
       );
 
       setWatchId(id);
     };
-
-    if (isRecording) {
+    try {
       startLocationTracking();
-    } else if (watchId) {
-      watchId.remove();
-      setWatchId(null);
+    } catch (error) {
+      console.error("Error al iniciar el tracking de la ubicación:", error);
+      throw error;
     }
 
     return () => {
@@ -65,7 +79,7 @@ const MapRecorrido: React.FC<MapRecorridoProps> = ({ isRecording }) => {
   return (
     <>
       <MapView
-        style={{ flex: 1 }}
+        style={mapStyle}
         initialRegion={{
           latitude: currentLocation ? currentLocation.latitude : 0,
           longitude: currentLocation ? currentLocation.longitude : 0,
@@ -74,9 +88,9 @@ const MapRecorrido: React.FC<MapRecorridoProps> = ({ isRecording }) => {
         }}
       >
         <Polyline
-          coordinates={routeCoordinates}
-          strokeColor="#000"
-          strokeWidth={3}
+          coordinates={routeCoordinates || []}
+          strokeColor="#383217"
+          strokeWidth={6}
         />
         <Marker
           coordinate={currentLocation || { latitude: 0, longitude: 0 }}

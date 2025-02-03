@@ -2,8 +2,7 @@
 import { eq } from "drizzle-orm";
 import * as FileSystem from "expo-file-system";
 import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
-import RoundedButton from "varaapplib/components/RoundedButton/RoundedButton";
+import { ScrollView, StyleSheet } from "react-native";
 
 import { db } from "../../../../database/connection/sqliteConnection";
 import {
@@ -22,7 +21,7 @@ import {
   ambiente,
   avisos as dbAvisos,
 } from "../../../../database/schemas/avisoSchema";
-import ImageDebugger from "../../../../components/ImageDebuger";
+import Recorrido from "../../../../forms/Recorrido/Recorrido";
 
 const SettingsPage: React.FC = () => {
   const getAvisos = async () => {
@@ -110,6 +109,7 @@ const SettingsPage: React.FC = () => {
     const result = await getAvisoBdLocal(19);
     console.log("result get aviso ", result);
   }
+
   const listarImagenesGuardadas = async () => {
     try {
       const directoryUri = FileSystem.cacheDirectory; // Directorio de documentos
@@ -240,7 +240,32 @@ const SettingsPage: React.FC = () => {
           text="Listar imágenes en subcarpeta"
         />
       </View>*/}
-      <ImageDebugger />
+      {/*<ImageDebugger />*/}
+      <Recorrido
+        onSubmitData={(data) => {
+          console.log("onSubmitData", data);
+        }}
+        initialValues={{
+          fecha: "",
+          horaInicio: new Date(),
+          horaFin: new Date(),
+          coordenadaInicio: {
+            latitud: 0,
+            longitud: 0,
+          },
+          coordenadaFin: {
+            latitud: 0,
+            longitud: 0,
+          },
+          referenciasInicio: "",
+          referenciasFin: "",
+          distanciaRecorrido: 0,
+          observaciones: "",
+          participantes: "",
+          zonaSeguimiento: "",
+          ruta: [],
+        }}
+      ></Recorrido>
       <ScrollView />
     </ScrollView>
   );

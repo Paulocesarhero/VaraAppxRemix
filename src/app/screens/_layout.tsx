@@ -9,10 +9,25 @@ const Layout: React.FC = () => {
   const navigateToHome = () => {
     router.replace("/screens/(home)/ListaAvisos/ListaAvisos");
   };
+  const navigateToHomeRecorrido = () => {
+    router.replace("/screens/(home)/Recorrido/ListaRecorrido");
+  };
   const headerHome = () => {
     return (
       <View style={{ margin: 12 }}>
         <Entypo name="home" size={24} color="black" onPress={navigateToHome} />
+      </View>
+    );
+  };
+  const headerHomeRecorridoo = () => {
+    return (
+      <View style={{ margin: 12 }}>
+        <Entypo
+          name="home"
+          size={24}
+          color="black"
+          onPress={navigateToHomeRecorrido}
+        />
       </View>
     );
   };
@@ -145,6 +160,15 @@ const Layout: React.FC = () => {
           headerBackButtonDisplayMode: "minimal",
           headerBackTitle: "regresar",
           headerLeft: headerHome,
+        }}
+      />
+      <Stack.Screen
+        name="RegistrarRecorrido/RegistroRecorrido"
+        options={{
+          title: "Registrar recorrido",
+          headerBackButtonDisplayMode: "minimal",
+          headerBackTitle: "regresar",
+          headerLeft: headerHomeRecorridoo,
         }}
       />
     </Stack>

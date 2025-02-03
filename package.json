@@ -47,7 +47,8 @@
     "react-native-web": "~0.19.13",
     "varaapplib": "1.0.16",
     "zustand": "^4.5.5",
-    "expo-location": "~18.0.5"
+    "expo-location": "~18.0.5",
+    "@react-native-community/datetimepicker": "8.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
