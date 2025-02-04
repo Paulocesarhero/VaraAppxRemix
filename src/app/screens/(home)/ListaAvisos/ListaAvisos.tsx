@@ -47,6 +47,7 @@ const ListaAvisos: React.FC = () => {
         nombre: avisos.nombre,
       })
       .from(avisos)
+      .where(isNull(avisos.recorridoId))
   );
   useEffect(() => {
     if (localData && useLocalDB) {
