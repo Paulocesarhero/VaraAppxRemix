@@ -20,6 +20,7 @@ export const avisos = table("avisos", {
   latitud: t.text(),
   longitud: t.text(),
   fotografia: t.text(),
+  recorridoId: t.int().references(() => recorrido.id, { onDelete: "cascade" }), // Relación con recorrido
 });
 
 export const ambiente = table(
@@ -134,7 +135,6 @@ export const recorrido = table("recorrido", {
   participantes: t.text(),
   zonaSeguimiento: t.text(),
   ruta: t.text({ mode: "json" }),
-  reportesMasivos: t.text(),
 });
 
 export const misticeto = table("misticeto", {
@@ -397,6 +397,10 @@ export const acciones = table("acciones", {
     .int("especimen_id")
     .references(() => especimen.id, { onDelete: "cascade" }),
 });
+
+export const recorridoRelations = relations(recorrido, ({ many }) => ({
+  avisos: many(avisos),
+}));
 export const varamientoMasivoRealtions = relations(
   varamientoMasivo,
   ({ one, many }) => ({

@@ -1,6 +1,6 @@
 import { Entypo } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -18,6 +18,7 @@ import {
 } from "../../database/repository/especieRepo";
 import useAuthStore from "../../hooks/globalState/useAuthStore";
 import getEspecies, { Especie } from "../../services/Especie/GetEspecie";
+import { useFocusEffect } from "expo-router";
 /**
  * @enum {number}
  * @description Tipos de taxa:
@@ -44,25 +45,33 @@ const EspecieSelector: React.FC<EspecieSelectorProps> = ({
 
   const token = useAuthStore((state) => state.token);
 
-  useEffect(() => {
-    const fetchEspecies = async () => {
-      try {
-        const data = await getEspecies(token ?? "");
-        setEspeciesBdLocal(data.data);
-        setEspecies(data.data);
-      } catch (err) {
-        const especiesBdLocal = await getEspeciesBdLocal();
-        if (especiesBdLocal.length > 0) {
-          setEspecies(especiesBdLocal as Especie[]);
-          setLoading(false);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
+  useFocusEffect(
+    useCallback(() => {
+      let isActive = true;
 
-    fetchEspecies();
-  }, [token]);
+      const fetchEspecies = async () => {
+        try {
+          const data = await getEspecies(token ?? "");
+          if (isActive && data.data.length > 0) {
+            setEspeciesBdLocal(data.data);
+            setEspecies(data.data);
+          }
+        } catch (err) {
+          const especiesBdLocal = await getEspeciesBdLocal();
+          if (isActive && especiesBdLocal.length > 0) {
+            setEspecies(especiesBdLocal as Especie[]);
+          }
+        } finally {
+          if (isActive) setLoading(false);
+        }
+      };
+      fetchEspecies();
+
+      return () => {
+        isActive = false;
+      };
+    }, [token])
+  );
 
   const handleSelectEspecie = (especie: Especie) => {
     onSelectEspecie(especie);

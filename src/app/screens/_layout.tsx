@@ -3,19 +3,35 @@ import Feather from "@expo/vector-icons/build/Feather";
 import { router, Stack, useRouter } from "expo-router";
 import React from "react";
 import { Platform, Text, View } from "react-native";
+import useRecorridoStore from "../../hooks/globalState/useRecorridoStore";
 
 const Layout: React.FC = () => {
   const router = useRouter();
+  const { idRecorridoSelected } = useRecorridoStore();
+  const navigateCondition = () => {
+    if (idRecorridoSelected == null) {
+      navigateToHome();
+    } else {
+      navigateToHomeRecorrido();
+    }
+  };
+
   const navigateToHome = () => {
     router.replace("/screens/(home)/ListaAvisos/ListaAvisos");
   };
   const navigateToHomeRecorrido = () => {
     router.replace("/screens/(home)/Recorrido/ListaRecorrido");
   };
+
   const headerHome = () => {
     return (
       <View style={{ margin: 12 }}>
-        <Entypo name="home" size={24} color="black" onPress={navigateToHome} />
+        <Entypo
+          name="home"
+          size={24}
+          color="black"
+          onPress={navigateCondition}
+        />
       </View>
     );
   };
@@ -164,6 +180,15 @@ const Layout: React.FC = () => {
       />
       <Stack.Screen
         name="RegistrarRecorrido/RegistroRecorrido"
+        options={{
+          title: "Registrar recorrido",
+          headerBackButtonDisplayMode: "minimal",
+          headerBackTitle: "regresar",
+          headerLeft: headerHomeRecorridoo,
+        }}
+      />
+      <Stack.Screen
+        name="RecorridoPage/RecorridoPage"
         options={{
           title: "Registrar recorrido",
           headerBackButtonDisplayMode: "minimal",

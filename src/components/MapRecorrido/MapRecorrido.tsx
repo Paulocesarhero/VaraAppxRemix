@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import * as Location from "expo-location";
-import { Alert } from "react-native";
+import { ActivityIndicator, Alert, Text } from "react-native";
 import { StyleProp } from "react-native/Libraries/StyleSheet/StyleSheet";
 import { ViewStyle } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
+import { useFocusEffect } from "expo-router";
 
 interface MapRecorridoProps {
   isRecording: boolean;
@@ -76,6 +77,15 @@ const MapRecorrido: React.FC<MapRecorridoProps> = ({
     };
   }, [isRecording]);
 
+  if (currentLocation == null) {
+    return (
+      <ActivityIndicator
+        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        size="large"
+      />
+    );
+  }
+
   return (
     <>
       <MapView
@@ -83,8 +93,8 @@ const MapRecorrido: React.FC<MapRecorridoProps> = ({
         initialRegion={{
           latitude: currentLocation ? currentLocation.latitude : 0,
           longitude: currentLocation ? currentLocation.longitude : 0,
-          longitudeDelta: 0.0,
-          latitudeDelta: 0.0,
+          longitudeDelta: 0.0922,
+          latitudeDelta: 0.0421,
         }}
       >
         <Polyline

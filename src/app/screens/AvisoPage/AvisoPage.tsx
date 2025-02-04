@@ -18,12 +18,14 @@ import {
 import { avisos } from "../../../database/schemas/avisoSchema";
 import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 import { getDateNow, saveImage } from "../../../hooks/helpers";
+import useRecorridoStore from "../../../hooks/globalState/useRecorridoStore";
 
 const AvisoPage: React.FC = () => {
   const idSelected = useAvisoStore((state) => state.idAvisoSelected);
   const { setIdAvisoSelected } = useAvisoStore();
   const headerHeight = useHeaderHeight();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { idRecorridoSelected } = useRecorridoStore();
   const router = useRouter();
 
   const { data: avisosDbLocal } = useLiveQuery(
@@ -43,13 +45,16 @@ const AvisoPage: React.FC = () => {
   };
 
   const handleNewAviso = async (data: AvisoValues) => {
-    console.log("dataAvisoValues", JSON.stringify(data, null, 2));
     const nombreAviso = Date.now().toString();
     if (data.Fotografia) {
       const responseImage = await saveImage(data.Fotografia);
       data.Fotografia = responseImage.uri;
     }
-    const idAvisoSqlite = await addAviso(data, nombreAviso);
+    const idAvisoSqlite = await addAviso(
+      data,
+      nombreAviso,
+      idRecorridoSelected
+    );
     setIdAvisoSelected(Number(idAvisoSqlite));
   };
 

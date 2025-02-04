@@ -2,16 +2,27 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useCallback } from "react";
 import Entypo from "@expo/vector-icons/Entypo";
 import { ColorsPalete } from "../../constants/COLORS";
-import { router } from "expo-router";
+import { Link, router, useFocusEffect, useRouter } from "expo-router";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite/index";
 import { db } from "../../database/connection/sqliteConnection";
 import { avisos } from "../../database/schemas/avisoSchema";
 import { FlashList } from "@shopify/flash-list";
-import CardAvisosRecorrido from "../CardAvisosRecorrido/CardAvisosRecorrido";
 import useRecorridoStore from "../../hooks/globalState/useRecorridoStore";
+import { eq } from "drizzle-orm";
+import CardAvisosRecorrido from "../CardAvisosRecorrido/CardAvisosRecorrido";
 
 const ListaAvisosRecorrido: React.FC = () => {
   const { idRecorridoSelected } = useRecorridoStore();
+  const router = useRouter();
+  useFocusEffect(
+    useCallback(() => {
+      console.log("idRecorridoSelected", idRecorridoSelected);
+      if (!idRecorridoSelected) {
+        console.log("idRecorridoSelected no seleccionado");
+        router.replace("/screens/ListaAvisos/ListaAvisos");
+      }
+    }, [idRecorridoSelected])
+  );
   const { data } = useLiveQuery(
     db
       .select({
@@ -22,6 +33,8 @@ const ListaAvisosRecorrido: React.FC = () => {
         nombre: avisos.nombre,
       })
       .from(avisos)
+      // @ts-ignore
+      .where(eq(avisos.recorridoId, idRecorridoSelected))
   );
 
   const handleNuevoAviso = useCallback(() => {

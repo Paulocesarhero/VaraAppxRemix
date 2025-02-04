@@ -10,7 +10,8 @@ type newAviso = typeof avisos.$inferInsert;
 
 export const addAviso = async (
   avisoValues: AvisoValues,
-  nombreAviso: string
+  nombreAviso: string,
+  idRecorrido: number | null
 ): Promise<number> => {
   const aviso: newAviso = {
     nombre: nombreAviso,
@@ -29,6 +30,7 @@ export const addAviso = async (
     longitud: avisoValues.Longitud,
     observaciones: avisoValues.Observaciones,
     fotografia: avisoValues.Fotografia,
+    recorridoId: idRecorrido ?? null,
   };
   const result = await db
     .insert(avisos)
@@ -75,6 +77,7 @@ export const updateAviso = async (
     longitud: avisoValues.Longitud ?? avisoObjeto.longitud,
     observaciones: avisoValues.Observaciones ?? avisoObjeto.observaciones,
     fotografia: avisoValues.Fotografia ?? avisoObjeto.fotografia,
+    recorridoId: avisoObjeto.recorridoId ?? null,
   };
 
   const result = await db

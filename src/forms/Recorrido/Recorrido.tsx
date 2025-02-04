@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -24,10 +24,14 @@ const Recorrido: React.FC<RecorrdioProps> = ({
   onSubmitData,
   initialValues,
 }) => {
-  const { control, setValue, handleSubmit } = useForm<FormValuesRecorrido>({
-    mode: "onSubmit",
-    defaultValues: initialValues,
-  });
+  const { control, setValue, handleSubmit, reset } =
+    useForm<FormValuesRecorrido>({
+      mode: "onSubmit",
+      defaultValues: initialValues,
+    });
+  useEffect(() => {
+    reset(initialValues);
+  }, [initialValues, reset]);
 
   return (
     <>
@@ -36,10 +40,7 @@ const Recorrido: React.FC<RecorrdioProps> = ({
         keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <ScrollView
-            style={{ paddingTop: 60 }}
-            keyboardShouldPersistTaps="handled"
-          >
+          <ScrollView keyboardShouldPersistTaps="handled">
             <InlineButton
               text="Continuar y guardar"
               onPress={handleSubmit(onSubmitData)}
@@ -140,7 +141,18 @@ const Recorrido: React.FC<RecorrdioProps> = ({
               iconName="eye"
               iconFamily="Ionicons"
               label="Observaciones"
-              placeholder="En la playa la bamba"
+              placeholder="Los residentes reportan que la luz se ha ido"
+              maxLength={200}
+              autoCorrect={false}
+              control={control}
+              isRequired={false}
+            />
+            <InputField
+              nameInput="zonaSeguimiento"
+              iconName="map"
+              iconFamily="Ionicons"
+              label="Zona de seguimiento"
+              placeholder="En la playa"
               maxLength={200}
               autoCorrect={false}
               control={control}

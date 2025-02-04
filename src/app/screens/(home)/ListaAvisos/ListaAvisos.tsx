@@ -18,6 +18,7 @@ import { avisos } from "../../../../database/schemas/avisoSchema";
 import useAuthStore from "../../../../hooks/globalState/useAuthStore";
 import useAvisoStore from "../../../../hooks/globalState/useAvisoStore";
 import { getAvisosVaraWeb } from "../../../../services/Avisos/GetAvisosVaraWeb";
+import { eq, isNull } from "drizzle-orm";
 
 interface Item {
   id: number | string;
