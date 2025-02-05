@@ -23,8 +23,6 @@ const RegistroRecorrido: React.FC = () => {
   const onPressButton = async () => {
     setIsRecording(!isRecording);
     if (isRecording && routeCoordinates.length > 0) {
-      console.log("idRecorridoSelected", idRecorridoSelected);
-      console.log("routeCoordinates", routeCoordinates);
       if (idRecorridoSelected == null) {
         return;
       }

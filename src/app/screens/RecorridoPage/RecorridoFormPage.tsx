@@ -42,7 +42,6 @@ const RecorridoFormPage: React.FC = () => {
     }
     previousValuesRef.current = data;
 
-    console.log("handleChange", data);
     try {
       if (idRecorridoSelected == null) {
         return;
