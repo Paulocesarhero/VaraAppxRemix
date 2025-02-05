@@ -1,9 +1,4 @@
-type Coordenada = {
-  latitud: number;
-  longitud: number;
-};
-
-type FormValuesRecorrido = {
+export type FormValuesRecorrido = {
   fecha: string;
   horaInicio: Date;
   horaFin: Date;

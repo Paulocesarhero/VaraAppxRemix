@@ -1,37 +1,47 @@
+import RNDateTimePicker from "@react-native-community/datetimepicker";
 import React, { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
 import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  TouchableWithoutFeedback,
   Text,
+  TouchableWithoutFeedback,
   View,
 } from "react-native";
-import InputField from "varaapplib/components/MaterialInput/MaterialInput";
-import { Controller, useForm } from "react-hook-form";
 import DateSelector from "varaapplib/components/DateSelector/DateSelector";
-import RNDateTimePicker from "@react-native-community/datetimepicker";
-import InlineButton from "../../components/InlineButton/InlineButton";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import InputField from "varaapplib/components/MaterialInput/MaterialInput";
+
+import { FormValuesRecorrido } from "./FormValuesRecorrido";
 
 type RecorrdioProps = {
   onSubmitData: (data: FormValuesRecorrido) => void;
   initialValues: FormValuesRecorrido;
+  onChangeData?: (data: Partial<FormValuesRecorrido>) => void;
 };
 
-const Recorrido: React.FC<RecorrdioProps> = ({
+const RecorridoForm: React.FC<RecorrdioProps> = ({
   onSubmitData,
   initialValues,
+  onChangeData,
 }) => {
-  const { control, setValue, handleSubmit, reset } =
-    useForm<FormValuesRecorrido>({
-      mode: "onSubmit",
-      defaultValues: initialValues,
-    });
+  const { control, setValue, reset, watch } = useForm<FormValuesRecorrido>({
+    mode: "onSubmit",
+    defaultValues: initialValues,
+  });
+
   useEffect(() => {
     reset(initialValues);
   }, [initialValues, reset]);
+
+  const watchedValues = watch();
+
+  useEffect(() => {
+    if (onChangeData) {
+      onChangeData(watchedValues);
+    }
+  }, [watchedValues, onChangeData]);
 
   return (
     <>
@@ -41,17 +51,6 @@ const Recorrido: React.FC<RecorrdioProps> = ({
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <ScrollView keyboardShouldPersistTaps="handled">
-            <InlineButton
-              text="Continuar y guardar"
-              onPress={handleSubmit(onSubmitData)}
-              icon={
-                <MaterialCommunityIcons
-                  name="page-next-outline"
-                  size={24}
-                  color="black"
-                />
-              }
-            />
             <Controller
               control={control}
               name="fecha"
@@ -176,4 +175,4 @@ const Recorrido: React.FC<RecorrdioProps> = ({
   );
 };
 
-export default Recorrido;
+export default RecorridoForm;

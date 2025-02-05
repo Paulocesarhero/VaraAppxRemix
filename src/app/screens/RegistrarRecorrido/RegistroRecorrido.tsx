@@ -1,13 +1,15 @@
-import React, { useCallback, useState } from "react";
-import { View, Text, Alert } from "react-native";
-import InlineButton from "../../../components/InlineButton/InlineButton";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import MapRecorrido from "../../../components/MapRecorrido/MapRecorrido";
-import ListaAvisosRecorrido from "../../../components/ListaAvisosRecorrido/ListaAvisosRecorrido";
 import { useFocusEffect, useRouter } from "expo-router";
-import useRecorridoStore from "../../../hooks/globalState/useRecorridoStore";
-import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
+import React, { useCallback, useState } from "react";
+import { Alert, View } from "react-native";
+
+import InlineButton from "../../../components/InlineButton/InlineButton";
+import ListaAvisosRecorrido from "../../../components/ListaAvisosRecorrido/ListaAvisosRecorrido";
+import MapRecorrido from "../../../components/MapRecorrido/MapRecorrido";
 import { updateRecorrido } from "../../../database/repository/RecorridoRepo";
+import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
+import useRecorridoStore from "../../../hooks/globalState/useRecorridoStore";
 
 const RegistroRecorrido: React.FC = () => {
   const { setIdAvisoSelected, setIdtaxaEspecie, clearIdEspecimen } =
@@ -32,8 +34,11 @@ const RegistroRecorrido: React.FC = () => {
           id: idRecorridoSelected,
           ruta: routeCoordinates,
         });
-      } catch (error) {
-        Alert.alert("Error", "No se pudo guardar el recorrido");
+      } catch (error: Error | any) {
+        Alert.alert(
+          "Error",
+          "No se pudo guardar el recorrido " + error.message
+        );
       }
 
       router.push("/screens/RecorridoPage/RecorridoPage");
@@ -50,10 +55,24 @@ const RegistroRecorrido: React.FC = () => {
       setIdAvisoSelected(0);
       setIdtaxaEspecie(0);
       clearIdEspecimen();
-    }, [])
+    }, [clearIdEspecimen, setIdAvisoSelected, setIdtaxaEspecie])
   );
+  const handleFormulario = () => {
+    router.push("screens/RecorridoPage/RecorridoFormPage");
+  };
   return (
     <View style={{ flex: 1, padding: 10 }}>
+      <InlineButton
+        text="Formulario de recorrido"
+        onPress={() => handleFormulario()}
+        icon={
+          <MaterialCommunityIcons
+            name="page-next-outline"
+            size={24}
+            color="black"
+          />
+        }
+      />
       <InlineButton
         text={isRecording ? "Guardar recorrido" : "Iniciar recorrido"}
         styleText={{ color: color() }}
@@ -87,7 +106,7 @@ const RegistroRecorrido: React.FC = () => {
         }}
         isRecording={isRecording}
       />
-      <ListaAvisosRecorrido></ListaAvisosRecorrido>
+      <ListaAvisosRecorrido />
     </View>
   );
 };

@@ -21,7 +21,7 @@ import {
   ambiente,
   avisos as dbAvisos,
 } from "../../../../database/schemas/avisoSchema";
-import Recorrido from "../../../../forms/Recorrido/Recorrido";
+import RecorridoForm from "../../../../forms/Recorrido/RecorridoForm";
 
 const SettingsPage: React.FC = () => {
   const getAvisos = async () => {
@@ -241,7 +241,7 @@ const SettingsPage: React.FC = () => {
         />
       </View>*/}
       {/*<ImageDebugger />*/}
-      <Recorrido
+      <RecorridoForm
         onSubmitData={(data) => {
           console.log("onSubmitData", data);
         }}
@@ -265,7 +265,7 @@ const SettingsPage: React.FC = () => {
           zonaSeguimiento: "",
           ruta: [],
         }}
-      ></Recorrido>
+      />
       <ScrollView />
     </ScrollView>
   );

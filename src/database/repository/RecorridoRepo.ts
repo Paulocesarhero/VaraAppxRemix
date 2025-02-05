@@ -1,6 +1,18 @@
+import { eq } from "drizzle-orm";
+
 import { db } from "../connection/sqliteConnection";
 import { recorrido, RecorridoDb } from "../schemas/avisoSchema";
-import { eq } from "drizzle-orm";
+
+export interface UpdateRecorridoData {
+  fecha?: string;
+  horaInicio?: string;
+  horaFin?: string;
+  referenciasInicio?: string;
+  referenciasFin?: string;
+  observaciones?: string;
+  participantes?: string;
+  zonaSeguimiento?: string;
+}
 
 export const addRecorrido = async (data: RecorridoDb) => {
   try {

@@ -9,7 +9,7 @@ import useSettingStore from "../hooks/globalState/useSettingStore";
 import LoginPage from "./screens/Login/LoginPage";
 import { db } from "../database/connection/sqliteConnection";
 import migrations from "../database/migrations/drizzle/migrations";
-import Recorrido from "../forms/Recorrido/Recorrido";
+import RecorridoForm from "../forms/Recorrido/RecorridoForm";
 
 export default function App() {
   const { success, error } = useMigrations(db, migrations);

@@ -3,6 +3,7 @@ import Feather from "@expo/vector-icons/build/Feather";
 import { router, Stack, useRouter } from "expo-router";
 import React from "react";
 import { Platform, Text, View } from "react-native";
+
 import useRecorridoStore from "../../hooks/globalState/useRecorridoStore";
 
 const Layout: React.FC = () => {
@@ -188,7 +189,7 @@ const Layout: React.FC = () => {
         }}
       />
       <Stack.Screen
-        name="RecorridoPage/RecorridoPage"
+        name="RecorridoPage/RecorridoFormPage"
         options={{
           title: "Registrar recorrido",
           headerBackButtonDisplayMode: "minimal",
