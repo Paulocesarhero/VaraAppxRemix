@@ -4,9 +4,11 @@ import { getEspecieById, getFistEspecie } from "./especieRepo";
 import { FormValuesEspecimen } from "../../forms/Especimen/FormValuesEspecimen";
 import { db } from "../connection/sqliteConnection";
 import {
+  acciones,
   especimen,
   misticeto,
   odontoceto,
+  organismo,
   pinnipedo,
   sirenio,
 } from "../schemas/avisoSchema";
@@ -58,7 +60,7 @@ export const getEspecimenByIdEspecimen = async (
     };
 
     return formValues;
-  } catch (error) {
+  } catch (_error: Error | any) {
     throw new Error(
       `Error al obtener el especimen para el id ${idEspecimen}: `
     );
@@ -176,10 +178,6 @@ export const updateEspecimenById = async (
     .set(updatedEspecimen)
     .where(eq(especimen.id, idEspecimen))
     .returning({ updateId: especimen.id });
-  const resultInsercion = await db
-    .select()
-    .from(especimen)
-    .where(eq(especimen.id, idEspecimen));
 
   return result[0].updateId;
 };
@@ -217,21 +215,31 @@ export const hasRegistroMorfometrico = async (idEspecimen: number | null) => {
 };
 
 export const deleteEspecimenById = async (idEspecimen: number | null) => {
-  if (idEspecimen === null) throw new Error("Sin un idEspecimen especificado");
+  if (idEspecimen === null) return null;
   const existingEspecimen = await db
     .select()
     .from(especimen)
     .where(eq(especimen.id, idEspecimen));
 
   if (existingEspecimen.length === 0) {
-    throw new Error(
-      `No se encontró un especimen para el aviso con id ${idEspecimen}`
-    );
+    return null;
+  } else {
+    await deletePhotoEspecimenById(idEspecimen, "golpes");
+    await deletePhotoEspecimenById(idEspecimen, "heridasDeBala");
+    await deletePhotoEspecimenById(idEspecimen, "presenciaDeRedes");
+    await deletePhotoEspecimenById(idEspecimen, "mordidas");
+    await deletePhotoEspecimenById(idEspecimen, "otros");
   }
 
   const especimenObjeto = existingEspecimen[0];
 
   await db.delete(especimen).where(eq(especimen.id, idEspecimen));
+  await db.delete(acciones).where(eq(acciones.especimenId, idEspecimen));
+  await db.delete(odontoceto).where(eq(odontoceto.especimenId, idEspecimen));
+  await db.delete(pinnipedo).where(eq(pinnipedo.especimenId, idEspecimen));
+  await db.delete(misticeto).where(eq(misticeto.especimenId, idEspecimen));
+  await db.delete(sirenio).where(eq(sirenio.especimenId, idEspecimen));
+  await db.delete(organismo).where(eq(organismo.especimenId, idEspecimen));
 
   return especimenObjeto.id;
 };
