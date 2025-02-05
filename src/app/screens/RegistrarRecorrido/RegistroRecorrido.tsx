@@ -11,6 +11,37 @@ import { updateRecorrido } from "../../../database/repository/RecorridoRepo";
 import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 import useRecorridoStore from "../../../hooks/globalState/useRecorridoStore";
 
+const toRadians = (degrees: number): number => degrees * (Math.PI / 180);
+
+const calculateDistance = (
+  coordinates: { latitude: number; longitude: number }[]
+): number => {
+  if (coordinates.length < 2) return 0;
+
+  const R = 6371; // Radio de la Tierra en km
+
+  let totalDistance = 0;
+
+  for (let i = 0; i < coordinates.length - 1; i++) {
+    const { latitude: lat1, longitude: lon1 } = coordinates[i];
+    const { latitude: lat2, longitude: lon2 } = coordinates[i + 1];
+
+    const dLat = toRadians(lat2 - lat1);
+    const dLon = toRadians(lon2 - lon1);
+
+    const a =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos(toRadians(lat1)) *
+        Math.cos(toRadians(lat2)) *
+        Math.sin(dLon / 2) ** 2;
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    totalDistance += R * c;
+  }
+
+  return totalDistance;
+};
+
 const RegistroRecorrido: React.FC = () => {
   const { setIdAvisoSelected, setIdtaxaEspecie, clearIdEspecimen } =
     useAvisoStore();
@@ -20,6 +51,7 @@ const RegistroRecorrido: React.FC = () => {
   const [routeCoordinates, setRouteCoordinates] = useState<
     { latitude: number; longitude: number }[]
   >([]);
+
   const onPressButton = async () => {
     setIsRecording(!isRecording);
     if (isRecording && routeCoordinates.length > 0) {
@@ -27,10 +59,10 @@ const RegistroRecorrido: React.FC = () => {
         return;
       }
       try {
-        console.log("se entro al update");
         await updateRecorrido({
           id: idRecorridoSelected,
           ruta: routeCoordinates,
+          distanciaRecorrido: calculateDistance(routeCoordinates),
         });
       } catch (error: Error | any) {
         Alert.alert(
@@ -38,8 +70,7 @@ const RegistroRecorrido: React.FC = () => {
           "No se pudo guardar el recorrido " + error.message
         );
       }
-
-      router.push("/screens/RecorridoPage/RecorridoPage");
+      handleFormulario();
     }
   };
   const color = () => {

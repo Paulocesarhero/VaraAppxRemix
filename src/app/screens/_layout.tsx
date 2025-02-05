@@ -1,8 +1,7 @@
 import Entypo from "@expo/vector-icons/Entypo";
-import Feather from "@expo/vector-icons/build/Feather";
-import { router, Stack, useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import React from "react";
-import { Platform, Text, View } from "react-native";
+import { Platform, View } from "react-native";
 
 import useRecorridoStore from "../../hooks/globalState/useRecorridoStore";
 

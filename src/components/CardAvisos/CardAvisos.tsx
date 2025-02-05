@@ -12,7 +12,6 @@ import {
   hasEspecieAviso,
   setSubidoAviso,
 } from "../../database/repository/avisoRepo";
-import { hasRegistroMorfometrico } from "../../database/repository/especimenRepo";
 import useAuthStore from "../../hooks/globalState/useAuthStore";
 import useAvisoStore from "../../hooks/globalState/useAvisoStore";
 import { formatDate } from "../../hooks/helpers";

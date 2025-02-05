@@ -1,17 +1,18 @@
+import { Ionicons } from "@expo/vector-icons";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import Feather from "@expo/vector-icons/build/Feather";
 import { FlashList } from "@shopify/flash-list";
-import React from "react";
+import { eq } from "drizzle-orm";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite/index";
+import { useFocusEffect, useRouter } from "expo-router";
+import React, { useState } from "react";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+
+import InlineButton from "../../../../components/InlineButton/InlineButton";
+import { ColorsPalete } from "../../../../constants/COLORS";
 import { db } from "../../../../database/connection/sqliteConnection";
 import { recorrido } from "../../../../database/schemas/avisoSchema";
-import { StyleSheet, Text, View } from "react-native";
-import { ColorsPalete } from "../../../../constants/COLORS";
-import InlineButton from "../../../../components/InlineButton/InlineButton";
-import { Ionicons } from "@expo/vector-icons";
-import Feather from "@expo/vector-icons/build/Feather";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import { eq } from "drizzle-orm";
 import useRecorridoStore from "../../../../hooks/globalState/useRecorridoStore";
-import { useFocusEffect, useRouter } from "expo-router";
 
 interface item {
   idRecorrido: number;
@@ -19,49 +20,10 @@ interface item {
 }
 
 const ListaRecorrido: React.FC = () => {
-  const {
-    setIdRecorridoSelected,
-    idRecorridoSelected,
-    clearIdRecorridoSelected,
-  } = useRecorridoStore();
+  const { setIdRecorridoSelected, clearIdRecorridoSelected } =
+    useRecorridoStore();
+  const [isLoading, setIsLoading] = useState(false);
   const route = useRouter();
-  const renderItem = ({ item }: { item: item }) => {
-    const handleUpdateRecodrido = (idRecorrido: number) => {
-      setIdRecorridoSelected(idRecorrido);
-      route.push("screens/RegistrarRecorrido/RegistroRecorrido");
-    };
-    const handleDeleteRecodrido = async (idRecorrido: number) => {
-      await db.delete(recorrido).where(eq(recorrido.id, idRecorrido));
-    };
-    return (
-      <View style={styles.itemContainer}>
-        <Text style={{ fontWeight: "bold" }}>ID : {item.idRecorrido}</Text>
-        <Text style={{ fontWeight: "bold" }}>
-          Distancia total : {item.distanciaTotal}
-        </Text>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-around",
-            marginVertical: 10,
-          }}
-        >
-          <Feather
-            name="edit"
-            size={24}
-            color="green"
-            onPress={() => handleUpdateRecodrido(item.idRecorrido)}
-          />
-          <AntDesign
-            name="delete"
-            size={24}
-            color="red"
-            onPress={() => handleDeleteRecodrido(item.idRecorrido)}
-          />
-        </View>
-      </View>
-    );
-  };
   const { data } = useLiveQuery(
     db
       .select({
@@ -81,6 +43,64 @@ const ListaRecorrido: React.FC = () => {
   };
   useFocusEffect(clearIdRecorridoSelected);
 
+  const renderItem = ({ item }: { item: item }) => {
+    const handleUpdateRecorrido = (idRecorrido: number) => {
+      setIdRecorridoSelected(idRecorrido);
+      route.push("screens/RegistrarRecorrido/RegistroRecorrido");
+    };
+    const handleDeleteRecorrido = async (idRecorrido: number) => {
+      await db.delete(recorrido).where(eq(recorrido.id, idRecorrido));
+    };
+    const handleCloudUpload = () => {
+      setIsLoading(true);
+    };
+    const formatDistance = (distanceKm: number): string => {
+      if (distanceKm < 1) {
+        return `${Math.round(distanceKm * 1000)} m`; // Convertir a metros y redondear
+      }
+      return `${distanceKm.toFixed(1)} km`; // Mostrar con 1 decimal en km
+    };
+    return (
+      <View style={styles.itemContainer}>
+        <Text style={{ fontWeight: "bold" }}>ID : {item.idRecorrido}</Text>
+        <Text style={{ fontWeight: "bold" }}>
+          Distancia total : {formatDistance(item.distanciaTotal)}
+        </Text>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-around",
+            marginVertical: 10,
+          }}
+        >
+          <Feather
+            name="edit"
+            size={24}
+            color="green"
+            onPress={() => handleUpdateRecorrido(item.idRecorrido)}
+          />
+          {isLoading ? (
+            <ActivityIndicator size="small" color="blue" />
+          ) : (
+            <AntDesign
+              name="cloudupload"
+              size={24}
+              color="blue"
+              onPress={handleCloudUpload}
+              disabled={isLoading}
+            />
+          )}
+          <AntDesign
+            name="delete"
+            size={24}
+            color="red"
+            onPress={() => handleDeleteRecorrido(item.idRecorrido)}
+          />
+        </View>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <InlineButton
@@ -94,7 +114,7 @@ const ListaRecorrido: React.FC = () => {
         data={data as unknown as item[]}
         renderItem={renderItem}
         keyExtractor={(item) => item.idRecorrido.toString() ?? ""}
-      ></FlashList>
+      />
     </View>
   );
 };
