@@ -2,17 +2,20 @@ import { Ionicons } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/build/Feather";
 import { FlashList } from "@shopify/flash-list";
-import { eq } from "drizzle-orm";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite/index";
 import { useFocusEffect, useRouter } from "expo-router";
-import React, { useState } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, Alert, StyleSheet, Text, View } from "react-native";
 
 import InlineButton from "../../../../components/InlineButton/InlineButton";
 import { ColorsPalete } from "../../../../constants/COLORS";
 import { db } from "../../../../database/connection/sqliteConnection";
 import { recorrido } from "../../../../database/schemas/avisoSchema";
 import useRecorridoStore from "../../../../hooks/globalState/useRecorridoStore";
+import {
+  addRecorrido,
+  deleteRecorrido,
+} from "../../../../database/repository/RecorridoRepo";
 
 interface item {
   idRecorrido: number;
@@ -20,9 +23,13 @@ interface item {
 }
 
 const ListaRecorrido: React.FC = () => {
+  const [loadingItemId, setLoadingItemId] = useState<number | null>(null);
+  useEffect(() => {
+    console.log("Nuevo estado de loadingItemId:", loadingItemId);
+  }, [loadingItemId]);
+
   const { setIdRecorridoSelected, clearIdRecorridoSelected } =
     useRecorridoStore();
-  const [isLoading, setIsLoading] = useState(false);
   const route = useRouter();
   const { data } = useLiveQuery(
     db
@@ -35,12 +42,12 @@ const ListaRecorrido: React.FC = () => {
 
   const handleAddRecorrdio = async () => {
     try {
-      await db.insert(recorrido).values({ fecha: new Date().toString() });
-    } catch (error) {
-      console.error("Error al agregar el recorrido:", error);
-      alert("No se pudo agregar el recorrido. Por favor, intenta nuevamente.");
+      await addRecorrido();
+    } catch (error: Error | any) {
+      Alert.alert(error.message);
     }
   };
+
   useFocusEffect(clearIdRecorridoSelected);
 
   const renderItem = ({ item }: { item: item }) => {
@@ -49,11 +56,20 @@ const ListaRecorrido: React.FC = () => {
       route.push("screens/RegistrarRecorrido/RegistroRecorrido");
     };
     const handleDeleteRecorrido = async (idRecorrido: number) => {
-      await db.delete(recorrido).where(eq(recorrido.id, idRecorrido));
+      try {
+        await deleteRecorrido(idRecorrido);
+      } catch (error: Error | any) {
+        Alert.alert(error.message);
+      }
     };
-    const handleCloudUpload = () => {
-      setIsLoading(true);
+    const handleCloudUpload = async (idRecorrido: number) => {
+      setLoadingItemId(idRecorrido);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      // Luego, resetea el estado
+      setLoadingItemId(null);
     };
+
     const formatDistance = (distanceKm: number): string => {
       if (distanceKm < 1) {
         return `${Math.round(distanceKm * 1000)} m`; // Convertir a metros y redondear
@@ -79,15 +95,14 @@ const ListaRecorrido: React.FC = () => {
             color="green"
             onPress={() => handleUpdateRecorrido(item.idRecorrido)}
           />
-          {isLoading ? (
+          {loadingItemId === item.idRecorrido ? (
             <ActivityIndicator size="small" color="blue" />
           ) : (
             <AntDesign
               name="cloudupload"
               size={24}
               color="blue"
-              onPress={handleCloudUpload}
-              disabled={isLoading}
+              onPress={() => handleCloudUpload(item.idRecorrido)}
             />
           )}
           <AntDesign
@@ -111,6 +126,7 @@ const ListaRecorrido: React.FC = () => {
 
       <FlashList
         estimatedItemSize={144}
+        extraData={loadingItemId}
         data={data as unknown as item[]}
         renderItem={renderItem}
         keyExtractor={(item) => item.idRecorrido.toString() ?? ""}
