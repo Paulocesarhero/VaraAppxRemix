@@ -28,15 +28,11 @@ import {
 import { getAvisoBdLocal } from "../../database/repository/avisoRepo";
 
 export const getImageUri = async (idAviso: number) => {
-  try {
-    const result = await db
-      .select({ imagen: avisos.fotografia })
-      .from(avisos)
-      .where(eq(avisos.id, idAviso));
-    return result[0].imagen;
-  } catch (error) {
-    throw error;
-  }
+  const result = await db
+    .select({ imagen: avisos.fotografia })
+    .from(avisos)
+    .where(eq(avisos.id, idAviso));
+  return result[0].imagen;
 };
 
 export const saveAviso = async (
@@ -47,19 +43,13 @@ export const saveAviso = async (
   if (!hasVaramientoMasivoLocal) {
     const resultSqlite = await getAvisoBdLocal(idAviso);
     const peticion = await generatePeticionAvisoIndividual(resultSqlite);
-    console.log("Peticion generada:", JSON.stringify(peticion, null, 2));
 
     if (peticion) {
       return await handleVaramientoIndividualResponse(idAviso, peticion, token);
     }
   } else {
-    try {
-      const response = await saveVaramientoMasivo(idAviso, token);
-      console.log("Response de la peticion de varamiento masivo:", response);
-      return response;
-    } catch (error) {
-      throw error;
-    }
+    const response = await saveVaramientoMasivo(idAviso, token);
+    return response;
   }
 };
 export const uploadFileFotoAviso = async (
@@ -67,25 +57,20 @@ export const uploadFileFotoAviso = async (
   fileUri: string,
   token: string
 ) => {
-  console.log("Uploading file:", fileUri);
-  try {
-    const result = await FileSystem.uploadAsync(
-      `${BASE_URL}/api/Aviso/GuardarFotoAviso/${idAviso}`,
-      fileUri,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-        fieldName: "Fotografias",
-        httpMethod: "POST",
-        uploadType: FileSystem.FileSystemUploadType.MULTIPART,
-      }
-    );
-    return result;
-  } catch (error) {
-    throw error;
-  }
+  const result = await FileSystem.uploadAsync(
+    `${BASE_URL}/api/Aviso/GuardarFotoAviso/${idAviso}`,
+    fileUri,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+      fieldName: "Fotografias",
+      httpMethod: "POST",
+      uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+    }
+  );
+  return result;
 };
 
 export const uploadFileEspecimen = async (
@@ -94,24 +79,20 @@ export const uploadFileEspecimen = async (
   fileUri: string,
   token: string
 ) => {
-  try {
-    const upload = await FileSystem.uploadAsync(
-      `${BASE_URL}/api/Aviso/GuardarFotoFormatoIndividual/${idEspecimen}/${typeImagen}`,
-      fileUri,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-        fieldName: "Fotografias",
-        httpMethod: "POST",
-        uploadType: FileSystem.FileSystemUploadType.MULTIPART,
-      }
-    );
-    return upload;
-  } catch (error) {
-    throw error;
-  }
+  const upload = await FileSystem.uploadAsync(
+    `${BASE_URL}/api/Aviso/GuardarFotoFormatoIndividual/${idEspecimen}/${typeImagen}`,
+    fileUri,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+      fieldName: "Fotografias",
+      httpMethod: "POST",
+      uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+    }
+  );
+  return upload;
 };
 
 const handleVaramientoIndividualResponse = async (
@@ -119,68 +100,50 @@ const handleVaramientoIndividualResponse = async (
   peticion: any,
   token: string
 ): Promise<Response> => {
-  try {
-    const response: Response = await api.post(
-      `api/Aviso/ReportarVaramientoIndividual`,
-      peticion,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    const imagen = await getImageUri(idAviso);
-    if (imagen) {
-      const updateImageAviso = await uploadFileFotoAviso(
-        response.data.data.idAviso,
-        imagen,
-        token
-      );
+  const response: Response = await api.post(
+    `api/Aviso/ReportarVaramientoIndividual`,
+    peticion,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     }
+  );
 
-    const imagenEspecimen: FotoAndDescription[] =
-      await getImagesEspecimen(idAviso);
-
-    for (const imagen of imagenEspecimen) {
-      const result = await uploadFileEspecimen(
-        response.data.data.idEspecimen.toString(),
-        imagen.typeImagen,
-        imagen.uriPhoto,
-        token
-      );
-    }
-
-    return response;
-  } catch (error) {
-    throw error;
+  const imagen = await getImageUri(idAviso);
+  if (imagen) {
+    await uploadFileFotoAviso(response.data.data.idAviso, imagen, token);
   }
+
+  const imagenEspecimen: FotoAndDescription[] =
+    await getImagesEspecimen(idAviso);
+
+  for (const imagen of imagenEspecimen) {
+    await uploadFileEspecimen(
+      response.data.data.idEspecimen.toString(),
+      imagen.typeImagen,
+      imagen.uriPhoto,
+      token
+    );
+  }
+
+  return response;
 };
 
 export const saveVaramientoMasivo = async (idAviso: number, token: string) => {
-  try {
-    const varameintoMasivvoLocalDb = await getAllDataVaramientoMasivo(idAviso);
-    const peticion = await generatePeticionVaramientoMasivo(
-      varameintoMasivvoLocalDb
-    );
-    if (!peticion) return { error: true, message: [], data: {} };
-    const response: VaramientoMasivoResponse = await addVaramientoMasivo(
-      token,
-      peticion
-    );
-    if (response.error) return response;
-    const fotos = await saveFotosVaramientoMasivo(
-      varameintoMasivvoLocalDb,
-      response,
-      token
-    );
-    console.log("Fotos subidas: ", JSON.stringify(fotos, null, 2));
-    return peticion;
-  } catch (error) {
-    console.error("Error al obtener el varamiento masivo:", error);
-    throw error;
-  }
+  const varameintoMasivvoLocalDb = await getAllDataVaramientoMasivo(idAviso);
+  const peticion = await generatePeticionVaramientoMasivo(
+    varameintoMasivvoLocalDb
+  );
+  if (!peticion) return { error: true, message: [], data: {} };
+  const response: VaramientoMasivoResponse = await addVaramientoMasivo(
+    token,
+    peticion
+  );
+  if (response.error) return response;
+  await saveFotosVaramientoMasivo(varameintoMasivvoLocalDb, response, token);
+  return peticion;
 };
 
 export const saveFotosVaramientoMasivo = async (
@@ -289,19 +252,11 @@ export const addVaramientoMasivo = async (
   barrerToken: string,
   data: Partial<PeticionVaramientoMasivo>
 ): Promise<any> => {
-  try {
-    const response = await api.post(
-      "api/Aviso/ReportarVaramientoMasivo",
-      data,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${barrerToken}`,
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await api.post("api/Aviso/ReportarVaramientoMasivo", data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${barrerToken}`,
+    },
+  });
+  return response.data;
 };
