@@ -3,23 +3,13 @@ import { eq } from "drizzle-orm";
 import { db } from "../connection/sqliteConnection";
 import { recorrido, RecorridoDb } from "../schemas/avisoSchema";
 
-export interface UpdateRecorridoData {
-  fecha?: string;
-  horaInicio?: string;
-  horaFin?: string;
-  referenciasInicio?: string;
-  referenciasFin?: string;
-  observaciones?: string;
-  participantes?: string;
-  zonaSeguimiento?: string;
-}
-
-export const addRecorrido = async (data: RecorridoDb) => {
+export const addRecorrido = async () => {
   try {
-    db.insert(recorrido).values(data);
-  } catch (error) {
-    console.error("Error al agregar el recorrido:", error);
-    throw error;
+    await db.insert(recorrido).values({ fecha: new Date().toString() });
+  } catch (_error) {
+    throw new Error(
+      "No se pudo agregar el recorrido. Por favor, intenta nuevamente. "
+    );
   }
 };
 export const updateRecorrido = async (data: Partial<RecorridoDb>) => {
@@ -28,18 +18,15 @@ export const updateRecorrido = async (data: Partial<RecorridoDb>) => {
   }
   try {
     await db.update(recorrido).set(data).where(eq(recorrido.id, data.id));
-  } catch (error) {
-    console.error("Error al actualizar el recorrido:", error);
-    throw error;
+  } catch (_error) {
+    throw new Error("Error al actualizar el recorrido: ");
   }
 };
-export const selectRecorrido = async (id: number) => {
+
+export const deleteRecorrido = async (id: number) => {
   try {
-    return await db.query.recorrido.findFirst({
-      where: (recorrido, { eq }) => eq(recorrido.id, id),
-    });
-  } catch (error) {
-    console.error("Error al obtener el recorrido:", error);
-    throw error;
+    await db.delete(recorrido).where(eq(recorrido.id, id));
+  } catch (_error) {
+    throw new Error("Error al eliminar el recorrido: ");
   }
 };

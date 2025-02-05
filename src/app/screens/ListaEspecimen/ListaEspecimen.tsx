@@ -5,7 +5,7 @@ import { FlashList } from "@shopify/flash-list";
 import { and, eq } from "drizzle-orm";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import InlineButton from "../../../components/InlineButton/InlineButton";
@@ -36,10 +36,6 @@ const ListaEspecimen: React.FC<ListaEspecimenProps> = ({
     (state) => state.idVaramientoMasivoSelected
   );
   const setIdEspecimenSelected = useAvisoStore((state) => state.setIdEspecimen);
-
-  if (idVaramientoMasivo == null || idAviso == null) {
-    return <Text>Por favor selecciona un varamiento masivo válido</Text>;
-  }
   const route = useRouter();
 
   const { data } = useLiveQuery(
@@ -51,6 +47,7 @@ const ListaEspecimen: React.FC<ListaEspecimenProps> = ({
       .from(especimen)
       .where(
         and(
+          // @ts-ignore
           eq(especimen.varamientoMasivoId, idVaramientoMasivo),
           eq(especimen.avisoId, idAviso)
         )
@@ -59,23 +56,22 @@ const ListaEspecimen: React.FC<ListaEspecimenProps> = ({
 
   const handleUpdateAviso = (idEspecimen: number) => {
     setIdEspecimenSelected(idEspecimen);
-    console.log("Se ejecutó handleUpdateAviso", idEspecimen);
     route.push("screens/EspecimenPages/EspecimenPage");
   };
   const handleDelete = async (idEspecimen: number) => {
     try {
       await deleteEspecimenById(idEspecimen);
-    } catch (error) {
-      console.error("Error al eliminar el espécimen:", error);
-      alert("No se pudo eliminar el espécimen. Por favor, intenta nuevamente.");
+    } catch (error: Error | any) {
+      alert(
+        "No se pudo eliminar el espécimen. Por favor, intenta nuevamente." +
+          error.message
+      );
     }
   };
 
-  function handleAddEspecimen(): void {
-    console.log("desde especimen lista", idAviso, idVaramientoMasivo);
-
+  async function handleAddEspecimen(): Promise<void> {
     if (!idAviso || !idVaramientoMasivo) return;
-    const result = addEspecimenToVaramientoMasivo(idAviso, idVaramientoMasivo);
+    await addEspecimenToVaramientoMasivo(idAviso, idVaramientoMasivo);
   }
 
   const renderItem = ({
