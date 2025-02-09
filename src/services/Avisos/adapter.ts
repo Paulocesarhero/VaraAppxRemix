@@ -4,6 +4,7 @@ import {
   AvisoDb,
   AvisoWithRelations,
   OrganismoDb,
+  RecorridoWithRelations,
   VaramientoMasivoWithRelations,
 } from "../../database/schemas/avisoSchema";
 import {
@@ -11,6 +12,7 @@ import {
   Aviso,
   FormatoGeneral,
   Peticion,
+  PeticionRecorrido,
   PeticionVaramientoMasivo,
   SoloOrganismoVivo,
 } from "./Types";
@@ -19,6 +21,7 @@ import { FormValuesMorfometriaMisticeto } from "../../forms/MorfometriaMisticeto
 import { RegistroMorfometricoPinnipedo } from "../../forms/MorfometriaPinnipedo/RegistroMorfometricoPinnipedo";
 import RegistroMorfometricoSirenio from "../../forms/MorfometriaSirenio/RegistroMorfometricoSirenio";
 import RegistroMorfometricoOdontoceto from "../../forms/MorformetriaOdontoceto/RegistroMorfometricoOdontoceto";
+import { formatHora, obtenerUbicacion } from "../../hooks/helpers";
 
 // Mapeo de la taxa a su tipo de animal correspondiente en la API se reailizo con el fin de que se vea en varaweb el registro morfometrico
 const convertirTaxaToTipoDeAnimal = (taxa: number) => {
@@ -249,5 +252,110 @@ export const generatePeticionVaramientoMasivo = async (
         AccionesYResultados: generateAccionesYResultados(especimen.acciones),
       };
     }, null),
+  };
+};
+
+// @ts-ignore
+export const generateRecorrido = async (
+  recorrido: RecorridoWithRelations
+): Promise<PeticionRecorrido | null> => {
+  if (!recorrido) return null;
+
+  const ubicuacionInicio = await obtenerUbicacion(
+    // @ts-ignore
+    recorrido.ruta[0].latitude,
+    // @ts-ignore
+    recorrido.ruta[0].longitude
+  );
+
+  // @ts-ignore
+  const ultmaCoordenada = recorrido.ruta[recorrido.ruta.length - 1];
+  const ubicuacionFin = await obtenerUbicacion(
+    // @ts-ignore
+    ultmaCoordenada.latitude,
+    // @ts-ignore
+    ultmaCoordenada.longitude
+  );
+
+  const varamientosIndividuales = recorrido.avisos.map(async (aviso) => {
+    if (aviso.varamientoMasivo) {
+      return {} as Peticion;
+    } else {
+      return await generatePeticionAvisoIndividual(aviso);
+    }
+  });
+
+  console.log(
+    "Varamientos individuales",
+    JSON.stringify(await Promise.all(varamientosIndividuales), null, 2)
+  );
+
+  const varamientosMasivos = recorrido.avisos.map(async (aviso) => {
+    if (aviso.varamientoMasivo) {
+      return await generatePeticionVaramientoMasivo(aviso.varamientoMasivo);
+    } else {
+      return {} as PeticionVaramientoMasivo;
+    }
+  });
+  console.log(
+    "Varamientos masivos",
+    JSON.stringify(await Promise.all(varamientosMasivos), null, 2)
+  );
+
+  const resultadosVaramientosMasivos = (
+    await Promise.all(varamientosMasivos)
+  ).filter((resultado) => resultado !== null);
+  const resultadosVaramientosIndividuales = (
+    await Promise.all(varamientosIndividuales)
+  ).filter((resultado) => resultado !== null);
+
+  return {
+    fecha: recorrido.fecha ?? "",
+    horaInicio: formatHora(recorrido.horaInicio),
+    horaFin: formatHora(recorrido.horaFin),
+    referenciasInicio: recorrido.referenciasInicio ?? "",
+    referenciasFin: recorrido.referenciasFin ?? "",
+    observaciones: recorrido.observaciones ?? "",
+    participantes: recorrido.participantes ?? "",
+    zonaSeguimiento: recorrido.zonaSeguimiento ?? "",
+    distanciaRecorrido: recorrido.distanciaRecorrido ?? 0,
+    coordenadaInicio: {
+      pais: ubicuacionInicio?.pais,
+      estado: ubicuacionInicio?.estado,
+      ciudad: ubicuacionInicio?.ciudad,
+      localidad: ubicuacionInicio?.localidad,
+      informacionAdicional: ubicuacionInicio?.informacionAdicional,
+      // @ts-ignore
+      latitud: recorrido.ruta[0].latitud ?? 0,
+      // @ts-ignore
+      longitud: recorrido.ruta[0].longitud ?? 0,
+    },
+    coordenadaFin: {
+      pais: ubicuacionFin?.pais,
+      estado: ubicuacionFin?.estado,
+      ciudad: ubicuacionFin?.ciudad,
+      localidad: ubicuacionFin?.localidad,
+      informacionAdicional: ubicuacionFin?.informacionAdicional,
+      // @ts-ignore
+      latitud: ultmaCoordenada.latitude ?? 0,
+      // @ts-ignore
+      longitud: ultmaCoordenada.longitude ?? 0,
+    },
+    // @ts-ignore
+    ruta: recorrido.ruta.map(
+      (coordenada: { latitude: number; longitude: number }) => ({
+        latitud: coordenada.latitude ?? 0,
+        longitud: coordenada.longitude ?? 0,
+      })
+    ),
+    reportesIndividuales:
+      resultadosVaramientosIndividuales.length > 0
+        ? resultadosVaramientosIndividuales
+        : null,
+
+    reportesMasivo:
+      resultadosVaramientosMasivos.length > 0
+        ? resultadosVaramientosMasivos
+        : null,
   };
 };

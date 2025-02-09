@@ -76,3 +76,33 @@ export const deleteImage = async (imageUri: string) => {
     await FileSystem.deleteAsync(imageUri);
   }
 };
+
+export const formatHora = (fechaString: string | null): string => {
+  if (!fechaString) return "";
+  return new Intl.DateTimeFormat("es-ES", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(new Date(fechaString));
+};
+
+export async function obtenerUbicacion(lat: number, lon: number) {
+  const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    return {
+      pais: data.address?.country || "",
+      estado: data.address?.state || "",
+      ciudad:
+        data.address?.city || data.address?.town || data.address?.village || "",
+      localidad: data.address?.suburb || "",
+      informacionAdicional: data.display_name || "",
+    };
+  } catch (error) {
+    console.error("Error al obtener la ubicación:", error);
+    return null;
+  }
+}

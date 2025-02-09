@@ -1,7 +1,11 @@
 import { eq } from "drizzle-orm";
 
 import { db } from "../connection/sqliteConnection";
-import { recorrido, RecorridoDb } from "../schemas/avisoSchema";
+import {
+  recorrido,
+  RecorridoDb,
+  RecorridoWithRelations,
+} from "../schemas/avisoSchema";
 
 export const addRecorrido = async () => {
   try {
@@ -29,4 +33,45 @@ export const deleteRecorrido = async (id: number) => {
   } catch (_error) {
     throw new Error("Error al eliminar el recorrido: ");
   }
+};
+
+export const getAllDataRecorrido = async (id: number) => {
+  const result = await db.query.recorrido.findFirst({
+    where: (recorrido, { eq }) => eq(recorrido.id, id),
+    with: {
+      avisos: {
+        with: {
+          especimenes: {
+            with: {
+              especie: true,
+              misticeto: true,
+              odontoceto: true,
+              pinnipedo: true,
+              sirenio: true,
+              organismo: true,
+              acciones: true,
+            },
+          },
+          ambiente: true,
+          varamientoMasivo: {
+            with: {
+              especimenes: {
+                with: {
+                  especie: true,
+                  misticeto: true,
+                  odontoceto: true,
+                  pinnipedo: true,
+                  sirenio: true,
+                  organismo: true,
+                  acciones: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return result as RecorridoWithRelations;
 };

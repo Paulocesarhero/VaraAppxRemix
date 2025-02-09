@@ -12,11 +12,13 @@ import {
 } from "../../database/repository/varamientoMasivoRepo";
 import {
   avisos,
+  RecorridoWithRelations,
   VaramientoMasivoWithRelations,
 } from "../../database/schemas/avisoSchema";
 import api, { BASE_URL } from "../Api";
 import {
   ImagenType,
+  PeticionRecorrido,
   PeticionVaramientoMasivo,
   Response,
   VaramientoMasivoResponse,
@@ -24,8 +26,10 @@ import {
 import {
   generatePeticionAvisoIndividual,
   generatePeticionVaramientoMasivo,
+  generateRecorrido,
 } from "./adapter";
 import { getAvisoBdLocal } from "../../database/repository/avisoRepo";
+import { getAllDataRecorrido } from "../../database/repository/RecorridoRepo";
 
 export const getImageUri = async (idAviso: number) => {
   const result = await db
@@ -74,12 +78,12 @@ export const uploadFileFotoAviso = async (
 };
 
 export const uploadFileEspecimen = async (
-  idEspecimen: string,
+  idEspecimen: string, //respuesta del endpoint
   typeImagen: ImagenType,
   fileUri: string,
   token: string
 ) => {
-  const upload = await FileSystem.uploadAsync(
+  return await FileSystem.uploadAsync(
     `${BASE_URL}/api/Aviso/GuardarFotoFormatoIndividual/${idEspecimen}/${typeImagen}`,
     fileUri,
     {
@@ -92,7 +96,6 @@ export const uploadFileEspecimen = async (
       uploadType: FileSystem.FileSystemUploadType.MULTIPART,
     }
   );
-  return upload;
 };
 
 const handleVaramientoIndividualResponse = async (
@@ -253,6 +256,69 @@ export const addVaramientoMasivo = async (
   data: Partial<PeticionVaramientoMasivo>
 ): Promise<any> => {
   const response = await api.post("api/Aviso/ReportarVaramientoMasivo", data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${barrerToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const saveRecorrido = async (idRecorrido: number, token: string) => {
+  const allData: RecorridoWithRelations =
+    await getAllDataRecorrido(idRecorrido);
+  const peticion = await generateRecorrido(allData);
+  console.log("peticion", JSON.stringify(peticion, null, 2));
+  console.log("All data ", allData);
+
+  const avisosIndividualesLocalDb = allData.avisos.filter(
+    (aviso) => aviso.varamientoMasivo === null
+  );
+  console.dir(avisosIndividualesLocalDb);
+  try {
+    const respuesta = await handleRecorridoVaraweb(peticion, token);
+    for (const idsEspecimenes of respuesta.data.idsEspecimenesIndividuales) {
+      const index: any =
+        respuesta.data.idsEspecimenesIndividuales.indexOf(idsEspecimenes);
+      if (avisosIndividualesLocalDb[index].fotografia) {
+        console.log(
+          "Subiendo fotografia " + avisosIndividualesLocalDb[index].fotografia
+        );
+        await subirFotoAviso(
+          avisosIndividualesLocalDb[index].fotografia,
+          idsEspecimenes.idAviso,
+          token
+        );
+
+        const imagenEspecimen: FotoAndDescription[] = await getImagesEspecimen(
+          avisosIndividualesLocalDb[index].id
+        );
+
+        for (const imagen of imagenEspecimen) {
+          await uploadFileEspecimen(
+            idsEspecimenes.idEspecimen,
+            imagen.typeImagen,
+            imagen.uriPhoto,
+            token
+          );
+        }
+      }
+
+      console.log(index, idsEspecimenes);
+    }
+
+    console.log("Respuesta de guardar recorrido " + JSON.stringify(respuesta));
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
+
+const handleRecorridoVaraweb = async (
+  data: Partial<PeticionRecorrido> | null,
+  barrerToken: string
+) => {
+  if (!data) return;
+  const response = await api.post("/api/Recorrido/Registrar", data, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${barrerToken}`,

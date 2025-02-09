@@ -16,6 +16,8 @@ import {
   addRecorrido,
   deleteRecorrido,
 } from "../../../../database/repository/RecorridoRepo";
+import { saveRecorrido } from "../../../../services/Avisos/SaveAviso";
+import useAuthStore from "../../../../hooks/globalState/useAuthStore";
 
 interface item {
   idRecorrido: number;
@@ -24,9 +26,7 @@ interface item {
 
 const ListaRecorrido: React.FC = () => {
   const [loadingItemId, setLoadingItemId] = useState<number | null>(null);
-  useEffect(() => {
-    console.log("Nuevo estado de loadingItemId:", loadingItemId);
-  }, [loadingItemId]);
+  const token = useAuthStore((state) => state.token);
 
   const { setIdRecorridoSelected, clearIdRecorridoSelected } =
     useRecorridoStore();
@@ -64,7 +64,13 @@ const ListaRecorrido: React.FC = () => {
     };
     const handleCloudUpload = async (idRecorrido: number) => {
       setLoadingItemId(idRecorrido);
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      if (!idRecorrido || !token) return;
+      try {
+        await saveRecorrido(idRecorrido, token);
+      } catch (error: Error | any) {
+        console.error("Error al subir el recorrido: ", error);
+        Alert.alert("Error al subir el recorrido: " + error.message);
+      }
 
       // Luego, resetea el estado
       setLoadingItemId(null);

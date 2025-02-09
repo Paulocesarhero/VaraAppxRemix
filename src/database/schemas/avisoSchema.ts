@@ -423,6 +423,10 @@ export const avisosRelations = relations(avisos, ({ many, one }) => ({
     references: [ambiente.avisoId],
   }),
   varamientoMasivo: one(varamientoMasivo),
+  recorrido: one(recorrido, {
+    fields: [avisos.recorridoId],
+    references: [recorrido.id],
+  }),
 }));
 
 export const especimenRelations = relations(especimen, ({ one }) => ({
@@ -531,6 +535,7 @@ export type AvisoWithRelations = AvisoDb & {
   misticeto: InferSelectModel<typeof misticeto> | null;
   odontoceto: InferSelectModel<typeof odontoceto> | null;
   sirenio: InferSelectModel<typeof sirenio> | null;
+  varamientoMasivo: VaramientoMasivoWithRelations;
   especimenes: EspecimenWithRelations[];
 };
 export type EspecimenWithRelations = EspecimenDb & {
@@ -543,4 +548,8 @@ export type EspecimenWithRelations = EspecimenDb & {
   sirenio: SirenioDb | null;
   organismo: OrganismoDb | null;
   acciones: AccionesDb | null;
+};
+
+export type RecorridoWithRelations = RecorridoDb & {
+  avisos: AvisoWithRelations[];
 };

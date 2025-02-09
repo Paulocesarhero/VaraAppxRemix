@@ -110,6 +110,38 @@ export interface PeticionVaramientoMasivo {
   Especimenes: Partial<Peticion>[];
 }
 
+export interface PeticionRecorrido {
+  fecha: string;
+  horaInicio: string;
+  horaFin: string;
+  referenciasInicio: string;
+  referenciasFin: string;
+  observaciones: string;
+  distanciaRecorrido: number;
+  participantes: string;
+  zonaSeguimiento: string;
+  coordenadaInicio: LocalizacionViewModel;
+  coordenadaFin: LocalizacionViewModel;
+  ruta: CoordenadaViewModel[];
+  reportesIndividuales?: Peticion[] | null;
+  reportesMasivo?: PeticionVaramientoMasivo[] | null;
+}
+
+export interface CoordenadaViewModel {
+  latitude: number;
+  longitude: number;
+}
+
+export interface LocalizacionViewModel {
+  pais?: string;
+  estado?: string;
+  ciudad?: string;
+  localidad?: string;
+  informacionAdicional?: string;
+  latitud: number;
+  longitud: number;
+}
+
 export interface Response {
   error: boolean;
   message: any[];
