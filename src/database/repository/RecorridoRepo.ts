@@ -55,6 +55,7 @@ export const getAllDataRecorrido = async (id: number) => {
           ambiente: true,
           varamientoMasivo: {
             with: {
+              aviso: true,
               especimenes: {
                 with: {
                   especie: true,

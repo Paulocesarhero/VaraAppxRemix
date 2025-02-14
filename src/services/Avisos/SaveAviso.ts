@@ -268,13 +268,13 @@ export const saveRecorrido = async (idRecorrido: number, token: string) => {
   const allData: RecorridoWithRelations =
     await getAllDataRecorrido(idRecorrido);
   const peticion = await generateRecorrido(allData);
-  console.log("peticion", JSON.stringify(peticion, null, 2));
-  console.log("All data ", allData);
 
   const avisosIndividualesLocalDb = allData.avisos.filter(
     (aviso) => aviso.varamientoMasivo === null
   );
-  console.dir(avisosIndividualesLocalDb);
+  const avisosMasivosLocalDb = allData.avisos.filter(
+    (aviso) => aviso.varamientoMasivo != null
+  );
   try {
     const respuesta = await handleRecorridoVaraweb(peticion, token);
     for (const idsEspecimenes of respuesta.data.idsEspecimenesIndividuales) {
@@ -308,8 +308,12 @@ export const saveRecorrido = async (idRecorrido: number, token: string) => {
     }
 
     console.log("Respuesta de guardar recorrido " + JSON.stringify(respuesta));
-  } catch (error) {
-    console.log(error.response.data);
+  } catch (error: any | Error) {
+    if (error.message == "La CantidadDeAnimales debe ser mayor 1 y menor 10000")
+      throw new Error(
+        "Asegúrese de que la cantidad de animales registrados en los avisos sea mayor a uno"
+      );
+    console.log((error as any).response.data);
   }
 };
 
@@ -318,6 +322,8 @@ const handleRecorridoVaraweb = async (
   barrerToken: string
 ) => {
   if (!data) return;
+  console.log("PETICION");
+  console.log(JSON.stringify(data, null, 2));
   const response = await api.post("/api/Recorrido/Registrar", data, {
     headers: {
       "Content-Type": "application/json",

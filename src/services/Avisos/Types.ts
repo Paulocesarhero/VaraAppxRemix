@@ -124,7 +124,7 @@ export interface PeticionRecorrido {
   coordenadaFin: LocalizacionViewModel;
   ruta: CoordenadaViewModel[];
   reportesIndividuales?: Peticion[] | null;
-  reportesMasivo?: PeticionVaramientoMasivo[] | null;
+  reportesMasivos?: PeticionVaramientoMasivo[] | null;
 }
 
 export interface CoordenadaViewModel {

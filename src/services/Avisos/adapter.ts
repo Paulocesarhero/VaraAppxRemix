@@ -161,10 +161,14 @@ export const generatePeticionAvisoIndividual = async (
     OtroTipoDeHeridas: resultSqlite.especimenes[0]?.otroTipoDeHeridas ?? "",
     Especie:
       (resultSqlite.especimenes[0]?.especie as Especie) ?? ({} as Especie),
-    RegistroMorfometricoMisticeto:
-      (resultSqlite.especimenes[0]
-        ?.misticeto as FormValuesMorfometriaMisticeto) ??
-      ({} as FormValuesMorfometriaMisticeto),
+    // @ts-ignore
+    RegistroMorfometricoMisticeto: resultSqlite.especimenes[0]?.misticeto
+      ? Object.fromEntries(
+          Object.entries(resultSqlite.especimenes[0].misticeto).map(
+            ([key, value]) => [key, value === "" ? null : value]
+          )
+        )
+      : ({} as FormValuesMorfometriaMisticeto),
     RegistroMorfometricoPinnipedo:
       (resultSqlite.especimenes[0]
         ?.pinnipedo as RegistroMorfometricoPinnipedo) ??
@@ -211,6 +215,7 @@ export const generatePeticionVaramientoMasivo = async (
     AnimalesMuertos: Number(varamientoMasivo.animalesMuertos) ?? 0,
     Observaciones: varamientoMasivo.observaciones ?? "",
     FormatoGeneral: formatoGeneralRaiz,
+    // @ts-ignore
     Especimenes: varamientoMasivo.especimenes.map((especimen) => {
       return {
         Latitud: especimen.latitud ?? "",
@@ -241,8 +246,14 @@ export const generatePeticionVaramientoMasivo = async (
         SoloOrganismoVivo: generateSoloOrganismoVivo(
           especimen.organismo ?? ({} as OrganismoDb)
         ),
-        RegistroMorfometricoMisticeto:
-          especimen.misticeto as FormValuesMorfometriaMisticeto,
+        RegistroMorfometricoMisticeto: especimen.misticeto
+          ? Object.fromEntries(
+              Object.entries(especimen.misticeto).map(([key, value]) => [
+                key,
+                value === "" ? null : value,
+              ])
+            )
+          : null,
         RegistroMorfometricoPinnipedo:
           especimen.pinnipedo as RegistroMorfometricoPinnipedo,
         RegistroMorfometricoSirenio:
@@ -285,11 +296,6 @@ export const generateRecorrido = async (
     }
   });
 
-  console.log(
-    "Varamientos individuales",
-    JSON.stringify(await Promise.all(varamientosIndividuales), null, 2)
-  );
-
   const varamientosMasivos = recorrido.avisos.map(async (aviso) => {
     if (aviso.varamientoMasivo) {
       return await generatePeticionVaramientoMasivo(aviso.varamientoMasivo);
@@ -297,17 +303,17 @@ export const generateRecorrido = async (
       return {} as PeticionVaramientoMasivo;
     }
   });
-  console.log(
-    "Varamientos masivos",
-    JSON.stringify(await Promise.all(varamientosMasivos), null, 2)
-  );
 
   const resultadosVaramientosMasivos = (
     await Promise.all(varamientosMasivos)
-  ).filter((resultado) => resultado !== null);
+  ).filter(
+    (resultado) => resultado !== null && Object.keys(resultado).length > 0
+  );
   const resultadosVaramientosIndividuales = (
     await Promise.all(varamientosIndividuales)
-  ).filter((resultado) => resultado !== null);
+  ).filter(
+    (resultado) => resultado !== null && Object.keys(resultado).length > 0
+  );
 
   return {
     fecha: recorrido.fecha ?? "",
@@ -348,12 +354,13 @@ export const generateRecorrido = async (
         longitud: coordenada.longitude ?? 0,
       })
     ),
+    // @ts-ignore
     reportesIndividuales:
       resultadosVaramientosIndividuales.length > 0
         ? resultadosVaramientosIndividuales
         : null,
-
-    reportesMasivo:
+    // @ts-ignore
+    reportesMasivos:
       resultadosVaramientosMasivos.length > 0
         ? resultadosVaramientosMasivos
         : null,
