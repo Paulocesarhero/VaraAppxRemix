@@ -12,11 +12,13 @@ import {
 } from "../../database/repository/varamientoMasivoRepo";
 import {
   avisos,
+  EspecimenWithRelations,
   RecorridoWithRelations,
   VaramientoMasivoWithRelations,
 } from "../../database/schemas/avisoSchema";
 import api, { BASE_URL } from "../Api";
 import {
+  IdEspecimenesOnly,
   ImagenType,
   PeticionRecorrido,
   PeticionVaramientoMasivo,
@@ -167,11 +169,13 @@ export const saveFotosVaramientoMasivo = async (
     responseVaramientoMasivo.data.idAviso.toString(),
     token
   );
-  await subirFotosEspecimenes(
-    varamientoMasivoLocalDb,
-    responseVaramientoMasivo,
-    token
-  );
+  if (responseVaramientoMasivo.data.idsEspecimenes) {
+    await subirFotosEspecimenes(
+      varamientoMasivoLocalDb.especimenes,
+      responseVaramientoMasivo.data.idsEspecimenes,
+      token
+    );
+  }
 };
 
 const subirFotoAviso = async (
@@ -201,11 +205,11 @@ const subirFotoAviso = async (
 };
 
 const subirFotosEspecimenes = async (
-  varamientoMasivoLocalDb: VaramientoMasivoWithRelations,
-  responseVaramientoMasivo: VaramientoMasivoResponse,
+  especimenesLocalDb: EspecimenWithRelations[],
+  idsEspecimenes: IdEspecimenesOnly,
   token: string
 ) => {
-  if (!responseVaramientoMasivo.data?.idsEspecimenes) {
+  if (!idsEspecimenes) {
     return;
   }
 
@@ -217,10 +221,7 @@ const subirFotosEspecimenes = async (
     otroTipoDeHeridasFoto: "otros",
   };
 
-  for (const [
-    index,
-    especimen,
-  ] of varamientoMasivoLocalDb.especimenes.entries()) {
+  for (const [index, especimen] of especimenesLocalDb.entries()) {
     const fotosEspecimen = Object.keys(mappings)
       .filter((key) => especimen[key as keyof typeof especimen])
       .map((key) => ({
@@ -230,8 +231,7 @@ const subirFotosEspecimenes = async (
 
     await Promise.all(
       fotosEspecimen.map(async (foto) => {
-        const idEspecimen =
-          responseVaramientoMasivo.data?.idsEspecimenes?.[index]?.idEspecimen;
+        const idEspecimen = idsEspecimenes[index].idEspecimen;
         if (idEspecimen) {
           try {
             await uploadFileEspecimen(
@@ -303,8 +303,30 @@ export const saveRecorrido = async (idRecorrido: number, token: string) => {
           );
         }
       }
-
-      console.log(index, idsEspecimenes);
+    }
+    for (let i = 0; i < respuesta.data.idsEspecimenesMasivos.length; i++) {
+      console.log(
+        "Ids especimines ",
+        respuesta.data.idsEspecimenesMasivos[i].idsEspecimenes,
+        "INDEX ",
+        i
+      );
+      if (
+        avisosMasivosLocalDb[i].fotografia &&
+        avisosMasivosLocalDb[i].fotografia != null
+      ) {
+        await subirFotoAviso(
+          avisosMasivosLocalDb[i].fotografia as string,
+          respuesta.data.idsEspecimenesMasivos[i].idAviso,
+          token
+        );
+      }
+      await subirFotosEspecimenes(
+        avisosMasivosLocalDb[i].especimenes,
+        respuesta.data.idsEspecimenesMasivos[i].idsEspecimenes,
+        token
+      );
+      console.log("respuesta ", respuesta);
     }
 
     console.log("Respuesta de guardar recorrido " + JSON.stringify(respuesta));
@@ -313,7 +335,9 @@ export const saveRecorrido = async (idRecorrido: number, token: string) => {
       throw new Error(
         "Asegúrese de que la cantidad de animales registrados en los avisos sea mayor a uno"
       );
-    console.log((error as any).response.data);
+    else {
+      throw new Error(error.message);
+    }
   }
 };
 

@@ -172,3 +172,8 @@ export type VaramientoMasivoResponse = {
     idAviso?: number;
   };
 };
+
+export type IdEspecimenesOnly = {
+  idEspecimen?: number;
+  uuid?: string | null;
+}[];
