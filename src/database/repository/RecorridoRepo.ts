@@ -35,6 +35,15 @@ export const deleteRecorrido = async (id: number) => {
   }
 };
 
+export const deleteCorrdenadaRecorrido = async (id: number | null) => {
+  if (id == null) return;
+  try {
+    await db.update(recorrido).set({ ruta: null }).where(eq(recorrido.id, id));
+  } catch (_error) {
+    throw new Error("Error al limpar la ruta del recorrido: ");
+  }
+};
+
 export const getAllDataRecorrido = async (id: number) => {
   const result = await db.query.recorrido.findFirst({
     where: (recorrido, { eq }) => eq(recorrido.id, id),

@@ -1,15 +1,23 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useFocusEffect, useRouter } from "expo-router";
-import React, { useCallback, useState } from "react";
-import { Alert, View } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import { Alert, Text, View } from "react-native";
 
 import InlineButton from "../../../components/InlineButton/InlineButton";
 import ListaAvisosRecorrido from "../../../components/ListaAvisosRecorrido/ListaAvisosRecorrido";
 import MapRecorrido from "../../../components/MapRecorrido/MapRecorrido";
-import { updateRecorrido } from "../../../database/repository/RecorridoRepo";
+import {
+  deleteCorrdenadaRecorrido,
+  updateRecorrido,
+} from "../../../database/repository/RecorridoRepo";
 import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 import useRecorridoStore from "../../../hooks/globalState/useRecorridoStore";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite/index";
+import { db } from "../../../database/connection/sqliteConnection";
+import { recorrido } from "../../../database/schemas/avisoSchema";
+import { eq } from "drizzle-orm";
+import { formatDistance } from "../../../hooks/helpers";
 
 const toRadians = (degrees: number): number => degrees * (Math.PI / 180);
 
@@ -51,6 +59,23 @@ const RegistroRecorrido: React.FC = () => {
   const [routeCoordinates, setRouteCoordinates] = useState<
     { latitude: number; longitude: number }[]
   >([]);
+  const [distance, setDistance] = useState<string>("");
+
+  const query = idRecorridoSelected
+    ? db
+        .select({
+          routeCoordinatesDB: recorrido.ruta,
+        })
+        .from(recorrido)
+        .where(eq(recorrido.id, idRecorridoSelected))
+    : undefined; // Usamos undefined en lugar de null
+
+  const { data, error: dataError } = useLiveQuery(query!);
+  useEffect(() => {
+    if (data && !dataError) {
+      setRouteCoordinates(data[0]?.routeCoordinatesDB as any);
+    }
+  }, [data, dataError, setRouteCoordinates]);
 
   const onPressButton = async () => {
     setIsRecording(!isRecording);
@@ -73,6 +98,22 @@ const RegistroRecorrido: React.FC = () => {
       handleFormulario();
     }
   };
+  const clearRecorridio = async () => {
+    setRouteCoordinates([]);
+    await deleteCorrdenadaRecorrido(idRecorridoSelected);
+  };
+
+  const ButtonClearRecorrido = () => {
+    if (routeCoordinates && routeCoordinates.length > 0) {
+      return (
+        <InlineButton
+          text="Limpiar recorrido"
+          onPress={() => clearRecorridio()}
+          icon={<MaterialIcons name="clear" size={24} color="black" />}
+        />
+      );
+    }
+  };
   const color = () => {
     if (isRecording) {
       return "green";
@@ -89,6 +130,11 @@ const RegistroRecorrido: React.FC = () => {
   const handleFormulario = () => {
     router.push("screens/RecorridoPage/RecorridoFormPage");
   };
+  useEffect(() => {
+    if (routeCoordinates && routeCoordinates.length >= 0) {
+      setDistance(formatDistance(calculateDistance(routeCoordinates)));
+    }
+  }, [routeCoordinates]);
   return (
     <View style={{ flex: 1, padding: 10 }}>
       <InlineButton
@@ -123,7 +169,8 @@ const RegistroRecorrido: React.FC = () => {
         }
         onPress={onPressButton}
       />
-
+      {ButtonClearRecorrido()}
+      <Text style={{ padding: 10 }}>Distancia total: {distance}</Text>
       <MapRecorrido
         routeCoordinates={routeCoordinates}
         setRouteCoordinates={setRouteCoordinates}

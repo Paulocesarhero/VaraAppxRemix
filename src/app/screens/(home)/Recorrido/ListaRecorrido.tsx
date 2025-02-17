@@ -18,6 +18,7 @@ import {
 } from "../../../../database/repository/RecorridoRepo";
 import { saveRecorrido } from "../../../../services/Avisos/SaveAviso";
 import useAuthStore from "../../../../hooks/globalState/useAuthStore";
+import { formatDistance } from "../../../../hooks/helpers";
 
 interface item {
   idRecorrido: number;
@@ -76,12 +77,6 @@ const ListaRecorrido: React.FC = () => {
       setLoadingItemId(null);
     };
 
-    const formatDistance = (distanceKm: number): string => {
-      if (distanceKm < 1) {
-        return `${Math.round(distanceKm * 1000)} m`; // Convertir a metros y redondear
-      }
-      return `${distanceKm.toFixed(1)} km`; // Mostrar con 1 decimal en km
-    };
     return (
       <View style={styles.itemContainer}>
         <Text style={{ fontWeight: "bold" }}>ID : {item.idRecorrido}</Text>

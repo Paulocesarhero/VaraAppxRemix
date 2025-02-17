@@ -106,3 +106,10 @@ export async function obtenerUbicacion(lat: number, lon: number) {
     return null;
   }
 }
+
+export const formatDistance = (distanceKm: number): string => {
+  if (distanceKm < 1) {
+    return `${Math.round(distanceKm * 1000)} m`; // Convertir a metros y redondear
+  }
+  return `${distanceKm.toFixed(1)} km`; // Mostrar con 1 decimal en km
+};

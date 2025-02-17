@@ -1,10 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import * as Location from "expo-location";
-import { ActivityIndicator, Alert, Text } from "react-native";
+import { ActivityIndicator, Alert } from "react-native";
 import { StyleProp } from "react-native/Libraries/StyleSheet/StyleSheet";
 import { ViewStyle } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
-import { useFocusEffect } from "expo-router";
 
 interface MapRecorridoProps {
   isRecording: boolean;
@@ -31,7 +30,7 @@ const MapRecorrido: React.FC<MapRecorridoProps> = ({
 
   useEffect(() => {
     const startLocationTracking = async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
+      const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         Alert.alert("Permiso para acceder a la ubicación denegado");
         return;
@@ -50,7 +49,7 @@ const MapRecorrido: React.FC<MapRecorridoProps> = ({
 
           if (isRecording) {
             setRouteCoordinates((prevCoordinates) => [
-              ...prevCoordinates,
+              ...(prevCoordinates || []),
               newCoordinate,
             ]);
           } else {
