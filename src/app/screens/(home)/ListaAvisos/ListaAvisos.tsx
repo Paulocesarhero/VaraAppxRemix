@@ -1,6 +1,6 @@
 import Entypo from "@expo/vector-icons/Entypo";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import { router, useFocusEffect, usePathname } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import {
   FlatList,
@@ -18,7 +18,8 @@ import { avisos } from "../../../../database/schemas/avisoSchema";
 import useAuthStore from "../../../../hooks/globalState/useAuthStore";
 import useAvisoStore from "../../../../hooks/globalState/useAvisoStore";
 import { getAvisosVaraWeb } from "../../../../services/Avisos/GetAvisosVaraWeb";
-import { eq, isNull } from "drizzle-orm";
+import { isNull } from "drizzle-orm";
+import { useCheckNetwork } from "../../../../hooks/validations";
 
 interface Item {
   id: number | string;
@@ -34,6 +35,8 @@ const ListaAvisos: React.FC = () => {
   const [data, setData] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const { token: barrerToken } = useAuthStore();
+  const checkNetwork = useCheckNetwork();
+  const [error, setError] = useState<boolean>(false);
 
   const { setIdAvisoSelected, setIdtaxaEspecie, clearIdEspecimen } =
     useAvisoStore();
@@ -51,6 +54,7 @@ const ListaAvisos: React.FC = () => {
       .where(isNull(avisos.recorridoId))
   );
   useEffect(() => {
+    setError(false);
     if (localData && useLocalDB) {
       const transformedData: Item[] = localData.map((item) => ({
         id: item.id,
@@ -66,35 +70,44 @@ const ListaAvisos: React.FC = () => {
   }, [localData, useLocalDB]);
 
   useEffect(() => {
-    if (!useLocalDB) {
+    const fetchData = async () => {
+      if (useLocalDB) return;
+
       setLoading(true);
 
-      getAvisosVaraWeb(barrerToken)
-        .then((data) => {
-          const transformedData: Item[] = data.map((item) => ({
-            id: item.id,
-            fechaDeAvistamiento: item.fechaDeAvistamiento,
-            cantidadDeAnimales: Number(item.cantidadDeAnimales), // Convierte a número
-            fotografia: item.fotografia,
-            isModificable: false,
-          }));
+      try {
+        const isOnline = await checkNetwork();
+        if (!isOnline) {
+          setError(true);
+          return;
+        }
 
-          setData(transformedData);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error al obtener los datos:", error);
-          setLoading(false);
-        });
-    }
-  }, [useLocalDB]);
+        const data = await getAvisosVaraWeb(barrerToken);
+        const transformedData: Item[] = data.map((item) => ({
+          id: item.id,
+          fechaDeAvistamiento: item.fechaDeAvistamiento,
+          cantidadDeAnimales: Number(item.cantidadDeAnimales),
+          fotografia: item.fotografia,
+          isModificable: false,
+        }));
+
+        setData(transformedData);
+      } catch {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [useLocalDB, barrerToken]); // Solo dependemos de `useLocalDB` y `barrerToken`
 
   useFocusEffect(
     useCallback(() => {
       setIdAvisoSelected(0);
       setIdtaxaEspecie(0);
       clearIdEspecimen();
-    }, [])
+    }, [clearIdEspecimen, setIdAvisoSelected, setIdtaxaEspecie])
   );
 
   const handleNuevoAviso = useCallback(() => {
@@ -121,6 +134,11 @@ const ListaAvisos: React.FC = () => {
         <Entypo name="new-message" size={24} color="black" />
         <Text style={styles.buttonText}>Nuevo aviso</Text>
       </TouchableOpacity>
+      {error && (
+        <Text>
+          Ocurrió un error inesperado. Asegúrate de tener conexión a la red.
+        </Text>
+      )}
       <FlatList
         data={data}
         keyExtractor={(item) => item.id.toString()}

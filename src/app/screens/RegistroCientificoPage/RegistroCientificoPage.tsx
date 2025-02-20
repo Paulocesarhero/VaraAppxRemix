@@ -8,7 +8,6 @@ import InformacionPersonalForm from "varaapplib/components/InformacionPersonalFo
 
 import { ColorsPalete } from "../../../constants/COLORS";
 import { RegistroCientifico } from "../../../services/Auth/AuthService";
-import { ResponseApi } from "../../../services/Auth/AuthServiceInterfaces";
 
 const RegistroCientificoPage: React.FC = () => {
   const router = useRouter();
@@ -20,25 +19,19 @@ const RegistroCientificoPage: React.FC = () => {
   const handleOnSubmit = async (data: any) => {
     setLoading(true);
     try {
-      const respuesta: ResponseApi = await RegistroCientifico(data);
+      await RegistroCientifico(data);
       Alert.alert(
         "Registro enviado",
         "Deberá esperar a que el administrador acepte su cuenta"
       );
       router.back();
-    } catch (error: unknown) {
-      let errorMessage =
-        "Ocurrió un error inesperado. Por favor, inténtelo de nuevo más tarde.";
-
+    } catch (error) {
       if (error instanceof AxiosError) {
-        errorMessage = error.response?.data?.message || errorMessage;
-        console.error("Error al registrar al científico:", errorMessage);
         Alert.alert(
           "Error al registrar al científico",
           "El correo ya esta en uso"
         );
       } else {
-        console.error("Error inesperado:", error);
         Alert.alert("Error en el servidor", "Contacte al soporte tecnioc");
       }
     } finally {

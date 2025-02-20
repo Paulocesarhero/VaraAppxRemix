@@ -44,19 +44,15 @@ export const Login = async (data: LoginViewModel): Promise<ResponseApi> => {
 export const RegistroCientifico = async (
   data: RegistroCientificoRequest
 ): Promise<ResponseApi> => {
-  try {
-    const response = await api.post<ResponseApi>(
-      "/Api/Autenticacion/RegistrarUsuarioExperto2",
-      data,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await api.post<ResponseApi>(
+    "/Api/Autenticacion/RegistrarUsuarioExperto2",
+    data,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return response.data;
 };
 export default { Login, RegistroCientifico };

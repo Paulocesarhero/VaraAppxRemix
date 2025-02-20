@@ -1,3 +1,6 @@
+import useSettingStore from "./globalState/useSettingStore";
+import NetInfo from "@react-native-community/netinfo";
+
 const handleNumericInput = (key: string, value: string, setValue: any) => {
   const filteredValue = value.replace(/[^0-9]/g, "");
   setValue(key, filteredValue, {
@@ -31,4 +34,13 @@ const handleNumericInputWithOnepoint = (
   }
 };
 
-export { handleNumericInput, handleNumericInputWithOnepoint };
+const useCheckNetwork = () => {
+  const isOnlyWifi = useSettingStore((state) => state.isOnlyWifi);
+
+  return async () => {
+    const netInfo = await NetInfo.fetch();
+    return !(isOnlyWifi && netInfo.type !== "wifi");
+  };
+};
+
+export { handleNumericInput, handleNumericInputWithOnepoint, useCheckNetwork };

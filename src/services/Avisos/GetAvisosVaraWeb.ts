@@ -22,7 +22,7 @@ export const getAvisosVaraWeb = async (
     });
 
     return response.data;
-  } catch (error) {
+  } catch {
     throw new Error("No se pudieron obtener los avisos.");
   }
 };

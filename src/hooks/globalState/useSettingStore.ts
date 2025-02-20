@@ -2,21 +2,26 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 
 interface Settings {
-  isMobileDataPermitted: boolean;
+  isOnlyWifi: boolean;
   isLoggedIn: boolean;
   actions: {
-    setMobileDataPermitted: (permitted: boolean) => void;
+    setIsOnlyWifi: (permitted: boolean) => void;
     setLoggedIn: (loggedIn: boolean) => Promise<void>;
     restoreLoggedIn: () => Promise<void>;
   };
 }
 
 const useSettingStore = create<Settings>((set) => ({
-  isMobileDataPermitted: false,
+  isOnlyWifi: false,
   isLoggedIn: false,
   actions: {
-    setMobileDataPermitted: (permitted) =>
-      set({ isMobileDataPermitted: permitted }),
+    setIsOnlyWifi: async (permitted) => {
+      await AsyncStorage.setItem(
+        "isMobileDataPermitted",
+        JSON.stringify(permitted)
+      );
+      set({ isOnlyWifi: permitted });
+    },
 
     setLoggedIn: async (loggedIn) => {
       await AsyncStorage.setItem("isLoggedIn", JSON.stringify(loggedIn));
