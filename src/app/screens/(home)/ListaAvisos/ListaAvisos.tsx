@@ -100,7 +100,7 @@ const ListaAvisos: React.FC = () => {
     };
 
     fetchData();
-  }, [useLocalDB, barrerToken]); // Solo dependemos de `useLocalDB` y `barrerToken`
+  }, [useLocalDB, barrerToken]);
 
   useFocusEffect(
     useCallback(() => {

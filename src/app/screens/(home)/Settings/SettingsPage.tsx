@@ -25,7 +25,7 @@ const SettingsPage: React.FC = () => {
           Desarrollador : Paulo Cesar Hernández Rosado
         </Text>
         <Text style={styles.text}>Mail: paulocesarhero@gmail.com</Text>
-        <Text style={styles.text}>Telefono: 2282522839</Text>
+        <Text style={styles.text}>Teléfono: 2282522839</Text>
       </View>
       <View style={styles.box}>
         <Text style={{ fontSize: 16 }}>Configuraciones</Text>
@@ -43,7 +43,7 @@ const SettingsPage: React.FC = () => {
       <InlineButton
         onPress={showTerminos}
         styleView={styles.button}
-        text="Terminos y condiciones"
+        text="Términos y condiciones"
       />
       <TermsModal isVisible={isModalVisible} onClose={hideModal} />
     </View>

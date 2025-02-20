@@ -17,6 +17,7 @@ import useAvisoStore from "../../hooks/globalState/useAvisoStore";
 import { formatDate } from "../../hooks/helpers";
 import { BASE_URL } from "../../services/Api";
 import { saveAviso } from "../../services/Avisos/SaveAviso";
+import { useCheckNetwork } from "../../hooks/validations";
 
 const CardAvisos: React.FC<CardAvisosProps> = ({
   urlImage,
@@ -29,6 +30,7 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
   const { setIdAvisoSelected } = useAvisoStore();
   const token = useAuthStore((state) => state.token);
   const [isLoading, setIsLoading] = useState(false);
+  const checkNetwork = useCheckNetwork();
 
   const handleUrlImage = (urlImage: string | null) => {
     if (!urlImage || urlImage === "") {
@@ -91,11 +93,10 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
     if (!hasEspecie) {
       Alert.alert(
         "No se selecciono una especie",
-        "Para poder subir un aviso es necesario que seleccione una especie llene el formulario completo",
+        "Para poder subir un aviso es necesario que seleccione una especie llene el formulario de especimen",
         [
           {
             text: "Cancelar",
-            onPress: () => console.log("Cancel Pressed"),
             style: "cancel",
           },
         ],
@@ -104,16 +105,21 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
     } else {
       try {
         if (!idAviso || !token) return;
+        const isOnline = await checkNetwork();
+        if (!isOnline) {
+          Alert.alert("Solo puedes subir un aviso mediante Wi-Fi.");
+          setIsLoading(false);
+          return;
+        }
         const result = await saveAviso(Number(idAviso), token);
         if (!result) return;
         await setSubidoAviso(Number(idAviso));
         Alert.alert("Éxito", "El aviso se subió correctamente.");
         setIsLoading(false);
         return;
-      } catch (error) {
-        // @ts-ignore
-        console.error("Error al subir al servidor:", error.response.data);
+      } catch {
         Alert.alert("Error", "Algo salió mal. Por favor, intenta nuevamente.");
+        setIsLoading(false);
       }
     }
     setIsLoading(false);

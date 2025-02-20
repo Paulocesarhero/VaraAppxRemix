@@ -4,7 +4,7 @@ import Feather from "@expo/vector-icons/build/Feather";
 import { FlashList } from "@shopify/flash-list";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite/index";
 import { useFocusEffect, useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ActivityIndicator, Alert, StyleSheet, Text, View } from "react-native";
 
 import InlineButton from "../../../../components/InlineButton/InlineButton";
@@ -19,6 +19,7 @@ import {
 import { saveRecorrido } from "../../../../services/Avisos/SaveAviso";
 import useAuthStore from "../../../../hooks/globalState/useAuthStore";
 import { formatDistance } from "../../../../hooks/helpers";
+import { useCheckNetwork } from "../../../../hooks/validations";
 
 interface item {
   idRecorrido: number;
@@ -28,6 +29,7 @@ interface item {
 const ListaRecorrido: React.FC = () => {
   const [loadingItemId, setLoadingItemId] = useState<number | null>(null);
   const token = useAuthStore((state) => state.token);
+  const checkNetwork = useCheckNetwork();
 
   const { setIdRecorridoSelected, clearIdRecorridoSelected } =
     useRecorridoStore();
@@ -67,10 +69,15 @@ const ListaRecorrido: React.FC = () => {
       setLoadingItemId(idRecorrido);
       if (!idRecorrido || !token) return;
       try {
-        await saveRecorrido(idRecorrido, token);
+        const isOnline = await checkNetwork();
+        if (!isOnline) {
+          Alert.alert("Solo puedes subir un aviso mediante Wi-Fi.");
+        } else {
+          await saveRecorrido(idRecorrido, token);
+        }
       } catch (error: Error | any) {
-        console.error("Error al subir el recorrido: ", error);
         Alert.alert("Error al subir el recorrido: " + error.message);
+        setLoadingItemId(null);
       }
 
       // Luego, resetea el estado
