@@ -1,11 +1,22 @@
 import { StyleSheet, Switch, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import InlineButton from "../../../../components/InlineButton/InlineButton";
 import useSettingStore from "../../../../hooks/globalState/useSettingStore";
+import TermsModal from "../../TermsModal";
 // eslint-disable-next-line no-unused-vars
 
 const SettingsPage: React.FC = () => {
   const { isOnlyWifi, actions } = useSettingStore();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const showTerminos = () => {
+    setIsModalVisible(true);
+  };
+
+  // Cerrar el modal
+  const hideModal = () => {
+    setIsModalVisible(false);
+  };
+
   return (
     <View style={styles.container}>
       {/*<Depurador />*/}
@@ -29,7 +40,12 @@ const SettingsPage: React.FC = () => {
           />
         </View>
       </View>
-      <InlineButton styleView={styles.button} text="Terminos y condiciones" />
+      <InlineButton
+        onPress={showTerminos}
+        styleView={styles.button}
+        text="Terminos y condiciones"
+      />
+      <TermsModal isVisible={isModalVisible} onClose={hideModal} />
     </View>
   );
 };
@@ -46,7 +62,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   text: {
-    fontSize: 20,
+    fontSize: 15,
   },
   button: {
     position: "absolute",
