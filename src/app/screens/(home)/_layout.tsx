@@ -1,14 +1,42 @@
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Feather from "@expo/vector-icons/build/Feather";
-import { Tabs } from "expo-router";
-import { Text, TouchableOpacity } from "react-native";
+import { router, Tabs } from "expo-router";
+import { Alert, Text, TouchableOpacity } from "react-native";
 
 import { ColorsPalete } from "../../../constants/COLORS";
 import React from "react";
+import { clearDataBase } from "../../../database/repository/avisoRepo";
+import useSettingStore from "../../../hooks/globalState/useSettingStore";
 
 const Layout: React.FC = () => {
-  const handleLogout = () => {};
+  const { actions } = useSettingStore();
+
+  const handleLogout = () => {
+    Alert.alert(
+      "¿Está seguro de que desea cerrar sesión?",
+      "Todos los datos que no estén en la nube se eliminarán.",
+      [
+        {
+          text: "Cancelar",
+          style: "cancel",
+        },
+        {
+          text: "Cerrar",
+          onPress: async () => {
+            try {
+              await clearDataBase();
+              await actions.setLoggedIn(false);
+              router.replace("/");
+            } catch {
+              Alert.alert("Algo inesperado ocurrió. Inténtelo otra vez.");
+            }
+          },
+          style: "destructive",
+        },
+      ]
+    );
+  };
 
   return (
     <Tabs

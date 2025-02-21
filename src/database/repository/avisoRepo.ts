@@ -1,12 +1,25 @@
 import { eq } from "drizzle-orm";
 import { AvisoValues } from "varaapplib/components/AvisoForm/types";
 
-import { deleteImage, deleteImageOfAviso } from "../../hooks/helpers";
+import {
+  deleteAllImages,
+  deleteImage,
+  deleteImageOfAviso,
+} from "../../hooks/helpers";
 import { db } from "../connection/sqliteConnection";
 import {
+  acciones,
   ambiente,
   avisos,
   AvisoWithRelations,
+  especimen,
+  localizacion,
+  misticeto,
+  odontoceto,
+  organismo,
+  pinnipedo,
+  recorrido,
+  sirenio,
   varamientoMasivo,
 } from "../schemas/avisoSchema";
 import { deleteEspecimenById } from "./especimenRepo";
@@ -227,4 +240,20 @@ export const setSubidoAviso = async (idAviso: number) => {
     .update(avisos)
     .set({ nombre: "Subido" })
     .where(eq(avisos.id, idAviso));
+};
+
+export const clearDataBase = async () => {
+  await db.delete(avisos);
+  await db.delete(ambiente);
+  await db.delete(especimen);
+  await db.delete(varamientoMasivo);
+  await db.delete(localizacion);
+  await db.delete(recorrido);
+  await db.delete(misticeto);
+  await db.delete(odontoceto);
+  await db.delete(pinnipedo);
+  await db.delete(sirenio);
+  await db.delete(organismo);
+  await db.delete(acciones);
+  await deleteAllImages();
 };

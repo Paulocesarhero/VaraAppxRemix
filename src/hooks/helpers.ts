@@ -119,3 +119,18 @@ export const formatDistance = (distanceKm: number): string => {
 export const deleteImageOfAviso = async (aviso: AvisoWithRelations) => {
   await deleteImage(aviso.fotografia ?? "");
 };
+
+export const deleteAllImages = async (): Promise<void> => {
+  const folderPath = FileSystem.documentDirectory + "VaraAppx";
+
+  const dirInfo = await FileSystem.getInfoAsync(folderPath);
+  if (!dirInfo.exists) {
+    return;
+  }
+
+  const files = await FileSystem.readDirectoryAsync(folderPath);
+  for (const file of files) {
+    const filePath = `${folderPath}/${file}`;
+    await FileSystem.deleteAsync(filePath);
+  }
+};

@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Alert,
   Keyboard,
@@ -55,7 +55,7 @@ const LoginPage: React.FC = () => {
       };
       const response = await Login(loginData);
       if (!response.error) {
-        router.navigate({
+        router.replace({
           pathname: "/screens/(home)/ListaAvisos/ListaAvisos",
         });
         setToken(response.data.token);
