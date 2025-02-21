@@ -1,10 +1,16 @@
 import { eq } from "drizzle-orm";
-import { SQLiteRunResult } from "expo-sqlite";
 import { AvisoValues } from "varaapplib/components/AvisoForm/types";
 
-import { deleteImage } from "../../hooks/helpers";
+import { deleteImage, deleteImageOfAviso } from "../../hooks/helpers";
 import { db } from "../connection/sqliteConnection";
-import { avisos, AvisoWithRelations } from "../schemas/avisoSchema";
+import {
+  ambiente,
+  avisos,
+  AvisoWithRelations,
+  varamientoMasivo,
+} from "../schemas/avisoSchema";
+import { deleteEspecimenById } from "./especimenRepo";
+import { d } from "drizzle-kit/index-Z-1TKnbX";
 
 type newAviso = typeof avisos.$inferInsert;
 
@@ -98,11 +104,21 @@ export const deletePhotoByIdAviso = async (idAviso: number): Promise<any> => {
   return null;
 };
 
-export const deleteAvisoById = async (
-  idAviso: number
-): Promise<SQLiteRunResult> => {
-  const result = await db.delete(avisos).where(eq(avisos.id, idAviso));
-  return result;
+export const deleteAvisoById = async (idAviso: number): Promise<boolean> => {
+  const allAviso = await getAvisoBdLocal(idAviso);
+  if (allAviso) {
+    await deleteImageOfAviso(allAviso);
+  }
+  await db.delete(avisos).where(eq(avisos.id, idAviso));
+  for (const especimen of allAviso?.especimenes ?? []) {
+    await deleteEspecimenById(especimen.id);
+  }
+  await db.delete(ambiente).where(eq(ambiente.avisoId, idAviso));
+  await db
+    .delete(varamientoMasivo)
+    .where(eq(varamientoMasivo.avisoId, idAviso));
+
+  return true;
 };
 
 export const getAvisosBdLocal = async (): Promise<AvisoWithId[]> => {

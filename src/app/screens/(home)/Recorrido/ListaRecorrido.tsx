@@ -59,12 +59,29 @@ const ListaRecorrido: React.FC = () => {
       route.push("screens/RegistrarRecorrido/RegistroRecorrido");
     };
     const handleDeleteRecorrido = async (idRecorrido: number) => {
-      try {
-        await deleteRecorrido(idRecorrido);
-      } catch (error: Error | any) {
-        Alert.alert(error.message);
-      }
+      Alert.alert(
+        "Confirmar eliminación",
+        "¿Está seguro de que desea eliminar este recorrido?",
+        [
+          {
+            text: "Cancelar",
+            style: "cancel",
+          },
+          {
+            text: "Eliminar",
+            onPress: async () => {
+              try {
+                await deleteRecorrido(idRecorrido);
+              } catch {
+                Alert.alert("Algo inesperado ocurrió. Inténtelo otra vez.");
+              }
+            },
+            style: "destructive",
+          },
+        ]
+      );
     };
+
     const handleCloudUpload = async (idRecorrido: number) => {
       setLoadingItemId(idRecorrido);
       if (!idRecorrido || !token) return;
@@ -80,7 +97,6 @@ const ListaRecorrido: React.FC = () => {
         setLoadingItemId(null);
       }
 
-      // Luego, resetea el estado
       setLoadingItemId(null);
     };
 

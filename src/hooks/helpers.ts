@@ -1,4 +1,5 @@
 import * as FileSystem from "expo-file-system";
+import { AvisoWithRelations } from "../database/schemas/avisoSchema";
 
 export const getDateNow = () => {
   const fecha = new Date();
@@ -71,6 +72,7 @@ export const saveImage = async (photoUri: string): Promise<ResponseImage> => {
   }
 };
 export const deleteImage = async (imageUri: string) => {
+  if (imageUri === "") return;
   const fileInfo = await FileSystem.getInfoAsync(imageUri);
   if (fileInfo.exists) {
     await FileSystem.deleteAsync(imageUri);
@@ -112,4 +114,8 @@ export const formatDistance = (distanceKm: number): string => {
     return `${Math.round(distanceKm * 1000)} m`; // Convertir a metros y redondear
   }
   return `${distanceKm.toFixed(1)} km`; // Mostrar con 1 decimal en km
+};
+
+export const deleteImageOfAviso = async (aviso: AvisoWithRelations) => {
+  await deleteImage(aviso.fotografia ?? "");
 };

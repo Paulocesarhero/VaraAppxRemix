@@ -6,6 +6,8 @@ import {
   RecorridoDb,
   RecorridoWithRelations,
 } from "../schemas/avisoSchema";
+import { deleteAvisoById } from "./avisoRepo";
+import { all } from "axios";
 
 export const addRecorrido = async () => {
   try {
@@ -29,8 +31,14 @@ export const updateRecorrido = async (data: Partial<RecorridoDb>) => {
 
 export const deleteRecorrido = async (id: number) => {
   try {
+    const allRecorrido = await getAllDataRecorrido(id);
+    console.log("all recorrido ", allRecorrido);
+    for (const aviso of allRecorrido.avisos) {
+      await deleteAvisoById(aviso.id);
+    }
     await db.delete(recorrido).where(eq(recorrido.id, id));
   } catch (_error) {
+    console.error(_error);
     throw new Error("Error al eliminar el recorrido: ");
   }
 };

@@ -4,6 +4,7 @@ import InlineButton from "../../../../components/InlineButton/InlineButton";
 import useSettingStore from "../../../../hooks/globalState/useSettingStore";
 import TermsModal from "../../TermsModal";
 // eslint-disable-next-line no-unused-vars
+import Depurador from "../../../../components/Depurador/Depurador";
 
 const SettingsPage: React.FC = () => {
   const { isOnlyWifi, actions } = useSettingStore();

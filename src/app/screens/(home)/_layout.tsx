@@ -5,8 +5,9 @@ import { Tabs } from "expo-router";
 import { Text, TouchableOpacity } from "react-native";
 
 import { ColorsPalete } from "../../../constants/COLORS";
+import React from "react";
 
-export default function Layout() {
+const Layout: React.FC = () => {
   const handleLogout = () => {};
 
   return (
@@ -60,15 +61,16 @@ export default function Layout() {
             >
               <Feather
                 name="log-out"
-                size={24}
-                color="black"
+                size={20}
+                color="white"
                 style={{ paddingLeft: 15 }}
               />
-              <Text style={{ fontSize: 10 }}>Cerra sesión</Text>
+              <Text style={{ fontSize: 8, color: "white" }}>Cerra sesión</Text>
             </TouchableOpacity>
           ),
         }}
       />
     </Tabs>
   );
-}
+};
+export default Layout;
