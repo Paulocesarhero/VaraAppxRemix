@@ -1,0 +1,14 @@
+appId: com.paulocesarhero.VaraAppx
+---
+- launchApp
+- tapOn:
+    point: "41%,47%"
+- inputText: "Admin@varaweb.com"
+- "hideKeyboard"
+- tapOn:
+    point: "44%,58%"
+- inputText: "@Admin_3612"
+- "hideKeyboard"
+- tapOn:
+    point: "47%,68%"
+- assertNotVisible: "id:Home Grabber"

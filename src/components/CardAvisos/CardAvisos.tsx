@@ -117,8 +117,21 @@ const CardAvisos: React.FC<CardAvisosProps> = ({
         Alert.alert("Éxito", "El aviso se subió correctamente.");
         setIsLoading(false);
         return;
-      } catch {
-        Alert.alert("Error", "Algo salió mal. Por favor, intenta nuevamente.");
+      } catch (error: any) {
+        if (error.status === 401) {
+          Alert.alert(
+            "Vuelve a iniciar sesión",
+            "Por seguridad vuelva a iniciar sesión"
+          );
+        } else {
+          console.table(JSON.stringify(error));
+          console.log("Respuesta de error", error.response);
+          Alert.alert(
+            "Error",
+            "Algo salió mal. Por favor, intenta nuevamente."
+          );
+        }
+
         setIsLoading(false);
       }
     }

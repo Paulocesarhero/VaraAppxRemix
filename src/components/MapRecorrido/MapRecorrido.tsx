@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import * as Location from "expo-location";
-import { ActivityIndicator, Alert } from "react-native";
+import { ActivityIndicator, Alert, View, Text } from "react-native";
 import { StyleProp } from "react-native/Libraries/StyleSheet/StyleSheet";
 import { ViewStyle } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
@@ -78,10 +78,13 @@ const MapRecorrido: React.FC<MapRecorridoProps> = ({
 
   if (currentLocation == null) {
     return (
-      <ActivityIndicator
-        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        size="large"
-      />
+      <View>
+        <ActivityIndicator
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          size="large"
+        />
+        <Text>Por favor active su localización</Text>
+      </View>
     );
   }
 

@@ -2,22 +2,13 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/build/Feather";
 import { Image } from "expo-image";
 import { router } from "expo-router";
-import React, { useState } from "react";
-import { ActivityIndicator, Alert, StyleSheet, Text, View } from "react-native";
-
-import CardAvisosProps from "./types";
+import React from "react";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import { ColorsPalete } from "../../constants/COLORS";
-import {
-  deleteAvisoById,
-  hasEspecieAviso,
-  setSubidoAviso,
-} from "../../database/repository/avisoRepo";
-import { hasRegistroMorfometrico } from "../../database/repository/especimenRepo";
-import useAuthStore from "../../hooks/globalState/useAuthStore";
+import { deleteAvisoById } from "../../database/repository/avisoRepo";
 import useAvisoStore from "../../hooks/globalState/useAvisoStore";
 import { formatDate } from "../../hooks/helpers";
 import { BASE_URL } from "../../services/Api";
-import { saveAviso } from "../../services/Avisos/SaveAviso";
 
 interface CardAvisosRecorridoProps {
   urlImage: string | null;

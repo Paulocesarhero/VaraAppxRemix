@@ -184,7 +184,6 @@ export const getAvisoBdLocal = async (
         },
       },
     });
-    console.log("aviso", JSON.stringify(aviso, null, 2));
 
     return aviso as AvisoWithRelations;
   } catch (error) {

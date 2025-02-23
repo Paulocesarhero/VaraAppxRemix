@@ -93,7 +93,18 @@ const ListaRecorrido: React.FC = () => {
           await saveRecorrido(idRecorrido, token);
         }
       } catch (error: Error | any) {
-        Alert.alert("Error al subir el recorrido: " + error.message);
+        if (error.status === 401) {
+          Alert.alert(
+            "Vuelve a iniciar sesión",
+            "Por seguridad vuelva a iniciar sesión"
+          );
+        } else {
+          console.error(error);
+          Alert.alert(
+            "Error",
+            "Algo salió mal. Por favor, intenta nuevamente."
+          );
+        }
         setLoadingItemId(null);
       }
 

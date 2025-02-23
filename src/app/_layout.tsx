@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 import { SQLiteProvider } from "expo-sqlite";
 import React from "react";
-import { View, Text } from "react-native";
+import { Text, View } from "react-native";
 
 import ErrorBoundary from "../components/ErrorBoundary";
 
@@ -22,6 +22,7 @@ const Layout = () => {
       </View>
     );
   };
+
   return (
     <ErrorBoundary fallback={error()}>
       <SQLiteProvider

@@ -105,6 +105,7 @@ const handleVaramientoIndividualResponse = async (
   peticion: any,
   token: string
 ): Promise<Response> => {
+  console.dir(peticion);
   const response: Response = await api.post(
     `api/Aviso/ReportarVaramientoIndividual`,
     peticion,
@@ -336,7 +337,7 @@ export const saveRecorrido = async (idRecorrido: number, token: string) => {
         "Asegúrese de que la cantidad de animales registrados en los avisos sea mayor a uno"
       );
     else {
-      throw new Error(error.message);
+      throw error;
     }
   }
 };
