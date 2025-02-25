@@ -91,6 +91,7 @@ const ListaRecorrido: React.FC = () => {
           Alert.alert("Solo puedes subir un aviso mediante Wi-Fi.");
         } else {
           await saveRecorrido(idRecorrido, token);
+          Alert.alert("Éxito", "El recorrido se guardó en la aplicación");
         }
       } catch (error: Error | any) {
         if (error.status === 401) {

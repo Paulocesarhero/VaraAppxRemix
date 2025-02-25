@@ -113,6 +113,7 @@ const CaracteristicasFisicasYAmbientales: React.FC<
             onPress={handleSubmit(onSubmit)}
           />
           <InputField
+            testID="temperaturaAmbiente"
             nameInput="temperaturaAmbiente"
             iconName="thermometer"
             iconFamily="Ionicons"
