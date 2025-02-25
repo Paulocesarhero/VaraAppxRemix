@@ -1,8 +1,9 @@
 appId: com.paulocesarhero.VaraAppx
 ---
 - launchApp
+- waitForAnimationToEnd
 - tapOn:
-    point: "41%,47%"
+    point: "35%,48%"
 - inputText: "Admin@varaweb.com"
 - "hideKeyboard"
 - tapOn:

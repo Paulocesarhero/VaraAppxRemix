@@ -59,5 +59,43 @@ Para empezar a trabajar con VaraAppx, sigue estos pasos:
    log4brains init  
    ```
 
+# Maestro pruebas e2e
+1. Instalar maestro
+   https://docs.maestro.dev/getting-started/installing-maestro
+2. en raiz de proyecto /VaraAppx
+3. Ejecutar el prebuild de ios
+```bash
+   npx expo run:ios
+```
+4. En otra terminal, ejecutar 
+   ```bash
+   maestro test .maestro/{prueba a ejecutar}  
+   ```
+
+## Nuevos casos de prueba
+1. Formatos comunes para nombrar casos de prueba
+   ✅ 1.1. [Módulo][Funcionalidad][Escenario esperado]
+   Este formato es claro y fácil de leer:
+
+📌 Ejemplo:
+
+   ```yaml
+      Login_IngresoUsuario_CredencialesCorrectas.yaml
+      Login_IngresoUsuario_CredencialesIncorrectas.yaml
+      Perfil_ActualizacionDatos_Exito.yaml
+   ```
+💡 Ventaja: Es fácil agrupar pruebas por módulos y funcionalidades.
+### Maestro estudio
+Maestro estudio es una herramienta que puede ayudar a generar nuevos casos de prueba
+1. Ejecutar el prebuild de ios
+   ```bash
+      npx expo run:ios
+   ```
+
+2. En otra terminal, ejecutar en raiz de proyecto
+   ```bash
+      maestro studio
+   ```
+
 Memento mori
 Buena suerte :)

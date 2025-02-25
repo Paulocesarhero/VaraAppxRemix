@@ -1,0 +1,4 @@
+appId: com.paulocesarhero.VaraAppx
+---
+- runFlow: "login_ingresoUsuario_credencialesCorrectas.yaml"
+- tapOn: " Nuevo aviso"
