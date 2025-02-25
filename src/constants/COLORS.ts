@@ -1,5 +1,5 @@
 import { ColorValue } from "react-native";
-
+/* eslint-disable no-unused-vars */
 export enum ColorsEnum {
   dark = "#333333",
   light = "#f8f8f8",

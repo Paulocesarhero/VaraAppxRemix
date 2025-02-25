@@ -26,7 +26,7 @@ const MorfometriaSirenio: React.FC<MorfometriaSirenioProps> = ({
   data,
   isDisabled,
 }) => {
-  const { handleSubmit, control, setValue, getValues, watch } =
+  const { handleSubmit, control, setValue, watch } =
     useForm<RegistroMorfometricoSirenio>({
       defaultValues: data,
     });

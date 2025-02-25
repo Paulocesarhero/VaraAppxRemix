@@ -20,51 +20,45 @@ type NewEspecimen = typeof especimen.$inferInsert;
 export const getEspecimenByIdEspecimen = async (
   idEspecimen: number
 ): Promise<FormValuesEspecimen> => {
-  try {
-    const result = await db
-      .select()
-      .from(especimen)
-      .where(eq(especimen.id, idEspecimen));
+  const result = await db
+    .select()
+    .from(especimen)
+    .where(eq(especimen.id, idEspecimen));
 
-    if (!result || result.length === 0) {
-      throw new Error(`No se encontró un especimen con id ${idEspecimen}`);
-    }
-
-    const EspecieBdLocal = await getEspecieById(result[0].especieId);
-
-    const item = result[0];
-
-    const formValues: FormValuesEspecimen = {
-      Especie: EspecieBdLocal,
-      Latitud: item.latitud ?? "",
-      Longitud: item.longitud ?? "",
-      EspecieId: item.especieId ?? undefined,
-      condicion: item.condicion ?? 0,
-      longitudTotalRectilinea: item.longitudTotalRectilinea ?? "",
-      peso: item.peso ?? "",
-      sexo: item.sexo ?? 0,
-      grupoDeEdad: item.grupoDeEdad ?? 0,
-      orientacionDelEspecimen: item.orientacionDelEspecimen ?? "",
-      sustrato: item.sustrato ?? 0,
-      otroSustrato: item.otroSustrato ?? "",
-      heridasBala: item.heridasBala ?? "",
-      heridasBalaFoto: item.heridasBalaFoto ?? "",
-      presenciaDeRedes: item.presenciaDeRedes ?? "",
-      presenciaDeRedesFoto: item.presenciaDeRedesFoto ?? "",
-      mordidas: item.mordidas ?? "",
-      mordidasFoto: item.mordidasFoto ?? "",
-      golpes: item.golpes ?? "",
-      golpesFoto: item.golpesFoto ?? "",
-      otroTipoDeHeridas: item.otroTipoDeHeridas ?? "",
-      otroTipoDeHeridasFoto: item.otroTipoDeHeridasFoto ?? "",
-    };
-
-    return formValues;
-  } catch (_error: Error | any) {
-    throw new Error(
-      `Error al obtener el especimen para el id ${idEspecimen}: `
-    );
+  if (!result || result.length === 0) {
+    throw new Error(`No se encontró un especimen con id ${idEspecimen}`);
   }
+
+  const EspecieBdLocal = await getEspecieById(result[0].especieId);
+
+  const item = result[0];
+
+  const formValues: FormValuesEspecimen = {
+    Especie: EspecieBdLocal,
+    Latitud: item.latitud ?? "",
+    Longitud: item.longitud ?? "",
+    EspecieId: item.especieId ?? undefined,
+    condicion: item.condicion ?? 0,
+    longitudTotalRectilinea: item.longitudTotalRectilinea ?? "",
+    peso: item.peso ?? "",
+    sexo: item.sexo ?? 0,
+    grupoDeEdad: item.grupoDeEdad ?? 0,
+    orientacionDelEspecimen: item.orientacionDelEspecimen ?? "",
+    sustrato: item.sustrato ?? 0,
+    otroSustrato: item.otroSustrato ?? "",
+    heridasBala: item.heridasBala ?? "",
+    heridasBalaFoto: item.heridasBalaFoto ?? "",
+    presenciaDeRedes: item.presenciaDeRedes ?? "",
+    presenciaDeRedesFoto: item.presenciaDeRedesFoto ?? "",
+    mordidas: item.mordidas ?? "",
+    mordidasFoto: item.mordidasFoto ?? "",
+    golpes: item.golpes ?? "",
+    golpesFoto: item.golpesFoto ?? "",
+    otroTipoDeHeridas: item.otroTipoDeHeridas ?? "",
+    otroTipoDeHeridasFoto: item.otroTipoDeHeridasFoto ?? "",
+  };
+
+  return formValues;
 };
 export const addEspecimenIfNotExist = async (idAviso: number) => {
   const getEspecie = await getFistEspecie();

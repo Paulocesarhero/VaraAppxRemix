@@ -18,10 +18,7 @@ import MorfometriaMisticetoProps from "./types";
 import InlineButton from "../../components/InlineButton/InlineButton";
 import LabelAndImage from "../../components/LabelAndImage/LabelAndImage";
 import { ColorsPalete } from "../../constants/COLORS";
-import {
-  handleNumericInput,
-  handleNumericInputWithOnepoint,
-} from "../../hooks/validations";
+import { handleNumericInputWithOnepoint } from "../../hooks/validations";
 
 const MorfometriaMisticeto: React.FC<MorfometriaMisticetoProps> = ({
   data,

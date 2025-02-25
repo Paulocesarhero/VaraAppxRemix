@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useCallback } from "react";
 import Entypo from "@expo/vector-icons/Entypo";
 import { ColorsPalete } from "../../constants/COLORS";
-import { Link, router, useFocusEffect, useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite/index";
 import { db } from "../../database/connection/sqliteConnection";
 import { avisos } from "../../database/schemas/avisoSchema";

@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 
 import RegistroMorfometricoOdontoceto from "../../forms/MorformetriaOdontoceto/RegistroMorfometricoOdontoceto";
 import { db } from "../connection/sqliteConnection";
-import { misticeto, odontoceto } from "../schemas/avisoSchema";
+import { odontoceto } from "../schemas/avisoSchema";
 
 export type NewOdontoceto = typeof odontoceto.$inferInsert;
 
@@ -33,7 +33,9 @@ export const updateOdontocetoByIdEspecimen = async (
 
   const odontocetoObjeto = existingOdontoceto[0];
   const campos = Object.keys(odontocetoObjeto).filter(
-    (campo) => campo !== "especimenId" && odontocetoData.hasOwnProperty(campo)
+    (campo) =>
+      campo !== "especimenId" &&
+      Object.prototype.hasOwnProperty.call(odontocetoData, campo)
   );
 
   const updatedOdontoceto = campos.reduce((acc, campo) => {
@@ -66,7 +68,7 @@ export const getOdontocetoByIdEspecimenLocal = async (
     // @ts-ignore
     delete item.especimenId;
     return item as RegistroMorfometricoOdontoceto;
-  } catch (error) {
+  } catch {
     throw new Error(
       `No se encontró un misticeto para el aviso con id ${idEspecimen}`
     );

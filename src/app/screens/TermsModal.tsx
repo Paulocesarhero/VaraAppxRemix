@@ -1,8 +1,8 @@
 // TermsModal.tsx
 import React from "react";
 import {
-  Dimensions,
   Button,
+  Dimensions,
   Modal,
   ScrollView,
   StyleSheet,
@@ -14,7 +14,8 @@ interface TermsModalProps {
   isVisible: boolean;
   onClose: () => void;
 }
-const { height, width } = Dimensions.get("window");
+
+const { height } = Dimensions.get("window");
 
 const TermsModal: React.FC<TermsModalProps> = ({ isVisible, onClose }) => {
   return (

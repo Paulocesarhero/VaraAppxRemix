@@ -32,7 +32,9 @@ export const updatePinnipedoByIdEspecimen = async (
   }
   const pinnipedoObjeto = existingPinnipedo[0];
   const campos = Object.keys(pinnipedoObjeto).filter(
-    (campo) => campo !== "especimenId" && pinnipedoData.hasOwnProperty(campo)
+    (campo) =>
+      campo !== "especimenId" &&
+      Object.prototype.hasOwnProperty.call(pinnipedoData, campo)
   );
 
   const updatedPinnipedo = campos.reduce((acc, campo) => {
@@ -51,20 +53,14 @@ export const updatePinnipedoByIdEspecimen = async (
 };
 
 export const getPinnipedoByIdEspecimenLocal = async (idEspecimen: number) => {
-  try {
-    const result = await db
-      .select()
-      .from(pinnipedo)
-      .where(eq(pinnipedo.especimenId, idEspecimen));
-    const item = { ...result[0] };
-    // @ts-ignore
-    delete item.id;
-    // @ts-ignore
-    delete item.especimenId;
-    return item as RegistroMorfometricoPinnipedo;
-  } catch (error) {
-    throw new Error(
-      `No se encontró un pinnipedo para el aviso con id ${idEspecimen}`
-    );
-  }
+  const result = await db
+    .select()
+    .from(pinnipedo)
+    .where(eq(pinnipedo.especimenId, idEspecimen));
+  const item = { ...result[0] };
+  // @ts-ignore
+  delete item.id;
+  // @ts-ignore
+  delete item.especimenId;
+  return item as RegistroMorfometricoPinnipedo;
 };

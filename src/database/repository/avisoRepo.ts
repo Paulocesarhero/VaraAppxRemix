@@ -23,7 +23,6 @@ import {
   varamientoMasivo,
 } from "../schemas/avisoSchema";
 import { deleteEspecimenById } from "./especimenRepo";
-import { d } from "drizzle-kit/index-Z-1TKnbX";
 
 type newAviso = typeof avisos.$inferInsert;
 

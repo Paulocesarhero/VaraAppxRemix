@@ -1,7 +1,7 @@
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useExpoRouter } from "expo-router/build/global-state/router-store";
-import React, { useCallback, useEffect, useState } from "react";
-import { Platform, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Alert, Platform, Text, View } from "react-native";
 
 import {
   addOrganismoIfNotExists,
@@ -28,8 +28,8 @@ const SoloOrganismosVivosPage: React.FC = () => {
           (await getOrganismoByIdEspecimenLocal(idEspecimen)) || undefined;
         setFormValues(formValuesDbLocal);
       }
-    } catch (error) {
-      console.error("Error al obtener aviso: ", error);
+    } catch {
+      Alert.alert("Error", "Ocurrió un error inesperado");
     } finally {
       setIsLoading(false);
     }

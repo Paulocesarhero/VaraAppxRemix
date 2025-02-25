@@ -38,38 +38,34 @@ type ResponseImage = {
   existImage: boolean;
 };
 export const saveImage = async (photoUri: string): Promise<ResponseImage> => {
-  try {
-    const fileName = photoUri.split("/").pop();
-    const newDir = FileSystem.documentDirectory + "VaraAppx";
-    const newPath = `${newDir}/${fileName}`;
+  const fileName = photoUri.split("/").pop();
+  const newDir = FileSystem.documentDirectory + "VaraAppx";
+  const newPath = `${newDir}/${fileName}`;
 
-    const fileInfoRepeat = await FileSystem.getInfoAsync(newPath);
-    if (fileInfoRepeat.exists) {
-      return {
-        uri: newPath,
-        existImage: true,
-      }; // El archivo ya existe en la carpeta de destino, retorna su ruta
-    }
-
-    const dirInfo = await FileSystem.getInfoAsync(newDir);
-    if (!dirInfo.exists) {
-      await FileSystem.makeDirectoryAsync(newDir, { intermediates: true });
-    }
-
-    const fileInfo = await FileSystem.getInfoAsync(photoUri);
-    if (!fileInfo.exists) {
-      throw new Error("El archivo de origen no existe" + photoUri);
-    }
-
-    await FileSystem.moveAsync({
-      from: photoUri,
-      to: newPath,
-    });
-
-    return { uri: newPath, existImage: false };
-  } catch (error) {
-    throw error; // Lanza el error para que pueda ser manejado
+  const fileInfoRepeat = await FileSystem.getInfoAsync(newPath);
+  if (fileInfoRepeat.exists) {
+    return {
+      uri: newPath,
+      existImage: true,
+    }; // El archivo ya existe en la carpeta de destino, retorna su ruta
   }
+
+  const dirInfo = await FileSystem.getInfoAsync(newDir);
+  if (!dirInfo.exists) {
+    await FileSystem.makeDirectoryAsync(newDir, { intermediates: true });
+  }
+
+  const fileInfo = await FileSystem.getInfoAsync(photoUri);
+  if (!fileInfo.exists) {
+    throw new Error("El archivo de origen no existe" + photoUri);
+  }
+
+  await FileSystem.moveAsync({
+    from: photoUri,
+    to: newPath,
+  });
+
+  return { uri: newPath, existImage: false };
 };
 export const deleteImage = async (imageUri: string) => {
   if (imageUri === "") return;
@@ -103,8 +99,7 @@ export async function obtenerUbicacion(lat: number, lon: number) {
       localidad: data.address?.suburb || "",
       informacionAdicional: data.display_name || "",
     };
-  } catch (error) {
-    console.error("Error al obtener la ubicación:", error);
+  } catch {
     return null;
   }
 }

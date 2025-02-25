@@ -1,16 +1,13 @@
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { eq } from "drizzle-orm";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React from "react";
 import { View } from "react-native";
 import MaterialCard from "varaapplib/components/MaterialCard/MaterialCard";
 
 import { db } from "../../../database/connection/sqliteConnection";
-import { hasVaramientoMasivo } from "../../../database/repository/varamientoMasivoRepo";
 import {
-  avisos,
   especimen,
   varamientoMasivo,
 } from "../../../database/schemas/avisoSchema";

@@ -100,7 +100,9 @@ export const updateMisticetoByIdEspecimen = async (
 
   // Genera dinámicamente la lista de campos a actualizar
   const campos = Object.keys(misticetoObjeto).filter(
-    (campo) => campo !== "especimenId" && misticetoData.hasOwnProperty(campo)
+    (campo) =>
+      campo !== "especimenId" &&
+      Object.prototype.hasOwnProperty.call(misticetoData, campo)
   );
 
   // Generar el objeto actualizado dinámicamente
@@ -143,7 +145,7 @@ export const getMisticetoByIdEspecimenLocal = async (
     // @ts-ignore
     delete item.especimenId;
     return item as FormValuesMorfometriaMisticeto;
-  } catch (error) {
+  } catch {
     throw new Error(
       `Error al obtener el misticeto para el aviso ${idEspecimen}`
     );

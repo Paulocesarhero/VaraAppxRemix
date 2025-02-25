@@ -2,9 +2,7 @@ import { eq } from "drizzle-orm";
 
 import FormValuesAccionesYresultados from "../../forms/AccionesYResultados/FormValuesAccionesYresultados";
 import { db } from "../connection/sqliteConnection";
-import { acciones, sirenio } from "../schemas/avisoSchema";
-
-export type NewAcciones = typeof acciones.$inferInsert;
+import { acciones } from "../schemas/avisoSchema";
 
 export const addAccionesIfNotExists = async (idEspecimen: number) => {
   const existingAcciones = await db
@@ -80,35 +78,31 @@ export const updateAccionesByIdEspecimen = async (
 };
 
 export const getAccionesByIdEspecimenLocal = async (idEspecimen: number) => {
-  try {
-    const result = await db
-      .select()
-      .from(acciones)
-      .where(eq(acciones.especimenId, idEspecimen));
-    if (result.length === 0) {
-      throw new Error(
-        `No se encontró un acciones para el aviso con id ${idEspecimen}`
-      );
-    }
-
-    const item = result[0];
-
-    const formValues: FormValuesAccionesYresultados = {
-      Autoridades: item.autoridades ?? undefined,
-      TelefonoAutoridades: item.telefonoAutoridades ?? undefined,
-      Morfometria: item.morfometria === 1,
-      Necropsia: item.necropsia === 1,
-      DisposicionDelCadaver: item.disposicionDelCadaver ?? undefined,
-      DisposicionOtro: item.disposicionOtro ?? undefined,
-      PosibleCausaDelVaramiento: item.posibleCausaDelVaramiento ?? undefined,
-      PosibleCausaDeMuerte: item.posibleCausaDeMuerte ?? undefined,
-      Participantes: item.participantes ?? undefined,
-      Observaciones: item.observaciones ?? undefined,
-      TipoDeMuestras: JSON.parse(item.tipoDeMuestras as string),
-    };
-
-    return formValues;
-  } catch (error) {
-    throw error;
+  const result = await db
+    .select()
+    .from(acciones)
+    .where(eq(acciones.especimenId, idEspecimen));
+  if (result.length === 0) {
+    throw new Error(
+      `No se encontró un acciones para el aviso con id ${idEspecimen}`
+    );
   }
+
+  const item = result[0];
+
+  const formValues: FormValuesAccionesYresultados = {
+    Autoridades: item.autoridades ?? undefined,
+    TelefonoAutoridades: item.telefonoAutoridades ?? undefined,
+    Morfometria: item.morfometria === 1,
+    Necropsia: item.necropsia === 1,
+    DisposicionDelCadaver: item.disposicionDelCadaver ?? undefined,
+    DisposicionOtro: item.disposicionOtro ?? undefined,
+    PosibleCausaDelVaramiento: item.posibleCausaDelVaramiento ?? undefined,
+    PosibleCausaDeMuerte: item.posibleCausaDeMuerte ?? undefined,
+    Participantes: item.participantes ?? undefined,
+    Observaciones: item.observaciones ?? undefined,
+    TipoDeMuestras: JSON.parse(item.tipoDeMuestras as string),
+  };
+
+  return formValues;
 };

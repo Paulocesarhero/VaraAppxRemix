@@ -22,7 +22,7 @@ import {
 } from "../../database/schemas/avisoSchema";
 import RoundedButton from "varaapplib/components/RoundedButton/RoundedButton";
 import ImageDebugger from "../ImageDebuger";
-
+/* eslint-disable no-console */
 const Depurador: React.FC = () => {
   const getAvisos = async () => {
     console.log("====== Result of get avisos ======");

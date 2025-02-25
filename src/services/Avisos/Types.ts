@@ -79,7 +79,7 @@ export interface Peticion {
   RegistroMorfometricoOdontoceto: RegistroMorfometricoOdontoceto;
   RegistroMorfometricoPinnipedo: RegistroMorfometricoPinnipedo;
   RegistroMorfometricoMisticeto: FormValuesMorfometriaMisticeto;
-  AccionesYResultados?: AccionesYResultados | {};
+  AccionesYResultados?: AccionesYResultados | null;
   SoloOrganismoVivo: SoloOrganismoVivo;
   Condicion: number;
   LongitudTotalRectilinea: number | null;

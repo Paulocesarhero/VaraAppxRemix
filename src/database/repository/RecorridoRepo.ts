@@ -7,7 +7,6 @@ import {
   RecorridoWithRelations,
 } from "../schemas/avisoSchema";
 import { deleteAvisoById } from "./avisoRepo";
-import { all } from "axios";
 
 export const addRecorrido = async () => {
   try {

@@ -2,9 +2,9 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { eq } from "drizzle-orm";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
-import { useNavigation, useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
-import { Alert, Platform, Text, View } from "react-native";
+import { useRouter } from "expo-router";
+import React from "react";
+import { Platform, Text, View } from "react-native";
 import { AvisoForm } from "varaapplib/components/AvisoForm/AvisoForm";
 import { AvisoValues } from "varaapplib/components/AvisoForm/types";
 
@@ -24,7 +24,6 @@ const AvisoPage: React.FC = () => {
   const idSelected = useAvisoStore((state) => state.idAvisoSelected);
   const { setIdAvisoSelected } = useAvisoStore();
   const headerHeight = useHeaderHeight();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { idRecorridoSelected } = useRecorridoStore();
   const router = useRouter();
 
@@ -79,7 +78,7 @@ const AvisoPage: React.FC = () => {
     />
   );
 
-  if (isLoading || (avisosDbLocal.length === 0 && idSelected > 0)) {
+  if (avisosDbLocal.length === 0 && idSelected > 0) {
     return <Text>Cargando datos...</Text>;
   }
 

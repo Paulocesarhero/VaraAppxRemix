@@ -16,23 +16,18 @@ const useAvisoStore = create<AvisosState>((set) => ({
   idtaxaEspecie: 0,
   idEspecimen: 0,
   setIdEspecimen: (id: number) => {
-    console.log("idEspecimen actualizado:", id); // Depuración
     set({ idEspecimen: id });
   },
   setIdtaxaEspecie: (id: number) => {
-    console.log("idtaxaEspecie actualizado:", id); // Depuración
     set({ idtaxaEspecie: id });
   },
   setIdAvisoSelected: (id: number) => {
-    console.log("idAvisoSelected actualizado:", id); // Depuración
     set({ idAvisoSelected: id });
   },
   clearIdAvisoSelected: () => {
-    console.log("idAvisoSelected limpiado"); // Depuración
     set({ idAvisoSelected: 0 });
   },
   clearIdEspecimen: () => {
-    console.log("idEspecimen limpiado"); // Depuración
     set({ idEspecimen: null });
   },
 }));

@@ -1,3 +1,5 @@
+import { FormValuesCaracteristicasFisicasYAmbientales } from "./FormValuesCaracteristicasFisicasYAmbientales";
+
 interface CaracteristicasFisicasYAmbientalesProps {
   /**
    * Función que se ejecuta al enviar el formulario, recibiendo los valores del formulario como argumento.

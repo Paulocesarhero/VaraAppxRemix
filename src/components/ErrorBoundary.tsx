@@ -1,4 +1,4 @@
-import { Component, ReactNode } from "react";
+import React, { Component, ReactNode } from "react";
 
 interface ErrorBoundaryProps {
   fallback: ReactNode; // Componente o texto de fallback

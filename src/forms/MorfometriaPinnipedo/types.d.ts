@@ -1,3 +1,5 @@
+import { RegistroMorfometricoPinnipedo } from "./RegistroMorfometricoPinnipedo";
+
 interface MorfometriaPinnipedoProps {
   onSubmitData: (data: RegistroMorfometricoPinnipedo) => void;
   data?: RegistroMorfometricoPinnipedo;

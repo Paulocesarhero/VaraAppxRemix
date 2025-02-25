@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 
 import {
   addAmbienteIfNotExist,
@@ -21,12 +21,12 @@ const CaracteristicasFisicasYAmbientalesPage: React.FC = () => {
     setIsLoading(true);
     try {
       if (idSelected > 0) {
-        const result = await addAmbienteIfNotExist(idSelected);
+        await addAmbienteIfNotExist(idSelected);
         const formValuesDbLocal = await getAmbienteByIdAvisoLocalDb(idSelected);
         setFormValues(formValuesDbLocal);
       }
-    } catch (error) {
-      throw error;
+    } catch {
+      Alert.alert("Error", "Ocurrió un error inesperado");
     } finally {
       setIsLoading(false);
     }

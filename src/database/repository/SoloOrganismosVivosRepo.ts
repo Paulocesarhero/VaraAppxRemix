@@ -2,9 +2,7 @@ import { eq } from "drizzle-orm";
 
 import { FormValuesSoloOrganismosVivos } from "../../forms/SoloOrganismosVivos/FormValuesSoloOrganismosVivos";
 import { db } from "../connection/sqliteConnection";
-import { organismo, sirenio } from "../schemas/avisoSchema";
-
-type NewOrganismo = typeof organismo.$inferInsert;
+import { organismo } from "../schemas/avisoSchema";
 
 export const addOrganismoIfNotExists = async (idEspecimen: number) => {
   const existingOrganismo = await db
@@ -32,7 +30,9 @@ export const updateOrganismoByIdEspecimen = async (
   }
   const organismoObjeto = existingOrganismo[0];
   const campos = Object.keys(organismoObjeto).filter(
-    (campo) => campo !== "especimenId" && organismoData.hasOwnProperty(campo)
+    (campo) =>
+      campo !== "especimenId" &&
+      Object.prototype.hasOwnProperty.call(organismoData, campo)
   );
 
   const updatedOrganismo = campos.reduce((acc, campo) => {
@@ -51,24 +51,20 @@ export const updateOrganismoByIdEspecimen = async (
 };
 
 export const getOrganismoByIdEspecimenLocal = async (idEspecimen: number) => {
-  try {
-    const result = await db
-      .select()
-      .from(organismo)
-      .where(eq(organismo.especimenId, idEspecimen));
-    const item = { ...result[0] };
-    // @ts-ignore
-    delete item.id;
-    // @ts-ignore
-    delete item.especimenId;
-    // @ts-ignore
-    const formValues: FormValuesSoloOrganismosVivos = {
-      ...item,
-      reflotacion: item.reflotacion === 1,
-      animalTransferido: item.animalTransferido === 1,
-    };
-    return formValues;
-  } catch (error) {
-    return null;
-  }
+  const result = await db
+    .select()
+    .from(organismo)
+    .where(eq(organismo.especimenId, idEspecimen));
+  const item = { ...result[0] };
+  // @ts-ignore
+  delete item.id;
+  // @ts-ignore
+  delete item.especimenId;
+  // @ts-ignore
+  const formValues: FormValuesSoloOrganismosVivos = {
+    ...item,
+    reflotacion: item.reflotacion === 1,
+    animalTransferido: item.animalTransferido === 1,
+  };
+  return formValues;
 };

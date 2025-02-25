@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 
 import RegistroMorfometricoSirenio from "../../forms/MorfometriaSirenio/RegistroMorfometricoSirenio";
 import { db } from "../connection/sqliteConnection";
-import { pinnipedo, sirenio } from "../schemas/avisoSchema";
+import { sirenio } from "../schemas/avisoSchema";
 
 type NewSirenio = typeof sirenio.$inferInsert;
 
@@ -32,7 +32,9 @@ export const updateSirenioByIdEspecimen = async (
   }
   const sirenioObjeto = existingSirenio[0];
   const campos = Object.keys(sirenioObjeto).filter(
-    (campo) => campo !== "especimenId" && sirenioData.hasOwnProperty(campo)
+    (campo) =>
+      campo !== "especimenId" &&
+      Object.prototype.hasOwnProperty.call(sirenioData, campo)
   );
 
   const updatedSirenio = campos.reduce((acc, campo) => {
@@ -62,7 +64,7 @@ export const getSirenioByIdEspecimenLocal = async (idEspecimen: number) => {
     // @ts-ignore
     delete item.especimenId;
     return item as RegistroMorfometricoSirenio;
-  } catch (error) {
-    return {} as RegistroMorfometricoSirenio;
+  } catch {
+    return null;
   }
 };

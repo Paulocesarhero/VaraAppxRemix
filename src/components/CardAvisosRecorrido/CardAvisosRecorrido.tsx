@@ -72,7 +72,7 @@ const CardAvisosRecorrido: React.FC<CardAvisosRecorridoProps> = ({
   const handledeleteAviso = async (idAviso: number | string) => {
     if (!idAviso) return;
     try {
-      const result = await deleteAvisoById(Number(idAviso));
+      await deleteAvisoById(Number(idAviso));
     } catch (error) {
       // @ts-ignore
       Alert.alert("Error al eliminar el aviso", error.message);

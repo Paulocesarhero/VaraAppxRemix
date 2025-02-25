@@ -98,8 +98,8 @@ const generateSoloOrganismoVivo = (
 };
 const generateAccionesYResultados = (
   resultSqlite: AccionesDb | null
-): AccionesYResultados | {} => {
-  if (!resultSqlite) return {};
+): AccionesYResultados | null => {
+  if (!resultSqlite) return null;
   const tipoDeMuestras =
     typeof resultSqlite.tipoDeMuestras === "string"
       ? JSON.parse(resultSqlite.tipoDeMuestras).map((item: string) => ({

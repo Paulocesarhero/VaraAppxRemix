@@ -20,7 +20,7 @@ import { LoginViewModel } from "../../../services/Auth/AuthServiceInterfaces";
 
 const LoginPage: React.FC = () => {
   const router = useRouter();
-  const { isLoggedIn, actions } = useSettingStore();
+  const { actions } = useSettingStore();
   const { setToken } = useAuthStore();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");

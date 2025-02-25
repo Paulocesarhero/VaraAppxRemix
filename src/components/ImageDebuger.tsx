@@ -1,9 +1,9 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useState } from "react";
-import { View, Text, Image, ScrollView } from "react-native";
+import React, { useCallback, useState } from "react";
+import { Image, ScrollView, Text, View } from "react-native";
 import * as FileSystem from "expo-file-system";
 
-const ImageDebugger = () => {
+const ImageDebugger: React.FC = () => {
   const [files, setFiles] = useState<string[]>([]);
 
   const listFiles = async () => {

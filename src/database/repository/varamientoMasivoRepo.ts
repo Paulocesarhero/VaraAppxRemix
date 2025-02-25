@@ -7,8 +7,6 @@ import {
   VaramientoMasivoWithRelations,
 } from "../schemas/avisoSchema";
 
-type NewVaramientoMasivo = typeof varamientoMasivo.$inferInsert;
-
 export const addVaramientoMasivoIfNotExists = async (
   avisoId: number
 ): Promise<number> => {

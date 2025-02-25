@@ -1,7 +1,6 @@
-import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
-import { Platform, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Text } from "react-native";
 
 import {
   addOdontocetoIfNotExist,
@@ -23,7 +22,7 @@ const Odontoceto: React.FC = () => {
 
     try {
       if (idEspecimen != null && idEspecimen > 0) {
-        const result = await addOdontocetoIfNotExist(idEspecimen);
+        await addOdontocetoIfNotExist(idEspecimen);
         const formValuesDbLocal =
           await getOdontocetoByIdEspecimenLocal(idEspecimen);
         setFormValues(formValuesDbLocal);

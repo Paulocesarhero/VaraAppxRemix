@@ -1,5 +1,5 @@
 import { useFocusEffect, useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Text } from "react-native";
 
 import {
@@ -22,7 +22,7 @@ const Misticeto: React.FC = () => {
 
     try {
       if (idEspecimen != null && idEspecimen > 0) {
-        const result = await addMisticetoIfNotExist(idEspecimen);
+        await addMisticetoIfNotExist(idEspecimen);
         const formValuesDbLocal =
           await getMisticetoByIdEspecimenLocal(idEspecimen);
         setFormValues(formValuesDbLocal);

@@ -1,4 +1,3 @@
-import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,7 +16,6 @@ const Recommendations: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [formValues, setFormValues] = useState<FormValuesAccionesYresultados>();
   const idEspecimen = useAvisoStore((state) => state.idEspecimen);
-  const router = useRouter();
   const loadAcciones = async () => {
     setIsLoading(true);
     try {

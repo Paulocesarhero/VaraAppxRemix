@@ -16,7 +16,6 @@ import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 import { saveImage } from "../../../hooks/helpers";
 
 const EspecimenPage: React.FC = () => {
-  const idtaxaEspecie = useAvisoStore((state) => state.idtaxaEspecie);
   const idAviso = useAvisoStore((state) => state.idAvisoSelected);
   const { setIdtaxaEspecie } = useAvisoStore();
 
@@ -120,7 +119,7 @@ const EspecimenPage: React.FC = () => {
           router.push("screens/Sirenio/Sirenio");
           break;
       }
-    } catch (error) {
+    } catch {
       Alert.alert(
         "Error al enviar los datos intenta volver a seleccionar las fotos"
       );

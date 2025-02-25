@@ -1,6 +1,6 @@
 import { Entypo } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -19,6 +19,7 @@ import {
 import useAuthStore from "../../hooks/globalState/useAuthStore";
 import getEspecies, { Especie } from "../../services/Especie/GetEspecie";
 import { useFocusEffect } from "expo-router";
+
 /**
  * @enum {number}
  * @description Tipos de taxa:
@@ -40,7 +41,6 @@ const EspecieSelector: React.FC<EspecieSelectorProps> = ({
 }) => {
   const [especies, setEspecies] = useState<Especie[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const token = useAuthStore((state) => state.token);
@@ -56,7 +56,7 @@ const EspecieSelector: React.FC<EspecieSelectorProps> = ({
             setEspeciesBdLocal(data.data);
             setEspecies(data.data);
           }
-        } catch (err) {
+        } catch {
           const especiesBdLocal = await getEspeciesBdLocal();
           if (isActive && especiesBdLocal.length > 0) {
             setEspecies(especiesBdLocal as Especie[]);
@@ -143,48 +143,45 @@ const EspecieSelector: React.FC<EspecieSelectorProps> = ({
     }
   };
 
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0000ff" />;
+  }
+
   return (
     <>
       <Text style={EspecieSelectorStyle.text}>Selecciona una especie:</Text>
-
-      {loading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
-      ) : error ? (
-        <Text>{error}</Text>
-      ) : (
-        <>
-          <TouchableOpacity
-            style={EspecieSelectorStyle.selectorButton}
-            onPress={() => setIsModalVisible(true)}
-          >
-            <View style={EspecieSelectorStyle.selectedText}>
-              {selectedEspecie ? (
-                <>
-                  <Text style={{ fontSize: 12 }}>
-                    Nombre: {selectedEspecie.nombre}
-                  </Text>
-                  <Text>Taxa: {taxaText(selectedEspecie.taxa)}</Text>
-                  {imagenes[selectedEspecie.taxa] && (
-                    <Image
-                      source={imagenes[selectedEspecie.taxa].image}
-                      style={{ width: 50, height: 50, alignSelf: "center" }}
-                    />
-                  )}
-                </>
-              ) : (
-                <Text>Selecciona una especie</Text>
-              )}
-            </View>
-            <Entypo
-              style={{ alignSelf: "center", paddingRight: 20 }}
-              name="chevron-down"
-              size={24}
-              color="#000"
-            />
-          </TouchableOpacity>
-          {renderModal()}
-        </>
-      )}
+      <>
+        <TouchableOpacity
+          style={EspecieSelectorStyle.selectorButton}
+          onPress={() => setIsModalVisible(true)}
+        >
+          <View style={EspecieSelectorStyle.selectedText}>
+            {selectedEspecie ? (
+              <>
+                <Text style={{ fontSize: 12 }}>
+                  Nombre: {selectedEspecie.nombre}
+                </Text>
+                <Text>Taxa: {taxaText(selectedEspecie.taxa)}</Text>
+                {imagenes[selectedEspecie.taxa] && (
+                  <Image
+                    source={imagenes[selectedEspecie.taxa].image}
+                    style={{ width: 50, height: 50, alignSelf: "center" }}
+                  />
+                )}
+              </>
+            ) : (
+              <Text>Selecciona una especie</Text>
+            )}
+          </View>
+          <Entypo
+            style={{ alignSelf: "center", paddingRight: 20 }}
+            name="chevron-down"
+            size={24}
+            color="#000"
+          />
+        </TouchableOpacity>
+        {renderModal()}
+      </>
     </>
   );
 };

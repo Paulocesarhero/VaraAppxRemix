@@ -26,7 +26,7 @@ const MorfometriaOdontoceto: React.FC<MorformetriaOdontocetoProps> = ({
   data,
   isDisabled,
 }) => {
-  const { handleSubmit, control, setValue, getValues, watch } =
+  const { handleSubmit, control, setValue, watch } =
     useForm<RegistroMorfometricoOdontoceto>({
       defaultValues: data,
     });

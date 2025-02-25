@@ -1,4 +1,4 @@
-import { ImageSourcePropType, TextInputProps } from "react-native";
+import { ImageSourcePropType } from "react-native";
 
 interface InputAndImageProps {
   image?: ImageSourcePropType;

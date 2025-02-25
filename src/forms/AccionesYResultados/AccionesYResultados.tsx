@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -22,20 +22,15 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
   initialValues,
   onValuesChange,
 }: AccionesYResultadosFormProps) => {
-  const { handleSubmit, control, watch } =
-    useForm<FormValuesAccionesYresultados>({
-      mode: "onSubmit",
-      defaultValues: initialValues,
-    });
+  const { control, watch } = useForm<FormValuesAccionesYresultados>({
+    mode: "onSubmit",
+    defaultValues: initialValues,
+  });
 
   const watchedValues = watch();
   useEffect(() => {
     onValuesChange(watchedValues);
   }, [watchedValues]);
-
-  const onSubmit: SubmitHandler<FormValuesAccionesYresultados> = (data) => {
-    onSubmitData(data);
-  };
 
   const disposicionList: Estado[] = [
     {

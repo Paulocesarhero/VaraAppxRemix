@@ -105,7 +105,6 @@ const handleVaramientoIndividualResponse = async (
   peticion: any,
   token: string
 ): Promise<Response> => {
-  console.dir(peticion);
   const response: Response = await api.post(
     `api/Aviso/ReportarVaramientoIndividual`,
     peticion,
@@ -282,9 +281,6 @@ export const saveRecorrido = async (idRecorrido: number, token: string) => {
       const index: any =
         respuesta.data.idsEspecimenesIndividuales.indexOf(idsEspecimenes);
       if (avisosIndividualesLocalDb[index].fotografia) {
-        console.log(
-          "Subiendo fotografia " + avisosIndividualesLocalDb[index].fotografia
-        );
         await subirFotoAviso(
           avisosIndividualesLocalDb[index].fotografia,
           idsEspecimenes.idAviso,
@@ -306,12 +302,6 @@ export const saveRecorrido = async (idRecorrido: number, token: string) => {
       }
     }
     for (let i = 0; i < respuesta.data.idsEspecimenesMasivos.length; i++) {
-      console.log(
-        "Ids especimines ",
-        respuesta.data.idsEspecimenesMasivos[i].idsEspecimenes,
-        "INDEX ",
-        i
-      );
       if (
         avisosMasivosLocalDb[i].fotografia &&
         avisosMasivosLocalDb[i].fotografia != null
@@ -327,12 +317,11 @@ export const saveRecorrido = async (idRecorrido: number, token: string) => {
         respuesta.data.idsEspecimenesMasivos[i].idsEspecimenes,
         token
       );
-      console.log("respuesta ", respuesta);
     }
-
-    console.log("Respuesta de guardar recorrido " + JSON.stringify(respuesta));
   } catch (error: any | Error) {
-    if (error.message == "La CantidadDeAnimales debe ser mayor 1 y menor 10000")
+    if (
+      error.message === "La CantidadDeAnimales debe ser mayor 1 y menor 10000"
+    )
       throw new Error(
         "Asegúrese de que la cantidad de animales registrados en los avisos sea mayor a uno"
       );
@@ -347,8 +336,6 @@ const handleRecorridoVaraweb = async (
   barrerToken: string
 ) => {
   if (!data) return;
-  console.log("PETICION");
-  console.log(JSON.stringify(data, null, 2));
   const response = await api.post("/api/Recorrido/Registrar", data, {
     headers: {
       "Content-Type": "application/json",

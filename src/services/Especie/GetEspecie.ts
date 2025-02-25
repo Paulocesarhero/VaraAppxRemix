@@ -22,15 +22,11 @@ export type ResponseEspecies = {
 };
 
 const getEspecies = async (token: string): Promise<ResponseEspecies> => {
-  try {
-    const response = await api.get(`api/Especie/ObtenerEspecies`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await api.get(`api/Especie/ObtenerEspecies`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
 };
 export default getEspecies;
