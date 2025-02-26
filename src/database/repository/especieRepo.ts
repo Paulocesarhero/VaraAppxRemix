@@ -37,6 +37,7 @@ export const setEspeciesBdLocal = async (especies: Especie[]) => {
 export const getEspecieById = async (id: number | null): Promise<Especie> => {
   if (id === null) return {} as Especie;
   const result = await db.select().from(especie).where(eq(especie.id, id));
+
   if (result.length === 0) {
     return {} as Especie;
   }

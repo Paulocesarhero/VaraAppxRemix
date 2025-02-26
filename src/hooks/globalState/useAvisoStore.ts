@@ -3,7 +3,7 @@ import { create } from "zustand";
 interface AvisosState {
   idAvisoSelected: number;
   idtaxaEspecie: number;
-  idEspecimen: number | null;
+  idEspecimen: number;
   setIdEspecimen: (id: number) => void;
   setIdtaxaEspecie: (id: number) => void;
   setIdAvisoSelected: (id: number) => void;
@@ -28,7 +28,7 @@ const useAvisoStore = create<AvisosState>((set) => ({
     set({ idAvisoSelected: 0 });
   },
   clearIdEspecimen: () => {
-    set({ idEspecimen: null });
+    set({ idEspecimen: 0 });
   },
 }));
 

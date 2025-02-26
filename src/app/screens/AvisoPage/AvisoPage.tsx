@@ -3,7 +3,7 @@ import { useHeaderHeight } from "@react-navigation/elements";
 import { eq } from "drizzle-orm";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { useRouter } from "expo-router";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Platform, Text, View } from "react-native";
 import { AvisoForm } from "varaapplib/components/AvisoForm/AvisoForm";
 import { AvisoValues } from "varaapplib/components/AvisoForm/types";
@@ -26,6 +26,8 @@ const AvisoPage: React.FC = () => {
   const headerHeight = useHeaderHeight();
   const { idRecorridoSelected } = useRecorridoStore();
   const router = useRouter();
+  const previouValuesRef = useRef<Partial<AvisoValues>>({});
+  const [loading, setLoading] = useState(false);
 
   const { data: avisosDbLocal } = useLiveQuery(
     db.select().from(avisos).where(eq(avisos.id, idSelected)),
@@ -78,7 +80,29 @@ const AvisoPage: React.FC = () => {
     />
   );
 
-  if (avisosDbLocal.length === 0 && idSelected > 0) {
+  const onValuesChange = async (data: Partial<AvisoValues>) => {
+    const previousValues = previouValuesRef.current;
+    if (JSON.stringify(previousValues) === JSON.stringify(data)) {
+      return;
+    }
+    previouValuesRef.current = data;
+    if (idSelected < 1) {
+      await handleNewAviso(data as AvisoValues);
+    } else {
+      if (data.Fotografia !== previousValues.Fotografia && data.Fotografia) {
+        setLoading(true);
+        const response = await saveImage(data.Fotografia);
+        if (!response.existImage) {
+          await deletePhotoByIdAviso(idSelected);
+          data.Fotografia = response.uri;
+        }
+        setLoading(false);
+      }
+      await updateAviso(data, data.Nombre ?? "", idSelected);
+    }
+  };
+
+  if ((avisosDbLocal.length === 0 && idSelected > 0) || loading) {
     return <Text>Cargando datos...</Text>;
   }
 
@@ -93,7 +117,9 @@ const AvisoPage: React.FC = () => {
         onSubmitData={handleSaveAviso}
         loading={false}
         setLoading={() => {}}
-        onValuesChange={(vaxlues) => {}}
+        onValuesChange={(vaxlues) => {
+          onValuesChange(vaxlues);
+        }}
         data={{
           Nombre: avisosDbLocal[0]?.nombre ?? "",
           Telefono: avisosDbLocal[0]?.telefono ?? "",

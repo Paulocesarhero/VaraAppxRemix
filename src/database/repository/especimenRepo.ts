@@ -101,6 +101,14 @@ export const addEspecimenIfNotExist = async (idAviso: number) => {
     return existingEspecimen[0].id;
   }
 };
+
+export const addNewEspecimen = async () => {
+  const result = await db
+    .insert(especimen)
+    .values({ condicion: 0 })
+    .returning({ updateId: especimen.id });
+  return result;
+};
 export const addEspecimenToVaramientoMasivo = async (
   idAviso: number,
   idVaramientoMasivo: number
@@ -167,6 +175,15 @@ export const updateEspecimenById = async (
     sustrato: especimenData.sustrato ?? especimenObjeto.sustrato,
     avisoId: especimenObjeto.avisoId,
   };
+  console.log(
+    "Especimen data heridas de bala",
+    JSON.stringify(especimenData.heridasBalaFoto)
+  );
+  console.log(
+    "Especimen data  Presencias de redes",
+    JSON.stringify(especimenData.presenciaDeRedesFoto)
+  );
+  console.log("Update especimen especimen repo", updatedEspecimen);
   result = await db
     .update(especimen)
     .set(updatedEspecimen)

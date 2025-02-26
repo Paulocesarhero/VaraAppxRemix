@@ -1,19 +1,22 @@
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { ActivityIndicator, Alert, Platform, View } from "react-native";
 
 import {
   addEspecimenIfNotExist,
   deletePhotoEspecimenById,
-  getEspecimenByIdEspecimen,
   hasRegistroMorfometrico,
   updateEspecimenById,
 } from "../../../database/repository/especimenRepo";
 import Especimen from "../../../forms/Especimen/Especimen";
 import { FormValuesEspecimen } from "../../../forms/Especimen/FormValuesEspecimen";
+
 import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
 import { saveImage } from "../../../hooks/helpers";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite/index";
+import { db } from "../../../database/connection/sqliteConnection";
+import { Especie } from "../../../services/Especie/GetEspecie";
 
 const EspecimenPage: React.FC = () => {
   const idAviso = useAvisoStore((state) => state.idAvisoSelected);
@@ -21,7 +24,6 @@ const EspecimenPage: React.FC = () => {
 
   const idEspecimen = useAvisoStore((state) => state.idEspecimen);
   const { setIdEspecimen } = useAvisoStore();
-  const [formValues, setFormValues] = useState<FormValuesEspecimen>();
   const [hasMorfometria, setHasMorfometria] = useState<boolean>();
   const router = useRouter();
   const MISTICETO = 0;
@@ -29,25 +31,23 @@ const EspecimenPage: React.FC = () => {
   const ODONTOCETO = 2;
   const SIRENIO = 3;
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const previouValuesRef = useRef<Partial<FormValuesEspecimen>>({});
 
-  const loadEspecimen = async () => {
-    setIsLoading(true);
-    let especimenInfo: any;
-    console.log("load especimen", idEspecimen);
-
-    if (idEspecimen === null) {
-      const idEspecimenBD = await addEspecimenIfNotExist(idAviso);
-      setIdEspecimen(idEspecimenBD);
-      especimenInfo = await getEspecimenByIdEspecimen(idEspecimenBD);
-      setFormValues(especimenInfo);
-    } else {
-      especimenInfo = await getEspecimenByIdEspecimen(idEspecimen);
-      setFormValues(especimenInfo);
-    }
-    setIsLoading(false);
-  };
+  const { data: especimenBdLocal } = useLiveQuery(
+    db.query.especimen.findFirst({
+      where: (especimen, { eq }) => eq(especimen.id, idEspecimen),
+      with: {
+        especie: true,
+      },
+    }),
+    [idEspecimen, isLoading]
+  );
 
   const loadHasMorfometria = async () => {
+    if (idEspecimen < 1) {
+      const idEspecimen = await addEspecimenIfNotExist(idAviso);
+      setIdEspecimen(idEspecimen);
+    }
     setIsLoading(true);
     const result = await hasRegistroMorfometrico(idEspecimen);
     setHasMorfometria(result);
@@ -56,12 +56,11 @@ const EspecimenPage: React.FC = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      loadEspecimen();
+      console.log("load has morfometria ");
       loadHasMorfometria();
     }, [idEspecimen])
   );
   const onSubmitData = async (data: FormValuesEspecimen) => {
-    console.dir(data, { depth: null });
     try {
       if (!data.Especie) return;
       if (idEspecimen === null) return;
@@ -126,16 +125,90 @@ const EspecimenPage: React.FC = () => {
     }
   };
 
-  const handleValuesChange = async (values: Partial<FormValuesEspecimen>) => {};
+  const handleValuesChange = async (data: Partial<FormValuesEspecimen>) => {
+    const previousValues = previouValuesRef.current;
+    if (!data) return;
+    if (JSON.stringify(previousValues) === JSON.stringify(data)) {
+      return;
+    }
+    previouValuesRef.current = data;
+    if (!data.Especie) return;
+    if (idEspecimen === null) return;
+    try {
+      if (
+        data.presenciaDeRedesFoto !== previousValues.presenciaDeRedesFoto &&
+        data.presenciaDeRedesFoto
+      ) {
+        console.log("presencia de redes", data.presenciaDeRedesFoto);
+        setIsLoading(true);
+        const response = await saveImage(data.presenciaDeRedesFoto);
+        if (!response.existImage) {
+          data.presenciaDeRedesFoto = response.uri;
+          await deletePhotoEspecimenById(idEspecimen, "presenciaDeRedes");
+        }
+        await updateEspecimenById(data, idEspecimen);
+        setIsLoading(false);
+      }
+      if (data.golpesFoto !== previousValues.golpesFoto && data.golpesFoto) {
+        setIsLoading(true);
+        const response = await saveImage(data.golpesFoto);
+        if (!response.existImage) {
+          await deletePhotoEspecimenById(idEspecimen, "golpes");
+          data.golpesFoto = response.uri;
+        }
+        setIsLoading(false);
+      }
+      if (
+        data.heridasBalaFoto !== previousValues.heridasBalaFoto &&
+        data.heridasBalaFoto
+      ) {
+        setIsLoading(true);
+        const response = await saveImage(data.heridasBalaFoto);
+        if (!response.existImage) {
+          await deletePhotoEspecimenById(idEspecimen, "heridasDeBala");
+          data.heridasBalaFoto = response.uri;
+        }
+        setIsLoading(false);
+      }
+
+      if (
+        data.mordidasFoto !== previousValues.mordidasFoto &&
+        data.mordidasFoto
+      ) {
+        setIsLoading(true);
+        const response = await saveImage(data.mordidasFoto);
+        if (!response.existImage) {
+          await deletePhotoEspecimenById(idEspecimen, "mordidas");
+          data.mordidasFoto = response.uri;
+        }
+        setIsLoading(false);
+      }
+
+      if (
+        data.otroTipoDeHeridasFoto !== previousValues.otroTipoDeHeridasFoto &&
+        data.otroTipoDeHeridasFoto
+      ) {
+        setIsLoading(true);
+        const response = await saveImage(data.otroTipoDeHeridasFoto);
+        if (!response.existImage) {
+          await deletePhotoEspecimenById(idEspecimen, "otros");
+          data.otroTipoDeHeridasFoto = response.uri;
+        }
+        setIsLoading(false);
+      }
+      console.log("Antes update", data);
+      await updateEspecimenById(data, idEspecimen);
+    } catch (error) {
+      console.error(error);
+      Alert.alert(
+        "Error al enviar los datos intenta volver a seleccionar las fotos"
+      );
+    }
+  };
 
   const headerHeight = useHeaderHeight();
 
-  if (
-    isLoading ||
-    !formValues ||
-    idEspecimen === null ||
-    hasMorfometria == undefined
-  ) {
+  if (isLoading || idEspecimen === null || hasMorfometria == undefined) {
     return (
       <ActivityIndicator
         style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
@@ -148,7 +221,35 @@ const EspecimenPage: React.FC = () => {
     <View style={{ paddingTop: Platform.OS === "android" ? 0 : headerHeight }}>
       <Especimen
         hasMorfometria={hasMorfometria}
-        initialValues={formValues}
+        initialValues={
+          {
+            Latitud: especimenBdLocal?.latitud ?? "",
+            Longitud: especimenBdLocal?.longitud ?? "",
+            EspecieId: especimenBdLocal?.especieId ?? 1,
+            Especie: especimenBdLocal?.especie as Especie,
+            condicion: especimenBdLocal?.condicion ?? 0,
+            longitudTotalRectilinea:
+              especimenBdLocal?.longitudTotalRectilinea ?? "",
+            peso: especimenBdLocal?.peso ?? "",
+            sexo: especimenBdLocal?.sexo ?? 0,
+            grupoDeEdad: especimenBdLocal?.grupoDeEdad ?? 0,
+            orientacionDelEspecimen:
+              especimenBdLocal?.orientacionDelEspecimen ?? "",
+            sustrato: especimenBdLocal?.sustrato ?? 0,
+            otroSustrato: especimenBdLocal?.otroSustrato ?? "",
+            heridasBala: especimenBdLocal?.heridasBala ?? "",
+            heridasBalaFoto: especimenBdLocal?.heridasBalaFoto ?? "",
+            presenciaDeRedes: especimenBdLocal?.presenciaDeRedes ?? "",
+            presenciaDeRedesFoto: especimenBdLocal?.presenciaDeRedesFoto ?? "",
+            mordidas: especimenBdLocal?.mordidas ?? "",
+            mordidasFoto: especimenBdLocal?.mordidasFoto ?? "",
+            golpes: especimenBdLocal?.golpes ?? "",
+            golpesFoto: especimenBdLocal?.golpesFoto ?? "",
+            otroTipoDeHeridas: especimenBdLocal?.otroTipoDeHeridas ?? "",
+            otroTipoDeHeridasFoto:
+              especimenBdLocal?.otroTipoDeHeridasFoto ?? "",
+          } as FormValuesEspecimen
+        }
         onValuesChange={async (values: Partial<FormValuesEspecimen>) => {
           await handleValuesChange(values);
         }}
@@ -157,5 +258,4 @@ const EspecimenPage: React.FC = () => {
     </View>
   );
 };
-
 export default EspecimenPage;

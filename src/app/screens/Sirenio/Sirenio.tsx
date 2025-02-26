@@ -1,6 +1,6 @@
 import { useFocusEffect, useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Text } from "react-native";
+import { Alert, Text } from "react-native";
 
 import {
   addSirenioIfNotExists,
@@ -26,8 +26,8 @@ const Sirenio: React.FC = () => {
 
         setFormValues(formValuesDbLocal);
       }
-    } catch (error) {
-      console.error("Error al obtener aviso: ", error);
+    } catch {
+      Alert.alert("Error", "Ocurrió un error inesperado");
     } finally {
       setIsLoading(false);
     }

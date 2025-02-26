@@ -65,6 +65,6 @@ export const getSirenioByIdEspecimenLocal = async (idEspecimen: number) => {
     delete item.especimenId;
     return item as RegistroMorfometricoSirenio;
   } catch {
-    return null;
+    return {} as RegistroMorfometricoSirenio;
   }
 };
