@@ -26,7 +26,7 @@ const LabelAndImage: React.FC<InputAndImageProps> = ({ image, label }) => {
             color="black"
             style={{
               boxShadow: "0px 2px 7px rgba(0, 0, 0, 0.9)",
-              borderRadius: "100%",
+              borderRadius: 15,
             }}
           />
         </TouchableOpacity>
