@@ -2,7 +2,7 @@ import axios from "axios";
 import { router } from "expo-router";
 import useSettingStore from "../hooks/globalState/useSettingStore";
 
-export const BASE_URL = "http://192.168.1.56";
+export const BASE_URL = "http://varaweb.ag-dev.com.mx";
 
 const api = axios.create({
   baseURL: BASE_URL,
