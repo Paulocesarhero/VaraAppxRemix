@@ -43,7 +43,7 @@ const LoginPage: React.FC = () => {
   }, []);
 
   const HandleRegistroCientifico = () => {
-    router.push("screens/RegistroCientificoPage/RegistroCientificoPage");
+    router.push("RegistroCientificoPage");
   };
 
   const handleLogin = async () => {

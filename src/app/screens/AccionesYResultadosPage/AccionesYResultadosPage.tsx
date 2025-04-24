@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-
-import { ColorsPalete } from "../../../constants/COLORS";
+import { Text, View } from "react-native";
 import {
   addAccionesIfNotExists,
   getAccionesByIdEspecimenLocal,
@@ -44,10 +41,7 @@ const Recommendations: React.FC = () => {
     return <Text>Cargando datos...</Text>;
   }
   return (
-    <SafeAreaView
-      edges={["bottom"]}
-      style={{ flex: 1, backgroundColor: ColorsPalete.light }}
-    >
+    <View style={{ flex: 1, marginHorizontal: 5 }}>
       <AccionesYResultadosForm
         onSubmitData={(data: FormValuesAccionesYresultados) => {
           console.log("Datos enviados:", data);
@@ -55,7 +49,7 @@ const Recommendations: React.FC = () => {
         initialValues={formValues}
         onValuesChange={handleValuesChange}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 export default Recommendations;

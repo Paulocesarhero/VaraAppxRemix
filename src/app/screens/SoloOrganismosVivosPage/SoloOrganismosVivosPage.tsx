@@ -1,7 +1,6 @@
-import { useHeaderHeight } from "@react-navigation/elements";
 import { useExpoRouter } from "expo-router/build/global-state/router-store";
 import React, { useState } from "react";
-import { Alert, Platform, Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 
 import {
   addOrganismoIfNotExists,
@@ -54,7 +53,6 @@ const SoloOrganismosVivosPage: React.FC = () => {
       updatedValues as unknown as FormValuesSoloOrganismosVivos
     );
   };
-  const headerHeight = useHeaderHeight();
   const onSubmitData = async () => {
     router.navigate("screens/AccionesYResultadosPage/AccionesYResultadosPage");
   };
@@ -64,7 +62,7 @@ const SoloOrganismosVivosPage: React.FC = () => {
   }
 
   return (
-    <View style={{ paddingTop: Platform.OS === "android" ? 0 : headerHeight }}>
+    <View style={{ flex: 1, marginHorizontal: 5 }}>
       <SoloOrganismosVivos
         onSubmitData={onSubmitData}
         isDisabled={false}

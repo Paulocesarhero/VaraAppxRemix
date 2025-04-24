@@ -14,7 +14,6 @@ const PhotoAndInputStyle = StyleSheet.create({
   },
   label: {
     textAlign: "center",
-    fontWeight: "bold",
     fontSize: 16,
   },
 });

@@ -42,6 +42,15 @@ const Layout = () => {
               title: "Login",
             }}
           />
+          <Stack.Screen
+            name="RegistroCientificoPage"
+            options={{
+              title: "Registro Científico",
+              headerShown: true,
+              headerBackButtonDisplayMode: "minimal",
+              gestureEnabled: true,
+            }}
+          />
         </Stack>
       </SQLiteProvider>
     </ErrorBoundary>

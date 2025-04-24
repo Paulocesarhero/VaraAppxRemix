@@ -20,6 +20,7 @@ import CaracteristicasFisicasYAmbientalesProps from "./types";
 import InlineButton from "../../components/InlineButton/InlineButton";
 import { updateAmbienteByIdAviso } from "../../database/repository/ambienteRepo";
 import useAvisoStore from "../../hooks/globalState/useAvisoStore";
+import { CustomTitle } from "../../components/CustomTitle";
 
 const CaracteristicasFisicasYAmbientales: React.FC<
   CaracteristicasFisicasYAmbientalesProps
@@ -99,8 +100,8 @@ const CaracteristicasFisicasYAmbientales: React.FC<
         paddingHorizontal: 0,
       }}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView keyboardShouldPersistTaps="handled">
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} style={{ flex: 1 }}>
+        <>
           <InlineButton
             text="Continuar y guardar"
             icon={
@@ -112,239 +113,254 @@ const CaracteristicasFisicasYAmbientales: React.FC<
             }
             onPress={handleSubmit(onSubmit)}
           />
-          <InputField
-            testID="temperaturaAmbiente"
-            nameInput="temperaturaAmbiente"
-            iconName="thermometer"
-            iconFamily="Ionicons"
-            label="Temperatura ambiente"
-            placeholder="Ejemplo: 20° C"
-            keyboardType="numeric"
-            validateRules={{
-              pattern: {
-                value: /^-?\d+(\.\d+)?$/,
-                message: "Debe ser un número válido (puede incluir decimales)",
-              },
-            }}
-            maxLength={20}
-            autoCorrect={false}
-            control={control}
-            isRequired={false}
-          />
-          <InputField
-            nameInput="precipitacionHoy"
-            iconName="rainy"
-            iconFamily="Ionicons"
-            label="Precipitación hoy"
-            placeholder="Ejemplo: 200 mm"
-            keyboardType="numeric"
-            validateRules={{
-              pattern: {
-                value: /^-?\d+(\.\d+)?$/,
-                message: "Debe ser un número válido (puede incluir decimales)",
-              },
-            }}
-            maxLength={20}
-            autoCorrect={false}
-            control={control}
-            isRequired={false}
-          />
-          <InputField
-            nameInput="precipitacionTormentaPrevia"
-            iconName="rainy"
-            iconFamily="Ionicons"
-            label="Precipitación de tormenta previa"
-            placeholder="Ejemplo: 200 mm"
-            keyboardType="numeric"
-            validateRules={{
-              pattern: {
-                value: /^-?\d+(\.\d+)?$/,
-                message: "Debe ser un número válido (puede incluir decimales)",
-              },
-            }}
-            maxLength={20}
-            autoCorrect={false}
-            control={control}
-            isRequired={false}
-          />
-          <InputField
-            nameInput="temperaturaSupMar"
-            iconName="thermometer"
-            iconFamily="Ionicons"
-            label="Temp. sup. del mar"
-            placeholder="Ejemplo: 20° C"
-            keyboardType="numeric"
-            validateRules={{
-              pattern: {
-                value: /^-?\d+(\.\d+)?$/,
-                message: "Debe ser un número válido (puede incluir decimales)",
-              },
-            }}
-            maxLength={20}
-            autoCorrect={false}
-            control={control}
-            isRequired={false}
-          />
-          <Controller
-            control={control}
-            name="marea"
-            render={({ field: { onChange, value } }) => (
-              <MaterialSelector
-                iconName="water"
-                iconFamily="Ionicons"
-                label="Marea"
-                estados={mareaList}
-                onEstadoChange={(estado: string) => {
-                  onChange(estado);
-                }}
-                value={value}
-              />
-            )}
-          />
-          <InputField
-            nameInput="mareaMedida"
-            iconName="water"
-            iconFamily="Ionicons"
-            label="Medida de la marea"
-            placeholder="Ejemplo: 2mm"
-            keyboardType="numeric"
-            validateRules={{
-              pattern: {
-                value: /^-?\d+(\.\d+)?$/,
-                message: "Debe ser un número válido (puede incluir decimales)",
-              },
-            }}
-            maxLength={20}
-            autoCorrect={false}
-            control={control}
-            isRequired={false}
-          />
-          <Controller
-            control={control}
-            name="direccionDelViento"
-            render={({ field: { onChange, value } }) => (
-              <MaterialSelector
-                iconName="compass"
-                iconFamily="Ionicons"
-                label="Direccion del viento"
-                estados={direccionVientoList}
-                onEstadoChange={(estado: string) => {
-                  onChange(estado);
-                }}
-                value={value}
-              />
-            )}
-          />
-          <InputField
-            nameInput="velocidadDelViento"
-            iconName="speedometer"
-            iconFamily="Ionicons"
-            label="Velocidad del viento"
-            placeholder="Ejemplo: 20 km/hr"
-            keyboardType="numeric"
-            validateRules={{
-              pattern: {
-                value: /^-?\d+(\.\d+)?$/,
-                message: "Debe ser un número válido (puede incluir decimales)",
-              },
-            }}
-            maxLength={20}
-            autoCorrect={false}
-            control={control}
-            isRequired={false}
-          />
-          <InputField
-            nameInput="nubosidad"
-            iconName="cloud"
-            iconFamily="Ionicons"
-            label="Porcentaje de nubosidad"
-            placeholder="Ejemplo: 20 %"
-            keyboardType="numeric"
-            validateRules={{
-              pattern: {
-                value: /^-?\d+(\.\d+)?$/,
-                message: "Debe ser un número válido (puede incluir decimales)",
-              },
-            }}
-            maxLength={20}
-            autoCorrect={false}
-            control={control}
-            isRequired={false}
-          />
-          <InputField
-            nameInput="oleaje"
-            iconName="boat"
-            iconFamily="Ionicons"
-            label="Oleaje"
-            placeholder="Ejemplo: 20 cm"
-            keyboardType="numeric"
-            validateRules={{
-              pattern: {
-                value: /^-?\d+(\.\d+)?$/,
-                message: "Debe ser un número válido (puede incluir decimales)",
-              },
-            }}
-            maxLength={20}
-            autoCorrect={false}
-            control={control}
-            isRequired={false}
-          />
-          <InputField
-            nameInput="beaufort"
-            iconName="flag"
-            iconFamily="Ionicons"
-            label="Escala de Beaufort"
-            placeholder="Ejemplo: 6"
-            keyboardType="numeric"
-            validateRules={{
-              pattern: {
-                value: /^[0-9]$|^1[0-2]$/,
-                message: "Debe ser un número entre 0 y 12",
-              },
-            }}
-            maxLength={2}
-            autoCorrect={false}
-            control={control}
-            isRequired={false}
-          />
-          <Controller
-            control={control}
-            name="anormalidadGeomagnetica"
-            render={({ field: { onChange, value } }) => (
-              <View style={{ paddingHorizontal: 10 }}>
-                <CustomCheckBox
-                  label="Anormalidad geomagnética"
-                  isChecked={value}
-                  onToggle={() => onChange(!value)}
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            stickyHeaderIndices={[0]}
+          >
+            <CustomTitle>Formato general</CustomTitle>
+            <InputField
+              testID="temperaturaAmbiente"
+              nameInput="temperaturaAmbiente"
+              iconName="thermometer"
+              iconFamily="Ionicons"
+              label="Temperatura ambiente"
+              placeholder="Ejemplo: 20° C"
+              keyboardType="numeric"
+              validateRules={{
+                pattern: {
+                  value: /^-?\d+(\.\d+)?$/,
+                  message:
+                    "Debe ser un número válido (puede incluir decimales)",
+                },
+              }}
+              maxLength={20}
+              autoCorrect={false}
+              control={control}
+              isRequired={false}
+            />
+            <InputField
+              nameInput="precipitacionHoy"
+              iconName="rainy"
+              iconFamily="Ionicons"
+              label="Precipitación hoy"
+              placeholder="Ejemplo: 200 mm"
+              keyboardType="numeric"
+              validateRules={{
+                pattern: {
+                  value: /^-?\d+(\.\d+)?$/,
+                  message:
+                    "Debe ser un número válido (puede incluir decimales)",
+                },
+              }}
+              maxLength={20}
+              autoCorrect={false}
+              control={control}
+              isRequired={false}
+            />
+            <InputField
+              nameInput="precipitacionTormentaPrevia"
+              iconName="rainy"
+              iconFamily="Ionicons"
+              label="Precipitación de tormenta previa"
+              placeholder="Ejemplo: 200 mm"
+              keyboardType="numeric"
+              validateRules={{
+                pattern: {
+                  value: /^-?\d+(\.\d+)?$/,
+                  message:
+                    "Debe ser un número válido (puede incluir decimales)",
+                },
+              }}
+              maxLength={20}
+              autoCorrect={false}
+              control={control}
+              isRequired={false}
+            />
+            <InputField
+              nameInput="temperaturaSupMar"
+              iconName="thermometer"
+              iconFamily="Ionicons"
+              label="Temp. sup. del mar"
+              placeholder="Ejemplo: 20° C"
+              keyboardType="numeric"
+              validateRules={{
+                pattern: {
+                  value: /^-?\d+(\.\d+)?$/,
+                  message:
+                    "Debe ser un número válido (puede incluir decimales)",
+                },
+              }}
+              maxLength={20}
+              autoCorrect={false}
+              control={control}
+              isRequired={false}
+            />
+            <Controller
+              control={control}
+              name="marea"
+              render={({ field: { onChange, value } }) => (
+                <MaterialSelector
+                  iconName="water"
+                  iconFamily="Ionicons"
+                  label="Marea"
+                  estados={mareaList}
+                  onEstadoChange={(estado: string) => {
+                    onChange(estado);
+                  }}
+                  value={value}
                 />
-              </View>
-            )}
-          />
-          <Controller
-            control={control}
-            name="mareaRoja"
-            render={({ field: { onChange, value } }) => (
-              <View style={{ paddingHorizontal: 10 }}>
-                <CustomCheckBox
-                  label="¿Hay marea roja?"
-                  isChecked={value}
-                  onToggle={() => onChange(!value)}
+              )}
+            />
+            <InputField
+              nameInput="mareaMedida"
+              iconName="water"
+              iconFamily="Ionicons"
+              label="Medida de la marea"
+              placeholder="Ejemplo: 2mm"
+              keyboardType="numeric"
+              validateRules={{
+                pattern: {
+                  value: /^-?\d+(\.\d+)?$/,
+                  message:
+                    "Debe ser un número válido (puede incluir decimales)",
+                },
+              }}
+              maxLength={20}
+              autoCorrect={false}
+              control={control}
+              isRequired={false}
+            />
+            <Controller
+              control={control}
+              name="direccionDelViento"
+              render={({ field: { onChange, value } }) => (
+                <MaterialSelector
+                  iconName="compass"
+                  iconFamily="Ionicons"
+                  label="Direccion del viento"
+                  estados={direccionVientoList}
+                  onEstadoChange={(estado: string) => {
+                    onChange(estado);
+                  }}
+                  value={value}
                 />
-              </View>
-            )}
-          />
-          <InputField
-            nameInput="anormalidadEnLaPesca"
-            iconName="fish"
-            iconFamily="Ionicons"
-            label="Anormalidad en la pesca"
-            placeholder="Presencia de restos de petróleo"
-            maxLength={200}
-            autoCorrect={false}
-            control={control}
-            isRequired={false}
-          />
-        </ScrollView>
+              )}
+            />
+            <InputField
+              nameInput="velocidadDelViento"
+              iconName="speedometer"
+              iconFamily="Ionicons"
+              label="Velocidad del viento"
+              placeholder="Ejemplo: 20 km/hr"
+              keyboardType="numeric"
+              validateRules={{
+                pattern: {
+                  value: /^-?\d+(\.\d+)?$/,
+                  message:
+                    "Debe ser un número válido (puede incluir decimales)",
+                },
+              }}
+              maxLength={20}
+              autoCorrect={false}
+              control={control}
+              isRequired={false}
+            />
+            <InputField
+              nameInput="nubosidad"
+              iconName="cloud"
+              iconFamily="Ionicons"
+              label="Porcentaje de nubosidad"
+              placeholder="Ejemplo: 20 %"
+              keyboardType="numeric"
+              validateRules={{
+                pattern: {
+                  value: /^-?\d+(\.\d+)?$/,
+                  message:
+                    "Debe ser un número válido (puede incluir decimales)",
+                },
+              }}
+              maxLength={20}
+              autoCorrect={false}
+              control={control}
+              isRequired={false}
+            />
+            <InputField
+              nameInput="oleaje"
+              iconName="boat"
+              iconFamily="Ionicons"
+              label="Oleaje"
+              placeholder="Ejemplo: 20 cm"
+              keyboardType="numeric"
+              validateRules={{
+                pattern: {
+                  value: /^-?\d+(\.\d+)?$/,
+                  message:
+                    "Debe ser un número válido (puede incluir decimales)",
+                },
+              }}
+              maxLength={20}
+              autoCorrect={false}
+              control={control}
+              isRequired={false}
+            />
+            <InputField
+              nameInput="beaufort"
+              iconName="flag"
+              iconFamily="Ionicons"
+              label="Escala de Beaufort"
+              placeholder="Ejemplo: 6"
+              keyboardType="numeric"
+              validateRules={{
+                pattern: {
+                  value: /^[0-9]$|^1[0-2]$/,
+                  message: "Debe ser un número entre 0 y 12",
+                },
+              }}
+              maxLength={2}
+              autoCorrect={false}
+              control={control}
+              isRequired={false}
+            />
+            <Controller
+              control={control}
+              name="anormalidadGeomagnetica"
+              render={({ field: { onChange, value } }) => (
+                <View style={{ paddingHorizontal: 10 }}>
+                  <CustomCheckBox
+                    label="Anormalidad geomagnética"
+                    isChecked={value}
+                    onToggle={() => onChange(!value)}
+                  />
+                </View>
+              )}
+            />
+            <Controller
+              control={control}
+              name="mareaRoja"
+              render={({ field: { onChange, value } }) => (
+                <View style={{ paddingHorizontal: 10 }}>
+                  <CustomCheckBox
+                    label="¿Hay marea roja?"
+                    isChecked={value}
+                    onToggle={() => onChange(!value)}
+                  />
+                </View>
+              )}
+            />
+            <InputField
+              nameInput="anormalidadEnLaPesca"
+              iconName="fish"
+              iconFamily="Ionicons"
+              label="Anormalidad en la pesca"
+              placeholder="Presencia de restos de petróleo"
+              maxLength={200}
+              autoCorrect={false}
+              control={control}
+              isRequired={false}
+            />
+            <View style={{ marginVertical: 150 }} />
+          </ScrollView>
+        </>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );

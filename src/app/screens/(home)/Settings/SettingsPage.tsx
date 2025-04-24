@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   box: {
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     margin: 10,
     gap: 10,
     padding: 10,

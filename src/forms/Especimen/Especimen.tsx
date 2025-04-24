@@ -26,6 +26,7 @@ import InlineButton from "../../components/InlineButton/InlineButton";
 import PhotoAndInputForm from "../../components/PhotoAndInputs/PhotoAndInputs";
 import { handleNumericInputWithOnepoint } from "../../hooks/validations";
 import { Especie } from "../../services/Especie/GetEspecie";
+import { CustomTitle } from "../../components/CustomTitle";
 
 const Especimen: React.FC<FormatoIndividualProps> = ({
   initialValues,
@@ -178,22 +179,24 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
     >
+      <InlineButton
+        text="Continuar y guardar"
+        onPress={handleSubmit(onSubmitData)}
+        icon={
+          <MaterialCommunityIcons
+            name="page-next-outline"
+            size={24}
+            color="black"
+          />
+        }
+      />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
-          style={{ paddingTop: 10, paddingHorizontal: 10 }}
           keyboardShouldPersistTaps="handled"
+          stickyHeaderIndices={[0, 14]}
         >
-          <InlineButton
-            text="Continuar y guardar"
-            onPress={handleSubmit(onSubmitData)}
-            icon={
-              <MaterialCommunityIcons
-                name="page-next-outline"
-                size={24}
-                color="black"
-              />
-            }
-          />
+          <CustomTitle>Formato individual</CustomTitle>
+
           {!hasMorfometria ? (
             <Controller
               control={control}
@@ -549,6 +552,7 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
             control={control}
             isRequired={false}
           />
+          <CustomTitle>Características Externas</CustomTitle>
 
           <PhotoAndInputForm
             control={control}

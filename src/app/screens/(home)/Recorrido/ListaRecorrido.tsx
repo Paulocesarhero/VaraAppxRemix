@@ -177,10 +177,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   itemContainer: {
-    backgroundColor: ColorsPalete.light,
     marginVertical: 20,
     marginHorizontal: 10,
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 15,
     gap: 10,
     height: 150,

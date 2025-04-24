@@ -182,19 +182,19 @@ const MorfometriaMisticeto: React.FC<MorfometriaMisticetoProps> = ({
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         keyboardVerticalOffset={Platform.OS === "ios" ? 70 : 0}
       >
+        <InlineButton
+          text="Continuar y guardar"
+          onPress={handleSubmit(onSubmitData)}
+          icon={
+            <MaterialCommunityIcons
+              name="page-next-outline"
+              size={24}
+              color="black"
+            />
+          }
+        />
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <ScrollView>
-            <InlineButton
-              text="Continuar y guardar"
-              onPress={handleSubmit(onSubmitData)}
-              icon={
-                <MaterialCommunityIcons
-                  name="page-next-outline"
-                  size={24}
-                  color="black"
-                />
-              }
-            />
             {formKeys.map((key, index) => {
               const medidaKey = key.match(/M(\d+)/)?.[1]; // Extraer el número de la medida
               const imagenReferencia = images.find(

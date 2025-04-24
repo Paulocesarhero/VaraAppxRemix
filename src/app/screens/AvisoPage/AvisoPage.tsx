@@ -1,10 +1,9 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useHeaderHeight } from "@react-navigation/elements";
 import { eq } from "drizzle-orm";
 import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { useRouter } from "expo-router";
 import React, { useRef, useState } from "react";
-import { Platform, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { AvisoForm } from "varaapplib/components/AvisoForm/AvisoForm";
 import { AvisoValues } from "varaapplib/components/AvisoForm/types";
 
@@ -23,7 +22,6 @@ import useRecorridoStore from "../../../hooks/globalState/useRecorridoStore";
 const AvisoPage: React.FC = () => {
   const idSelected = useAvisoStore((state) => state.idAvisoSelected);
   const { setIdAvisoSelected } = useAvisoStore();
-  const headerHeight = useHeaderHeight();
   const { idRecorridoSelected } = useRecorridoStore();
   const router = useRouter();
   const previouValuesRef = useRef<Partial<AvisoValues>>({});
@@ -107,11 +105,11 @@ const AvisoPage: React.FC = () => {
   }
 
   return (
-    <View style={{ marginHorizontal: 5 }}>
+    <View style={{ marginHorizontal: 5, flex: 1 }}>
       <AvisoForm
         scroolViewStyles={{
-          paddingTop: Platform.OS === "android" ? 0 : headerHeight,
           paddingHorizontal: 0,
+          paddingVertical: 0,
         }}
         reactNodeButton={CustomButton}
         onSubmitData={handleSaveAviso}

@@ -1,20 +1,25 @@
-import { Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AxiosError } from "axios";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
-import CustomizableHeader from "varaapplib/components/CustomizableHeader/CustomizableHeader";
 import InformacionPersonalForm from "varaapplib/components/InformacionPersonalForm/InformacionPersonalForm";
-
-import { ColorsPalete } from "../../../constants/COLORS";
-import { RegistroCientifico } from "../../../services/Auth/AuthService";
+import { RegistroCientifico } from "../services/Auth/AuthService";
+import InlineButton from "../components/InlineButton/InlineButton";
 
 const RegistroCientificoPage: React.FC = () => {
   const router = useRouter();
-  const handleBack = () => {
-    router.back();
-  };
   const [loading, setLoading] = useState(false);
+
+  const CustomButton = ({ onPress }: { onPress?: () => void }) => (
+    <InlineButton
+      text="Enviar registro"
+      icon={
+        <MaterialCommunityIcons name="content-save" size={24} color="black" />
+      }
+      onPress={onPress}
+    />
+  );
 
   const handleOnSubmit = async (data: any) => {
     setLoading(true);
@@ -38,30 +43,16 @@ const RegistroCientificoPage: React.FC = () => {
       setLoading(false);
     }
   };
+
   return (
-    <View
-      style={{
-        flex: 1,
-        paddingBottom: 10,
-        backgroundColor: ColorsPalete.light,
-      }}
-    >
-      <CustomizableHeader
-        containerStyle={{ backgroundColor: ColorsPalete.light }}
-        leftComponent={
-          <Ionicons
-            name="arrow-back"
-            size={24}
-            color="black"
-            onPress={handleBack}
-          />
-        }
-        rightComponent={<View style={{ height: 24, width: 24 }} />}
-      />
+    <View style={{ marginHorizontal: 5, flex: 1 }}>
       <InformacionPersonalForm
+        scroolViewStyles={{ paddingHorizontal: 0, paddingBottom: 100 }}
         onSubmitData={handleOnSubmit}
         loading={loading}
         setLoading={setLoading}
+        // @ts-ignore
+        reactNodeButton={CustomButton}
       />
     </View>
   );

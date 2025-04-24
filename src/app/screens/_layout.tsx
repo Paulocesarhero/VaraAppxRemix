@@ -60,8 +60,6 @@ const Layout: React.FC = () => {
           title: "Aviso",
           headerBackTitle: "regresar",
           headerBackButtonDisplayMode: "minimal",
-          headerTransparent: Platform.OS === "ios",
-          headerBlurEffect: Platform.OS === "ios" ? "regular" : undefined,
           headerLeft: headerHome,
         }}
       />
@@ -105,8 +103,6 @@ const Layout: React.FC = () => {
           headerBackButtonDisplayMode: "minimal",
           headerBackTitle: "regresar",
           headerLeft: headerHome,
-          headerTransparent: Platform.OS === "ios",
-          headerBlurEffect: Platform.OS === "ios" ? "regular" : undefined,
         }}
       />
       <Stack.Screen

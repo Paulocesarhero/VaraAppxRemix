@@ -93,7 +93,7 @@ const Layout: React.FC = () => {
                 color="white"
                 style={{ paddingLeft: 15 }}
               />
-              <Text style={{ fontSize: 8, color: "white" }}>Cerra sesión</Text>
+              <Text style={{ fontSize: 8, color: "white" }}>Cerrar sesión</Text>
             </TouchableOpacity>
           ),
         }}

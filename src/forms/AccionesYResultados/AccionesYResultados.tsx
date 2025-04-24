@@ -262,7 +262,7 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
             control={control}
             isRequired={false}
           />
-          <View style={{ paddingBottom: 50 }} />
+          <View style={{ marginHorizontal: 50 }} />
         </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

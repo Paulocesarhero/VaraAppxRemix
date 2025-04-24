@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     height: 200,
     width: "100%",
     padding: 10,
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
   },
   imageContainer: {
     flex: 1,

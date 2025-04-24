@@ -1,7 +1,7 @@
 import { Entypo } from "@expo/vector-icons";
 import React from "react";
 import { Control, Controller } from "react-hook-form";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import CameraButton from "varaapplib/components/Camera/CameraButton/CameraButton";
 import PhotoPreview from "varaapplib/components/Camera/PhotoPreview";
 import InputField from "varaapplib/components/MaterialInput/MaterialInput";
@@ -74,7 +74,14 @@ const PhotoAndInputForm: React.FC<Props> = ({
   namePhoto,
 }) => {
   return (
-    <View style={{ borderWidth: 1, borderRadius: 15, marginVertical: 15 }}>
+    <View
+      style={{
+        borderWidth: StyleSheet.hairlineWidth,
+        borderRadius: 15,
+        marginVertical: 15,
+        marginHorizontal: 10,
+      }}
+    >
       <InputField
         isDisabled={isDisabled}
         nameInput={nameInput}

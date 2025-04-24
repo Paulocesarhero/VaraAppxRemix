@@ -30,7 +30,7 @@ const InlineButton: React.FC<InlineButtonProps> = ({
     >
       {icon}
       <Text style={[{ fontSize: 16, fontWeight: "bold" }, styleText]}>
-        {text}{" "}
+        {text}
       </Text>
     </TouchableOpacity>
   );
@@ -38,7 +38,7 @@ const InlineButton: React.FC<InlineButtonProps> = ({
 
 const inlineButtonStyle = StyleSheet.create({
   button: {
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     padding: 10,
     alignItems: "center" as const,
     justifyContent: "center",

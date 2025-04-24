@@ -6,7 +6,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Text,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
@@ -17,6 +16,7 @@ import { FormValuesSoloOrganismosVivos } from "./FormValuesSoloOrganismosVivos";
 import { SoloOrganismosVivosProps } from "./types";
 import InlineButton from "../../components/InlineButton/InlineButton";
 import { handleNumericInputWithOnepoint } from "../../hooks/validations";
+import { CustomTitle } from "../../components/CustomTitle";
 
 const SoloOrganismosVivos: React.FC<SoloOrganismosVivosProps> = ({
   initialValues,
@@ -39,19 +39,23 @@ const SoloOrganismosVivos: React.FC<SoloOrganismosVivosProps> = ({
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView keyboardShouldPersistTaps="handled">
-          <InlineButton
-            text="Continuar y guardar"
-            onPress={handleSubmit(onSubmitData)}
-            icon={
-              <MaterialCommunityIcons
-                name="page-next-outline"
-                size={24}
-                color="black"
-              />
-            }
+      <InlineButton
+        text="Continuar y guardar"
+        onPress={handleSubmit(onSubmitData)}
+        icon={
+          <MaterialCommunityIcons
+            name="page-next-outline"
+            size={24}
+            color="black"
           />
+        }
+      />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} style={{ flex: 1 }}>
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          stickyHeaderIndices={[3]}
+          style={{ paddingHorizontal: 0, paddingVertical: 0 }}
+        >
           <InputField
             nameInput="tasaDeRespiracion"
             iconName="help"
@@ -101,16 +105,7 @@ const SoloOrganismosVivos: React.FC<SoloOrganismosVivosProps> = ({
             control={control}
             isRequired={false}
           />
-          <Text
-            style={{
-              padding: 20,
-              fontSize: 20,
-              fontWeight: "bold",
-              alignSelf: "center",
-            }}
-          >
-            Comportamiento
-          </Text>
+          <CustomTitle>Comportamiento</CustomTitle>
           <InputField
             nameInput="antesDeVararse"
             iconName="help"
@@ -198,6 +193,7 @@ const SoloOrganismosVivos: React.FC<SoloOrganismosVivosProps> = ({
             control={control}
             isRequired={false}
           />
+          <View style={{ marginVertical: 100 }} />
         </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

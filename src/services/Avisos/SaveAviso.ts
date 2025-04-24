@@ -51,6 +51,7 @@ export const saveAviso = async (
     const peticion = await generatePeticionAvisoIndividual(resultSqlite);
 
     if (peticion) {
+      console.table("Peticion", peticion);
       return await handleVaramientoIndividualResponse(idAviso, peticion, token);
     }
   } else {

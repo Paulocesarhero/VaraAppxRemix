@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: 10,
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     marginBottom: 10,
   },
   buttonText: {
