@@ -16,6 +16,9 @@ import { Estado } from "varaapplib/components/MaterialSelector/types";
 import FormValuesAccionesYresultados from "./FormValuesAccionesYresultados";
 import AccionesYResultadosFormProps from "./types";
 import MultiMaterialSelector from "../../components/MultiMaterialSelector/MultiMaterialSelector";
+import InlineButton from "../../components/InlineButton/InlineButton";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
 const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
   onSubmitData,
@@ -89,12 +92,21 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
   ];
 
   const scrollViewRef = useRef<ScrollView>(null);
+  const router = useRouter();
 
+  const regresarAlMenuPrincipal = () => {
+    router.navigate("/screens/(home)/ListaAvisos/ListaAvisos");
+  };
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
     >
+      <InlineButton
+        text="Guardar y finalizar registro"
+        onPress={regresarAlMenuPrincipal}
+        icon={<MaterialCommunityIcons name="home" size={24} color="black" />}
+      />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
           style={{ paddingTop: 10 }}
