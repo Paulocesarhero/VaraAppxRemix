@@ -1,5 +1,5 @@
 import RNDateTimePicker from "@react-native-community/datetimepicker";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   Keyboard,
@@ -7,8 +7,10 @@ import {
   Platform,
   ScrollView,
   Text,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  StyleSheet,
 } from "react-native";
 import DateSelector from "varaapplib/components/DateSelector/DateSelector";
 import InputField from "varaapplib/components/MaterialInput/MaterialInput";
@@ -26,14 +28,12 @@ const RecorridoForm: React.FC<RecorrdioProps> = ({
   initialValues,
   onChangeData,
 }) => {
-  const { control, setValue, reset, watch } = useForm<FormValuesRecorrido>({
+  const [showStartTime, setShowStartTime] = useState(false);
+  const [showEndTime, setShowEndTime] = useState(false);
+  const { control, setValue, watch } = useForm<FormValuesRecorrido>({
     mode: "onSubmit",
     defaultValues: initialValues,
   });
-
-  useEffect(() => {
-    reset(initialValues);
-  }, [initialValues, reset]);
 
   const watchedValues = watch();
 
@@ -81,14 +81,29 @@ const RecorridoForm: React.FC<RecorrdioProps> = ({
               render={({ field: { value, onChange } }) => (
                 <View style={{ padding: 10 }}>
                   <Text style={{ fontSize: 20 }}>Hora de inicio</Text>
-                  <RNDateTimePicker
-                    mode="time"
-                    value={value ? new Date(value) : new Date()}
-                    onChange={(event, selectedDate) => {
-                      const currentDate = selectedDate || value;
-                      onChange(currentDate);
-                    }}
-                  />
+                  <TouchableOpacity
+                    onPress={() => setShowStartTime(true)}
+                    style={{ padding: 10, borderWidth: 1, borderRadius: 5 }}
+                  >
+                    <Text>
+                      {value
+                        ? new Date(value).toLocaleTimeString()
+                        : "Seleccionar hora"}
+                    </Text>
+                  </TouchableOpacity>
+
+                  {showStartTime && (
+                    <RNDateTimePicker
+                      mode="time"
+                      value={value ? new Date(value) : new Date()}
+                      onChange={(event, selectedDate) => {
+                        setShowStartTime(Platform.OS === "ios"); // Mantiene visible solo en iOS
+                        if (selectedDate) {
+                          onChange(selectedDate);
+                        }
+                      }}
+                    />
+                  )}
                 </View>
               )}
             />
@@ -98,14 +113,33 @@ const RecorridoForm: React.FC<RecorrdioProps> = ({
               render={({ field: { value, onChange } }) => (
                 <View style={{ padding: 10 }}>
                   <Text style={{ fontSize: 20 }}>Hora de fin</Text>
-                  <RNDateTimePicker
-                    mode="time"
-                    value={value ? new Date(value) : new Date()}
-                    onChange={(event, selectedDate) => {
-                      const currentDate = selectedDate || value;
-                      onChange(currentDate);
+                  <TouchableOpacity
+                    onPress={() => setShowEndTime(true)}
+                    style={{
+                      padding: 10,
+                      borderWidth: StyleSheet.hairlineWidth,
+                      borderRadius: 5,
                     }}
-                  />
+                  >
+                    <Text>
+                      {value
+                        ? new Date(value).toLocaleTimeString()
+                        : "Seleccionar hora"}
+                    </Text>
+                  </TouchableOpacity>
+
+                  {showEndTime && (
+                    <RNDateTimePicker
+                      mode="time"
+                      value={value ? new Date(value) : new Date()}
+                      onChange={(event, selectedDate) => {
+                        setShowEndTime(Platform.OS === "ios"); // Mantiene visible solo en iOS
+                        if (selectedDate) {
+                          onChange(selectedDate);
+                        }
+                      }}
+                    />
+                  )}
                 </View>
               )}
             />
