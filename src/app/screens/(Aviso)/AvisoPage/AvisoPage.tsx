@@ -7,17 +7,17 @@ import { Text, View } from "react-native";
 import { AvisoForm } from "varaapplib/components/AvisoForm/AvisoForm";
 import { AvisoValues } from "varaapplib/components/AvisoForm/types";
 
-import InlineButton from "../../../components/InlineButton/InlineButton";
-import { db } from "../../../database/connection/sqliteConnection";
+import InlineButton from "../../../../components/InlineButton/InlineButton";
+import { db } from "../../../../database/connection/sqliteConnection";
 import {
   addAviso,
   deletePhotoByIdAviso,
   updateAviso,
-} from "../../../database/repository/avisoRepo";
-import { avisos } from "../../../database/schemas/avisoSchema";
-import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
-import { getDateNow, saveImage } from "../../../hooks/helpers";
-import useRecorridoStore from "../../../hooks/globalState/useRecorridoStore";
+} from "../../../../database/repository/avisoRepo";
+import { avisos } from "../../../../database/schemas/avisoSchema";
+import useAvisoStore from "../../../../hooks/globalState/useAvisoStore";
+import { getDateNow, saveImage } from "../../../../hooks/helpers";
+import useRecorridoStore from "../../../../hooks/globalState/useRecorridoStore";
 
 const AvisoPage: React.FC = () => {
   const idSelected = useAvisoStore((state) => state.idAvisoSelected);
@@ -38,9 +38,7 @@ const AvisoPage: React.FC = () => {
     } else {
       await handleExistingAviso(data);
     }
-    router.push(
-      "/screens/Aviso/CaracteristicasFisicasYAmbientalesPage/CaracteristicasFisicasYAmbientalesPage"
-    );
+    router.back();
   };
 
   const handleNewAviso = async (data: AvisoValues) => {
@@ -131,7 +129,7 @@ const AvisoPage: React.FC = () => {
           Observaciones: avisosDbLocal[0]?.observaciones ?? "",
           CondicionDeAnimal: avisosDbLocal[0]?.condicionDeAnimal ?? 0,
           CantidadDeAnimales: (
-            avisosDbLocal[0]?.cantidadDeAnimales ?? ""
+            avisosDbLocal[0]?.cantidadDeAnimales ?? 1
           ).toString(),
           InformacionDeLocalizacion:
             avisosDbLocal[0]?.informacionDeLocalizacion ?? "",

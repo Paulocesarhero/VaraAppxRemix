@@ -1,9 +1,8 @@
-import Entypo from "@expo/vector-icons/Entypo";
 import { Stack, useRouter } from "expo-router";
 import React from "react";
 import { Platform, View } from "react-native";
-
-import useRecorridoStore from "../../hooks/globalState/useRecorridoStore";
+import Entypo from "@expo/vector-icons/Entypo";
+import useRecorridoStore from "../../../hooks/globalState/useRecorridoStore";
 
 const Layout: React.FC = () => {
   const router = useRouter();
@@ -35,75 +34,55 @@ const Layout: React.FC = () => {
       </View>
     );
   };
-  const headerHomeRecorridoo = () => {
-    return (
-      <View style={{ margin: 12 }}>
-        <Entypo
-          name="home"
-          size={24}
-          color="black"
-          onPress={navigateToHomeRecorrido}
-        />
-      </View>
-    );
-  };
-
   return (
     <Stack>
       <Stack.Screen
-        name="(home)"
-        options={{ headerShown: false, gestureEnabled: false }}
-      />
-
-      <Stack.Screen
-        name="ListaEspecimen/ListaEspecimen"
+        name="AvisoPage/AvisoPage"
         options={{
-          title: "Lista espécimen",
-          headerBackButtonDisplayMode: "minimal",
+          title: "Aviso",
           headerBackTitle: "regresar",
+          headerBackButtonDisplayMode: "minimal",
           headerLeft: headerHome,
         }}
       />
       <Stack.Screen
-        name="RegistrarRecorrido/RegistroRecorrido"
+        name="CaracteristicasFisicasYAmbientalesPage/CaracteristicasFisicasYAmbientalesPage"
         options={{
-          title: "Registrar recorrido",
+          title: "Características Ambientales",
           headerBackButtonDisplayMode: "minimal",
           headerBackTitle: "regresar",
-          headerLeft: headerHomeRecorridoo,
+          headerTransparent: Platform.OS === "ios",
+          headerBlurEffect: Platform.OS === "ios" ? "regular" : undefined,
+          headerLeft: headerHome,
         }}
       />
       <Stack.Screen
-        name="RecorridoPage/RecorridoFormPage"
+        name="MenuTipoDeAviso/MenuTipoDeAviso"
         options={{
-          title: "Registrar recorrido",
+          title: "Seleccione una opción",
           headerBackButtonDisplayMode: "minimal",
           headerBackTitle: "regresar",
-          headerLeft: headerHomeRecorridoo,
+          headerTransparent: Platform.OS === "ios",
+          headerBlurEffect: Platform.OS === "ios" ? "regular" : undefined,
+          headerLeft: headerHome,
         }}
       />
       <Stack.Screen
-        name="(Aviso)"
+        name="MenuEspecimenPage/MenuEspecimenPage"
+        options={{
+          title: "Información espécimen",
+          headerShown: true,
+          fullScreenGestureEnabled: true,
+          gestureEnabled: true,
+          headerLeft: headerHome,
+        }}
+      />
+      <Stack.Screen
+        name="(Especimen)"
         options={{
           headerShown: false,
           fullScreenGestureEnabled: true,
           gestureEnabled: true,
-          title: "Registro aviso",
-          headerBackButtonDisplayMode: "minimal",
-          headerBackTitle: "regresar",
-          headerLeft: headerHome,
-        }}
-      />
-      <Stack.Screen
-        name="MenuAviso/MenuAvisoPage"
-        options={{
-          headerShown: true,
-          fullScreenGestureEnabled: true,
-          gestureEnabled: true,
-          title: "Registrar aviso",
-          headerBackButtonDisplayMode: "minimal",
-          headerBackTitle: "regresar",
-          headerLeft: headerHome,
         }}
       />
     </Stack>

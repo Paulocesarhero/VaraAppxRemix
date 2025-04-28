@@ -6,17 +6,17 @@ import React from "react";
 import { View } from "react-native";
 import MaterialCard from "varaapplib/components/MaterialCard/MaterialCard";
 
-import { db } from "../../../database/connection/sqliteConnection";
+import { db } from "../../../../database/connection/sqliteConnection";
 import {
   especimen,
   varamientoMasivo,
-} from "../../../database/schemas/avisoSchema";
-import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
+} from "../../../../database/schemas/avisoSchema";
+import useAvisoStore from "../../../../hooks/globalState/useAvisoStore";
 
-const MenuRegistrarAviso: React.FC = () => {
+const MenuTipoDeAviso: React.FC = () => {
   const router = useRouter();
   const handleAvisoIndividual = () => {
-    router.push("screens/EspecimenPages/EspecimenPage");
+    router.push("screens/(Aviso)/MenuEspecimenPage/MenuEspecimenPage");
   };
   const handleVaramientoMasivo = () => {
     router.push("screens/VaramientoMasivoPage/VaramientoMasivoPage");
@@ -98,4 +98,4 @@ const MenuRegistrarAviso: React.FC = () => {
     </View>
   );
 };
-export default MenuRegistrarAviso;
+export default MenuTipoDeAviso;

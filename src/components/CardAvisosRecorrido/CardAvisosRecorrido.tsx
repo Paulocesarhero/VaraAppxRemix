@@ -66,7 +66,7 @@ const CardAvisosRecorrido: React.FC<CardAvisosRecorridoProps> = ({
 
   const handleUpdateAviso = async () => {
     setIdAvisoSelected(Number(idAviso));
-    router.push("screens/AvisoPage/AvisoPage");
+    router.push("screens/MenuAviso/MenuAvisoPage");
   };
 
   const handledeleteAviso = async (idAviso: number | string) => {

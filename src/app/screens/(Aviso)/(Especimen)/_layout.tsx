@@ -1,9 +1,8 @@
-import Entypo from "@expo/vector-icons/Entypo";
 import { Stack, useRouter } from "expo-router";
 import React from "react";
-import { Platform, View } from "react-native";
-
-import useRecorridoStore from "../../hooks/globalState/useRecorridoStore";
+import useRecorridoStore from "../../../../hooks/globalState/useRecorridoStore";
+import { View } from "react-native";
+import Entypo from "@expo/vector-icons/Entypo";
 
 const Layout: React.FC = () => {
   const router = useRouter();
@@ -35,72 +34,76 @@ const Layout: React.FC = () => {
       </View>
     );
   };
-  const headerHomeRecorridoo = () => {
-    return (
-      <View style={{ margin: 12 }}>
-        <Entypo
-          name="home"
-          size={24}
-          color="black"
-          onPress={navigateToHomeRecorrido}
-        />
-      </View>
-    );
-  };
-
   return (
     <Stack>
       <Stack.Screen
-        name="(home)"
-        options={{ headerShown: false, gestureEnabled: false }}
-      />
-
-      <Stack.Screen
-        name="ListaEspecimen/ListaEspecimen"
+        name="EspecimenPages/EspecimenPage"
         options={{
-          title: "Lista espécimen",
-          headerBackButtonDisplayMode: "minimal",
-          headerBackTitle: "regresar",
-          headerLeft: headerHome,
-        }}
-      />
-      <Stack.Screen
-        name="RegistrarRecorrido/RegistroRecorrido"
-        options={{
-          title: "Registrar recorrido",
-          headerBackButtonDisplayMode: "minimal",
-          headerBackTitle: "regresar",
-          headerLeft: headerHomeRecorridoo,
-        }}
-      />
-      <Stack.Screen
-        name="RecorridoPage/RecorridoFormPage"
-        options={{
-          title: "Registrar recorrido",
-          headerBackButtonDisplayMode: "minimal",
-          headerBackTitle: "regresar",
-          headerLeft: headerHomeRecorridoo,
-        }}
-      />
-      <Stack.Screen
-        name="(Aviso)"
-        options={{
-          headerShown: false,
           fullScreenGestureEnabled: true,
-          gestureEnabled: true,
-          title: "Registro aviso",
-          headerBackButtonDisplayMode: "minimal",
-          headerBackTitle: "regresar",
-          headerLeft: headerHome,
-        }}
-      />
-      <Stack.Screen
-        name="MenuAviso/MenuAvisoPage"
-        options={{
+          title: "Espécimen",
           headerShown: true,
-          fullScreenGestureEnabled: true,
-          gestureEnabled: true,
-          title: "Registrar aviso",
+          headerBackButtonDisplayMode: "minimal",
+          headerBackTitle: "regresar",
+        }}
+      />
+      <Stack.Screen
+        name="SoloOrganismosVivosPage/SoloOrganismosVivosPage"
+        options={{
+          title: "Organismo vivo",
+          headerBackButtonDisplayMode: "minimal",
+          headerBackTitle: "regresar",
+          headerLeft: headerHome,
+        }}
+      />
+      <Stack.Screen
+        name="Sirenio/Sirenio"
+        options={{
+          title: "Morfometria Sirenio",
+          headerBackButtonDisplayMode: "minimal",
+          headerBackTitle: "regresar",
+          headerLeft: headerHome,
+        }}
+      />
+      <Stack.Screen
+        name="Misticeto/Misticeto"
+        options={{
+          title: "Morfometria misticeto",
+          headerBackButtonDisplayMode: "minimal",
+          headerBackTitle: "regresar",
+          headerLeft: headerHome,
+        }}
+      />
+      <Stack.Screen
+        name="Odontoceto/Odontoceto"
+        options={{
+          title: "Morfometria odontoceto",
+          headerBackButtonDisplayMode: "minimal",
+          headerBackTitle: "regresar",
+          headerLeft: headerHome,
+        }}
+      />
+      <Stack.Screen
+        name="Pinnipedo/Pinnipedo"
+        options={{
+          title: "Morfometria pinnípedos",
+          headerBackButtonDisplayMode: "minimal",
+          headerBackTitle: "regresar",
+          headerLeft: headerHome,
+        }}
+      />
+      <Stack.Screen
+        name="VaramientoMasivoPage/VaramientoMasivoPage"
+        options={{
+          title: "Varamiento masivo",
+          headerBackButtonDisplayMode: "minimal",
+          headerBackTitle: "regresar",
+          headerLeft: headerHome,
+        }}
+      />
+      <Stack.Screen
+        name="AccionesYResultadosPage/AccionesYResultadosPage"
+        options={{
+          title: "Acciones y resultados",
           headerBackButtonDisplayMode: "minimal",
           headerBackTitle: "regresar",
           headerLeft: headerHome,

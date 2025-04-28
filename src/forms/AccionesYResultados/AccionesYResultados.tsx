@@ -95,7 +95,7 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
   const router = useRouter();
 
   const regresarAlMenuPrincipal = () => {
-    router.navigate("/screens/(home)/ListaAvisos/ListaAvisos");
+    router.back();
   };
   return (
     <KeyboardAvoidingView
@@ -103,7 +103,7 @@ const AccionesYResultadosForm: React.FC<AccionesYResultadosFormProps> = ({
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
     >
       <InlineButton
-        text="Guardar y finalizar registro"
+        text="Continuar y guardar"
         onPress={regresarAlMenuPrincipal}
         icon={<MaterialCommunityIcons name="home" size={24} color="black" />}
       />

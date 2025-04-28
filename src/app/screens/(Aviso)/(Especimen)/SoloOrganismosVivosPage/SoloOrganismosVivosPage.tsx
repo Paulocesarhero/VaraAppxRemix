@@ -1,4 +1,3 @@
-import { useExpoRouter } from "expo-router/build/global-state/router-store";
 import React, { useState } from "react";
 import { Alert, Text, View } from "react-native";
 
@@ -6,17 +5,17 @@ import {
   addOrganismoIfNotExists,
   getOrganismoByIdEspecimenLocal,
   updateOrganismoByIdEspecimen,
-} from "../../../database/repository/SoloOrganismosVivosRepo";
-import { FormValuesSoloOrganismosVivos } from "../../../forms/SoloOrganismosVivos/FormValuesSoloOrganismosVivos";
-import SoloOrganismosVivos from "../../../forms/SoloOrganismosVivos/SoloOrganismosVivos";
-import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
-import { useFocusEffect } from "expo-router";
+} from "../../../../../database/repository/SoloOrganismosVivosRepo";
+import { FormValuesSoloOrganismosVivos } from "../../../../../forms/SoloOrganismosVivos/FormValuesSoloOrganismosVivos";
+import SoloOrganismosVivos from "../../../../../forms/SoloOrganismosVivos/SoloOrganismosVivos";
+import useAvisoStore from "../../../../../hooks/globalState/useAvisoStore";
+import { useFocusEffect, useRouter } from "expo-router";
 
 const SoloOrganismosVivosPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const idEspecimen = useAvisoStore((state) => state.idEspecimen);
   const [formValues, setFormValues] = useState<FormValuesSoloOrganismosVivos>();
-  const router = useExpoRouter();
+  const router = useRouter();
 
   const loadOrganismo = async () => {
     setIsLoading(true);
@@ -54,7 +53,7 @@ const SoloOrganismosVivosPage: React.FC = () => {
     );
   };
   const onSubmitData = async () => {
-    router.navigate("screens/AccionesYResultadosPage/AccionesYResultadosPage");
+    router.back();
   };
 
   if (isLoading) {

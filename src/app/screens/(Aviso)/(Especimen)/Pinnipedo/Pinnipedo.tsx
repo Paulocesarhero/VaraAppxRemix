@@ -6,10 +6,10 @@ import {
   addPinnipedoIfNotExists,
   getPinnipedoByIdEspecimenLocal,
   updatePinnipedoByIdEspecimen,
-} from "../../../database/repository/pinipedoRepo";
-import MorfometriaPinnipedo from "../../../forms/MorfometriaPinnipedo/MorfometriaPinnipedo";
-import { RegistroMorfometricoPinnipedo } from "../../../forms/MorfometriaPinnipedo/RegistroMorfometricoPinnipedo";
-import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
+} from "../../../../../database/repository/pinipedoRepo";
+import MorfometriaPinnipedo from "../../../../../forms/MorfometriaPinnipedo/MorfometriaPinnipedo";
+import { RegistroMorfometricoPinnipedo } from "../../../../../forms/MorfometriaPinnipedo/RegistroMorfometricoPinnipedo";
+import useAvisoStore from "../../../../../hooks/globalState/useAvisoStore";
 
 const Pinnipedo: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -40,7 +40,7 @@ const Pinnipedo: React.FC = () => {
 
   const router = useRouter();
   const onSubmitData = async () => {
-    router.navigate("screens/SoloOrganismosVivosPage/SoloOrganismosVivosPage");
+    router.back();
   };
 
   if (isLoading) {

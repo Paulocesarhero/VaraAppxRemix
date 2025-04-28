@@ -16,9 +16,7 @@ const ListaAvisosRecorrido: React.FC = () => {
   const router = useRouter();
   useFocusEffect(
     useCallback(() => {
-      console.log("idRecorridoSelected", idRecorridoSelected);
       if (!idRecorridoSelected) {
-        console.log("idRecorridoSelected no seleccionado");
         router.replace("/screens/ListaAvisos/ListaAvisos");
       }
     }, [idRecorridoSelected])
@@ -38,8 +36,8 @@ const ListaAvisosRecorrido: React.FC = () => {
   );
 
   const handleNuevoAviso = useCallback(() => {
-    router.push("screens/AvisoPage/AvisoPage");
-  }, []);
+    router.push("screens/MenuAviso/MenuAvisoPage");
+  }, [router]);
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={handleNuevoAviso}>

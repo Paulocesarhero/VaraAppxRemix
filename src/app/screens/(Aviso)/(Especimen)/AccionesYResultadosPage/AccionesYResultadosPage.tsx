@@ -4,10 +4,10 @@ import {
   addAccionesIfNotExists,
   getAccionesByIdEspecimenLocal,
   updateAccionesByIdEspecimen,
-} from "../../../database/repository/AccionesRepo";
-import AccionesYResultadosForm from "../../../forms/AccionesYResultados/AccionesYResultados";
-import FormValuesAccionesYresultados from "../../../forms/AccionesYResultados/FormValuesAccionesYresultados";
-import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
+} from "../../../../../database/repository/AccionesRepo";
+import AccionesYResultadosForm from "../../../../../forms/AccionesYResultados/AccionesYResultados";
+import FormValuesAccionesYresultados from "../../../../../forms/AccionesYResultados/FormValuesAccionesYresultados";
+import useAvisoStore from "../../../../../hooks/globalState/useAvisoStore";
 
 const Recommendations: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);

@@ -36,7 +36,7 @@ const CaracteristicasFisicasYAmbientalesPage: React.FC = () => {
     loadAmbiente();
   }, [idSelected]);
   const onSubmitData = async (data: any) => {
-    router.push("screens/MenuRegistrarAviso/MenuRegistrarAviso");
+    router.back();
   };
 
   if (isLoading) {

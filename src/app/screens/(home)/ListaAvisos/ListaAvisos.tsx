@@ -111,24 +111,33 @@ const ListaAvisos: React.FC = () => {
   );
 
   const handleNuevoAviso = useCallback(() => {
-    router.push("screens/AvisoPage/AvisoPage");
+    router.push("screens/MenuAviso/MenuAvisoPage");
   }, []);
 
   const ITEM_HEIGHT = 200;
 
   return (
     <View style={styles.container}>
-      <View style={styles.switchContainer}>
-        <Text style={styles.switchLabel}>Avisos en la nube</Text>
-        <Switch
-          trackColor={{ false: "#81b0ff", true: "#282853" }}
-          thumbColor={useLocalDB ? "#54AD94" : "#f4f3f4"}
-          value={useLocalDB}
-          onValueChange={(value) => {
-            setUseLocalDB(value);
-          }}
-        />
-        <Text style={styles.switchLabel}>Avisos en el dispositivo</Text>
+      <View style={styles.optionsContainer}>
+        <TouchableOpacity
+          style={styles.checkboxContainer}
+          onPress={() => setUseLocalDB(false)}
+        >
+          <View style={styles.checkbox}>
+            {!useLocalDB && <View style={styles.checkboxSelected} />}
+          </View>
+          <Text style={styles.checkboxLabel}>Avisos en la nube</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.checkboxContainer}
+          onPress={() => setUseLocalDB(true)}
+        >
+          <View style={styles.checkbox}>
+            {useLocalDB && <View style={styles.checkboxSelected} />}
+          </View>
+          <Text style={styles.checkboxLabel}>Avisos en el dispositivo</Text>
+        </TouchableOpacity>
       </View>
       <TouchableOpacity style={styles.button} onPress={handleNuevoAviso}>
         <Entypo name="new-message" size={24} color="black" />
@@ -196,6 +205,35 @@ const styles = StyleSheet.create({
   switchLabel: {
     fontSize: 12,
     marginRight: 10,
+  },
+  optionsContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 20,
+    gap: 15,
+  },
+  checkboxContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  checkbox: {
+    width: 18,
+    height: 18,
+    borderRadius: 18,
+    borderWidth: 2,
+    borderColor: "black",
+    marginRight: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  checkboxSelected: {
+    width: 10,
+    height: 10,
+    borderRadius: 10,
+    backgroundColor: "black",
+  },
+  checkboxLabel: {
+    fontSize: 14,
   },
 });
 

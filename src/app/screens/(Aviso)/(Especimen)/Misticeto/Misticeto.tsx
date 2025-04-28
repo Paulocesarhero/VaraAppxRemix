@@ -3,28 +3,28 @@ import React, { useState } from "react";
 import { Text } from "react-native";
 
 import {
-  addOdontocetoIfNotExist,
-  getOdontocetoByIdEspecimenLocal,
-  updateOdontocetoByIdEspecimen,
-} from "../../../database/repository/odontocetoRepo";
-import MorfometriaOdontoceto from "../../../forms/MorformetriaOdontoceto/MorfometriaOdontoceto";
-import RegistroMorfometricoOdontoceto from "../../../forms/MorformetriaOdontoceto/RegistroMorfometricoOdontoceto";
-import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
+  addMisticetoIfNotExist,
+  getMisticetoByIdEspecimenLocal,
+  updateMisticetoByIdEspecimen,
+} from "../../../../../database/repository/misticetoRepo";
+import { FormValuesMorfometriaMisticeto } from "../../../../../forms/MorfometriaMisticeto/FormValuesMorfometriaMisticeto";
+import MorfometriaMisticeto from "../../../../../forms/MorfometriaMisticeto/MorfometriaMisticeto";
+import useAvisoStore from "../../../../../hooks/globalState/useAvisoStore";
 
-const Odontoceto: React.FC = () => {
+const Misticeto: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const idEspecimen = useAvisoStore((state) => state.idEspecimen);
   const [formValues, setFormValues] =
-    useState<RegistroMorfometricoOdontoceto>();
+    useState<FormValuesMorfometriaMisticeto>();
 
-  const loadOdontoceto = async () => {
+  const loadMisticeto = async () => {
     setIsLoading(true);
 
     try {
       if (idEspecimen != null && idEspecimen > 0) {
-        await addOdontocetoIfNotExist(idEspecimen);
+        await addMisticetoIfNotExist(idEspecimen);
         const formValuesDbLocal =
-          await getOdontocetoByIdEspecimenLocal(idEspecimen);
+          await getMisticetoByIdEspecimenLocal(idEspecimen);
         setFormValues(formValuesDbLocal);
       }
     } catch (error) {
@@ -33,28 +33,29 @@ const Odontoceto: React.FC = () => {
       setIsLoading(false);
     }
   };
+
   useFocusEffect(
     React.useCallback(() => {
-      loadOdontoceto();
+      loadMisticeto();
     }, [idEspecimen])
   );
-
   const router = useRouter();
   const onSubmitData = async () => {
-    router.navigate("screens/SoloOrganismosVivosPage/SoloOrganismosVivosPage");
+    router.back();
   };
 
   if (isLoading) {
     return <Text>Cargando datos...</Text>;
   }
+
   return (
-    <MorfometriaOdontoceto
-      onSubmitData={onSubmitData}
+    <MorfometriaMisticeto
       data={formValues}
       onValuesChange={async (values) => {
-        await updateOdontocetoByIdEspecimen(idEspecimen, values);
+        await updateMisticetoByIdEspecimen(idEspecimen, values);
       }}
+      onSubmitData={onSubmitData}
     />
   );
 };
-export default Odontoceto;
+export default Misticeto;

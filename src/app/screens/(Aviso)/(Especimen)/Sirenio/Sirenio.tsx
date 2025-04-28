@@ -6,10 +6,10 @@ import {
   addSirenioIfNotExists,
   getSirenioByIdEspecimenLocal,
   updateSirenioByIdEspecimen,
-} from "../../../database/repository/sirenioRepo";
-import MorfometriaSirenio from "../../../forms/MorfometriaSirenio/MorfometriaSirenio";
-import RegistroMorfometricoSirenio from "../../../forms/MorfometriaSirenio/RegistroMorfometricoSirenio";
-import useAvisoStore from "../../../hooks/globalState/useAvisoStore";
+} from "../../../../../database/repository/sirenioRepo";
+import MorfometriaSirenio from "../../../../../forms/MorfometriaSirenio/MorfometriaSirenio";
+import RegistroMorfometricoSirenio from "../../../../../forms/MorfometriaSirenio/RegistroMorfometricoSirenio";
+import useAvisoStore from "../../../../../hooks/globalState/useAvisoStore";
 
 const Sirenio: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -39,7 +39,7 @@ const Sirenio: React.FC = () => {
   );
   const router = useRouter();
   const onSubmitData = async () => {
-    router.navigate("screens/SoloOrganismosVivosPage/SoloOrganismosVivosPage");
+    router.back();
   };
 
   if (isLoading) {
