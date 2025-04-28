@@ -15,6 +15,7 @@ import useRecorridoStore from "../../../../hooks/globalState/useRecorridoStore";
 import {
   addRecorrido,
   deleteRecorrido,
+  hasRecorridoRuta,
 } from "../../../../database/repository/RecorridoRepo";
 import { saveRecorrido } from "../../../../services/Avisos/SaveAviso";
 import useAuthStore from "../../../../hooks/globalState/useAuthStore";
@@ -84,6 +85,14 @@ const ListaRecorrido: React.FC = () => {
 
     const handleCloudUpload = async (idRecorrido: number) => {
       setLoadingItemId(idRecorrido);
+      if (!hasRecorridoRuta) {
+        Alert.alert(
+          "No se puede subir el recorrido",
+          "No hay coordenas guardadas en el recorrido"
+        );
+        setLoadingItemId(null);
+        return;
+      }
       if (!idRecorrido || !token) return;
       try {
         const isOnline = await checkNetwork();

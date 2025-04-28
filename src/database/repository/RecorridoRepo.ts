@@ -92,3 +92,12 @@ export const getAllDataRecorrido = async (id: number) => {
 
   return result as RecorridoWithRelations;
 };
+
+export const hasRecorridoRuta = async (
+  idRecorrdio: number
+): Promise<boolean> => {
+  const result = await db.query.recorrido.findFirst({
+    where: (recorrido, { eq }) => eq(recorrido.id, idRecorrdio),
+  });
+  return result?.ruta !== null;
+};
