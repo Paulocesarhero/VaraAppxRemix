@@ -82,12 +82,6 @@ const MenuEspecimenPage = () => {
     );
   }, [hasMisticeto, hasOdontoceto, hasPinnipedo, hasSirenio]);
 
-  console.log("idEspecimen", idEspecimen);
-  console.log("especimenBdLocal", especimenBdLocal);
-  console.log("organismoVivoBD", organismoVivoBD);
-  console.log("accionesBd", accionesBd);
-  console.log("hasMorfometria", hasMorfometria);
-
   const handleOnPressFormatoIndividual = async () => {
     router.push("screens/(Especimen)/EspecimenPages/EspecimenPage");
   };
