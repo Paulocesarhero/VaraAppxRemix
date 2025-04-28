@@ -260,6 +260,7 @@ const MorfometriaMisticeto: React.FC<MorfometriaMisticetoProps> = ({
                 </View>
               );
             })}
+            <View style={{ marginVertical: 100 }} />
           </ScrollView>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
