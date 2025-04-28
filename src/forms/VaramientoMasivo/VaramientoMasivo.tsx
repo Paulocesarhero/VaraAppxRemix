@@ -64,7 +64,7 @@ const VaramientoMasivo: React.FC<VaramientoMasivoProps> = ({
                 pointerEvents={isDisabled ? "none" : "auto"}
               >
                 <CustomCheckBox
-                  label="¿Hay aves muerteas?"
+                  label="¿Hay aves muertas?"
                   isChecked={value}
                   onToggle={() => onChange(!value)}
                 />
