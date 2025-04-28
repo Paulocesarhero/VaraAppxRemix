@@ -106,12 +106,14 @@ const generateAccionesYResultados = (
           TipoMuestra: Number(item),
         }))
       : null;
+  const disposicionValue = Number(resultSqlite.disposicionDelCadaver);
+  const disposicionFinal = isNaN(disposicionValue) ? 0 : disposicionValue;
   return {
     autoridades: resultSqlite.autoridades ?? "",
     telefonoAutoridades: resultSqlite.telefonoAutoridades ?? "",
     morfometria: resultSqlite.morfometria === 1,
     necropsia: resultSqlite.necropsia === 1,
-    disposicionDelCadaver: Number(resultSqlite.disposicionDelCadaver) ?? 0,
+    disposicionDelCadaver: disposicionFinal,
     disposicionOtro: resultSqlite.disposicionOtro ?? "",
     tipoDeMuestras,
     posibleCausaDelVaramiento: resultSqlite.posibleCausaDelVaramiento ?? "",
