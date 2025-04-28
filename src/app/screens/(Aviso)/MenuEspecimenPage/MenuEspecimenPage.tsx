@@ -14,13 +14,20 @@ const MenuEspecimenPage = () => {
   const [hasMorfometria, setHasMorfometria] = useState<boolean>();
 
   const { data: especimenBdLocal } = useLiveQuery(
-    db.query.especimen.findFirst({
-      where: (especimen, { eq }) => eq(especimen.avisoId, idAviso),
-      with: {
-        especie: true,
-      },
-    }),
-    [idEspecimen]
+    idEspecimen > 0
+      ? db.query.especimen.findFirst({
+          where: (especimen, { eq }) => eq(especimen.id, idEspecimen),
+          with: {
+            especie: true,
+          },
+        })
+      : db.query.especimen.findFirst({
+          where: (especimen, { eq }) => eq(especimen.avisoId, idAviso),
+          with: {
+            especie: true,
+          },
+        }),
+    [idEspecimen, idAviso]
   );
   useFocusEffect(
     React.useCallback(() => {
@@ -41,12 +48,7 @@ const MenuEspecimenPage = () => {
     }),
     [idEspecimen]
   );
-  const { data: especimenBd } = useLiveQuery(
-    db.query.especimen.findFirst({
-      where: (especimen, { eq }) => eq(especimen.id, idEspecimen),
-    }),
-    [idEspecimen]
-  );
+
   // En tu componente React
   const { data: hasMisticeto } = useLiveQuery(
     db.query.misticeto.findFirst({
@@ -119,7 +121,7 @@ const MenuEspecimenPage = () => {
     <MenuEspecimen
       onPressFormatoIndividual={handleOnPressFormatoIndividual}
       formatoIndividualComplete={hasMorfometria}
-      avisoComplete={!!especimenBd}
+      avisoComplete={!!especimenBdLocal?.especie}
       registroMorfometricoComplete={hasMorfometria}
       soloOrganismoVivoComplete={!!organismoVivoBD}
       accionesYResultadosComplete={!!accionesBd}

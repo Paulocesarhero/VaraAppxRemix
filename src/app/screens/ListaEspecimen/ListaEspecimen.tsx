@@ -56,7 +56,7 @@ const ListaEspecimen: React.FC<ListaEspecimenProps> = ({
 
   const handleUpdateAviso = (idEspecimen: number) => {
     setIdEspecimenSelected(idEspecimen);
-    route.push("screens/EspecimenPages/EspecimenPage");
+    route.push("screens/MenuEspecimenPage/MenuEspecimenPage");
   };
   const handleDelete = async (idEspecimen: number) => {
     try {

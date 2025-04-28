@@ -80,9 +80,7 @@ const RecorridoForm: React.FC<RecorrdioProps> = ({
               name="horaInicio"
               render={({ field: { value, onChange } }) => (
                 <View style={{ padding: 10 }}>
-                  <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                    Hora de inicio
-                  </Text>
+                  <Text style={{ fontSize: 20 }}>Hora de inicio</Text>
                   <RNDateTimePicker
                     mode="time"
                     value={value ? new Date(value) : new Date()}
@@ -99,9 +97,7 @@ const RecorridoForm: React.FC<RecorrdioProps> = ({
               name="horaFin"
               render={({ field: { value, onChange } }) => (
                 <View style={{ padding: 10 }}>
-                  <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                    Hora de fin
-                  </Text>
+                  <Text style={{ fontSize: 20 }}>Hora de fin</Text>
                   <RNDateTimePicker
                     mode="time"
                     value={value ? new Date(value) : new Date()}

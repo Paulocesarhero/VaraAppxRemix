@@ -106,6 +106,18 @@ const Layout: React.FC = () => {
           headerLeft: headerHome,
         }}
       />
+      <Stack.Screen
+        name="VaramientoMasivoPage/VaramientoMasivoPage"
+        options={{
+          headerShown: true,
+          fullScreenGestureEnabled: true,
+          gestureEnabled: true,
+          title: "Varamiento masivo",
+          headerBackButtonDisplayMode: "minimal",
+          headerBackTitle: "regresar",
+          headerLeft: headerHome,
+        }}
+      />
     </Stack>
   );
 };
