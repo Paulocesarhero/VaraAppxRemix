@@ -94,6 +94,7 @@ const RecorridoForm: React.FC<RecorrdioProps> = ({
 
                   {showStartTime && (
                     <RNDateTimePicker
+                      style={{ marginTop: 10 }}
                       mode="time"
                       value={value ? new Date(value) : new Date()}
                       onChange={(event, selectedDate) => {
@@ -131,6 +132,7 @@ const RecorridoForm: React.FC<RecorrdioProps> = ({
                   {showEndTime && (
                     <RNDateTimePicker
                       mode="time"
+                      style={{ marginTop: 10 }}
                       value={value ? new Date(value) : new Date()}
                       onChange={(event, selectedDate) => {
                         setShowEndTime(Platform.OS === "ios"); // Mantiene visible solo en iOS

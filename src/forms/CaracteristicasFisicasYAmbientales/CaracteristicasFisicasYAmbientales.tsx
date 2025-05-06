@@ -101,7 +101,7 @@ const CaracteristicasFisicasYAmbientales: React.FC<
       }}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} style={{ flex: 1 }}>
-        <>
+        <View>
           <InlineButton
             text="Continuar y guardar"
             icon={
@@ -360,7 +360,7 @@ const CaracteristicasFisicasYAmbientales: React.FC<
             />
             <View style={{ marginVertical: 150 }} />
           </ScrollView>
-        </>
+        </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
