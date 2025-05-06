@@ -27,21 +27,21 @@ Para empezar a trabajar con VaraAppx, sigue estos pasos:
 
 1. Instalar dependencias
      ```bash
-    npm i
+    yarn
 2. Ejecuta el comando de inicialización del proyecto:
    ```bash
-   npm start
+   yarn start
 
 ## Ejecutar eslint
 
    ```bash
-   npm run lint
+   yarn run lint
    ```
 
 ## Ejecutar formateador
 
    ```bash
-   npm run format
+   yarn run format
    ```
 
 # Ejecutar documentación ADR
