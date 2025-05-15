@@ -8677,10 +8677,10 @@ validate-npm-package-name@^5.0.0:
   resolved "https://registry.yarnpkg.com/validate-npm-package-name/-/validate-npm-package-name-5.0.1.tgz#a316573e9b49f3ccd90dbb6eb52b3f06c6d604e8"
   integrity sha512-OljLrQ9SQdOUqTaQxqL5dEfZWrXExyyWsozYlAWFawPVNuD83igl7uJD2RTkNMbniIYgt8l81eCJGIdQF7avLQ==
 
-varaapplib@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/varaapplib/-/varaapplib-1.4.0.tgz#b2d8f78647c5bd96ae0a9709bdba6b57cc8e1d76"
-  integrity sha512-FLgNZSeCDBaI4SISEf4lTvlM1+WIq0CyI1dUvoqUZAA7Kuy2b9e+d28VoNV3t9AnBfypdRBCao4y+sujJUNGgw==
+varaapplib@1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/varaapplib/-/varaapplib-1.6.0.tgz#b59822a9bdeab1a5422dd211b74da3961d420110"
+  integrity sha512-I/LTDLqOIaklZFT84dclyjBr2evsMnYEGUVJqPmiTNk2iZHv76IOrDF+OOnmY692U9KM0u3TrfAmgFDyhEZx3Q==
   dependencies:
     "@gorhom/bottom-sheet" "^4.6.4"
     "@react-native-async-storage/async-storage" "2.1.2"

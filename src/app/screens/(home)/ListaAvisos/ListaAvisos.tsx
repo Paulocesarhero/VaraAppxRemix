@@ -56,7 +56,7 @@ const ListaAvisos: React.FC = () => {
   useEffect(() => {
     setError(false);
     if (localData && useLocalDB) {
-      const transformedData: Item[] = localData.map((item) => ({
+      const transformedData: Item[] = localData.map((item: any) => ({
         id: item.id,
         fechaDeAvistamiento: item.fechaDeAvistamiento,
         cantidadDeAnimales: item.cantidadDeAnimales,

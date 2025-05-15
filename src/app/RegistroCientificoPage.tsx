@@ -18,6 +18,7 @@ const RegistroCientificoPage: React.FC = () => {
         <MaterialCommunityIcons name="content-save" size={24} color="black" />
       }
       onPress={onPress}
+      isLoading={loading}
     />
   );
 

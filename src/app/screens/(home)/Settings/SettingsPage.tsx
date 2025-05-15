@@ -20,7 +20,7 @@ const SettingsPage: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      {/*<Depurador />*/}
+      <Depurador />
       <View style={styles.box}>
         <Text style={styles.text}>
           Desarrollador : Paulo Cesar Hernández Rosado

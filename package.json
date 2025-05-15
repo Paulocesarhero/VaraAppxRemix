@@ -52,7 +52,7 @@
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.10.0",
     "react-native-web": "^0.20.0",
-    "varaapplib": "1.4.0",
+    "varaapplib": "1.6.0",
     "zustand": "^4.5.5"
   },
   "devDependencies": {

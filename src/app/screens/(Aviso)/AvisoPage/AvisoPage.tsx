@@ -56,14 +56,19 @@ const AvisoPage: React.FC = () => {
   };
 
   const handleExistingAviso = async (data: AvisoValues) => {
-    if (data.Fotografia) {
-      const response = await saveImage(data.Fotografia);
-      if (!response.existImage) {
-        await deletePhotoByIdAviso(idSelected);
-        data.Fotografia = response.uri;
+    try {
+      if (data.Fotografia) {
+        setLoading(true); // Establecer loading a true
+        const response = await saveImage(data.Fotografia);
+        if (!response.existImage) {
+          await deletePhotoByIdAviso(idSelected);
+          data.Fotografia = response.uri;
+        }
       }
+      await updateAviso(data, data.Nombre ?? "", idSelected);
+    } finally {
+      setLoading(false); // Asegurar que loading siempre se establezca a false
     }
-    await updateAviso(data, data.Nombre ?? "", idSelected);
   };
 
   const CustomButton = ({ onPress }: { onPress?: () => void }) => (
@@ -86,19 +91,25 @@ const AvisoPage: React.FC = () => {
       await handleNewAviso(data as AvisoValues);
     } else {
       if (data.Fotografia !== previousValues.Fotografia && data.Fotografia) {
-        setLoading(true);
-        const response = await saveImage(data.Fotografia);
-        if (!response.existImage) {
-          await deletePhotoByIdAviso(idSelected);
-          data.Fotografia = response.uri;
+        try {
+          setLoading(true);
+          const response = await saveImage(data.Fotografia);
+          if (!response.existImage) {
+            await deletePhotoByIdAviso(idSelected);
+            data.Fotografia = response.uri;
+          }
+        } finally {
+          setLoading(false);
         }
-        setLoading(false);
       }
       await updateAviso(data, data.Nombre ?? "", idSelected);
     }
   };
 
   if ((avisosDbLocal.length === 0 && idSelected > 0) || loading) {
+    console.log("Loading", loading);
+    console.log("avisosbdlocal", avisosDbLocal.length);
+    console.log("id selected", idSelected);
     return <Text>Cargando datos...</Text>;
   }
 
@@ -113,8 +124,8 @@ const AvisoPage: React.FC = () => {
         onSubmitData={handleSaveAviso}
         loading={false}
         setLoading={() => {}}
-        onValuesChange={(vaxlues) => {
-          onValuesChange(vaxlues);
+        onValuesChange={(values) => {
+          onValuesChange(values);
         }}
         data={{
           Nombre: avisosDbLocal[0]?.nombre ?? "",

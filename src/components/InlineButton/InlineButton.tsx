@@ -6,6 +6,8 @@ import {
   TextStyle,
   TouchableOpacity,
   ViewStyle,
+  ColorValue,
+  ActivityIndicator
 } from "react-native";
 
 interface InlineButtonProps {
@@ -14,6 +16,8 @@ interface InlineButtonProps {
   text?: string;
   styleText?: StyleProp<TextStyle>;
   styleView?: StyleProp<ViewStyle>;
+  isLoading?: boolean;
+  loadingColor?: ColorValue;
 }
 
 const InlineButton: React.FC<InlineButtonProps> = ({
@@ -22,16 +26,24 @@ const InlineButton: React.FC<InlineButtonProps> = ({
   text,
   styleText,
   styleView,
+  isLoading = false,
+  loadingColor = "black",
 }) => {
   return (
     <TouchableOpacity
       style={[inlineButtonStyle.button, styleView]}
       onPress={onPress}
     >
-      {icon}
-      <Text style={[{ fontSize: 16, fontWeight: "bold" }, styleText]}>
-        {text}
-      </Text>
+      {isLoading ? (
+        <ActivityIndicator size="small" color={loadingColor} />
+      ) : (
+        <>
+          {icon}
+          <Text style={[{ fontSize: 16, fontWeight: "bold" }, styleText]}>
+            {text}
+          </Text>
+        </>
+      )}
     </TouchableOpacity>
   );
 };
