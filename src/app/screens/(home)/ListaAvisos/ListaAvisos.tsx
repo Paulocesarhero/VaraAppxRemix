@@ -207,8 +207,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   optionsContainer: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
     marginBottom: 20,
     gap: 15,
   },
