@@ -90,13 +90,25 @@ const AvisoPage: React.FC = () => {
     if (idSelected < 1) {
       await handleNewAviso(data as AvisoValues);
     } else {
-      if (data.Fotografia !== previousValues.Fotografia && data.Fotografia) {
+      if (
+        data.Fotografia !== previousValues.Fotografia &&
+        data.Fotografia &&
+        data.Fotografia !== ""
+      ) {
         try {
           setLoading(true);
           const response = await saveImage(data.Fotografia);
           if (!response.existImage) {
             await deletePhotoByIdAviso(idSelected);
-            data.Fotografia = response.uri;
+            // Usar la nueva ruta
+            const updatedData = { ...data, Fotografia: response.uri };
+            // Actualizar con la nueva ruta inmediatamente
+            await updateAviso(
+              updatedData,
+              updatedData.Nombre ?? "",
+              idSelected
+            );
+            return; // Salir para evitar la actualización duplicada al final
           }
         } finally {
           setLoading(false);

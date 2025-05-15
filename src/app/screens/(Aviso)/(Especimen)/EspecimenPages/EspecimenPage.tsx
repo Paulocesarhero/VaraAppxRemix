@@ -13,13 +13,15 @@ import { FormValuesEspecimen } from "../../../../../forms/Especimen/FormValuesEs
 
 import useAvisoStore from "../../../../../hooks/globalState/useAvisoStore";
 import { saveImage } from "../../../../../hooks/helpers";
-import { useLiveQuery } from "drizzle-orm/expo-sqlite/index";
+import { useLiveQuery } from "drizzle-orm/expo-sqlite";
 import { db } from "../../../../../database/connection/sqliteConnection";
 import { Especie } from "../../../../../services/Especie/GetEspecie";
 import { addMisticetoIfNotExist } from "../../../../../database/repository/misticetoRepo";
 import { addOdontocetoIfNotExist } from "../../../../../database/repository/odontocetoRepo";
 import { addPinnipedoIfNotExists } from "../../../../../database/repository/pinipedoRepo";
 import { addSirenioIfNotExists } from "../../../../../database/repository/sirenioRepo";
+import { SQL } from "drizzle-orm";
+import { especimen as especimenSchema } from "../../../../../database/schemas/avisoSchema"; // Ajusta esta ruta según tu estructura
 
 const EspecimenPage: React.FC = () => {
   const idAviso = useAvisoStore((state) => state.idAvisoSelected);
@@ -35,7 +37,10 @@ const EspecimenPage: React.FC = () => {
 
   const { data: especimenBdLocal } = useLiveQuery(
     db.query.especimen.findFirst({
-      where: (especimen, { eq }) => eq(especimen.id, idEspecimen),
+      where: (
+        especimen: typeof especimenSchema,
+        { eq }: { eq: (column: unknown, value: unknown) => SQL<unknown> }
+      ) => eq(especimen.id, idEspecimen),
       with: {
         especie: true,
       },
@@ -130,6 +135,7 @@ const EspecimenPage: React.FC = () => {
   };
 
   const handleValuesChange = async (data: Partial<FormValuesEspecimen>) => {
+    console.log("handle values change", data);
     const previousValues = previouValuesRef.current;
     if (!data) return;
     if (JSON.stringify(previousValues) === JSON.stringify(data)) {
@@ -143,61 +149,130 @@ const EspecimenPage: React.FC = () => {
         data.presenciaDeRedesFoto !== previousValues.presenciaDeRedesFoto &&
         data.presenciaDeRedesFoto
       ) {
-        setIsLoading(true);
-        const response = await saveImage(data.presenciaDeRedesFoto);
-        if (!response.existImage) {
-          data.presenciaDeRedesFoto = response.uri;
-          await deletePhotoEspecimenById(idEspecimen, "presenciaDeRedes");
+        try {
+          setIsLoading(true);
+          const response = await saveImage(data.presenciaDeRedesFoto);
+          if (!response.existImage) {
+            await deletePhotoEspecimenById(idEspecimen, "presenciaDeRedes");
+            const updatedData = {
+              ...data,
+              presenciaDeRedesFoto: response.uri,
+            };
+            await updateEspecimenById(updatedData, idEspecimen);
+
+            previouValuesRef.current = {
+              ...previouValuesRef.current,
+              presenciaDeRedesFoto: response.uri,
+            };
+            data.presenciaDeRedesFoto = response.uri;
+          }
+          setIsLoading(false);
+          return;
+        } finally {
+          setIsLoading(false);
         }
-        await updateEspecimenById(data, idEspecimen);
-        setIsLoading(false);
       }
       if (data.golpesFoto !== previousValues.golpesFoto && data.golpesFoto) {
-        setIsLoading(true);
-        const response = await saveImage(data.golpesFoto);
-        if (!response.existImage) {
-          await deletePhotoEspecimenById(idEspecimen, "golpes");
-          data.golpesFoto = response.uri;
+        try {
+          setIsLoading(true);
+          const response = await saveImage(data.golpesFoto);
+          if (!response.existImage) {
+            await deletePhotoEspecimenById(idEspecimen, "golpes");
+            const updatedData = { ...data, golpesFoto: response.uri };
+            await updateEspecimenById(updatedData, idEspecimen);
+            previouValuesRef.current = {
+              ...previouValuesRef.current,
+              golpesFoto: response.uri,
+            };
+            data.golpesFoto = response.uri;
+          }
+          setIsLoading(false);
+          return;
+        } finally {
+          setIsLoading(false);
         }
-        setIsLoading(false);
       }
       if (
         data.heridasBalaFoto !== previousValues.heridasBalaFoto &&
         data.heridasBalaFoto
       ) {
-        setIsLoading(true);
-        const response = await saveImage(data.heridasBalaFoto);
-        if (!response.existImage) {
-          await deletePhotoEspecimenById(idEspecimen, "heridasDeBala");
-          data.heridasBalaFoto = response.uri;
+        try {
+          setIsLoading(true);
+          const response = await saveImage(data.heridasBalaFoto);
+          if (!response.existImage) {
+            await deletePhotoEspecimenById(idEspecimen, "heridasDeBala");
+            const updatedData = {
+              ...data,
+              heridasBalaFoto: response.uri,
+            };
+
+            await updateEspecimenById(updatedData, idEspecimen);
+
+            previouValuesRef.current = {
+              ...previouValuesRef.current,
+              heridasBalaFoto: response.uri,
+            };
+
+            data.heridasBalaFoto = response.uri;
+          }
+          setIsLoading(false);
+          return;
+        } finally {
+          setIsLoading(false);
         }
-        setIsLoading(false);
       }
 
       if (
         data.mordidasFoto !== previousValues.mordidasFoto &&
         data.mordidasFoto
       ) {
-        setIsLoading(true);
-        const response = await saveImage(data.mordidasFoto);
-        if (!response.existImage) {
-          await deletePhotoEspecimenById(idEspecimen, "mordidas");
-          data.mordidasFoto = response.uri;
+        try {
+          setIsLoading(true);
+          const response = await saveImage(data.mordidasFoto);
+          if (!response.existImage) {
+            await deletePhotoEspecimenById(idEspecimen, "mordidas");
+            const updatedData = { ...data, mordidasFoto: response.uri };
+
+            await updateEspecimenById(updatedData, idEspecimen);
+
+            previouValuesRef.current = {
+              ...previouValuesRef.current,
+              mordidasFoto: response.uri,
+            };
+            data.mordidasFoto = response.uri;
+          }
+          setIsLoading(false);
+          return;
+        } finally {
+          setIsLoading(false);
         }
-        setIsLoading(false);
       }
 
       if (
         data.otroTipoDeHeridasFoto !== previousValues.otroTipoDeHeridasFoto &&
         data.otroTipoDeHeridasFoto
       ) {
-        setIsLoading(true);
-        const response = await saveImage(data.otroTipoDeHeridasFoto);
-        if (!response.existImage) {
-          await deletePhotoEspecimenById(idEspecimen, "otros");
-          data.otroTipoDeHeridasFoto = response.uri;
+        try {
+          setIsLoading(true);
+          const response = await saveImage(data.otroTipoDeHeridasFoto);
+          if (!response.existImage) {
+            await deletePhotoEspecimenById(idEspecimen, "otros");
+            const updatedData = {
+              ...data,
+              otroTipoDeHeridasFoto: response.uri,
+            };
+            await updateEspecimenById(updatedData, idEspecimen);
+            previouValuesRef.current = {
+              ...previouValuesRef.current,
+              otroTipoDeHeridasFoto: response.uri,
+            };
+            data.otroTipoDeHeridasFoto = response.uri;
+          }
+          setIsLoading(false);
+          return;
+        } finally {
+          setIsLoading(false);
         }
-        setIsLoading(false);
       }
       console.log("Antes update", data);
       await updateEspecimenById(data, idEspecimen);

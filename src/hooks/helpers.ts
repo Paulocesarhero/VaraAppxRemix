@@ -60,7 +60,7 @@ export const saveImage = async (photoUri: string): Promise<ResponseImage> => {
     throw new Error("El archivo de origen no existe" + photoUri);
   }
 
-  await FileSystem.moveAsync({
+  await FileSystem.copyAsync({
     from: photoUri,
     to: newPath,
   });

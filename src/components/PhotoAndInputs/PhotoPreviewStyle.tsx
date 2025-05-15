@@ -9,7 +9,7 @@ const PhotoAndInputStyle = StyleSheet.create({
     width: "100%",
     overflow: "hidden",
     backgroundColor: "#000",
-    alignItems: "center",
+    alignItems: "flex-end",
     justifyContent: "center",
   },
   label: {

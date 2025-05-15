@@ -555,6 +555,7 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
           <CustomTitle>Características Externas</CustomTitle>
 
           <PhotoAndInputForm
+            setValue={setValue}
             control={control}
             getValues={getValues}
             isDisabled={false}
@@ -564,6 +565,7 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
           />
 
           <PhotoAndInputForm
+            setValue={setValue}
             control={control}
             getValues={getValues}
             isDisabled={false}
@@ -572,6 +574,7 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
             namePhoto="presenciaDeRedesFoto"
           />
           <PhotoAndInputForm
+            setValue={setValue}
             control={control}
             getValues={getValues}
             isDisabled={false}
@@ -580,6 +583,7 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
             namePhoto="mordidasFoto"
           />
           <PhotoAndInputForm
+            setValue={setValue}
             control={control}
             getValues={getValues}
             isDisabled={false}
@@ -588,6 +592,7 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
             namePhoto="golpesFoto"
           />
           <PhotoAndInputForm
+            setValue={setValue}
             control={control}
             getValues={getValues}
             isDisabled={false}
@@ -595,6 +600,7 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
             label="Otro tipo de heridas"
             namePhoto="otroTipoDeHeridasFoto"
           />
+          <View style={{ marginVertical: 50 }}></View>
         </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
