@@ -107,9 +107,6 @@ const AvisoPage: React.FC = () => {
   };
 
   if ((avisosDbLocal.length === 0 && idSelected > 0) || loading) {
-    console.log("Loading", loading);
-    console.log("avisosbdlocal", avisosDbLocal.length);
-    console.log("id selected", idSelected);
     return <Text>Cargando datos...</Text>;
   }
 
