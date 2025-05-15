@@ -570,7 +570,7 @@ const Especimen: React.FC<FormatoIndividualProps> = ({
             getValues={getValues}
             isDisabled={false}
             nameInput="presenciaDeRedes"
-            label="Precencia de redes"
+            label="Presencia de redes"
             namePhoto="presenciaDeRedesFoto"
           />
           <PhotoAndInputForm
