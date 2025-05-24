@@ -28,9 +28,11 @@ Para empezar a trabajar con VaraAppx, sigue estos pasos:
 1. Instalar dependencias
      ```bash
     yarn
+    ```
 2. Ejecuta el comando de inicialización del proyecto:
    ```bash
    yarn start
+    ```
 
 ## Ejecutar eslint
 
@@ -96,6 +98,21 @@ Maestro estudio es una herramienta que puede ayudar a generar nuevos casos de pr
    ```bash
       maestro studio
    ```
+# Drizzle studio
+Para almacenar datos localmente en el dispositivo, se utilizó Drizzle. La base de datos local puede visualizarse a través de las herramientas de desarrollo de Expo siguiendo estos pasos:
+1. Levantar el servicio de expo
+    ```bash
+    yarn
+    ```
+2. Presionar las teclas shft + m
+3. Con las teclas de navegación seleccionar la opción de "open-expo-drizzle-studio"
 
-Memento mori
+# Recomendaciones para el desarrollador
+1. Aprende bien los fundamentos de git para trabajar en el fork que deje y mantener un historial limpio
+2. Aprender antes de tocar el proyecto los conceptos de react, react native, expo, typescript y drizzle
+3. La organización del proyecto se debe a Expo Router Apps -> es lo equivalente a las pantallas; todo lo demás está separado en capas ad hoc a la tecnología que se ocupó.
+4. Aunque los directores probablemente quieran separar este proyecto en dos uno para android y otro para ios, no es necesario. Expo se encarga de la separación de los módulos nativos y de la compilación para cada plataforma. Recomiendo encarecidamente seguir con un desarrollo multiplataforma en el futuro
+5. Es posible que el proyecto no se compile correctamente con cada actualización del SDK de Expo. Por ello, se recomienda actualizar regularmente las dependencias de esta aplicación junto con la librería de VaraAppLib. Durante el desarrollo, se realizaron dos actualizaciones del SDK, lo que generó problemas al actualizar las dependencias de VaraAppLib y adaptarlas a VaraAppX. Sin embargo, generalmente basta con leer la documentación de Expo sobre cómo actualizar las dependencias para resolver estos inconvenientes.
+6. En el componente `SettingsPage.tsx` dejé comentado un componente que me sirvió para depurar la aplicación durante su desarrollo. Puede ser útil en el futuro. El componente en cuestión se llama `Depurador.tsx`.
+Memento mori.
 Buena suerte :)
