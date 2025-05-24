@@ -18,6 +18,7 @@
       "bundleIdentifier": "com.paulocesarhero.VaraAppx"
     },
     "android": {
+      "edgeToEdge": true,
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "##0E4F7E"
