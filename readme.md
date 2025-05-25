@@ -109,7 +109,7 @@ Para almacenar datos localmente en el dispositivo, se utilizó Drizzle. La base 
 
 # Recomendaciones para el desarrollador
 1. Aprende bien los fundamentos de git para trabajar en el fork que deje y mantener un historial limpio
-2. Aprender antes de tocar el proyecto los conceptos de react, react native, expo, typescript y drizzle
+2. Aprender antes de tocar el proyecto los conceptos de react, react native, expo, typescript, drizzle orm y zustand
 3. La organización del proyecto se debe a Expo Router Apps -> es lo equivalente a las pantallas; todo lo demás está separado en capas ad hoc a la tecnología que se ocupó.
 4. Aunque los directores probablemente quieran separar este proyecto en dos uno para android y otro para ios, no es necesario. Expo se encarga de la separación de los módulos nativos y de la compilación para cada plataforma. Recomiendo encarecidamente seguir con un desarrollo multiplataforma en el futuro
 5. Es posible que el proyecto no se compile correctamente con cada actualización del SDK de Expo. Por ello, se recomienda actualizar regularmente las dependencias de esta aplicación junto con la librería de VaraAppLib. Durante el desarrollo, se realizaron dos actualizaciones del SDK, lo que generó problemas al actualizar las dependencias de VaraAppLib y adaptarlas a VaraAppX. Sin embargo, generalmente basta con leer la documentación de Expo sobre cómo actualizar las dependencias para resolver estos inconvenientes.
