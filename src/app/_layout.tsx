@@ -24,7 +24,7 @@ const Layout = () => {
   };
 
   return (
-    <ErrorBoundary fallback={error()}>
+    <ErrorBoundary fallback={error}>
       <SQLiteProvider
         databaseName="db.db"
         options={{ enableChangeListener: true }}
