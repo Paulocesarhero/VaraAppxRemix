@@ -24,36 +24,34 @@ const Layout = () => {
   };
 
   return (
-    <ErrorBoundary fallback={error}>
-      <SQLiteProvider
-        databaseName="db.db"
-        options={{ enableChangeListener: true }}
+    <SQLiteProvider
+      databaseName="db.db"
+      options={{ enableChangeListener: true }}
+    >
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          gestureEnabled: false,
+          fullScreenGestureEnabled: true,
+        }}
       >
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            gestureEnabled: false,
-            fullScreenGestureEnabled: true,
+        <Stack.Screen
+          name="index"
+          options={{
+            title: "Login",
           }}
-        >
-          <Stack.Screen
-            name="index"
-            options={{
-              title: "Login",
-            }}
-          />
-          <Stack.Screen
-            name="RegistroCientificoPage"
-            options={{
-              title: "Registro Científico",
-              headerShown: true,
-              headerBackButtonDisplayMode: "minimal",
-              gestureEnabled: true,
-            }}
-          />
-        </Stack>
-      </SQLiteProvider>
-    </ErrorBoundary>
+        />
+        <Stack.Screen
+          name="RegistroCientificoPage"
+          options={{
+            title: "Registro Científico",
+            headerShown: true,
+            headerBackButtonDisplayMode: "minimal",
+            gestureEnabled: true,
+          }}
+        />
+      </Stack>
+    </SQLiteProvider>
   );
 };
 
